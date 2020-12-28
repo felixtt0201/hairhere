@@ -29,8 +29,13 @@ const routes = [
     children: [
       {
         path: '',
-        name: 'dashboardProducts',
-        component: () => import('../components/dashboard/db_Reservation'),
+        name: 'db_Reservation',
+        component: () => import('../components/dashboard/db_Reservation.vue'),
+      },
+      {
+        path: 'db_designers',
+        name: 'db_designers',
+        component: () => import('../components/dashboard/db_designers.vue'),
       },
     ],
   },

@@ -25,7 +25,9 @@
 
     <!--newNavbar-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Home</a>
+      <router-link class="nav-link" :to="{ name: 'db_Reservation' }"
+        >Home</router-link
+      >
       <button
         class="navbar-toggler"
         type="button"
@@ -41,7 +43,9 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="#">設計師管理</a>
+            <router-link class="nav-link" :to="{ name: 'db_designers' }"
+              >設計師管理</router-link
+            >
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">店家資訊管理</a>
