@@ -25,16 +25,20 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">店家資訊管理</a>
+            <router-link class="nav-link" to="information"
+              >店家資訊管理</router-link
+            >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">作品集管理</a>
+            <router-link class="nav-link" to="portfolio"
+              >作品集管理</router-link
+            >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">結帳管理</a>
+            <router-link class="nav-link" to="checkout">結帳管理</router-link>
           </li>
           <li class="nav-item dropdown">
-            <a
+            <router-link
               class="nav-link dropdown-toggle"
               href="#"
               id="navbarDropdown"
@@ -42,9 +46,9 @@
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
+              to="forms"
+              >表單管理</router-link
             >
-              表單管理
-            </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="#">預約表</a>
               <div class="dropdown-divider"></div>
