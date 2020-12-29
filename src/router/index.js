@@ -20,22 +20,22 @@ const routes = [
     component: () => import('../views/About.vue'),
   },
   {
-    path: '/dashboard',
-    // name: 'Dashboard',
+    path: '/Dashboard',
+    name: 'Dashboard',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/dashboard.vue'),
+    component: () => import('../components/Dashboard.vue'),
     children: [
       {
         path: '',
-        name: 'db_Reservation',
-        component: () => import('../components/dashboard/db_Reservation.vue'),
+        name: 'Reservation',
+        component: () => import('../components/Reservation.vue'),
       },
       {
-        path: 'db_designers',
-        name: 'db_designers',
-        component: () => import('../components/dashboard/db_designers.vue'),
+        path: 'designers',
+        name: 'Designers',
+        component: () => import('../components/Designers.vue'),
       },
     ],
   },

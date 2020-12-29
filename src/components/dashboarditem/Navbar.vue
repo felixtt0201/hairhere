@@ -1,31 +1,8 @@
 <template>
   <div>
-    <!--原版-->
-    <!-- <nav
-      class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow"
-    >
-      <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">後台</a>
-      <button
-        class="navbar-toggler position-absolute d-md-none collapsed"
-        type="button"
-        data-toggle="collapse"
-        data-target="#sidebarMenu"
-        aria-controls="sidebarMenu"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <ul class="navbar-nav px-3">
-        <li class="nav-item text-nowrap">
-          <a class="nav-link" href="#">Sign out</a>
-        </li>
-      </ul>
-    </nav> -->
-
     <!--newNavbar-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <router-link class="nav-link" :to="{ name: 'db_Reservation' }"
+      <router-link class="nav-link" :to="{ name: 'Reservation' }"
         >Home</router-link
       >
       <button
@@ -43,7 +20,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <router-link class="nav-link" :to="{ name: 'db_designers' }"
+            <router-link class="nav-link" :to="{ name: 'Designers' }"
               >設計師管理</router-link
             >
           </li>

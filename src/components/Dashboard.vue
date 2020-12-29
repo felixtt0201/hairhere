@@ -1,6 +1,6 @@
 <template>
   <div>
-    <dashboardNavbar />
+    <Navbar />
     <div class="container-fluid">
       <div class="container">
         <main>
@@ -12,15 +12,15 @@
 </template>
 
 <script>
-import dashboardNavbar from '../components/dashboard/db_Navbar.vue';
+import Navbar from './dashboarditem/Navbar.vue';
 
 export default {
   components: {
-    dashboardNavbar,
+    Navbar,
   },
 };
 </script>
 
 <style lang="scss">
-@import './src/assets/db_all.scss';
+@import './src/assets/all.scss';
 </style>
