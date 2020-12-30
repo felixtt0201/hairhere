@@ -37,6 +37,65 @@ const routes = [
         name: 'Designers',
         component: () => import('../components/Designers.vue'),
       },
+      {
+        path: 'information', // 店家資訊
+        name: 'Information',
+        component: () => import('../components/Information.vue'),
+      },
+      {
+        path: 'portfolio', // 作品集
+        name: 'Portfolio',
+        component: () => import('../components/Portfolio.vue'),
+      },
+      {
+        path: 'checkout', // 結帳管理
+        name: 'Checkout',
+        component: () => import('../components/Checkout.vue'),
+      },
+      {
+        path: 'forms', // 表單管理
+        name: 'Forms',
+        component: () => import('../components/Forms.vue'),
+        children: [
+          {
+            path: 'reservationlist',
+            name: 'ReservationList',
+            component: () => import('../components/forms/ReservationList.vue'),
+          },
+          {
+            path: 'vaction',
+            name: 'Vaction',
+            component: () => import('../components/forms/Vaction.vue'),
+          },
+          {
+            path: 'performance',
+            name: 'Performance',
+            component: () => import('../components/forms/Performance.vue'),
+          },
+          {
+            path: 'historicalOrders',
+            name: 'HistoricalOrders',
+            component: () => import('../components/forms/HistoricalOrders.vue'),
+          },
+        ],
+      },
+      // {
+      //   path: '/', // 表單管理
+      //   name: 'Forms',
+      //   component: () => import('../components/Forms.vue'),
+      //   children: [
+      //     {
+      //       path: 'reservationlist',
+      //       name: 'ReservationList',
+      //       component: () => import('../components/forms/ReservationList.vue'),
+      //     },
+      //     {
+      //       path: 'vaction',
+      //       name: 'Vaction',
+      //       component: () => import('../components/forms/Vaction.vue'),
+      //     },
+      //   ],
+      // },
     ],
   },
 ];
