@@ -224,57 +224,59 @@ export default {
   methods: {
     // ban預約的日期
     // eslint-disable-next-line consistent-return
-    banDate() {
-      // const today = new Date(new Date().setDate(-1));
-      // const day = new Date(e.date.getMilliseconds());
-      // console.log(day);
-      if (2 > 1) {
-        console.log('no');
-        return 'isRes';
-      }
-    },
+    // banDate() {
+    // const today = new Date(new Date().setDate(-1));
+    // const day = new Date(e.date.getMilliseconds());
+    // console.log(day);
+    // ---
+    // const time = this.$moment().unix();
+    // console.log(time);
+    // if (time > 0) {
+    //   console.log('no');
+    //   return 'isRes';
+    // },
+  },
 
-    // 開啟Modal 並把api的訊息存到data中的selectdateInfo
-    openModal(e) {
-      console.log('openModel', e.dayEl.className);
-      this.reservationInfo = {};
-      if (e.dayEl.classList.contains('isRes')) {
-        console.log('hell');
-      } else {
-        $('#productModal').modal('show');
-        this.selectdateInfo = e;
-      }
-    },
-
-    // 將輸入的訊息寫到選則的日期裡面
-    setInfo() {
-      const selectedInfo = this.selectdateInfo.view.calendar;
-      // console.log('selectedInfo', selectedInfo);
-      // console.log('selectdateInfo', this.selectdateInfo);
-      selectedInfo.unselect();
-      selectedInfo.addEvent({
-        // eslint-disable-next-line no-plusplus
-        id: this.num++,
-        title: this.reservationInfo.cName,
-        // start: this.selectdateInfo.startStr,
-        start: '2020-12-01',
-        // extendedProps
-        tel: this.reservationInfo.cTel,
-        name: this.reservationInfo.cName,
-      });
-
-      $('#productModal').modal('hide');
-    },
-
-    // 點選有存儲過的資訊打開內容
-    getSelectInfo(e) {
-      // eslint-disable-next-line prefer-object-spread
-      this.reservationInfo = Object.assign({}, e.evnet);
-      this.reservationInfo.cName = e.event.title;
-      this.reservationInfo.cTel = e.event.extendedProps.tel;
-      // console.log(e.event.extendedProps);
+  // 開啟Modal 並把api的訊息存到data中的selectdateInfo
+  openModal(e) {
+    console.log('openModel', e.dayEl.className);
+    this.reservationInfo = {};
+    if (e.dayEl.classList.contains('isRes')) {
+      console.log('hell');
+    } else {
       $('#productModal').modal('show');
-    },
+      this.selectdateInfo = e;
+    }
+  },
+
+  // 將輸入的訊息寫到選則的日期裡面
+  setInfo() {
+    const selectedInfo = this.selectdateInfo.view.calendar;
+    // console.log('selectedInfo', selectedInfo);
+    // console.log('selectdateInfo', this.selectdateInfo);
+    selectedInfo.unselect();
+    selectedInfo.addEvent({
+      // eslint-disable-next-line no-plusplus
+      id: this.num++,
+      title: this.reservationInfo.cName,
+      // start: this.selectdateInfo.startStr,
+      start: '2020-12-01',
+      // extendedProps
+      tel: this.reservationInfo.cTel,
+      name: this.reservationInfo.cName,
+    });
+
+    $('#productModal').modal('hide');
+  },
+
+  // 點選有存儲過的資訊打開內容
+  getSelectInfo(e) {
+    // eslint-disable-next-line prefer-object-spread
+    this.reservationInfo = Object.assign({}, e.evnet);
+    this.reservationInfo.cName = e.event.title;
+    this.reservationInfo.cTel = e.event.extendedProps.tel;
+    // console.log(e.event.extendedProps);
+    $('#productModal').modal('show');
   },
 };
 </script>
