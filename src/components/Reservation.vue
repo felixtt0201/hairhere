@@ -1,10 +1,13 @@
 <template>
   <div>
     <h1>reservation</h1>
+    <Calendar />
   </div>
 </template>
 
 <script>
+import Calendar from './dashboarditem/Calendar.vue';
+
 export default {
   methods: {
     getInfo() {
@@ -16,6 +19,9 @@ export default {
   },
   created() {
     this.getInfo();
+  },
+  components: {
+    Calendar,
   },
 };
 </script>
