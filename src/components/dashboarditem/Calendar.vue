@@ -5,13 +5,14 @@
     <FullCalendar :options="calendarOptions" />
     <div
       class="modal fade"
-      id="productModal"
+      id="reservationModal"
       tabindex="-1"
       role="dialog"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
     >
-      <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-dialog modal-lg container" role="document">
+        <div class="row"></div>
         <div class="modal-content border-0">
           <div class="modal-header bg-dark text-white">
             <h5 class="modal-title" id="exampleModalLabel">
@@ -27,7 +28,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <div class="row">
+            <div class="row justify-content-center">
               <div class="col-sm-8">
                 <div class="form-row">
                   <div class="form-group col-md-6">
@@ -153,18 +154,42 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-outline-secondary"
-              data-dismiss="modal"
-            >
-              取消
-            </button>
-            <button type="button" class="btn btn-primary" @click="setInfo">
-              確認
-            </button>
+            <div class="container">
+              <div class="row justify-content-between">
+                <div class="col-4">
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    @click="deletAlert"
+                  >
+                    刪除
+                  </button>
+                </div>
+                <div class="col-auto">
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary mr-2"
+                    data-dismiss="modal"
+                  >
+                    取消
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    @click="saveAlert"
+                  >
+                    確認
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    @click="updateInfo"
+                  >
+                    編輯
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -177,7 +202,6 @@ import FullCalendar from '@fullcalendar/vue';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-// import { mapGetters } from 'vuex';
 import $ from 'jquery';
 
 export default {
@@ -194,6 +218,17 @@ export default {
           center: 'title',
           right: 'prev,today,next',
         },
+        views: {
+          timeGridWeek: {
+            allDayText: '時間',
+          },
+        },
+        // businessHours: {
+        //   daysOfWeek: [1, 2, 3, 4, 5, 6, 7], // Monday - Thursday
+
+        //   startTime: '09:00', // a start time (10am in this example)
+        //   endTime: '18:00', // an end time (6pm in this example)
+        // },
         initialView: 'dayGridMonth',
         // validRange: { start: new Date().toISOString().slice(0, 10) },
         locale: 'tw',
@@ -207,6 +242,12 @@ export default {
         dayCellClassNames: this.banDate,
         // eventsSet: this.handleEvents,
         dateClick: this.openModal,
+
+        // 時間區間
+        slotDuration: '0:30', // 區間30分鐘
+        slotMinTime: '9:00', // 開始
+        slotMaxTime: '18:00', // 結束
+        expandRows: true, // 適應有時間的高度(不然會是原本高度)
       },
       reservationInfo: {
         cName: '',
@@ -215,8 +256,9 @@ export default {
         content: '',
       },
 
-      // select事件中叫出來資訊的存放區
-      selectdateInfo: {},
+      // 事件中叫出來資訊的存放區
+      dateClickEvent: {},
+      eventClickEvent: {},
       num: 1,
     };
   },
@@ -224,63 +266,107 @@ export default {
   methods: {
     // ban預約的日期
     // eslint-disable-next-line consistent-return
-    banDate() {
-      // const today = new Date(new Date().setDate(-1));
-      // const day = new Date(e.date.getMilliseconds());
-      // console.log(day);
-      if (2 > 1) {
-        console.log('no');
-        return 'isRes';
+    banDate(arg) {
+      // eslint-disable-next-line prefer-const
+      // eslint-disable-next-line no-var
+      const today = new Date(); // 目前時間
+      // eslint-disable-next-line no-var
+      const eachDate = arg.date; // 每個格子的時間
+      // 比今日早的格子全部加入 'fc-bg' class，改變背景顏色
+      if (eachDate.getTime() < today.getTime() - 1 * 24 * 60 * 60 * 1000) {
+        return ['fc-BeforeDay'];
       }
     },
 
-    // 開啟Modal 並把api的訊息存到data中的selectdateInfo
+    // 開啟Modal 並把api的訊息存到data中的dateClickEvent
     openModal(e) {
-      console.log('openModel', e.dayEl.className);
+      // console.log('openModel', e.dayEl.className);
       this.reservationInfo = {};
-      if (e.dayEl.classList.contains('isRes')) {
-        console.log('hell');
+      if (e.dayEl.classList.contains('fc-BeforeDay')) {
+        alert('過去日期不能預約');
       } else {
-        $('#productModal').modal('show');
-        this.selectdateInfo = e;
+        $('#reservationModal').modal('show');
+        this.dateClickEvent = e;
       }
     },
-
+    saveAlert() {
+      this.$swal(
+        {
+          title: '成功預約',
+          position: 'center',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 1500,
+        },
+        this.setInfo(),
+      );
+    },
     // 將輸入的訊息寫到選則的日期裡面
     setInfo() {
-      const selectedInfo = this.selectdateInfo.view.calendar;
-      // console.log('selectedInfo', selectedInfo);
-      // console.log('selectdateInfo', this.selectdateInfo);
+      const selectedInfo = this.dateClickEvent.view.calendar;
       selectedInfo.unselect();
       selectedInfo.addEvent({
         // eslint-disable-next-line no-plusplus
         id: this.num++,
         title: this.reservationInfo.cName,
-        // start: this.selectdateInfo.startStr,
-        start: '2020-12-01',
+        start: this.dateClickEvent.dateStr,
         // extendedProps
         tel: this.reservationInfo.cTel,
         name: this.reservationInfo.cName,
       });
-
-      $('#productModal').modal('hide');
+      $('#reservationModal').modal('hide');
     },
 
     // 點選有存儲過的資訊打開內容
     getSelectInfo(e) {
+      this.eventClickEvent = e;
       // eslint-disable-next-line prefer-object-spread
       this.reservationInfo = Object.assign({}, e.evnet);
       this.reservationInfo.cName = e.event.title;
       this.reservationInfo.cTel = e.event.extendedProps.tel;
       // console.log(e.event.extendedProps);
-      $('#productModal').modal('show');
+      $('#reservationModal').modal('show');
+    },
+
+    // 編輯預約資訊
+    updateInfo() {
+      const selectedInfo = this.eventClickEvent;
+      console.log(selectedInfo);
+      selectedInfo.refetchEvents({
+        title: this.reservationInfo.cName,
+        start: this.dateClickEvent.dateStr,
+        // extendedProps
+        tel: this.reservationInfo.cTel,
+        name: this.reservationInfo.cName,
+      });
+    },
+
+    // 刪除資訊
+    deletAlert() {
+      this.$swal({
+        title: '你確定要刪除嗎？',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33 ',
+        confirmButtonText: '確定',
+        cancelButtonColor: '#3085d6',
+        cancelButtonText: '取消',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$swal('成功刪除預約', this.deleteInfo());
+        }
+      });
+    },
+    deleteInfo() {
+      this.eventClickEvent.event.remove();
+      $('#reservationModal').modal('hide');
     },
   },
 };
 </script>
 
-<style lang="scss" scoped>
-.isRes {
-  background-color: yellowgreen;
+<style lang="scss">
+.fc-BeforeDay {
+  background-color: #fab1a0;
 }
 </style>
