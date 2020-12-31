@@ -1,26 +1,31 @@
 <template>
-  <div class="container">
-    <form @submit="signin">
-      <h1 class="h3 mb-3 font-weight-normal">後台登入</h1>
-      <label for="inputEmail">帳號(email)</label>
-      <input
-        type="email"
-        id="inputEmail"
-        class="form-control"
-        placeholder="Email address"
-        required
-        autofocus
-        v-model="user.username"
-      />
-      <label for="inputPassword">密碼</label>
-      <input
-        type="password"
-        id="inputPassword"
-        class="form-control"
-        placeholder="Password"
-        required
-        v-model="user.password"
-      />
+  <div id="login" class="d-flex align-items-center justify-content-center">
+    <form class="form-signin" @submit="signin">
+      <h1 class="h3 mb-3 font-weight-normal text-center">後台登入</h1>
+      <div class="form-group">
+        <label for="inputEmail">帳號(email)</label>
+        <input
+          type="email"
+          id="inputEmail"
+          class="form-control"
+          placeholder="Email address"
+          required
+          autofocus
+          v-model="user.username"
+        />
+      </div>
+      <div class="form-group">
+        <label for="inputPassword">密碼</label>
+        <input
+          type="password"
+          id="inputPassword"
+          class="form-control"
+          placeholder="Password"
+          required
+          v-model="user.password"
+        />
+      </div>
+
       <div class="checkbox mb-3">
         <label>
           <input type="checkbox" value="remember-me" /> Remember me
@@ -31,8 +36,8 @@
       </button>
       <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
     </form>
-  </div></template
->
+  </div>
+</template>
 
 <script>
 export default {
@@ -55,3 +60,4 @@ export default {
   },
 };
 </script>
+<style lang="scss"></style>

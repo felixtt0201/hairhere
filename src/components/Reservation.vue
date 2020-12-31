@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>reservation</h1>
-    <Calendar />
+    <Calendar class="container" />
   </div>
 </template>
 
@@ -26,4 +26,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss"></style>

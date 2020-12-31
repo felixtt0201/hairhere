@@ -44,6 +44,34 @@
           </div>
         </div>
       </div>
+      <div class="card" style="width: 18rem;">
+        <img
+          src="https://picsum.photos/id/237/200/300"
+          class="card-img-top"
+          alt="..."
+        />
+        <div class="card-body">
+          <h5 class="card-title text-center">設計師名稱</h5>
+          <div class="row justify-content-between">
+            <a href="#" class="btn btn-primary">編輯</a>
+            <a href="#" class="btn btn-primary">刪除</a>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="width: 18rem;">
+        <img
+          src="https://picsum.photos/id/237/200/300"
+          class="card-img-top"
+          alt="..."
+        />
+        <div class="card-body">
+          <h5 class="card-title text-center">設計師名稱</h5>
+          <div class="row justify-content-between">
+            <a href="#" class="btn btn-primary">編輯</a>
+            <a href="#" class="btn btn-primary">刪除</a>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="row justify-content-center mt-3">
       <button
