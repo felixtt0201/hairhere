@@ -20,6 +20,11 @@ const routes = [
     component: () => import('../views/About.vue'),
   },
   {
+    path: '/Login',
+    name: 'login',
+    component: () => import('../components/Login.vue'),
+  },
+  {
     path: '/Dashboard',
     name: 'Dashboard',
     // route level code-splitting
@@ -79,23 +84,6 @@ const routes = [
           },
         ],
       },
-      // {
-      //   path: '/', // 表單管理
-      //   name: 'Forms',
-      //   component: () => import('../components/Forms.vue'),
-      //   children: [
-      //     {
-      //       path: 'reservationlist',
-      //       name: 'ReservationList',
-      //       component: () => import('../components/forms/ReservationList.vue'),
-      //     },
-      //     {
-      //       path: 'vaction',
-      //       name: 'Vaction',
-      //       component: () => import('../components/forms/Vaction.vue'),
-      //     },
-      //   ],
-      // },
     ],
   },
 ];
