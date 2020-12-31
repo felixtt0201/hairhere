@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!--newNavbar-->
+    <!--Navbar-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <router-link class="nav-link" :to="{ name: 'Reservation' }"
         >Home</router-link
@@ -25,39 +25,24 @@
             >
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="information"
+            <router-link class="nav-link" :to="{ name: 'Information' }"
               >店家資訊管理</router-link
             >
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="portfolio"
+            <router-link class="nav-link" :to="{ name: 'Portfolio' }"
               >作品集管理</router-link
             >
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="checkout">結帳管理</router-link>
+            <router-link class="nav-link" :to="{ name: 'Checkout' }"
+              >結帳管理</router-link
+            >
           </li>
-          <li class="nav-item dropdown">
-            <router-link
-              class="nav-link dropdown-toggle"
-              href="#"
-              id="navbarDropdown"
-              role="button"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-              to="forms"
+          <li class="nav-item">
+            <router-link class="nav-link" :to="{ name: 'Forms' }"
               >表單管理</router-link
             >
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">預約表</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#"> 假表</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">業績表</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">歷史訂單</a>
-            </div>
           </li>
         </ul>
         <form class="form-inline my-2 my-lg-0 d-flex justify-content-center">

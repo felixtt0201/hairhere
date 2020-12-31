@@ -76,7 +76,7 @@
     <div class="row justify-content-center mt-3">
       <button
         type="button"
-        class="btn btn-primary"
+        class="btn btn-primary btn-lg"
         data-toggle="modal"
         data-target="#staticBackdrop"
       >

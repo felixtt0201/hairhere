@@ -1,11 +1,18 @@
 <template>
-  <div>
-    <h1>店家資訊管理</h1>
-    <router-link :to="{ name: 'ReservationList' }">預約表 </router-link>|
-    <router-link to="/Dashboard/forms/vaction">休假表 </router-link>|
-    <router-link to="/Dashboard/forms/performance">業績表 </router-link>|
-    <router-link to="/Dashboard/forms/historicalOrders">歷史訂單 </router-link>|
-    <router-view></router-view>
+  <div id="information">
+    <div class="container">
+      <h1 class="text-center">店家資訊管理</h1>
+      <div class="row justify-content-center">
+        <router-link class="btn btn-primary" :to="{ name: 'StoreInformation' }"
+          >基本資訊維護
+        </router-link>
+        <router-link class="btn btn-primary" :to="{ name: 'ServiceInfo' }"
+          >服務項目維護
+        </router-link>
+      </div>
+
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 

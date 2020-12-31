@@ -46,6 +46,18 @@ const routes = [
         path: 'information', // 店家資訊
         name: 'Information',
         component: () => import('../components/Information.vue'),
+        children: [
+          {
+            path: '',
+            name: 'StoreInformation',
+            component: () => import('../components/forms/StoreInformation.vue'),
+          },
+          {
+            path: 'serviceinfo',
+            name: 'ServiceInfo',
+            component: () => import('../components/forms/ServiceInfo.vue'),
+          },
+        ],
       },
       {
         path: 'portfolio', // 作品集
