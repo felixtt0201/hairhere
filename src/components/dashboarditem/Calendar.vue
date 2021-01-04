@@ -1,7 +1,6 @@
 /* eslint-disable func-names */
 <template>
   <div>
-    Calendar
     <FullCalendar :options="calendarOptions" />
     <div
       class="modal fade"

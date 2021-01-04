@@ -33,9 +33,9 @@ const routes = [
     component: () => import('../components/Dashboard.vue'),
     children: [
       {
-        path: '',
+        path: '/',
         name: 'Reservation',
-        component: () => import('../components/Reservation.vue'),
+        component: () => import('../components/forms/Reservation.vue'),
       },
       {
         path: 'designers',
@@ -75,9 +75,9 @@ const routes = [
         component: () => import('../components/Forms.vue'),
         children: [
           {
-            path: 'reservationlist',
-            name: 'ReservationList',
-            component: () => import('../components/forms/ReservationList.vue'),
+            path: 'reservation',
+            name: 'Reservation',
+            component: () => import('../components/forms/Reservation.vue'),
           },
           {
             path: 'vaction',
