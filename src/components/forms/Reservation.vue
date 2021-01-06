@@ -1,9 +1,12 @@
 <template>
-  <div id="reservation">
+  <div id="reservation" class="container-fluid">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-      <h1 class="h3 mb-0 text-gray-800">預約表</h1>
+      <h3 class="mb-0 text-gray-800">預約表</h3>
     </div>
-    <Calendar />
+    <div class="row">
+      <div class="col"><Calendar /></div>
+      <!-- <div class="col"></div> -->
+    </div>
   </div>
 </template>
 

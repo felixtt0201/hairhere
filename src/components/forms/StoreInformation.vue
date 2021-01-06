@@ -3,22 +3,38 @@
     <div class="row">
       <div class="col">
         <div class="row justify-content-between">
-          <h4 class="mb-3">基本資料</h4>
-
-          <button class="btn btn-info" v-show="status" @click="edit">
-            編輯
+          <h4 class="mb-3 ml-3 text-gray-900 font-weight-bold">基本資料</h4>
+          <button
+            type="button"
+            class="btn btn-primary btn-lg btn-icon-split mr-3"
+            v-show="status"
+            @click="edit"
+          >
+            <span class="icon text-white-10">
+              <i class="fas fa-edit"></i>
+            </span>
           </button>
         </div>
         <hr class="mb-4" />
-        <form class="needs-validation" novalidate v-cloak>
+        <form
+          class="needs-validation text-left text-gray-900"
+          novalidate
+          v-cloak
+        >
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="firstName" class="font-weight-bold">店家名稱：</label>
-              <p for="" v-if="status" class="text-muted">ABC</p>
+              <p
+                for=""
+                v-if="status"
+                class="text-muted text-gray-800 text-gray-800"
+              >
+                ABC
+              </p>
               <input
                 v-else
                 type="text"
-                class="form-control"
+                class="form-control bg-light"
                 id="Name"
                 placeholder="請輸入名稱 ex:樂髮手作"
                 value=""
@@ -27,7 +43,13 @@
             </div>
             <div class="col-md-6 mb-3">
               <label for="lastName" class="font-weight-bold">店家電話：</label>
-              <p for="" v-if="status" class="text-muted">0912345678</p>
+              <p
+                for=""
+                v-if="status"
+                class="text-muted text-gray-800 text-gray-800"
+              >
+                0912345678
+              </p>
               <input
                 v-else
                 type="phone"
@@ -42,7 +64,9 @@
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="firstName" class="font-weight-bold">營業時間：</label>
-              <p for="" v-if="status" class="text-muted">星期一 ~ 星期六</p>
+              <p for="" v-if="status" class="text-muted text-gray-800">
+                星期一 ~ 星期六
+              </p>
               <input
                 v-else
                 type="text"
@@ -55,7 +79,9 @@
             </div>
             <div class="col-md-6 mb-3">
               <label for="lastName" class="font-weight-bold">店休日：</label>
-              <p for="" v-if="status" class="text-muted">星期日</p>
+              <p for="" v-if="status" class="text-muted text-gray-800">
+                星期日
+              </p>
               <input
                 v-else
                 type="text"
@@ -69,7 +95,9 @@
           </div>
           <div class="mb-3">
             <label for="lastName" class="font-weight-bold">店家地址：</label>
-            <p for="" v-if="status" class="text-muted">高雄市前鎮區</p>
+            <p for="" v-if="status" class="text-muted text-gray-800">
+              高雄市前鎮區
+            </p>
             <input
               v-else
               type="text"
@@ -81,7 +109,9 @@
           </div>
           <div class="mb-3">
             <label for="lastName" class="font-weight-bold">Facebook：</label>
-            <p for="" v-if="status" class="text-muted">bac.facebook.com</p>
+            <p for="" v-if="status" class="text-muted text-gray-800">
+              bac.facebook.com
+            </p>
             <input
               v-else
               type="text"
@@ -93,7 +123,9 @@
           </div>
           <div class="mb-3">
             <label for="lastName" class="font-weight-bold">Instagram：</label>
-            <p for="" v-if="status" class="text-muted">bac.ig.com</p>
+            <p for="" v-if="status" class="text-muted text-gray-800">
+              bac.ig.com
+            </p>
             <input
               v-else
               type="text"
@@ -107,7 +139,7 @@
             <label for="exampleFormControlTextarea1" class="font-weight-bold"
               >店家簡介：</label
             >
-            <p for="" v-if="status" class="text-muted">
+            <p for="" v-if="status" class="text-muted text-gray-800">
               Lorem ipsum dolor, sit amet consectetur adipisicing elit.
               Perspiciatis fugiat earum iste aspernatur laborum? Saepe
               voluptates sint velit totam, ea ad sunt ratione consequatur sit?
@@ -150,7 +182,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" scopeded>
 [v-cloak] {
   display: none;
 }

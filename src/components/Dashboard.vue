@@ -4,7 +4,7 @@
     <div id="content-wrapper" class="d-flex flex-column">
       <div id="content">
         <Navbar />
-        <div class="container-fluid">
+        <div>
           <router-view></router-view>
         </div>
       </div>
@@ -28,7 +28,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scopeded>
 // @import './src/assets/all.scss';
 @import './src/assets/scss/sb-admin-2.scss';
 </style>

@@ -1,91 +1,180 @@
 <template>
-  <div class="container">
-    <h1 class="text-center m-5">設計師管理頁面</h1>
-    <div class="row justify-content-between m-3">
-      <div class="card" style="width: 18rem;">
-        <img
-          src="https://picsum.photos/id/237/200/300"
-          class="card-img-top"
-          alt="..."
-        />
-        <div class="card-body">
-          <h5 class="card-title text-center">設計師名稱</h5>
-          <div class="row justify-content-between">
-            <a href="#" class="btn btn-primary">編輯</a>
-            <a href="#" class="btn btn-primary">刪除</a>
+  <div id="designers" class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <h1 class="h3 mb-0 text-gray-800">設計師管理</h1>
+    </div>
+    <div class="row row-cols-1 row-cols-md-4">
+      <div class="col mb-4">
+        <div class="card h-100 border-0 shadow-sm">
+          <img
+            src="https://picsum.photos/300/200?random=11"
+            class="card-img-top"
+            alt=""
+          />
+          <div class="card-body">
+            <h5 class="card-title text-center">小明</h5>
+          </div>
+          <div class="container mb-4">
+            <div class="row justify-content-around">
+              <a href="#" class="btn btn-success btn-circle">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a href="#" class="btn btn-danger btn-circle">
+                <i class="fas fa-trash"></i>
+              </a>
+            </div>
           </div>
         </div>
       </div>
-      <div class="card" style="width: 18rem;">
-        <img
-          src="https://picsum.photos/id/237/200/300"
-          class="card-img-top"
-          alt="..."
-        />
-        <div class="card-body">
-          <h5 class="card-title text-center">設計師名稱</h5>
-          <div class="row justify-content-between">
-            <a href="#" class="btn btn-primary">編輯</a>
-            <a href="#" class="btn btn-primary">刪除</a>
+      <div class="col mb-4">
+        <div class="card h-100 border-0 shadow-sm">
+          <img
+            src="https://picsum.photos/300/200?random=11"
+            class="card-img-top"
+            alt=""
+          />
+          <div class="card-body">
+            <h5 class="card-title text-center">小明</h5>
+          </div>
+          <div class="container mb-4">
+            <div class="row justify-content-around">
+              <a href="#" class="btn btn-success btn-circle">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a href="#" class="btn btn-danger btn-circle">
+                <i class="fas fa-trash"></i>
+              </a>
+            </div>
           </div>
         </div>
       </div>
-      <div class="card" style="width: 18rem;">
-        <img
-          src="https://picsum.photos/id/237/200/300"
-          class="card-img-top"
-          alt="..."
-        />
-        <div class="card-body">
-          <h5 class="card-title text-center">設計師名稱</h5>
-          <div class="row justify-content-between">
-            <a href="#" class="btn btn-primary">編輯</a>
-            <a href="#" class="btn btn-primary">刪除</a>
+      <div class="col mb-4">
+        <div class="card h-100 border-0 shadow-sm">
+          <img
+            src="https://picsum.photos/300/200?random=11"
+            class="card-img-top"
+            alt=""
+          />
+          <div class="card-body">
+            <h5 class="card-title text-center">小明</h5>
+          </div>
+          <div class="container mb-4">
+            <div class="row justify-content-around">
+              <a href="#" class="btn btn-success btn-circle">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a href="#" class="btn btn-danger btn-circle">
+                <i class="fas fa-trash"></i>
+              </a>
+            </div>
           </div>
         </div>
       </div>
-      <div class="card" style="width: 18rem;">
-        <img
-          src="https://picsum.photos/id/237/200/300"
-          class="card-img-top"
-          alt="..."
-        />
-        <div class="card-body">
-          <h5 class="card-title text-center">設計師名稱</h5>
-          <div class="row justify-content-between">
-            <a href="#" class="btn btn-primary">編輯</a>
-            <a href="#" class="btn btn-primary">刪除</a>
+      <div class="col mb-4">
+        <div class="card h-100 border-0 shadow-sm">
+          <img
+            src="https://picsum.photos/300/200?random=11"
+            class="card-img-top"
+            alt=""
+          />
+          <div class="card-body">
+            <h5 class="card-title text-center">小明</h5>
+          </div>
+          <div class="container mb-4">
+            <div class="row justify-content-around">
+              <a href="#" class="btn btn-success btn-circle">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a href="#" class="btn btn-danger btn-circle">
+                <i class="fas fa-trash"></i>
+              </a>
+            </div>
           </div>
         </div>
       </div>
-      <div class="card" style="width: 18rem;">
-        <img
-          src="https://picsum.photos/id/237/200/300"
-          class="card-img-top"
-          alt="..."
-        />
-        <div class="card-body">
-          <h5 class="card-title text-center">設計師名稱</h5>
-          <div class="row justify-content-between">
-            <a href="#" class="btn btn-primary">編輯</a>
-            <a href="#" class="btn btn-primary">刪除</a>
+      <div class="col mb-4">
+        <div class="card h-100 border-0 shadow-sm">
+          <img
+            src="https://picsum.photos/300/200?random=11"
+            class="card-img-top"
+            alt=""
+          />
+          <div class="card-body">
+            <h5 class="card-title text-center">小明</h5>
+          </div>
+          <div class="container mb-4">
+            <div class="row justify-content-around">
+              <a href="#" class="btn btn-success btn-circle">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a href="#" class="btn btn-danger btn-circle">
+                <i class="fas fa-trash"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col mb-4">
+        <div class="card h-100 border-0 shadow-sm">
+          <img
+            src="https://picsum.photos/300/200?random=11"
+            class="card-img-top"
+            alt=""
+          />
+          <div class="card-body">
+            <h5 class="card-title text-center">小明</h5>
+          </div>
+          <div class="container mb-4">
+            <div class="row justify-content-around">
+              <a href="#" class="btn btn-success btn-circle">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a href="#" class="btn btn-danger btn-circle">
+                <i class="fas fa-trash"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col mb-4">
+        <div class="card h-100 border-0 shadow-sm">
+          <img
+            src="https://picsum.photos/300/200?random=11"
+            class="card-img-top"
+            alt=""
+          />
+          <div class="card-body">
+            <h5 class="card-title text-center">小明</h5>
+          </div>
+          <div class="container mb-4">
+            <div class="row justify-content-around">
+              <a href="#" class="btn btn-success btn-circle">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a href="#" class="btn btn-danger btn-circle">
+                <i class="fas fa-trash"></i>
+              </a>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="row justify-content-center mt-3">
+    <div class="row justify-content-center mt-3 mb-3">
       <button
         type="button"
-        class="btn btn-primary btn-lg"
+        class="btn btn-primary btn-lg btn-icon-split"
         data-toggle="modal"
         data-target="#staticBackdrop"
       >
-        新增設計師
+        <span class="icon text-white-50">
+          <i class="fas fa-user-plus"></i>
+        </span>
+        <span class="text">新增設計師</span>
       </button>
     </div>
     <!--Modal-->
     <div
-      class="modal fade"
+      class="modal fade text-gray-900"
       id="staticBackdrop"
       data-backdrop="static"
       data-keyboard="false"
@@ -234,6 +323,8 @@
                     class="form-control"
                     id="description"
                     placeholder="請輸入我的專長/特色"
+                    cols="30"
+                    rows="5"
                   ></textarea>
                 </div>
               </div>
@@ -262,4 +353,9 @@
 export default {};
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scopeded>
+input,
+textarea {
+  background-color: #ffff !important;
+}
+</style>

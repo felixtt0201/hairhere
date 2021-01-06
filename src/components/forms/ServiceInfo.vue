@@ -1,7 +1,9 @@
 <template>
-  <div id="serviceinfo">
-    <h4>服務項目</h4>
-    <table class="table table-hover table-borderless">
+  <div id="serviceinfo" class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <h4 class="h3 mb-0 text-gray-900 font-weight-bold">服務項目</h4>
+    </div>
+    <table class="table table-hover table-borderless text-gray-900">
       <thead class="thead-dark">
         <tr>
           <th scope="col">#</th>

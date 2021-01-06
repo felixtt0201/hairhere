@@ -20,40 +20,52 @@
       內容
     </div>
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-      <router-link class="nav-link" :to="{ name: 'Designers' }">
-        <i class="fas fa-fw fa-chart-area"></i>
+    <li class="nav-item ">
+      <router-link
+        class="nav-link font-weight-bold sidebarhover"
+        :to="{ name: 'Designers' }"
+      >
+        <i class="fas fa-users mr-2"></i>
         <span>設計師管理</span></router-link
       >
     </li>
     <li class="nav-item">
-      <router-link class="nav-link" :to="{ name: 'Information' }">
-        <i class="fas fa-fw fa-chart-area"></i>
+      <router-link
+        class="nav-link font-weight-bold sidebarhover"
+        :to="{ name: 'StoreInformation' }"
+      >
+        <i class="fas fa-store-alt mr-2"></i>
         <span>店家資訊管理</span></router-link
       >
     </li>
     <li class="nav-item">
-      <router-link class="nav-link" :to="{ name: 'Portfolio' }">
-        <i class="fas fa-fw fa-chart-area"></i>
+      <router-link
+        class="nav-link font-weight-bold sidebarhover"
+        :to="{ name: 'Portfolio' }"
+      >
+        <i class="fas fa-box mr-2"></i>
         <span>作品集管理</span></router-link
       >
     </li>
     <li class="nav-item">
-      <router-link class="nav-link" :to="{ name: 'Checkout' }">
-        <i class="fas fa-fw fa-chart-area"></i>
+      <router-link
+        class="nav-link font-weight-bold sidebarhover"
+        :to="{ name: 'Checkout' }"
+      >
+        <i class="fas fa-money-check mr-2"></i>
         <span>結帳管理</span></router-link
       >
     </li>
     <li class="nav-item">
       <a
-        class="nav-link collapsed"
+        class="nav-link collapsed font-weight-bold sidebarhover"
         href="#"
         data-toggle="collapse"
         data-target="#collapseTwo"
         aria-expanded="true"
         aria-controls="collapseTwo"
       >
-        <i class="fas fa-fw fa-cog"></i>
+        <i class="fas fa-fw fa-chart-area mr-2"></i>
         <span>表單管理</span>
       </a>
       <div
@@ -174,4 +186,11 @@ export default {
 
 <style lang="scss">
 // @import 'src/assets/scss/sb-admin-2.scss';
+.sidebarhover {
+  &:hover {
+    // margin-left: 10px;
+    border-radius: 0.35rem;
+    background-color: #1d3d4a;
+  }
+}
 </style>
