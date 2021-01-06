@@ -1,6 +1,9 @@
 <template>
-  <div id="login" class="d-flex align-items-center justify-content-center">
-    <form class="form-signin" @submit="signin">
+  <div
+    id="login"
+    class="min-vh-100 d-flex align-items-center justify-content-center"
+  >
+    <!-- <form class="form-signin" @submit="signin">
       <h1 class="h3 mb-3 font-weight-normal text-center">後台登入</h1>
       <div class="form-group">
         <label for="inputEmail">帳號(email)</label>
@@ -35,9 +38,10 @@
         Sign in
       </button>
       <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
-    </form>
+    </form> -->
     <!----->
-    <div class="container">
+
+    <div class="container-fluid">
       <!-- Outer Row -->
       <div class="row justify-content-center">
         <div class="col-xl-10 col-lg-12 col-md-9">
@@ -88,30 +92,19 @@
                         Login
                       </a>
                       <hr />
-                      <a
-                        href="index.html"
-                        class="btn btn-google btn-user btn-block"
-                      >
-                        <i class="fab fa-google fa-fw"></i> Login with Google
-                      </a>
-                      <a
-                        href="index.html"
-                        class="btn btn-facebook btn-user btn-block"
-                      >
-                        <i class="fab fa-facebook-f fa-fw"></i> Login with
-                        Facebook
-                      </a>
                     </form>
-                    <hr />
                     <div class="text-center">
-                      <a class="small" href="forgot-password.html"
+                      <!-- <a class="small" href="forgot-password.html"
                         >Forgot Password?</a
-                      >
+                      > -->
                     </div>
                     <div class="text-center">
-                      <a class="small" href="register.html"
-                        >Create an Account!</a
+                      <router-link class="small" :to="{ name: 'Register' }"
+                        >Create an Account!</router-link
                       >
+                      <!-- <a class="small" href="register.html"
+                        >Create an Account!</a
+                      > -->
                     </div>
                   </div>
                 </div>
