@@ -14,41 +14,84 @@
                 <div class="text-center">
                   <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                 </div>
-                <form class="user">
-                  <div class="form-group">
-                    <input
-                      type="email"
-                      class="form-control form-control-user"
-                      id="exampleInputEmail"
-                      placeholder="帳號 / Email Address"
-                    />
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-sm-6 mb-3 mb-sm-0">
-                      <input
-                        type="password"
-                        class="form-control form-control-user"
-                        id="exampleInputPassword"
-                        placeholder="Password"
-                      />
+                <validation-observer v-slot="{ invalid }">
+                  <form class="user">
+                    <div class="row">
+                      <div class="col">
+                        <label for="account">帳號</label>
+                        <validation-provider
+                          rules="required"
+                          v-slot="{ errors, classes }"
+                        >
+                          <div class="form-group">
+                            <input
+                              type="account"
+                              id="Account"
+                              class="form-control form-control-user"
+                              placeholder="帳號 / Email Address"
+                              v-model="account"
+                              :class="classes"
+                            />
+                            <span class="invalid-feedback">{{
+                              errors[0]
+                            }}</span>
+                          </div>
+                        </validation-provider>
+                      </div>
                     </div>
-                    <div class="col-sm-6">
-                      <input
-                        type="password"
-                        class="form-control form-control-user"
-                        id="exampleRepeatPassword"
-                        placeholder="Repeat Password"
-                      />
+                    <label for="password">密碼</label>
+
+                    <div class="form-group row">
+                      <div class="col-sm-6 mb-3 mb-sm-0">
+                        <validation-provider
+                          rules="required"
+                          v-slot="{ errors, classes }"
+                        >
+                          <input
+                            type="password"
+                            class="form-control form-control-user"
+                            id="password"
+                            placeholder="Password"
+                            :class="classes"
+                            v-model="password"
+                          />
+                          <span class="invalid-feedback">{{ errors[0] }}</span>
+                        </validation-provider>
+                      </div>
+
+                      <div class="col-sm-6">
+                        <validation-provider
+                          rules="required"
+                          v-slot="{ errors, classes }"
+                        >
+                          <input
+                            type="password"
+                            class="form-control form-control-user"
+                            id="re-password"
+                            placeholder="Repeat Password"
+                            :class="classes"
+                            v-model="repassword"
+                          />
+                          <span class="invalid-feedback">{{ errors[0] }}</span>
+                        </validation-provider>
+                      </div>
                     </div>
-                  </div>
-                  <a
-                    href="login.html"
-                    class="btn btn-primary btn-user btn-block"
-                  >
-                    註冊
-                  </a>
-                  <hr />
-                </form>
+                    <button
+                      class="btn btn-primary btn-user btn-block"
+                      :disabled="invalid"
+                    >
+                      註冊
+                    </button>
+                    <!-- <a
+                      href="login.html"
+                      class="btn btn-primary btn-user btn-block"
+                      :disabled="invalid"
+                    >
+                      註冊
+                    </a> -->
+                    <hr />
+                  </form>
+                </validation-observer>
                 <!-- <div class="text-center">
                 <a class="small" href="forgot-password.html"
                   >Forgot Password?</a
@@ -72,7 +115,15 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      account: '',
+      password: '',
+      repassword: '',
+    };
+  },
+};
 </script>
 
 <style lang="scss">

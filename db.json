@@ -2,5 +2,89 @@
   "user": {
     "username": "111@a",
     "password": "222"
+  },
+  "store": {
+    "Name": "樂髮手作",
+    "BasicData": {
+      "Summary": "歐式溫馨鄉村風格的樂髮手作\r\n服務專業造型之外\r\n身邊有可愛貓咪陪伴身邊真的很逗趣\r\n歡迎愛貓咪的朋友們來朝聖唷",
+      "Details": "樂髮手作(喵員排行) 1.拿鐵（老大哥）♂ 「樂髮小老闆」，成天喜歡窩在家裡，膽小怕事、非常不喜歡上班，一副甘我屁事的表情！ 生日：105/07/05 外觀：布偶藍眼睛+咖啡白毛 個性：帥氣獨立、愛耍帥兼俗仔 專長：喜歡羽毛類玩具、愛欺負弟妹 喜好：肚子餓了會喵喵叫，深怕自己餓壞了。愛吃 2.姆姆（老大姐）♀ 「樂髮闆娘」，大姐風範，一上班便是監督奴才們有沒專心工作，淡定的坐在專屬闆娘位置！ 生日：105/09/23 外觀：短短腿奶茶毛色 個性：超冷靜、喜歡觀察、愛睡覺 專長：獨愛關於線類玩具 喜好：愛跟媽咪撒嬌、特愛吃肉泥 3.餅乾（排行老三）♀ 「樂髮三姐」，老是喜歡跟在拿鐵哥哥屁股後面混時間，不喜歡上班。怕事超級膽小 生日：108/04/24 外觀：灰色英短藍貓 個性：恰北北、膽小怕事、看心情撒嬌 專長：愛玩、愛模仿拿鐵哥 喜好：愛吃零食、欺負薯條弟弟 4.蛋捲（小老四）♀ 「樂髮公關貓」，超愛上班，每天都有白目事物發生，擁有狗靈魂的貓咪，過動活潑具有探險家精神 生日：108/06/15 外觀：虎斑長毛，像小獅子般 個性：溫馴活潑、親人親貓、超愛撒嬌 專長：在客人面前賣萌、老愛刷存在感深怕沒有人注意 喜好：愛吃愛玩什麼事都跑第一 5.薯條（老么）♂ 「樂髮加菲」，超級膽小，聽到上班就躲起來超級邊緣貓，臉上寫著我好無辜的表情。 生日：108/06/18 外觀：橘白毛色、鼻子扁扁 個性：傻憨可愛、膽小怕生 專長：裝憨憨呆呆的、愛玩 喜好：愛吃罐罐、被姐姐們欺負",
+      "Address": "高雄市苓雅區青年一路4巷21號",
+      "Impressum": null,
+      "Remark": null,
+      "Phone": "07 226 8725",
+      "Email": "store@store",
+      "Facebook": "https://www.facebook.com/lefahairsalon/",
+      "Instagram": null,
+      "Web": null,
+      "Twitter": null
+    },
+    "Business": {
+      "BusinessHoursOpen": "10:00:00",
+      "BusinessHoursClose": "18:00:00",
+      "daysOfWeek": "0,1,2,3,4,5",
+      "RestDates": [
+        "2021-01-13T00:00:00",
+        "2021-01-21T00:00:00",
+        "2021-01-29T00:00:00"
+      ]
+    },
+    "ServicesPublic": [
+      {
+        "Name": "洗",
+        "UnitPrice": 300,
+        "ReferencePrice": false,
+        "Summary": null,
+        "ServiceMinutes": "01:00:00",
+        "Remark": null
+      },
+      {
+        "Name": "洗剪",
+        "UnitPrice": 680,
+        "ReferencePrice": false,
+        "Summary": null,
+        "ServiceMinutes": "01:00:00",
+        "Remark": null
+      },
+      {
+        "Name": "頭皮調理",
+        "UnitPrice": 850,
+        "ReferencePrice": false,
+        "Summary": "清潔頭皮油垢阻塞.老舊角質.平衡油質.促進循環",
+        "ServiceMinutes": "01:00:00",
+        "Remark": null
+      },
+      {
+        "Name": "深層護髮",
+        "UnitPrice": 1200,
+        "ReferencePrice": true,
+        "Summary": "好的髮質來自好的保養習慣",
+        "ServiceMinutes": "01:15:00",
+        "Remark": null
+      },
+      {
+        "Name": "染髮",
+        "UnitPrice": 1500,
+        "ReferencePrice": true,
+        "Summary": null,
+        "ServiceMinutes": "01:30:00",
+        "Remark": null
+      },
+      {
+        "Name": "燙髮",
+        "UnitPrice": 2000,
+        "ReferencePrice": true,
+        "Summary": null,
+        "ServiceMinutes": "03:30:00",
+        "Remark": null
+      },
+      {
+        "Name": "日本天然植物草護髮泥",
+        "UnitPrice": 2000,
+        "ReferencePrice": true,
+        "Summary": "1次解決九大問題 出油.皮屑.過敏.掉髮.髮損 毛孔阻塞.細菌.老化.白髮",
+        "ServiceMinutes": "03:00:00",
+        "Remark": null
+      }
+    ]
   }
 }
