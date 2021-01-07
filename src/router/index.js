@@ -10,6 +10,13 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
+    children: [
+      {
+        path: '/',
+        name: 'FontIndex',
+        component: () => import('../components/fontitem/FontIndex.vue'),
+      },
+    ],
   },
   {
     path: '/about',

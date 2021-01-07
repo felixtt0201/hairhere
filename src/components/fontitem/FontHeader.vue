@@ -4,7 +4,10 @@
       <a class="navbar-brand" href="#">
         <h1
           class="text-hide img-position--center"
-          style="background-image: url('d5767d953403db08b874b0ab670a1e14.png');"
+          :style="{
+            'background-image':
+              'url(' + require('@/assets/img/biglogo.png') + ')',
+          }"
         >
           樂髮手作
         </h1>
@@ -24,10 +27,10 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto ">
           <li class="nav-item active">
-            <a
+            <router-link
+              to="/"
               class="nav-link text-main--hover border-bottom pr-3 pl-3"
-              href="#"
-              >首頁 <span class="sr-only">(current)</span></a
+              >首頁<span class="sr-only">(current)</span></router-link
             >
           </li>
           <li class="nav-item">
@@ -69,4 +72,10 @@
 export default {};
 </script>
 
-<style></style>
+<style scoped>
+/* .yourDivClass {
+  background: url('/../../assets/logo.png"') no-repeat center center / cover;
+
+  z-index: 9999999;
+} */
+</style>
