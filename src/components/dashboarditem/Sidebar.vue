@@ -20,15 +20,6 @@
       內容
     </div>
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item ">
-      <router-link
-        class="nav-link font-weight-bold sidebarhover"
-        :to="{ name: 'Designers' }"
-      >
-        <i class="fas fa-users mr-2"></i>
-        <span>設計師管理</span></router-link
-      >
-    </li>
     <li class="nav-item">
       <router-link
         class="nav-link font-weight-bold sidebarhover"
@@ -38,6 +29,16 @@
         <span>店家資訊管理</span></router-link
       >
     </li>
+    <li class="nav-item ">
+      <router-link
+        class="nav-link font-weight-bold sidebarhover"
+        :to="{ name: 'Designers' }"
+      >
+        <i class="fas fa-users mr-2"></i>
+        <span>設計師管理</span></router-link
+      >
+    </li>
+
     <li class="nav-item">
       <router-link
         class="nav-link font-weight-bold sidebarhover"

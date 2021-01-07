@@ -63,6 +63,8 @@
                           id="exampleInputEmail"
                           aria-describedby="emailHelp"
                           placeholder="Enter Email Address..."
+                          v-model="user.username"
+                          required
                         />
                       </div>
                       <div class="form-group">
@@ -71,6 +73,8 @@
                           class="form-control form-control-user"
                           id="exampleInputPassword"
                           placeholder="Password"
+                          required
+                          v-model="user.password"
                         />
                       </div>
                       <div class="form-group">

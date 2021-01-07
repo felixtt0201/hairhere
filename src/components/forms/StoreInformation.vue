@@ -23,62 +23,63 @@
         >
           <div class="row">
             <div class="col-md-6 mb-3">
-              <label for="firstName" class="font-weight-bold">店家名稱：</label>
+              <label for="title" class="font-weight-bold">店家名稱：</label>
               <p
                 for=""
                 v-if="status"
                 class="text-muted text-gray-800 text-gray-800"
               >
-                ABC
+                {{ storeInfo.title }}
               </p>
               <input
                 v-else
                 type="text"
-                class="form-control bg-light"
-                id="Name"
+                class="form-control"
+                id="title"
                 placeholder="請輸入名稱 ex:樂髮手作"
-                value=""
-                required
+                v-model="storeInfo.title"
               />
             </div>
             <div class="col-md-6 mb-3">
-              <label for="lastName" class="font-weight-bold">店家電話：</label>
+              <label for="tel" class="font-weight-bold">店家電話：</label>
               <p
                 for=""
                 v-if="status"
                 class="text-muted text-gray-800 text-gray-800"
               >
-                0912345678
+                {{ storeInfo.tel }}
               </p>
               <input
                 v-else
-                type="phone"
+                type="tel"
                 class="form-control"
-                id="Tel"
+                id="tel"
                 placeholder="請輸入電話or手機"
-                value=""
-                required
+                v-model="storeInfo.tel"
               />
             </div>
           </div>
           <div class="row">
             <div class="col-md-6 mb-3">
-              <label for="firstName" class="font-weight-bold">營業時間：</label>
+              <label for="businesstime" class="font-weight-bold"
+                >營業時間：</label
+              >
               <p for="" v-if="status" class="text-muted text-gray-800">
-                星期一 ~ 星期六
+                {{ storeInfo.businessTime }}
               </p>
               <input
                 v-else
                 type="text"
                 class="form-control"
-                id="Name"
+                id="businesstime"
                 placeholder="請輸入時間 ex:9:00-18:00"
                 value=""
                 required
+                v-model="storeInfo.businessTime"
               />
             </div>
             <div class="col-md-6 mb-3">
-              <label for="lastName" class="font-weight-bold">店休日：</label>
+              <label for="dayof" class="font-weight-bold">店休日：</label>
               <p for="" v-if="status" class="text-muted text-gray-800">
                 星期日
               </p>
@@ -86,17 +87,15 @@
                 v-else
                 type="text"
                 class="form-control"
-                id="Tel"
+                id="dayof"
                 placeholder="請輸入星期幾 ex:星期日"
-                value=""
-                required
               />
             </div>
           </div>
           <div class="mb-3">
-            <label for="lastName" class="font-weight-bold">店家地址：</label>
+            <label for="address" class="font-weight-bold">店家地址：</label>
             <p for="" v-if="status" class="text-muted text-gray-800">
-              高雄市前鎮區
+              {{ storeInfo.address }}
             </p>
             <input
               v-else
@@ -104,13 +103,13 @@
               class="form-control"
               id="address"
               placeholder="請輸入完整地址 ex:高雄市前鎮區"
-              required
+              v-model="storeInfo.address"
             />
           </div>
           <div class="mb-3">
             <label for="lastName" class="font-weight-bold">Facebook：</label>
             <p for="" v-if="status" class="text-muted text-gray-800">
-              bac.facebook.com
+              {{ storeInfo.facebook }}
             </p>
             <input
               v-else
@@ -118,10 +117,10 @@
               class="form-control"
               id="facebook"
               placeholder="請輸入臉書網址 ex:xxxxx.facebook"
-              required
+              v-model="storeInfo.facebook"
             />
           </div>
-          <div class="mb-3">
+          <!-- <div class="mb-3">
             <label for="lastName" class="font-weight-bold">Instagram：</label>
             <p for="" v-if="status" class="text-muted text-gray-800">
               bac.ig.com
@@ -134,16 +133,16 @@
               placeholder="請輸入ig網址 ex:xxxx.ig"
               required
             />
-          </div>
+          </div> -->
           <div class="form-group">
             <label for="exampleFormControlTextarea1" class="font-weight-bold"
               >店家簡介：</label
             >
             <p for="" v-if="status" class="text-muted text-gray-800">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-              Perspiciatis fugiat earum iste aspernatur laborum? Saepe
-              voluptates sint velit totam, ea ad sunt ratione consequatur sit?
-              Delectus non excepturi ullam quos.
+              <!-- {{ storeInfo.summary }}。 -->
+              <!-- <br /> -->
+              <!-- {{ storeInfo.detail }} -->
+              {{ storeInfo.detailTotal }}
             </p>
             <textarea
               v-else
@@ -151,6 +150,7 @@
               id="exampleFormControlTextarea1"
               rows="5"
               placeholder="請輸入內容"
+              v-model="storeInfo.detailTotal"
             ></textarea>
           </div>
           <div class="row justify-content-between" v-show="!status">
@@ -171,13 +171,50 @@
 export default {
   data() {
     return {
+      // 存放Api接回來的資料
+      newdata: {},
+      // 店家資料
+      storeInfo: {
+        title: '',
+        address: '',
+        facebook: '',
+        detail: '',
+        summary: '',
+        detailTotal: '',
+        tel: '',
+        businessTime: '',
+      },
+      // 編輯的開關
       status: true,
     };
   },
   methods: {
+    // 取得店家資料
+    getStoreInfo() {
+      const api = 'http://localhost:3000/store';
+      this.axios.get(api).then((res) => {
+        this.newdata = res.data;
+        // console.log(this.newdata);
+        this.storeInfo.title = this.newdata.Name;
+        this.storeInfo.tel = this.newdata.BasicData.Phone;
+        this.storeInfo.address = this.newdata.BasicData.Address;
+        this.storeInfo.facebook = this.newdata.BasicData.Facebook;
+        // this.storeInfo.summary = this.newdata.BasicData.Summary;
+        // this.storeInfo.detail = this.newdata.BasicData.Details;
+        this.storeInfo.detailTotal = `${this.newdata.BasicData.Summary}。${this.newdata.BasicData.Details}`;
+        this.storeInfo.businessTime = `${this.newdata.Business.BusinessHoursOpen} ~ ${this.newdata.Business.BusinessHoursClose}`;
+      });
+    },
+    // 修改店家資料
+    putStoreInfo() {},
+
+    // 切換編輯模式
     edit() {
       this.status = !this.status;
     },
+  },
+  mounted() {
+    this.getStoreInfo();
   },
 };
 </script>
