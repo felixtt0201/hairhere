@@ -14,40 +14,42 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in items" :key="item.id">
+        <tr v-for="(item, index) in servicesdata" :key="item.index">
           <th scope="row">{{ index + 1 }}</th>
           <td>
-            <p>{{ item.title }}</p>
+            <p>{{ item.Name }}</p>
           </td>
           <td>
-            <p v-show="editId !== item.id">{{ item.money }}</p>
+            <label for="">{{ item.UnitPrice }}</label>
+            <!-- <p v-show="editId !== item.index">NT. {{ item.UnitPrice }}</p> -->
             <input
               type="text"
               name=""
               id=""
-              v-show="editId === item.id"
+              v-show="editId === item.index"
               placeholder="請輸入金額"
             />
           </td>
           <td>
-            <p v-show="editId !== item.id">{{ item.time }}</p>
+            <label for="">{{ item.ServiceMinutes }}</label>
+            <!-- <p v-show="editId !== item.index">{{ item.ServiceMinutes }}</p> -->
             <input
               type="text"
               name=""
               id=""
-              v-show="editId === item.id"
+              v-show="editId === item.index"
               placeholder="請輸入時間"
             />
           </td>
-          <td v-show="editId !== item.id">
-            <button class="btn btn-secondary btn-sm" @click="edit(item.id)">
+          <td v-show="editId !== item.index">
+            <button class="btn btn-secondary btn-sm" @click="edit(item.index)">
               修改
             </button>
           </td>
-          <td v-show="editId === item.id">
+          <td v-show="editId === item.index">
             <button
               class="btn btn-secondary btn-sm mr-2"
-              @click="edit(item.id)"
+              @click="edit(item.index)"
             >
               取消
             </button>
@@ -56,45 +58,6 @@
             </button>
           </td>
         </tr>
-        <!-- <tr>
-          <th scope="row">1</th>
-          <td>
-            <p>洗頭</p>
-          </td>
-          <td>
-            <p v-show="status">NT:150</p>
-            <input
-              type="text"
-              name=""
-              id=""
-              v-show="!status"
-              placeholder="請輸入金額"
-            />
-          </td>
-          <td>
-            <p v-show="status">30分</p>
-            <input
-              type="text"
-              name=""
-              id=""
-              v-show="!status"
-              placeholder="請輸入時間"
-            />
-          </td>
-          <td v-show="status">
-            <button class="btn btn-secondary btn-sm" @click="edit">
-              修改
-            </button>
-          </td>
-          <td v-show="!status">
-            <button class="btn btn-secondary btn-sm mr-2" @click="edit">
-              取消
-            </button>
-            <button class="btn btn-secondary btn-sm" @click="edit">
-              確定
-            </button>
-          </td>
-        </tr> -->
       </tbody>
     </table>
   </div>
@@ -104,6 +67,7 @@
 export default {
   data() {
     return {
+      servicesdata: {},
       items: [
         {
           id: '1',
@@ -123,6 +87,12 @@ export default {
     };
   },
   methods: {
+    getServicesInfo() {
+      const api = 'http://localhost:3000/store';
+      this.axios.get(api).then((res) => {
+        this.servicesdata = res.data.ServicesPublic;
+      });
+    },
     edit(id) {
       this.editId = id;
     },
@@ -130,6 +100,9 @@ export default {
       this.editId = '';
       this.status = !this.status;
     },
+  },
+  mounted() {
+    this.getServicesInfo();
   },
 };
 </script>

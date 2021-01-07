@@ -38,18 +38,13 @@ const routes = [
     component: () => import('../components/Dashboard.vue'),
     children: [
       {
-        path: '/',
-        name: 'Reservation',
-        component: () => import('../components/forms/Reservation.vue'),
-      },
-      {
         path: 'designers',
         name: 'Designers',
         component: () => import('../components/Designers.vue'),
       },
       {
         path: 'information', // 店家資訊
-        name: 'Information',
+        name: '',
         component: () => import('../components/Information.vue'),
         children: [
           {

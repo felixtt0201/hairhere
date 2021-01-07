@@ -194,13 +194,11 @@ export default {
       const api = 'http://localhost:3000/store';
       this.axios.get(api).then((res) => {
         this.newdata = res.data;
-        // console.log(this.newdata);
+        console.log(this.newdata);
         this.storeInfo.title = this.newdata.Name;
         this.storeInfo.tel = this.newdata.BasicData.Phone;
         this.storeInfo.address = this.newdata.BasicData.Address;
         this.storeInfo.facebook = this.newdata.BasicData.Facebook;
-        // this.storeInfo.summary = this.newdata.BasicData.Summary;
-        // this.storeInfo.detail = this.newdata.BasicData.Details;
         this.storeInfo.detailTotal = `${this.newdata.BasicData.Summary}。${this.newdata.BasicData.Details}`;
         this.storeInfo.businessTime = `${this.newdata.Business.BusinessHoursOpen} ~ ${this.newdata.Business.BusinessHoursClose}`;
       });
