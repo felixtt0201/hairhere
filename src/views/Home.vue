@@ -1,20 +1,24 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/img/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <FontHeader></FontHeader>
+    <router-view></router-view>
+    <FontFooter></FontFooter>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
+import FontHeader from '@/components/fontitem/FontHeader.vue';
+import FontFooter from '@/components/fontitem/FontFooter.vue';
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld,
+    FontHeader,
+    FontFooter,
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss">
+@import './src/assets/hair.scss';
+</style>
