@@ -10,10 +10,12 @@ const storeApi = axios.create({
   },
 });
 
+/** 店家 */
 // 店家登入
-const userLogin = (data) => storeApi.post('/LoginStore', data);
-
+const storeLogin = (data) => storeApi.post('/LoginStore', data);
 // 店家註冊
-const userRegister = (data) => storeApi.post('/CreateStore', data);
+const storeRegister = (data) => storeApi.post('/CreateStore', data);
+// 店家全部資料
+const storeTotalInfo = () => storeApi.get('/GetStore?id=2');
 
-export { userLogin, userRegister };
+export { storeLogin, storeRegister, storeTotalInfo };

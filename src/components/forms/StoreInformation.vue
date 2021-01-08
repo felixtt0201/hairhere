@@ -158,7 +158,7 @@
 </template>
 
 <script>
-// import AppServices from '@/js/AppServices';
+import { storeTotalInfo } from '@/js/AppServices';
 import qs from 'qs';
 
 export default {
@@ -181,11 +181,12 @@ export default {
       status: true,
     };
   },
+
   methods: {
     // 取得店家資料
     getStoreInfo() {
-      const api = 'http://localhost:3000/store';
-      this.axios.get(api).then((res) => {
+      storeTotalInfo().then((res) => {
+        console.log(res);
         this.newdata = res.data;
         // console.log(this.newdata);
         this.storeInfo.title = this.newdata.Name;
@@ -196,13 +197,8 @@ export default {
         this.storeInfo.businessTime = `${this.newdata.Business.BusinessHoursOpen} ~ ${this.newdata.Business.BusinessHoursClose}`;
       });
     },
+
     // 修改店家資料
-    // putStoreInfo() {
-    //   const api = 'https://salon.rocket-coding.com/GetStore?id=2';
-    //   this.axios.get(api).then((res) => {
-    //     console.log(res);
-    //   });
-    // },
     putStoreInfo() {
       //  eslint-disable-next-line operator-linebreak
       this.axios.defaults.headers.put['Content-Type'] =
@@ -225,8 +221,7 @@ export default {
     },
   },
   mounted() {
-    // this.getStoreInfo();
-    // this.putStoreInfo();
+    this.getStoreInfo();
   },
 };
 </script>

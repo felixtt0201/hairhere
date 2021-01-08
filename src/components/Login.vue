@@ -36,6 +36,7 @@
                           id="exampleInputPassword"
                           placeholder="Password"
                           v-model="store.password"
+                          required
                         />
                       </div>
                       <div class="form-group">
@@ -80,7 +81,7 @@
 </template>
 
 <script>
-import { userLogin } from '@/js/AppServices';
+import { storeLogin } from '@/js/AppServices';
 
 export default {
   data() {
@@ -93,7 +94,7 @@ export default {
   },
   methods: {
     signin() {
-      userLogin(
+      storeLogin(
         this.$qs.stringify({
           email: this.store.email,
           password: this.store.password,
@@ -101,16 +102,16 @@ export default {
       ).then((res) => {
         console.log(res.data.status);
         if (res.data.status === false) {
-          this.sendInfoError();
+          this.nosuccessMessage();
         } else {
           this.$router.push('/Dashboard');
-          this.successLogin();
+          this.successMessage();
         }
       });
     },
 
     // 提示-輸入帳密有誤
-    sendInfoError() {
+    nosuccessMessage() {
       this.$swal({
         position: 'cneter',
         icon: 'error',
@@ -120,7 +121,7 @@ export default {
     },
 
     // 提示-成功登入
-    successLogin() {
+    successMessage() {
       this.$swal({
         position: 'center',
         icon: 'success',

@@ -14,82 +14,84 @@
                 <div class="text-center">
                   <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                 </div>
-                <!-- <validation-observer v-slot="{ invalid }"> -->
-                <form class="user" @submit.prevent="register">
-                  <div class="row">
-                    <div class="col">
-                      <label for="account">帳號</label>
-                      <validation-provider
-                        rules="required"
-                        v-slot="{ errors, classes }"
-                      >
-                        <div class="form-group">
+                <validation-observer v-slot="{ invalid }">
+                  <form class="user" @submit.prevent="register">
+                    <div class="row">
+                      <div class="col">
+                        <label for="account">帳號</label>
+                        <validation-provider
+                          rules="required"
+                          v-slot="{ errors, classes }"
+                        >
+                          <div class="form-group">
+                            <input
+                              type="email"
+                              id="Account"
+                              class="form-control form-control-user"
+                              placeholder="帳號 / Email Address"
+                              v-model="registerInfo.account"
+                              :class="classes"
+                            />
+                            <span class="invalid-feedback">{{
+                              errors[0]
+                            }}</span>
+                          </div>
+                        </validation-provider>
+                      </div>
+                    </div>
+                    <label for="password">密碼</label>
+
+                    <div class="form-group row">
+                      <div class="col-sm-6 mb-3 mb-sm-0">
+                        <validation-provider
+                          rules="required"
+                          v-slot="{ errors, classes }"
+                        >
                           <input
-                            type="account"
-                            id="Account"
+                            type="password"
                             class="form-control form-control-user"
-                            placeholder="帳號 / Email Address"
-                            v-model="account"
+                            id="password"
+                            placeholder="Password"
                             :class="classes"
+                            v-model="registerInfo.password"
                           />
                           <span class="invalid-feedback">{{ errors[0] }}</span>
-                        </div>
-                      </validation-provider>
-                    </div>
-                  </div>
-                  <label for="password">密碼</label>
+                        </validation-provider>
+                      </div>
 
-                  <div class="form-group row">
-                    <div class="col-sm-6 mb-3 mb-sm-0">
-                      <validation-provider
-                        rules="required"
-                        v-slot="{ errors, classes }"
-                      >
-                        <input
-                          type="password"
-                          class="form-control form-control-user"
-                          id="password"
-                          placeholder="Password"
-                          :class="classes"
-                          v-model="password"
-                        />
-                        <span class="invalid-feedback">{{ errors[0] }}</span>
-                      </validation-provider>
+                      <div class="col-sm-6">
+                        <validation-provider
+                          rules="required"
+                          v-slot="{ errors, classes }"
+                        >
+                          <input
+                            type="password"
+                            class="form-control form-control-user"
+                            id="re-password"
+                            placeholder="Repeat Password"
+                            :class="classes"
+                            v-model="registerInfo.repassword"
+                          />
+                          <span class="invalid-feedback">{{ errors[0] }}</span>
+                        </validation-provider>
+                      </div>
                     </div>
-
-                    <div class="col-sm-6">
-                      <validation-provider
-                        rules="required"
-                        v-slot="{ errors, classes }"
-                      >
-                        <input
-                          type="password"
-                          class="form-control form-control-user"
-                          id="re-password"
-                          placeholder="Repeat Password"
-                          :class="classes"
-                          v-model="repassword"
-                        />
-                        <span class="invalid-feedback">{{ errors[0] }}</span>
-                      </validation-provider>
-                    </div>
-                  </div>
-                  <button
-                    class="btn btn-primary btn-user btn-block"
-                    :disabled="invalid"
-                  >
-                    註冊
-                  </button>
-                  <!-- <a
+                    <button
+                      class="btn btn-primary btn-user btn-block"
+                      :disabled="invalid"
+                    >
+                      註冊
+                    </button>
+                    <!-- <a
                       href="login.html"
                       class="btn btn-primary btn-user btn-block"
                       :disabled="invalid"
                     >
                       註冊
                     </a> -->
-                  <hr />
-                </form>
-                <!-- </validation-observer> -->
+                    <hr />
+                  </form>
+                </validation-observer>
 
                 <!-- <div class="text-center">
                 <a class="small" href="forgot-password.html"
@@ -114,33 +116,56 @@
 </template>
 
 <script>
-import qs from 'qs';
+import { storeRegister } from '@/js/AppServices';
 
 export default {
   data() {
     return {
-      account: '',
-      password: '',
-      repassword: '',
+      registerInfo: {
+        account: '',
+        password: '',
+        repassword: '',
+      },
     };
   },
   methods: {
     register() {
-      // eslint-disable-next-line operator-linebreak
-      this.axios.defaults.headers.post['Content-Type'] =
-        'application/x-www-form-urlencoded';
-      this.axios
-        .post(
-          'https://salon.rocket-coding.com/CreateStore',
-          qs.stringify({
-            Name: 'cindy',
-            Email: 'test@gmail.com',
-            Password: '123',
-          }),
-        )
-        .then((res) => {
-          console.log(res);
-        });
+      storeRegister(
+        this.$qs.stringify({
+          Email: this.registerInfo.account,
+          Password: this.registerInfo.repassword,
+        }),
+      ).then((res) => {
+        if (res.data.status === false) {
+          this.nosuccessRegister();
+        } else {
+          this.successRegister();
+        }
+        console.log(res);
+      });
+    },
+
+    // 提示-不成功
+    nosuccessRegister() {
+      const message = '註冊';
+      this.$swal({
+        position: 'cneter',
+        icon: 'error',
+        title: `${message}失敗`,
+        text: '帳號重複',
+      });
+    },
+
+    // 提示-成功
+    successRegister() {
+      this.$swal({
+        position: 'center',
+        icon: 'success',
+        title: '註冊成功，請重新登入',
+        // showConfirmButton: false,
+        // timer: 1500,
+      });
+      this.$router.push('/Login');
     },
   },
 };
