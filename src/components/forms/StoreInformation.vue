@@ -20,6 +20,7 @@
           class="needs-validation text-left text-gray-900"
           novalidate
           v-cloak
+          @submit.prevent="putStoreInfo"
         >
           <div class="row">
             <div class="col-md-6 mb-3">
@@ -120,20 +121,6 @@
               v-model="storeInfo.facebook"
             />
           </div>
-          <!-- <div class="mb-3">
-            <label for="lastName" class="font-weight-bold">Instagram：</label>
-            <p for="" v-if="status" class="text-muted text-gray-800">
-              bac.ig.com
-            </p>
-            <input
-              v-else
-              type="text"
-              class="form-control"
-              id="instagram"
-              placeholder="請輸入ig網址 ex:xxxx.ig"
-              required
-            />
-          </div> -->
           <div class="form-group">
             <label for="exampleFormControlTextarea1" class="font-weight-bold"
               >店家簡介：</label
@@ -160,6 +147,9 @@
             <button class="btn btn-primary" type="submit">
               確認
             </button>
+            <button class="btn btn-primary" type="submit">
+              test
+            </button>
           </div>
         </form>
       </div>
@@ -168,6 +158,9 @@
 </template>
 
 <script>
+// import AppServices from '@/js/AppServices';
+import qs from 'qs';
+
 export default {
   data() {
     return {
@@ -194,7 +187,7 @@ export default {
       const api = 'http://localhost:3000/store';
       this.axios.get(api).then((res) => {
         this.newdata = res.data;
-        console.log(this.newdata);
+        // console.log(this.newdata);
         this.storeInfo.title = this.newdata.Name;
         this.storeInfo.tel = this.newdata.BasicData.Phone;
         this.storeInfo.address = this.newdata.BasicData.Address;
@@ -204,7 +197,27 @@ export default {
       });
     },
     // 修改店家資料
-    putStoreInfo() {},
+    // putStoreInfo() {
+    //   const api = 'https://salon.rocket-coding.com/GetStore?id=2';
+    //   this.axios.get(api).then((res) => {
+    //     console.log(res);
+    //   });
+    // },
+    putStoreInfo() {
+      //  eslint-disable-next-line operator-linebreak
+      this.axios.defaults.headers.put['Content-Type'] =
+        'application/x-www-form-urlencoded';
+      this.axios
+        .put(
+          'https://salon.rocket-coding.com/EditStore?id=2',
+          qs.stringify({
+            name: '樂法手做',
+          }),
+        )
+        .then((res) => {
+          console.log(res);
+        });
+    },
 
     // 切換編輯模式
     edit() {
@@ -212,7 +225,8 @@ export default {
     },
   },
   mounted() {
-    this.getStoreInfo();
+    // this.getStoreInfo();
+    // this.putStoreInfo();
   },
 };
 </script>

@@ -11,6 +11,7 @@ import TW from 'vee-validate/dist/locale/zh_TW.json';
 import * as rules from 'vee-validate/dist/rules';
 
 import axios from 'axios';
+import qs from 'qs';
 import VueAxios from 'vue-axios';
 import App from './App.vue';
 import router from './router';
@@ -25,6 +26,7 @@ localize('zh_TW', TW);
 
 Vue.component('ValidationObserver', ValidationObserver);
 Vue.component('ValidationProvider', ValidationProvider);
+Vue.prototype.$qs = qs;
 
 configure({
   classes: {
@@ -36,6 +38,7 @@ configure({
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
 Vue.use(VueSweetalert2);
+
 new Vue({
   router,
   store,

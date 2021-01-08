@@ -1,46 +1,9 @@
+/* eslint-disable operator-linebreak */
 <template>
   <div
     id="login"
     class="min-vh-100 d-flex align-items-center justify-content-center"
   >
-    <!-- <form class="form-signin" @submit="signin">
-      <h1 class="h3 mb-3 font-weight-normal text-center">後台登入</h1>
-      <div class="form-group">
-        <label for="inputEmail">帳號(email)</label>
-        <input
-          type="email"
-          id="inputEmail"
-          class="form-control"
-          placeholder="Email address"
-          required
-          autofocus
-          v-model="user.username"
-        />
-      </div>
-      <div class="form-group">
-        <label for="inputPassword">密碼</label>
-        <input
-          type="password"
-          id="inputPassword"
-          class="form-control"
-          placeholder="Password"
-          required
-          v-model="user.password"
-        />
-      </div>
-
-      <div class="checkbox mb-3">
-        <label>
-          <input type="checkbox" value="remember-me" /> Remember me
-        </label>
-      </div>
-      <button class="btn btn-lg btn-primary btn-block">
-        Sign in
-      </button>
-      <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
-    </form> -->
-    <!----->
-
     <div class="container-fluid">
       <!-- Outer Row -->
       <div class="row justify-content-center">
@@ -55,7 +18,7 @@
                     <div class="text-center">
                       <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                     </div>
-                    <form class="user">
+                    <form class="user" @submit.prevent="signin" method="post">
                       <div class="form-group">
                         <input
                           type="email"
@@ -63,8 +26,7 @@
                           id="exampleInputEmail"
                           aria-describedby="emailHelp"
                           placeholder="Enter Email Address..."
-                          v-model="user.username"
-                          required
+                          v-model="store.email"
                         />
                       </div>
                       <div class="form-group">
@@ -73,8 +35,7 @@
                           class="form-control form-control-user"
                           id="exampleInputPassword"
                           placeholder="Password"
-                          required
-                          v-model="user.password"
+                          v-model="store.password"
                         />
                       </div>
                       <div class="form-group">
@@ -89,12 +50,12 @@
                           >
                         </div>
                       </div>
-                      <a
-                        href="index.html"
+                      <button
                         class="btn btn-primary btn-user btn-block"
+                        type="submit"
                       >
                         Login
-                      </a>
+                      </button>
                       <hr />
                     </form>
                     <div class="text-center">
@@ -106,9 +67,6 @@
                       <router-link class="small" :to="{ name: 'Register' }"
                         >Create an Account!</router-link
                       >
-                      <!-- <a class="small" href="register.html"
-                        >Create an Account!</a
-                      > -->
                     </div>
                   </div>
                 </div>
@@ -122,21 +80,53 @@
 </template>
 
 <script>
+import { userLogin } from '@/js/AppServices';
+
 export default {
   data() {
     return {
-      user: {
-        username: '',
+      store: {
+        email: '',
         password: '',
       },
     };
   },
   methods: {
     signin() {
-      const api = 'http://localhost:3000/user';
-      this.$http.post(api, this.user).then((res) => {
-        console.log(res);
-        console.log('ok');
+      userLogin(
+        this.$qs.stringify({
+          email: this.store.email,
+          password: this.store.password,
+        }),
+      ).then((res) => {
+        console.log(res.data.status);
+        if (res.data.status === false) {
+          this.sendInfoError();
+        } else {
+          this.$router.push('/Dashboard');
+          this.successLogin();
+        }
+      });
+    },
+
+    // 提示-輸入帳密有誤
+    sendInfoError() {
+      this.$swal({
+        position: 'cneter',
+        icon: 'error',
+        title: '登入失敗',
+        text: '帳號或密碼錯誤',
+      });
+    },
+
+    // 提示-成功登入
+    successLogin() {
+      this.$swal({
+        position: 'center',
+        icon: 'success',
+        title: '登入成功',
+        // showConfirmButton: false,
+        timer: 1500,
       });
     },
   },
