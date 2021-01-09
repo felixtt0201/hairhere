@@ -64,6 +64,8 @@
 </template>
 
 <script>
+import { storeTotalInfo } from '@/js/AppServices';
+
 export default {
   data() {
     return {
@@ -88,11 +90,12 @@ export default {
   },
   methods: {
     getServicesInfo() {
-      const api = 'http://localhost:3000/store';
-      this.axios.get(api).then((res) => {
+      storeTotalInfo().then((res) => {
         this.servicesdata = res.data.ServicesPublic;
+        console.log(res);
       });
     },
+
     edit(id) {
       this.editId = id;
     },

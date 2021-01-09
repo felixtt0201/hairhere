@@ -20,7 +20,7 @@
           class="needs-validation text-left text-gray-900"
           novalidate
           v-cloak
-          @submit.prevent="putStoreInfo"
+          @submit.prevent="puti"
         >
           <div class="row">
             <div class="col-md-6 mb-3">
@@ -147,7 +147,7 @@
             <button class="btn btn-primary" type="submit">
               確認
             </button>
-            <button class="btn btn-primary" type="submit">
+            <button class="btn btn-primary">
               test
             </button>
           </div>
@@ -159,7 +159,7 @@
 
 <script>
 import { storeTotalInfo } from '@/js/AppServices';
-import qs from 'qs';
+// import qs from 'qs';
 
 export default {
   data() {
@@ -186,9 +186,8 @@ export default {
     // 取得店家資料
     getStoreInfo() {
       storeTotalInfo().then((res) => {
-        console.log(res);
+        // console.log(res);
         this.newdata = res.data;
-        // console.log(this.newdata);
         this.storeInfo.title = this.newdata.Name;
         this.storeInfo.tel = this.newdata.BasicData.Phone;
         this.storeInfo.address = this.newdata.BasicData.Address;
@@ -197,23 +196,20 @@ export default {
         this.storeInfo.businessTime = `${this.newdata.Business.BusinessHoursOpen} ~ ${this.newdata.Business.BusinessHoursClose}`;
       });
     },
-
-    // 修改店家資料
-    putStoreInfo() {
-      //  eslint-disable-next-line operator-linebreak
-      this.axios.defaults.headers.put['Content-Type'] =
-        'application/x-www-form-urlencoded';
+    puti() {
       this.axios
         .put(
-          'https://salon.rocket-coding.com/EditStore?id=2',
-          qs.stringify({
-            name: '樂法手做',
+          'https://salon.rocket-coding.com/PutStore?id=2',
+          this.$qs.stringify({
+            Name: '熱髮首座',
           }),
         )
         .then((res) => {
           console.log(res);
         });
     },
+    // 修改店家資料
+    putStoreInfo() {},
 
     // 切換編輯模式
     edit() {
