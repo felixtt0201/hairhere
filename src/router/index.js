@@ -15,6 +15,26 @@ const routes = [
         name: 'FontIndex',
         component: () => import('../components/fontitem/FontIndex.vue'),
       },
+      {
+        path: '/designerTotal',
+        name: 'DesignerTotal',
+        component: () => import('../components/fontitem/DesignerTotal.vue'),
+      },
+      {
+        path: '/designerSingle',
+        name: 'DesignerSingle',
+        component: () => import('../components/fontitem/DesignerSingle.vue'),
+      },
+      {
+        path: '/reservation',
+        name: 'Reservation',
+        component: () => import('../components/fontitem/Reservation.vue'),
+      },
+      {
+        path: '/confirm',
+        name: 'Confirm',
+        component: () => import('../components/fontitem/Confirm.vue'),
+      },
     ],
   },
   {

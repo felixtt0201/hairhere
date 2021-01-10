@@ -21,4 +21,8 @@ export default {
 
 <style lang="scss">
 @import './src/assets/hair.scss';
+@import './src/assets/designerTotal.scss';
+@import './src/assets/designerSingle.scss';
+@import './src/assets/reservation.scss';
+@import './src/assets/confirm.scss';
 </style>

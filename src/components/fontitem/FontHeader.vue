@@ -34,10 +34,10 @@
             >
           </li>
           <li class="nav-item">
-            <a
+            <router-link
+              to="/designerTotal"
               class="nav-link text-main--hover border-bottom pr-3 pl-3"
-              href="#"
-              >線上預約</a
+              >線上預約</router-link
             >
           </li>
           <li class="nav-item">
@@ -48,10 +48,10 @@
             >
           </li>
           <li class="nav-item ">
-            <a
+            <router-link
+              to="/designerTotal"
               class="nav-link text-main--hover border-bottom pr-3 pl-3"
-              href="#"
-              >設計師</a
+              >設計師</router-link
             >
           </li>
 

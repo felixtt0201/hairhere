@@ -167,9 +167,11 @@
                 ><span class="w-50 pl-3">$3999 +</span>
               </li>
             </ul>
-            <button type="button" class="btn btn-secondary mx-auto rounded-0">
-              立即預約
-            </button>
+            <router-link
+              to="/reservation"
+              class="btn btn-secondary mx-auto rounded-0"
+              >立即預約</router-link
+            >
           </div>
         </div>
       </div>
