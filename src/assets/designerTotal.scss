@@ -1,0 +1,49 @@
+.photo-size {
+  background-position: center center;
+  background-repeat: no-repeat;
+  height: 228px;
+}
+.border-left {
+  border-left: 1px solid $text-primary !important;
+  padding-left: 5px;
+}
+.designer-btn {
+  width: 100px !important;
+  background-color: $text-primary;
+  color: $text-accent;
+  padding: 0;
+  &:hover {
+    background-color: $bg-accent;
+  }
+}
+.page-item {
+  padding: 0 20px 0 0;
+}
+.page-link {
+  color: $text-accent;
+  border-radius: 100px;
+  background-color: $bg-primary;
+  &:hover {
+    color: $bg-accent !important;
+  }
+}
+.path {
+  background-color: white !important;
+  color: $text-primary;
+  border: none;
+}
+.btn-viewmore {
+  display: flex;
+  justify-content: center !important;
+  align-items: flex-end !important;
+  .designer-btn {
+    opacity: 0.6;
+    background-color: $text-accent;
+    color: $text-primary;
+    &:hover {
+      background-color: $bg-accent;
+      color: $text-accent;
+      opacity: 0.8;
+    }
+  }
+}

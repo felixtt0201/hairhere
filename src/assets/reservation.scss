@@ -1,0 +1,50 @@
+$text-reservation: #cb9861;
+.text-reservation {
+  color: $text-reservation;
+  input {
+    display: none;
+  }
+  td,
+  span {
+    color: $text-accent;
+  }
+}
+.item-total {
+  display: flex;
+  justify-content: flex-end;
+  .item-total-group {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid $text-accent;
+  }
+}
+.bg-reservation {
+  background-color: $bg-primary;
+  padding-bottom: 20px;
+  color: $bg-accent;
+  .title-line:after,
+  .title-line:before {
+    background-color: $bg-accent;
+  }
+}
+
+.form-reservation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+input {
+  border: 0;
+  width: 258px;
+  margin-bottom: 5px;
+}
+.btn-reservation {
+  width: 100px !important;
+  background-color: $bg-accent;
+  color: $text-accent;
+  border: 0;
+  &:hover {
+    background-color: $text-primary;
+  }
+}

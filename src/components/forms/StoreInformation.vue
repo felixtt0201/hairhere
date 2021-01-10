@@ -199,7 +199,7 @@ export default {
     puti() {
       this.axios
         .put(
-          'https://salon.rocket-coding.com/PutStore?id=2',
+          'https://salon.rocket-coding.com/PUT/Store/1',
           this.$qs.stringify({
             Name: '熱髮首座',
           }),

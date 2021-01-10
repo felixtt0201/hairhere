@@ -16,7 +16,7 @@ import Calendar from '../dashboarditem/Calendar.vue';
 export default {
   methods: {
     getInfo() {
-      const api = 'https://vue-course-api.hexschool.io/api/dsprj/products';
+      const api = 'https://salon.rocket-coding.com/GET/Store/1';
       this.axios.get(api).then((res) => {
         console.log(res);
       });
