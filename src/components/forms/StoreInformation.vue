@@ -158,8 +158,7 @@
 </template>
 
 <script>
-import { storeTotalInfo } from '@/js/AppServices';
-// import qs from 'qs';
+import { storeTotalInfo, updateStore } from '@/js/AppServices';
 
 export default {
   data() {
@@ -196,17 +195,32 @@ export default {
         this.storeInfo.businessTime = `${this.newdata.Business.BusinessHoursOpen} ~ ${this.newdata.Business.BusinessHoursClose}`;
       });
     },
+
+    //  this.$qs.stringify(data)
     puti() {
-      this.axios
-        .put(
-          'https://salon.rocket-coding.com/PutStore?id=2',
-          this.$qs.stringify({
-            Name: '熱髮首座',
-          }),
-        )
-        .then((res) => {
-          console.log(res);
-        });
+      const data = this.$qs.stringify({
+        Id: '2',
+        Email: 'store@store',
+        Password: 'blD7XIfS44Yq2UiAkzYJ0wlF+tMhMagBLmP9I7+QlHU=',
+        Address: '高雄市苓雅區青年一路4巷21號',
+        BusinessHoursOpen: '2021-01-06 10:30:00.000',
+        BusinessHoursClose: '2021-01-06 18:00:00.000',
+        Instagram: '',
+        Facebook: 'https://www.facebook.com/lefahairsalon/',
+        Twitter: '',
+        Web: '',
+        Name: '2222',
+        Phone: '',
+        Summary:
+          '歐式溫馨鄉村風格的樂髮手作\\r\\n服務專業造型之外\\r\\n身邊有可愛貓咪陪伴身邊真的很逗趣\\r\\n歡迎愛貓咪的朋友們來朝聖唷',
+        Details:
+          '樂髮手作(喵員排行) 1.拿鐵（老大哥）♂ 「樂髮小老闆」，成天喜歡窩在家裡，膽小怕事、非常不喜歡上班，一副甘我屁事的表情！ 生日：105/07/05 外觀：布偶藍眼睛+咖啡白毛 個性：帥氣獨立、愛耍帥兼俗仔 專長：喜歡羽毛類玩具、愛欺負弟妹 喜好：肚子餓了會喵喵叫，深怕自己餓壞了。愛吃 2.姆姆（老大姐）♀ 「樂髮闆娘」，大姐風範，一上班便是監督奴才們有沒專心工作，淡定的坐在專屬闆娘位置！ 生日：105/09/23 外觀：短短腿奶茶毛色 個性：超冷靜、喜歡觀察、愛睡覺 專長：獨愛關於線類玩具 喜好：愛跟媽咪撒嬌、特愛吃肉泥 3.餅乾（排行老三）♀ 「樂髮三姐」，老是喜歡跟在拿鐵哥哥屁股後面混時間，不喜歡上班。怕事超級膽小 生日：108/04/24 外觀：灰色英短藍貓 個性：恰北北、膽小怕事、看心情撒嬌 專長：愛玩、愛模仿拿鐵哥 喜好：愛吃零食、欺負薯條弟弟 4.蛋捲（小老四）♀ 「樂髮公關貓」，超愛上班，每天都有白目事物發生，擁有狗靈魂的貓咪，過動活潑具有探險家精神 生日：108/06/15 外觀：虎斑長毛，像小獅子般 個性：溫馴活潑、親人親貓、超愛撒嬌 專長：在客人面前賣萌、老愛刷存在感深怕沒有人注意 喜好：愛吃愛玩什麼事都跑第一 5.薯條（老么）♂ 「樂髮加菲」，超級膽小，聽到上班就躲起來超級邊緣貓，臉上寫著我好無辜的表情。 生日：108/06/18 外觀：橘白毛色、鼻子扁扁 個性：傻憨可愛、膽小怕生 專長：裝憨憨呆呆的、愛玩 喜好：愛吃罐罐、被姐姐們欺負',
+        Impressum: '',
+        Remark: '',
+      });
+      updateStore(data).then((res) => {
+        console.log(res);
+      });
     },
     // 修改店家資料
     putStoreInfo() {},
