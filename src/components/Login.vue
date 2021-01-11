@@ -54,7 +54,7 @@
                       <button
                         class="btn btn-primary btn-user btn-block"
                         type="submit"
-                        @click="cintest"
+                        @click="signin"
                       >
                         Login
                       </button>
@@ -83,6 +83,7 @@
 
 <script>
 import { storeLogin } from '@/js/AppServices';
+import VueRouter from 'vue-router';
 
 export default {
   data() {
@@ -101,11 +102,23 @@ export default {
           password: this.store.password,
         }),
       ).then((res) => {
-        console.log(res.data.status);
+        console.log(res);
         if (res.data.status === false) {
           this.unsuccessMessage();
         } else {
-          this.$router.push('/Dashboard');
+          // 成功登入就把token存在 cookie
+          document.cookie = `mytoken=${res.data.token}`;
+
+          // router問題解決
+          const { isNavigationFailure, NavigationFailureType } = VueRouter;
+          this.$router.push({ name: 'Dashboard' }).catch((failure) => {
+            if (
+              isNavigationFailure(failure, NavigationFailureType.redirected)
+            ) {
+              // show a small notification to the user
+            }
+          });
+
           this.successMessage();
         }
       });
@@ -114,7 +127,7 @@ export default {
     // 提示-輸入帳密有誤
     unsuccessMessage() {
       this.$swal({
-        position: 'cneter',
+        position: 'center',
         icon: 'error',
         title: '登入失敗',
         text: '帳號或密碼錯誤',

@@ -202,31 +202,22 @@
               <div class="col-sm-4">
                 <h2>設計師個人照片</h2>
                 <div class="form-group">
-                  <label for="image">輸入照片網址</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="image"
-                    placeholder="請輸入照片連結"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="customFile"
-                    >或 上傳照片
-                    <i class="fas fa-cog fa-spin"></i>
+                  <label for="designerphoto"
+                    >上傳照片
+                    <!-- <i class="fas fa-cog fa-spin"></i> -->
                   </label>
                   <input
                     type="file"
-                    id="customFile"
+                    id="designerphoto"
                     class="form-control"
                     ref="files"
                   />
                 </div>
-                <img
+                <!-- <img
                   img="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=828346ed697837ce808cae68d3ddc3cf&auto=format&fit=crop&w=1350&q=80"
                   class="img-fluid"
                   alt=""
-                />
+                /> -->
               </div>
               <div class="col-sm-8">
                 <div class="form-row">
@@ -237,6 +228,7 @@
                       class="form-control"
                       id="category"
                       placeholder="請輸入姓名"
+                      v-model="designerInfo.name"
                     />
                   </div>
                   <div class="form-group col-md-6">
@@ -248,6 +240,7 @@
                         name="inlineRadioOptions"
                         id="male"
                         value="male"
+                        v-model="designerInfo.sex"
                       />
                       <label class="form-check-label" for="male">男</label>
                     </div>
@@ -258,6 +251,7 @@
                         name="inlineRadioOptions"
                         id="female"
                         value="female"
+                        v-model="designerInfo.sex"
                       />
                       <label class="form-check-label" for="female">女</label>
                     </div>
@@ -270,6 +264,7 @@
                     class="form-control"
                     id="phone"
                     placeholder="請輸入電話/手機"
+                    v-model="designerInfo.tel"
                   />
                 </div>
                 <div class="form-group">
@@ -284,12 +279,13 @@
                 <div class="form-row">
                   <div class="form-group col-md-6">
                     <div class="row"></div>
-                    <label for="password">帳號</label>
+                    <label for="account">帳號</label>
                     <input
-                      type="password"
+                      type="email"
                       class="form-control"
-                      id="password"
+                      id="account"
                       placeholder="請輸入帳號"
+                      v-model="designerInfo.account"
                     />
                   </div>
                   <div class="form-group col-md-6">
@@ -300,18 +296,20 @@
                       class="form-control"
                       id="password"
                       placeholder="請輸入密碼"
+                      v-model="designerInfo.password"
                     />
                   </div>
                 </div>
                 <div class="form-row justify-content-end">
                   <div class="form-group col-md-6">
                     <div class="row"></div>
-                    <label for="password">再次輸入密碼</label>
+                    <label for="repassword">再次輸入密碼</label>
                     <input
                       type="password"
                       class="form-control"
-                      id="password"
+                      id="repassword"
                       placeholder="再次輸入密碼"
+                      v-model="designerInfo.repassword"
                     />
                   </div>
                 </div>
@@ -325,6 +323,7 @@
                     placeholder="請輸入我的專長/特色"
                     cols="30"
                     rows="5"
+                    v-model="designerInfo.details"
                   ></textarea>
                 </div>
               </div>
@@ -338,7 +337,11 @@
             >
               取消
             </button>
-            <button type="button" class="btn btn-primary">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              @click="addNewDesigner"
+            >
               確認
             </button>
           </div>
@@ -350,12 +353,40 @@
 </template>
 
 <script>
-export default {};
+import { postDesinger } from '@/js/AppServices';
+
+export default {
+  data() {
+    return {
+      designerInfo: {
+        name: '',
+        tel: '',
+        LineID: '',
+        account: '',
+        password: '',
+        repassword: '',
+        details: '',
+        sex: '',
+      },
+    };
+  },
+  methods: {
+    addNewDesigner() {
+      const data = this.$qs.stringify({
+        Name: this.designerInfo.name,
+        Email: this.designerInfo.account,
+        Password: this.designerInfo.repassword,
+        Sex: this.designerInfo.sex,
+        LineID: this.designerInfo.LineID,
+        Tel: this.designerInfo.tel,
+        Detail: this.designerInfo.details,
+      });
+      postDesinger(data).then((res) => {
+        console.log(res);
+      });
+    },
+  },
+};
 </script>
 
-<style lang="scss" scopeded>
-input,
-textarea {
-  background-color: #ffff !important;
-}
-</style>
+<style lang="scss" scopeded></style>

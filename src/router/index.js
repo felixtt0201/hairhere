@@ -102,7 +102,7 @@ const routes = [
         children: [
           {
             path: 'reservation',
-            name: 'Reservation',
+            name: 'ReservationList',
             component: () => import('../components/forms/Reservation.vue'),
           },
           {

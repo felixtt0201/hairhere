@@ -212,7 +212,7 @@ export default {
     // 取得店家資料
     getStoreInfo() {
       storeTotalInfo().then((res) => {
-        // console.log(res);
+        console.log(res);
         this.newdata = res.data;
         this.storeInfo.title = this.newdata.Name;
         this.storeInfo.tel = this.newdata.BasicData.Phone;
@@ -231,7 +231,7 @@ export default {
       const data = this.$qs.stringify({
         Id: '2',
         Email: 'store@store',
-        Password: 'blD7XIfS44Yq2UiAkzYJ0wlF+tMhMagBLmP9I7+QlHU=',
+        Password: '123',
         Address: this.storeInfo.address,
         BusinessHoursOpen: this.storeInfo.businessTimeOpen,
         BusinessHoursClose: this.storeInfo.businessTimeClose,

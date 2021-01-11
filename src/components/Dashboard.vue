@@ -25,10 +25,12 @@ export default {
     Footer,
     // test,
   },
+  created() {
+    console.log(document.cookie.split('=')[1]);
+  },
 };
 </script>
 
 <style lang="scss" scopeded>
-// @import './src/assets/all.scss';
 @import './src/assets/scss/sb-admin-2.scss';
 </style>
