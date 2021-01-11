@@ -7,7 +7,7 @@
           <button
             type="button"
             class="btn btn-primary btn-lg btn-icon-split mr-3"
-            v-show="status"
+            v-show="editstatus"
             @click="edit"
           >
             <span class="icon text-white-10">
@@ -20,14 +20,14 @@
           class="needs-validation text-left text-gray-900"
           novalidate
           v-cloak
-          @submit.prevent="puti"
+          @submit.prevent="putStoreInfo"
         >
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="title" class="font-weight-bold">店家名稱：</label>
               <p
                 for=""
-                v-if="status"
+                v-if="editstatus"
                 class="text-muted text-gray-800 text-gray-800"
               >
                 {{ storeInfo.title }}
@@ -45,7 +45,7 @@
               <label for="tel" class="font-weight-bold">店家電話：</label>
               <p
                 for=""
-                v-if="status"
+                v-if="editstatus"
                 class="text-muted text-gray-800 text-gray-800"
               >
                 {{ storeInfo.tel }}
@@ -63,26 +63,37 @@
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="businesstime" class="font-weight-bold"
-                >營業時間：</label
+                >營業時間(ex:10:30 ~ 18:00)：</label
               >
-              <p for="" v-if="status" class="text-muted text-gray-800">
-                {{ storeInfo.businessTime }}
+              <p for="" v-if="editstatus" class="text-muted text-gray-800">
+                {{ storeInfo.businessHoursOpen }} ~
+                {{ storeInfo.businessHoursClose }}
               </p>
-              <input
-                v-else
-                type="text"
-                class="form-control"
-                id="businesstime"
-                placeholder="請輸入時間 ex:9:00-18:00"
-                value=""
-                required
-                v-model="storeInfo.businessTime"
-              />
+              <div v-else>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="businesstime"
+                  placeholder="請輸入時間 ex:9:00"
+                  value=""
+                  required
+                  v-model="storeInfo.businessHoursOpen"
+                />
+                <input
+                  type="text"
+                  class="form-control"
+                  id="businesstime"
+                  placeholder="請輸入時間 ex:18:00"
+                  value=""
+                  required
+                  v-model="storeInfo.businessHoursClose"
+                />
+              </div>
             </div>
             <div class="col-md-6 mb-3">
               <label for="dayof" class="font-weight-bold">店休日：</label>
-              <p for="" v-if="status" class="text-muted text-gray-800">
-                星期日
+              <p for="" v-if="editstatus" class="text-muted text-gray-800">
+                {{ storeInfo.restDayofWeek }}
               </p>
               <input
                 v-else
@@ -90,12 +101,13 @@
                 class="form-control"
                 id="dayof"
                 placeholder="請輸入星期幾 ex:星期日"
+                v-model="storeInfo.restDayofWeek"
               />
             </div>
           </div>
           <div class="mb-3">
             <label for="address" class="font-weight-bold">店家地址：</label>
-            <p for="" v-if="status" class="text-muted text-gray-800">
+            <p for="" v-if="editstatus" class="text-muted text-gray-800">
               {{ storeInfo.address }}
             </p>
             <input
@@ -108,8 +120,8 @@
             />
           </div>
           <div class="mb-3">
-            <label for="lastName" class="font-weight-bold">Facebook：</label>
-            <p for="" v-if="status" class="text-muted text-gray-800">
+            <label for="facebook" class="font-weight-bold">Facebook：</label>
+            <p for="" v-if="editstatus" class="text-muted text-gray-800">
               {{ storeInfo.facebook }}
             </p>
             <input
@@ -125,11 +137,8 @@
             <label for="exampleFormControlTextarea1" class="font-weight-bold"
               >店家簡介：</label
             >
-            <p for="" v-if="status" class="text-muted text-gray-800">
-              <!-- {{ storeInfo.summary }}。 -->
-              <!-- <br /> -->
-              <!-- {{ storeInfo.detail }} -->
-              {{ storeInfo.detailTotal }}
+            <p for="" v-if="editstatus" class="text-muted text-gray-800">
+              {{ storeInfo.summary }}。
             </p>
             <textarea
               v-else
@@ -137,18 +146,31 @@
               id="exampleFormControlTextarea1"
               rows="5"
               placeholder="請輸入內容"
-              v-model="storeInfo.detailTotal"
+              v-model="storeInfo.summary"
             ></textarea>
           </div>
-          <div class="row justify-content-between" v-show="!status">
-            <button class="btn btn-primary" type="submit">
+          <div class="form-group">
+            <label for="exampleFormControlTextarea1" class="font-weight-bold"
+              >成員介紹：</label
+            >
+            <p for="" v-if="editstatus" class="text-muted text-gray-800">
+              {{ storeInfo.detail }}
+            </p>
+            <textarea
+              v-else
+              class="form-control"
+              id="exampleFormControlTextarea1"
+              rows="5"
+              placeholder="請輸入內容"
+              v-model="storeInfo.detail"
+            ></textarea>
+          </div>
+          <div class="row justify-content-between" v-show="!editstatus">
+            <button class="btn btn-secondary" type="button" @click="edit">
               取消
             </button>
             <button class="btn btn-primary" type="submit">
               確認
-            </button>
-            <button class="btn btn-primary">
-              test
             </button>
           </div>
         </form>
@@ -174,10 +196,13 @@ export default {
         summary: '',
         detailTotal: '',
         tel: '',
+        businessHoursOpen: '',
+        businessHoursClose: '',
         businessTime: '',
+        restDayofWeek: '',
       },
       // 編輯的開關
-      status: true,
+      editstatus: true,
     };
   },
 
@@ -185,49 +210,60 @@ export default {
     // 取得店家資料
     getStoreInfo() {
       storeTotalInfo().then((res) => {
-        // console.log(res);
         this.newdata = res.data;
         this.storeInfo.title = this.newdata.Name;
         this.storeInfo.tel = this.newdata.BasicData.Phone;
         this.storeInfo.address = this.newdata.BasicData.Address;
         this.storeInfo.facebook = this.newdata.BasicData.Facebook;
-        this.storeInfo.detailTotal = `${this.newdata.BasicData.Summary}。${this.newdata.BasicData.Details}`;
-        this.storeInfo.businessTime = `${this.newdata.Business.BusinessHoursOpen} ~ ${this.newdata.Business.BusinessHoursClose}`;
+        this.storeInfo.restDayofWeek = this.newdata.Business.RestDayOfWeekString;
+        this.storeInfo.detail = this.newdata.BasicData.Details;
+        this.storeInfo.summary = this.newdata.BasicData.Summary;
+        this.storeInfo.businessHoursOpen = this.newdata.Business.BusinessHoursOpen;
+        this.storeInfo.businessHoursClose = this.newdata.Business.BusinessHoursClose;
       });
     },
 
-    //  this.$qs.stringify(data)
-    puti() {
+    // 修改店家資料
+    putStoreInfo() {
       const data = this.$qs.stringify({
         Id: '2',
         Email: 'store@store',
         Password: 'blD7XIfS44Yq2UiAkzYJ0wlF+tMhMagBLmP9I7+QlHU=',
-        Address: '高雄市苓雅區青年一路4巷21號',
-        BusinessHoursOpen: '2021-01-06 10:30:00.000',
-        BusinessHoursClose: '2021-01-06 18:00:00.000',
+        Address: this.storeInfo.address,
+        BusinessHoursOpen: this.storeInfo.businessHoursOpen,
+        BusinessHoursClose: this.storeInfo.businessHoursClose,
         Instagram: '',
-        Facebook: 'https://www.facebook.com/lefahairsalon/',
+        Facebook: this.storeInfo.facebook,
         Twitter: '',
         Web: '',
-        Name: '2222',
-        Phone: '',
-        Summary:
-          '歐式溫馨鄉村風格的樂髮手作\\r\\n服務專業造型之外\\r\\n身邊有可愛貓咪陪伴身邊真的很逗趣\\r\\n歡迎愛貓咪的朋友們來朝聖唷',
-        Details:
-          '樂髮手作(喵員排行) 1.拿鐵（老大哥）♂ 「樂髮小老闆」，成天喜歡窩在家裡，膽小怕事、非常不喜歡上班，一副甘我屁事的表情！ 生日：105/07/05 外觀：布偶藍眼睛+咖啡白毛 個性：帥氣獨立、愛耍帥兼俗仔 專長：喜歡羽毛類玩具、愛欺負弟妹 喜好：肚子餓了會喵喵叫，深怕自己餓壞了。愛吃 2.姆姆（老大姐）♀ 「樂髮闆娘」，大姐風範，一上班便是監督奴才們有沒專心工作，淡定的坐在專屬闆娘位置！ 生日：105/09/23 外觀：短短腿奶茶毛色 個性：超冷靜、喜歡觀察、愛睡覺 專長：獨愛關於線類玩具 喜好：愛跟媽咪撒嬌、特愛吃肉泥 3.餅乾（排行老三）♀ 「樂髮三姐」，老是喜歡跟在拿鐵哥哥屁股後面混時間，不喜歡上班。怕事超級膽小 生日：108/04/24 外觀：灰色英短藍貓 個性：恰北北、膽小怕事、看心情撒嬌 專長：愛玩、愛模仿拿鐵哥 喜好：愛吃零食、欺負薯條弟弟 4.蛋捲（小老四）♀ 「樂髮公關貓」，超愛上班，每天都有白目事物發生，擁有狗靈魂的貓咪，過動活潑具有探險家精神 生日：108/06/15 外觀：虎斑長毛，像小獅子般 個性：溫馴活潑、親人親貓、超愛撒嬌 專長：在客人面前賣萌、老愛刷存在感深怕沒有人注意 喜好：愛吃愛玩什麼事都跑第一 5.薯條（老么）♂ 「樂髮加菲」，超級膽小，聽到上班就躲起來超級邊緣貓，臉上寫著我好無辜的表情。 生日：108/06/18 外觀：橘白毛色、鼻子扁扁 個性：傻憨可愛、膽小怕生 專長：裝憨憨呆呆的、愛玩 喜好：愛吃罐罐、被姐姐們欺負',
+        Name: this.storeInfo.title,
+        Phone: this.storeInfo.tel,
+        Summary: this.storeInfo.summary,
+        Details: this.storeInfo.detail,
         Impressum: '',
         Remark: '',
       });
       updateStore(data).then((res) => {
-        console.log(res);
+        console.log(res.status);
+        if (res.status === 200) {
+          this.successedUpdateInfo();
+          this.editstatus = !this.editstatus;
+        }
       });
     },
-    // 修改店家資料
-    putStoreInfo() {},
+
+    // 提示-修改成功
+    successedUpdateInfo() {
+      this.$swal({
+        position: 'center',
+        icon: 'success',
+        title: '修改成功！',
+      });
+    },
 
     // 切換編輯模式
     edit() {
-      this.status = !this.status;
+      this.editstatus = !this.editstatus;
     },
   },
   mounted() {

@@ -12,7 +12,7 @@ const storeApi = axios.create({
 // 店家登入
 const storeLogin = (data) => storeApi.post('/LoginStore', data);
 // 店家註冊
-const storeRegister = (data) => storeApi.post('/CreateStore', data);
+const storeRegister = (data) => storeApi.post('/POST/Store', data);
 // 店家全部資料
 const storeTotalInfo = () => storeApi.get('/GET/Store?id=2');
 const updateStore = (data) => storeApi.put('/PUT/Store?id=2', data);
