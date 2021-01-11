@@ -103,7 +103,7 @@ export default {
       ).then((res) => {
         console.log(res.data.status);
         if (res.data.status === false) {
-          this.nosuccessMessage();
+          this.unsuccessMessage();
         } else {
           this.$router.push('/Dashboard');
           this.successMessage();
@@ -112,7 +112,7 @@ export default {
     },
 
     // 提示-輸入帳密有誤
-    nosuccessMessage() {
+    unsuccessMessage() {
       this.$swal({
         position: 'cneter',
         icon: 'error',

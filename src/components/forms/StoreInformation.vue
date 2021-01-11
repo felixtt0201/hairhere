@@ -259,8 +259,9 @@ export default {
         position: 'center',
         icon: 'success',
         title: '修改成功',
+      }).then(() => {
+        this.edit();
       });
-      this.edit();
     },
 
     // 切換編輯模式

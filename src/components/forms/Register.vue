@@ -130,14 +130,13 @@ export default {
   },
   methods: {
     register() {
-      storeRegister(
-        this.$qs.stringify({
-          Email: this.registerInfo.account,
-          Password: this.registerInfo.repassword,
-        }),
-      ).then((res) => {
+      const data = this.$qs.stringify({
+        Email: this.registerInfo.account,
+        Password: this.registerInfo.repassword,
+      });
+      storeRegister(this.$qs.stringify(data)).then((res) => {
         if (res.data.status === false) {
-          this.nosuccessRegister();
+          this.unsuccessRegister();
         } else {
           this.successRegister();
         }
@@ -146,12 +145,11 @@ export default {
     },
 
     // 提示-不成功
-    nosuccessRegister() {
-      const message = '註冊';
+    unsuccessRegister() {
       this.$swal({
         position: 'cneter',
         icon: 'error',
-        title: `${message}失敗`,
+        title: '註冊',
         text: '帳號重複',
       });
     },
@@ -164,8 +162,9 @@ export default {
         title: '註冊成功，請重新登入',
         // showConfirmButton: false,
         // timer: 1500,
+      }).then(() => {
+        this.$router.push('/Login');
       });
-      this.$router.push('/Login');
     },
   },
 };
