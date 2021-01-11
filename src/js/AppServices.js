@@ -9,13 +9,21 @@ const storeApi = axios.create({
 });
 
 /** 店家 */
-// 店家登入
+// post店家登入
 const storeLogin = (data) => storeApi.post('/LoginStore', data);
-// 店家註冊
+// post店家註冊
 const storeRegister = (data) => storeApi.post('/POST/Store', data);
-// 店家全部資料
+// get店家全部資料
 const storeTotalInfo = () => storeApi.get('/GET/Store?id=2');
+// put修改店家資料
 const updateStore = (data) => storeApi.put('/PUT/Store?id=2', data);
-
+// get店家全部產品
+const storeProductList = () => storeApi.get('/GET/ProductList?storeId=2');
 // eslint-disable-next-line object-curly-newline
-export { storeLogin, storeRegister, storeTotalInfo, updateStore };
+export {
+  storeLogin,
+  storeRegister,
+  storeTotalInfo,
+  updateStore,
+  storeProductList,
+};

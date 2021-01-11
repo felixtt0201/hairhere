@@ -14,42 +14,42 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in servicesdata" :key="item.index">
+        <tr v-for="(item, index) in servicesdata" :key="item.Id">
           <th scope="row">{{ index + 1 }}</th>
           <td>
             <p>{{ item.Name }}</p>
           </td>
           <td>
-            <label for="">{{ item.UnitPrice }}</label>
-            <!-- <p v-show="editId !== item.index">NT. {{ item.UnitPrice }}</p> -->
+            <p v-show="editId !== item.Id">NT. {{ item.UnitPrice }}</p>
             <input
               type="text"
               name=""
               id=""
-              v-show="editId === item.index"
+              v-show="editId === item.Id"
               placeholder="請輸入金額"
+              v-model="item.UnitPrice"
             />
           </td>
           <td>
-            <label for="">{{ item.ServiceMinutes }}</label>
-            <!-- <p v-show="editId !== item.index">{{ item.ServiceMinutes }}</p> -->
+            <p v-show="editId !== item.Id">{{ item.ServiceMinutes }}</p>
             <input
               type="text"
               name=""
               id=""
-              v-show="editId === item.index"
+              v-show="editId === item.Id"
               placeholder="請輸入時間"
+              v-model="item.ServiceMinutes"
             />
           </td>
-          <td v-show="editId !== item.index">
-            <button class="btn btn-secondary btn-sm" @click="edit(item.index)">
+          <td v-show="editId !== item.Id">
+            <button class="btn btn-secondary btn-sm" @click="edit(item.Id)">
               修改
             </button>
           </td>
-          <td v-show="editId === item.index">
+          <td v-show="editId === item.Id">
             <button
               class="btn btn-secondary btn-sm mr-2"
-              @click="edit(item.index)"
+              @click="!edit(item.Id)"
             >
               取消
             </button>
@@ -64,35 +64,27 @@
 </template>
 
 <script>
-import { storeTotalInfo } from '@/js/AppServices';
+import { storeProductList } from '@/js/AppServices';
 
 export default {
   data() {
     return {
       servicesdata: {},
-      items: [
-        {
-          id: '1',
-          title: '剪髮',
-          money: 'NT:300',
-          time: '30分',
-        },
-        {
-          id: '2',
-          title: '洗髮',
-          money: 'NT:150',
-          time: '30分',
-        },
-      ],
       status: true,
       editId: '',
     };
   },
   methods: {
     getServicesInfo() {
-      storeTotalInfo().then((res) => {
-        this.servicesdata = res.data.ServicesPublic;
+      // this.axios
+      //   .get('https://salon.rocket-coding.com/GET/ProductList?storeId=2')
+      //   .then((res) => {
+      //     console.log(res);
+      //   });
+      storeProductList().then((res) => {
         console.log(res);
+        this.servicesdata = res.data;
+        console.log(this.servicesdata);
       });
     },
 
