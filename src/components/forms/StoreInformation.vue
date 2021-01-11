@@ -7,7 +7,7 @@
           <button
             type="button"
             class="btn btn-primary btn-lg btn-icon-split mr-3"
-            v-show="status"
+            v-show="editstatus"
             @click="edit"
           >
             <span class="icon text-white-10">
@@ -20,14 +20,14 @@
           class="needs-validation text-left text-gray-900"
           novalidate
           v-cloak
-          @submit.prevent="puti"
+          @submit.prevent="putStoreInfo"
         >
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="title" class="font-weight-bold">店家名稱：</label>
               <p
                 for=""
-                v-if="status"
+                v-if="editstatus"
                 class="text-muted text-gray-800 text-gray-800"
               >
                 {{ storeInfo.title }}
@@ -45,7 +45,7 @@
               <label for="tel" class="font-weight-bold">店家電話：</label>
               <p
                 for=""
-                v-if="status"
+                v-if="editstatus"
                 class="text-muted text-gray-800 text-gray-800"
               >
                 {{ storeInfo.tel }}
@@ -65,24 +65,35 @@
               <label for="businesstime" class="font-weight-bold"
                 >營業時間：</label
               >
-              <p for="" v-if="status" class="text-muted text-gray-800">
-                {{ storeInfo.businessTime }}
+              <p for="" v-if="editstatus" class="text-muted text-gray-800">
+                {{ storeInfo.businessTimeOpen }} ~
+                {{ storeInfo.businessTimeClose }}
               </p>
-              <input
-                v-else
-                type="text"
-                class="form-control"
-                id="businesstime"
-                placeholder="請輸入時間 ex:9:00-18:00"
-                value=""
-                required
-                v-model="storeInfo.businessTime"
-              />
+              <div v-else>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="businesstime"
+                  placeholder="請輸入時間 ex:9:00"
+                  value=""
+                  required
+                  v-model="storeInfo.businessTimeOpen"
+                />
+                <input
+                  type="text"
+                  class="form-control"
+                  id="businesstime"
+                  placeholder="請輸入時間 ex:18:00"
+                  value=""
+                  required
+                  v-model="storeInfo.businessTimeClose"
+                />
+              </div>
             </div>
             <div class="col-md-6 mb-3">
               <label for="dayof" class="font-weight-bold">店休日：</label>
-              <p for="" v-if="status" class="text-muted text-gray-800">
-                星期日
+              <p for="" v-if="editstatus" class="text-muted text-gray-800">
+                {{ storeInfo.DayOf }}
               </p>
               <input
                 v-else
@@ -90,12 +101,13 @@
                 class="form-control"
                 id="dayof"
                 placeholder="請輸入星期幾 ex:星期日"
+                v-model="storeInfo.DayOf"
               />
             </div>
           </div>
           <div class="mb-3">
             <label for="address" class="font-weight-bold">店家地址：</label>
-            <p for="" v-if="status" class="text-muted text-gray-800">
+            <p for="" v-if="editstatus" class="text-muted text-gray-800">
               {{ storeInfo.address }}
             </p>
             <input
@@ -109,7 +121,7 @@
           </div>
           <div class="mb-3">
             <label for="lastName" class="font-weight-bold">Facebook：</label>
-            <p for="" v-if="status" class="text-muted text-gray-800">
+            <p for="" v-if="editstatus" class="text-muted text-gray-800">
               {{ storeInfo.facebook }}
             </p>
             <input
@@ -125,11 +137,8 @@
             <label for="exampleFormControlTextarea1" class="font-weight-bold"
               >店家簡介：</label
             >
-            <p for="" v-if="status" class="text-muted text-gray-800">
-              <!-- {{ storeInfo.summary }}。 -->
-              <!-- <br /> -->
-              <!-- {{ storeInfo.detail }} -->
-              {{ storeInfo.detailTotal }}
+            <p for="" v-if="editstatus" class="text-muted text-gray-800">
+              {{ storeInfo.summary }}
             </p>
             <textarea
               v-else
@@ -137,18 +146,33 @@
               id="exampleFormControlTextarea1"
               rows="5"
               placeholder="請輸入內容"
-              v-model="storeInfo.detailTotal"
+              v-model="storeInfo.summary"
             ></textarea>
           </div>
-          <div class="row justify-content-between" v-show="!status">
-            <button class="btn btn-primary" type="submit">
+          <div class="form-group">
+            <label for="exampleFormControlTextarea1" class="font-weight-bold"
+              >成員介紹：</label
+            >
+            <p for="" v-if="editstatus" class="text-muted text-gray-800">
+              <!-- {{ storeInfo.summary }}。 -->
+              <!-- <br /> -->
+              {{ storeInfo.detail }}
+            </p>
+            <textarea
+              v-else
+              class="form-control"
+              id="exampleFormControlTextarea1"
+              rows="5"
+              placeholder="請輸入內容"
+              v-model="storeInfo.detail"
+            ></textarea>
+          </div>
+          <div class="row justify-content-between" v-show="!editstatus">
+            <button class="btn btn-primary" type="button" @click="edit">
               取消
             </button>
             <button class="btn btn-primary" type="submit">
               確認
-            </button>
-            <button class="btn btn-primary">
-              test
             </button>
           </div>
         </form>
@@ -158,8 +182,7 @@
 </template>
 
 <script>
-import { storeTotalInfo } from '@/js/AppServices';
-// import qs from 'qs';
+import { storeTotalInfo, updateStore } from '@/js/AppServices';
 
 export default {
   data() {
@@ -175,10 +198,13 @@ export default {
         summary: '',
         detailTotal: '',
         tel: '',
+        businessTimeOpen: '',
+        businessTimeClose: '',
         businessTime: '',
+        DayOf: '',
       },
       // 編輯的開關
-      status: true,
+      editstatus: true,
     };
   },
 
@@ -192,28 +218,55 @@ export default {
         this.storeInfo.tel = this.newdata.BasicData.Phone;
         this.storeInfo.address = this.newdata.BasicData.Address;
         this.storeInfo.facebook = this.newdata.BasicData.Facebook;
-        this.storeInfo.detailTotal = `${this.newdata.BasicData.Summary}。${this.newdata.BasicData.Details}`;
-        this.storeInfo.businessTime = `${this.newdata.Business.BusinessHoursOpen} ~ ${this.newdata.Business.BusinessHoursClose}`;
+        this.storeInfo.detail = this.newdata.BasicData.Details;
+        this.storeInfo.summary = this.newdata.BasicData.Summary;
+        this.storeInfo.DayOf = this.newdata.Business.RestDayOfWeekString;
+        this.storeInfo.businessTimeOpen = this.newdata.Business.BusinessHoursOpen;
+        this.storeInfo.businessTimeClose = this.newdata.Business.BusinessHoursClose;
       });
     },
-    puti() {
-      this.axios
-        .put(
-          'https://salon.rocket-coding.com/PUT/Store/1',
-          this.$qs.stringify({
-            Name: '熱髮首座',
-          }),
-        )
-        .then((res) => {
-          console.log(res);
-        });
+
+    //  修改店家資料
+    putStoreInfo() {
+      const data = this.$qs.stringify({
+        Id: '2',
+        Email: 'store@store',
+        Password: 'blD7XIfS44Yq2UiAkzYJ0wlF+tMhMagBLmP9I7+QlHU=',
+        Address: this.storeInfo.address,
+        BusinessHoursOpen: this.storeInfo.businessTimeOpen,
+        BusinessHoursClose: this.storeInfo.businessTimeClose,
+        Instagram: '',
+        Facebook: this.storeInfo.facebook,
+        Twitter: '',
+        Web: '',
+        Name: this.storeInfo.title,
+        Phone: this.storeInfo.tel,
+        Summary: this.storeInfo.summary,
+        Details: this.storeInfo.detail,
+        Impressum: '',
+        Remark: '',
+      });
+      updateStore(data).then((res) => {
+        if (res.status === 200) {
+          this.successedUpdate();
+        }
+      });
     },
-    // 修改店家資料
-    putStoreInfo() {},
+
+    // 提示-修改成功
+    successedUpdate() {
+      this.$swal({
+        position: 'center',
+        icon: 'success',
+        title: '修改成功',
+      }).then(() => {
+        this.edit();
+      });
+    },
 
     // 切換編輯模式
     edit() {
-      this.status = !this.status;
+      this.editstatus = !this.editstatus;
     },
   },
   mounted() {

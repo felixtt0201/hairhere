@@ -2,26 +2,50 @@ import axios from 'axios';
 
 const storeApi = axios.create({
   baseURL: 'https://salon.rocket-coding.com',
-  // baseURL: 'http://todoapi.balliiballii.com/api/v1',
   withCredentials: false,
   headers: {
-    Accept: 'application/json',
-    // 'Access-Control-Allow-Origin': '*',
-    // 'Content-Type': 'application/x-www-form-urlencoded',
-    'Content-Type': 'application/json',
-    // Authorization: `Bearer ${token}`,
+    'Content-Type': 'application/x-www-form-urlencoded',
   },
 });
 
 /** 店家 */
-// 店家登入
+// post店家登入
 const storeLogin = (data) => storeApi.post('/LoginStore', data);
-// 店家註冊
-const storeRegister = (data) => storeApi.post('/CreateStore', data);
-// 店家全部資料
-const storeTotalInfo = () => storeApi.get('/GetStore?id=2');
-const updateStore = (data) => storeApi.put('/PutStore?id=2', data);
-// const updateStore = (data) => storeApi.patch('/todos/3', data);
+
+// post店家註冊
+const storeRegister = (data) => storeApi.post('/POST/Store', data);
+
+// get店家全部資料
+const storeTotalInfo = () => storeApi.get('/GET/Store?id=2');
+
+// put修改店家資料
+const updateStore = (data) => storeApi.put('/PUT/Store?id=2', data);
+
+/** 產品 */
+// get全部產品
+const storeProductList = () => storeApi.get('/GET/ProductList?storeId=2');
+
+// post新增產品
+const postestoreProduct = (data) => storeApi.post('/POST/Product', data);
+
+// put修改產品
+const updatestoreProductList = (data, pId) =>
+  // eslint-disable-next-line implicit-arrow-linebreak
+  storeApi.put(`/PUT/Product?id=${pId}`, data);
+
+// delete刪除產品
+const deletestoreProduct = (pId) =>
+  // eslint-disable-next-line implicit-arrow-linebreak
+  storeApi.delete(`/DELETE/Product?id=${pId}`);
 
 // eslint-disable-next-line object-curly-newline
-export { storeLogin, storeRegister, storeTotalInfo, updateStore };
+export {
+  storeLogin,
+  storeRegister,
+  storeTotalInfo,
+  updateStore,
+  storeProductList,
+  updatestoreProductList,
+  postestoreProduct,
+  deletestoreProduct,
+};
