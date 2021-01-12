@@ -53,6 +53,11 @@ const deletestoreProduct = (pId) =>
 const postDesinger = (data) => storeApi.post('/POST/Designer?storeid=2', data);
 
 /** 設計師 */
+// get全部設計師
+const getAllDesigner = (data) =>
+  // eslint-disable-next-line implicit-arrow-linebreak
+  storeApi.get('/GET/DesignerList?storeId=2', data);
+
 // post新增設計師
 // const postDesinger = (data) =>
 //   // eslint-disable-next-line implicit-arrow-linebreak
@@ -70,4 +75,5 @@ export {
   postestoreProduct,
   deletestoreProduct,
   postDesinger,
+  getAllDesigner,
 };

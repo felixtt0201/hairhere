@@ -68,7 +68,9 @@
     </div>
     <div class="container border py-5">
       <div class="row">
-        <div class="col">日曆套件</div>
+        <div class="col">
+          <CalendarFontVacation />
+        </div>
       </div>
     </div>
     <div class="container bg-reservation ">
@@ -90,7 +92,13 @@
 </template>
 
 <script>
-export default {};
+import CalendarFontVacation from '@/components/fontitem/CalendarFontVacation.vue';
+
+export default {
+  components: {
+    CalendarFontVacation,
+  },
+};
 </script>
 
 <style></style>
