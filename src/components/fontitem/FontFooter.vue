@@ -1,6 +1,6 @@
 <template>
   <div>
-    <footer class="py-5 bg-main text-accent text-sm footer-center">
+    <footer class="py-5 bg-main text-accent footer-center">
       <div class="footer-list">
         <p class="mb-1">樂髮手作</p>
         <p class="mb-0">lefahairsalon</p>

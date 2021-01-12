@@ -220,7 +220,20 @@
 </template>
 
 <script>
-export default {};
+import { storeTotalInfo } from '@/js/AppServices';
+
+export default {
+  methods: {
+    GetStoreInfo() {
+      storeTotalInfo().then((res) => {
+        console.log(res);
+      });
+    },
+  },
+  mounted() {
+    this.GetStoreInfo();
+  },
+};
 </script>
 
 <style></style>
