@@ -5,8 +5,8 @@
       <router-link to="/about">About</router-link>|
       <router-link :to="{ name: 'Dashboard' }">Dashboard</router-link>｜
       <router-link to="/login">後台登入</router-link>
+      <router-view></router-view>
     </div>
-    <router-view />
   </div>
 </template>
 

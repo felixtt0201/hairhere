@@ -103,16 +103,14 @@
             <div class="col-md-3 border-left">
               <h4>店家資訊</h4>
               <ul class="p-0">
-                <li class="d-flex">
-                  <h5 class="mr-2">聯絡電話</h5>
-                  (07) - {{ basicData.Phone }}
+                <li class="">
+                  <h5 class="mr-2">聯絡電話 (07) - {{ basicData.Phone }}</h5>
                 </li>
-                <li class="d-flex">
-                  <h5 class="mr-2  text-nowrap">店家地址</h5>
-                  {{ basicData.Address }}
+                <li class="">
+                  <h5 class="mr-2">店家地址 {{ basicData.Address }}</h5>
                 </li>
-                <li class="d-flex">
-                  <h5 class="mr-2  text-nowrap">營業時間</h5>
+                <li class="">
+                  <h5 class="mr-2">營業時間</h5>
                   每週二至日<br />上午{{ business.BusinessHoursOpen }}～下午{{
                     business.BusinessHoursClose
                   }}<br />
@@ -122,14 +120,14 @@
             </div>
             <div class="col-md-3 border-left">
               <h4 class="font-en">Follow us!</h4>
-              <div class="d-flex">
-                <a :href="basicData.Facebook"
+              <div>
+                <a :href="basicData.Facebook" class="d-flex"
                   ><i class="fab fa-instagram mr-2"></i>
                   <p class="mb-0 font-en">樂髮手作 Hair Salon</p></a
                 >
               </div>
-              <div class="d-flex">
-                <a :href="basicData.Facebook"
+              <div>
+                <a :href="basicData.Facebook" class="d-flex"
                   ><i class="fab fa-facebook-square mr-2"></i>
                   <p class="mb-0 font-en">樂髮手作 Hair Salon</p></a
                 >

@@ -1,7 +1,9 @@
 <template>
   <div class="home">
     <FontHeader></FontHeader>
-    <router-view></router-view>
+    <transition name="page" mode="out-in">
+      <router-view :key="$route.path"></router-view>
+    </transition>
     <FontFooter></FontFooter>
   </div>
 </template>
@@ -27,4 +29,12 @@ export default {
 @import './src/assets/confirm.scss';
 @import './src/assets/works.scss';
 @import './src/assets/searchList.scss';
+.page-enter-active,
+.page-leave-active {
+  transition: 1s;
+}
+.page-enter,
+.page-leave {
+  opacity: 0;
+}
 </style>
