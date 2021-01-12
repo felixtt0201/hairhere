@@ -1,0 +1,148 @@
+.text-main--hover {
+  color: #7d7265 !important;
+}
+
+.text-main--hover:hover {
+  color: white !important;
+  background: #cdc3b7 !important;
+  border-radius: 2px;
+}
+
+.text-main {
+  color: #7d7265 !important;
+}
+
+.text-accent {
+  color: white;
+}
+
+.font-en {
+  font-family: "Josefin Sans", sans-serif;
+}
+
+.font-tw {
+  font-family: cwTeXYen;
+}
+
+.bg-accent {
+  background-color: #1d3d4a;
+}
+
+.bg-main {
+  background-color: #7d7265;
+}
+
+.nav-h {
+  height: 100px !important;
+}
+
+.img-position--center {
+  background-position: center center;
+  background-size: cover;
+  height: 50px;
+  width: 112px;
+  margin-left: 24px;
+}
+
+.list-style {
+  list-style: none;
+}
+
+.letter-space {
+  letter-spacing: 0.4em;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #cdc3b7 !important;
+}
+
+.border-bottom:hover {
+  border-bottom: 2px solid #7d7265 !important;
+}
+
+.position-absolute {
+  right: 0;
+  bottom: 0;
+}
+
+.bordera {
+  background-color: black;
+  border: 1px solid white;
+}
+
+.line {
+  position: relative;
+}
+
+.line:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  left: 50%;
+  background-color: white;
+}
+
+.item-logo-position-relative {
+  position: relative;
+}
+
+.item-logo-position-absolute {
+  position: absolute;
+  bottom: -20%;
+}
+
+.title-line {
+  position: relative;
+}
+
+.title-line:before {
+  content: '';
+  position: absolute;
+  right: 58%;
+  left: 0;
+  height: 2px;
+  top: 10px;
+  background-color: #7d7265;
+}
+
+.title-line:after {
+  content: '';
+  position: absolute;
+  right: 0;
+  left: 58%;
+  height: 2px;
+  top: 10px;
+  background-color: #7d7265;
+}
+
+.background-img {
+  width: 180px;
+  height: 180px;
+  background-position: center center;
+  background-size: cover;
+}
+
+.text-sm {
+  font-size: 12px;
+}
+
+.footer-center {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.footer-center .footer-list {
+  padding-right: 45px;
+  padding-left: 5px;
+  border-left: 1px solid white;
+}
+/*# sourceMappingURL=hair.css.map */

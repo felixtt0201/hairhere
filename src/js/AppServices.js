@@ -5,7 +5,7 @@ const storeApi = axios.create({
   // baseURL: 'http://todoapi.balliiballii.com/api/v1',
   withCredentials: false,
   headers: {
-    Accept: 'application/json',
+    // Accept: 'application/json',
     // 'Access-Control-Allow-Origin': '*',
     // 'Content-Type': 'application/x-www-form-urlencoded',
     'Content-Type': 'application/json',
@@ -19,7 +19,7 @@ const storeLogin = (data) => storeApi.post('/LoginStore', data);
 // 店家註冊
 const storeRegister = (data) => storeApi.post('/CreateStore', data);
 // 店家全部資料
-const storeTotalInfo = () => storeApi.get('/GetStore?id=2');
+const storeTotalInfo = () => storeApi.get('/GET/Store?id=2');
 const updateStore = (data) => storeApi.put('/PutStore?id=2', data);
 // const updateStore = (data) => storeApi.patch('/todos/3', data);
 
