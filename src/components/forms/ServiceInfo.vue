@@ -1,14 +1,14 @@
 /* eslint-disable no-param-reassign */
 <template>
   <div id="serviceinfo" class="container-fluid">
-    <!-- <loading
+    <loading
       :opacity="1"
       color="#7e735d"
       loader="bars"
       background-color="#b7b9cc"
       :active.sync="isLoading"
       :is-full-page="fullPage"
-    ></loading> -->
+    ></loading>
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h4 class="h3 mb-0 text-gray-900 font-weight-bold">服務項目</h4>
     </div>
@@ -52,7 +52,7 @@
             <td v-show="editId !== item.Id" class="row">
               <button
                 class="btn btn-danger btn-sm mr-2 mb-1"
-                @click="deleteProduct(item.Id)"
+                @click="deleteProductHandler(item.Id)"
               >
                 刪除
               </button>
@@ -74,7 +74,7 @@
               <button
                 type="submit"
                 class="btn btn-primary btn-sm mb-1"
-                @click="updateServiceInfo(item.Id)"
+                @click="updateProductHandler(item.Id)"
               >
                 確定
               </button>
@@ -110,7 +110,10 @@
               />
             </td>
             <td class="align-middle">
-              <button class="btn btn-success btn-sm" @click="addNewProduct">
+              <button
+                class="btn btn-success btn-sm"
+                @click="addNewProductHandler"
+              >
                 新增
               </button>
             </td>
@@ -123,10 +126,10 @@
 
 <script>
 import {
-  storeProductList,
-  postestoreProduct,
-  updatestoreProductList,
-  deletestoreProduct,
+  getStoreProductList,
+  posteStoreProduct,
+  putStoreProductList,
+  deleteStoreProduct,
 } from '@/js/AppServices';
 
 export default {
@@ -151,14 +154,16 @@ export default {
   },
   methods: {
     // 取得產品資訊
-    getServicesInfo() {
-      storeProductList().then((res) => {
-        console.log(res);
-        this.servicesdata = res.data;
+    getInfoHandler() {
+      getStoreProductList().then((res) => {
+        if (res.data.status) {
+          this.servicesdata = res.data.BasicData;
+          this.isLoading = false;
+        }
       });
     },
     // 新增產品
-    addNewProduct() {
+    addNewProductHandler() {
       const data = this.$qs.stringify({
         Name: this.newProduct.Name,
         UnitPrice: this.newProduct.Price,
@@ -169,7 +174,7 @@ export default {
         Remark: '',
         PublicInformation: 'true',
       });
-      postestoreProduct(data).then((res) => {
+      posteStoreProduct(data).then((res) => {
         if (res.data.errorMessage === '名稱重複' && res.status === 200) {
           this.unsuccessed();
           this.newProduct = {};
@@ -181,9 +186,9 @@ export default {
       });
     },
 
-    // 修改產品價格時間
-    updateServiceInfo(pId) {
-      this.getServicesInfo();
+    // 修改產品的價格、時間
+    updateProductHandler(pId) {
+      this.getInfoHandler();
       this.servicesdata.forEach((item) => {
         if (item.Id === pId) {
           this.pName = item.Name;
@@ -202,7 +207,7 @@ export default {
         Remark: '',
         PublicInformation: 'true',
       });
-      updatestoreProductList(data, pId).then((res) => {
+      putStoreProductList(data, pId).then((res) => {
         if (res.status === 200) {
           const msg = '修改';
           this.successed(msg);
@@ -211,7 +216,7 @@ export default {
     },
 
     // 刪除產品
-    deleteProduct(pId) {
+    deleteProductHandler(pId) {
       this.$swal({
         title: '您確定要刪除？',
         icon: 'warning',
@@ -222,7 +227,7 @@ export default {
         cancelButtonText: '取消',
       }).then((result) => {
         if (result.isConfirmed) {
-          deletestoreProduct(pId);
+          deleteStoreProduct(pId);
           const msg = '刪除';
           this.successed(msg);
         }
@@ -235,7 +240,7 @@ export default {
         icon: 'success',
         title: `${msg}成功`,
       }).then(() => {
-        this.getServicesInfo();
+        this.getInfoHandler();
         this.edit();
       });
     },
@@ -248,7 +253,7 @@ export default {
         title: '新增失敗',
         text: '項目名稱重複',
       }).then(() => {
-        this.getServicesInfo();
+        this.getInfoHandler();
         this.edit();
       });
     },
@@ -261,8 +266,8 @@ export default {
       this.editstatus = !this.editstatus;
     },
   },
-  mounted() {
-    this.getServicesInfo();
+  created() {
+    this.getInfoHandler();
   },
 };
 </script>

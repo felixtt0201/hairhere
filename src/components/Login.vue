@@ -18,7 +18,7 @@
                     <div class="text-center">
                       <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                     </div>
-                    <form class="user" @submit.prevent="signin">
+                    <form class="user" @submit.prevent="loginHandler">
                       <div class="form-group">
                         <input
                           type="email"
@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import { storeLogin } from '@/js/AppServices';
+import { postStoreLogin } from '@/js/AppServices';
 import VueRouter from 'vue-router';
 
 export default {
@@ -95,8 +95,8 @@ export default {
     };
   },
   methods: {
-    signin() {
-      storeLogin(
+    loginHandler() {
+      postStoreLogin(
         this.$qs.stringify({
           email: this.store.email,
           password: this.store.password,

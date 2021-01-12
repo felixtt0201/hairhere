@@ -28,10 +28,66 @@
           class="needs-validation text-left text-gray-900"
           novalidate
           v-cloak
-          @submit.prevent="putStoreInfo"
+          @submit.prevent="putInfoHandler"
         >
           <div class="row">
-            <div class="col-md-6 mb-3">
+            <div class="col-md-4 mb-3">
+              <label for="title" class="font-weight-bold">店家名稱：</label>
+              <p
+                for=""
+                v-if="editstatus"
+                class="text-muted text-gray-800 text-gray-800"
+              >
+                {{ storeInfo.title }}
+              </p>
+              <input
+                v-else
+                type="text"
+                class="form-control"
+                id="title"
+                placeholder="請輸入名稱 ex:樂髮手作"
+                v-model="storeInfo.title"
+              />
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="title" class="font-weight-bold"
+                >店家名稱：(英文)</label
+              >
+              <p
+                for=""
+                v-if="editstatus"
+                class="text-muted text-gray-800 text-gray-800"
+              >
+                {{ storeInfo.engtitle }}
+              </p>
+              <input
+                v-else
+                type="text"
+                class="form-control"
+                id="title"
+                placeholder="請輸入名稱 ex:樂髮手作"
+                v-model="storeInfo.engtitle"
+              />
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="tel" class="font-weight-bold">店家電話：</label>
+              <p
+                for=""
+                v-if="editstatus"
+                class="text-muted text-gray-800 text-gray-800"
+              >
+                {{ storeInfo.tel }}
+              </p>
+              <input
+                v-else
+                type="tel"
+                class="form-control"
+                id="tel"
+                placeholder="請輸入電話or手機"
+                v-model="storeInfo.tel"
+              />
+            </div>
+            <!-- <div class="col-md-6 mb-3">
               <label for="title" class="font-weight-bold">店家名稱：</label>
               <p
                 for=""
@@ -66,7 +122,7 @@
                 placeholder="請輸入電話or手機"
                 v-model="storeInfo.tel"
               />
-            </div>
+            </div> -->
           </div>
           <div class="row">
             <div class="col-md-6 mb-3">
@@ -280,7 +336,7 @@
 </template>
 
 <script>
-import { storeTotalInfo, updateStore } from '@/js/AppServices';
+import { getStoreTotalInfo, putStoreInfo } from '@/js/AppServices';
 
 export default {
   data() {
@@ -295,6 +351,7 @@ export default {
       // 店家資料
       storeInfo: {
         title: '',
+        engtitle: '',
         address: '',
         facebook: '',
         detail: '',
@@ -317,12 +374,13 @@ export default {
 
   methods: {
     // 取得店家資料
-    getStoreInfo() {
-      storeTotalInfo().then((res) => {
+    getInfoHandler() {
+      getStoreTotalInfo().then((res) => {
         // console.log(res);
         if (res.data.status === true) {
           this.newdata = res.data;
           this.storeInfo.title = this.newdata.Name;
+          this.storeInfo.engtitle = this.newdata.EnglishName;
           this.storeInfo.tel = this.newdata.BasicData.Phone;
           this.storeInfo.address = this.newdata.BasicData.Address;
           this.storeInfo.facebook = this.newdata.BasicData.Facebook;
@@ -337,13 +395,14 @@ export default {
     },
 
     //  修改店家資料
-    putStoreInfo() {
+    putInfoHandler() {
       const data = this.$qs.stringify({
         Id: '2',
         Email: 'store@store',
         Password: '123',
         Address: this.storeInfo.address,
         BusinessHoursOpen: this.storeInfo.businessTimeOpen,
+        EnglishName: this.storeInfo.engtitle,
         BusinessHoursClose: this.storeInfo.businessTimeClose,
         Instagram: '',
         Facebook: this.storeInfo.facebook,
@@ -356,15 +415,15 @@ export default {
         Impressum: '',
         Remark: '',
       });
-      updateStore(data).then((res) => {
+      putStoreInfo(data).then((res) => {
         if (res.status === 200) {
-          this.successedUpdate();
+          this.successedMessage();
         }
       });
     },
 
     // 提示-修改成功
-    successedUpdate() {
+    successedMessage() {
       this.$swal({
         position: 'center',
         icon: 'success',
@@ -379,8 +438,8 @@ export default {
       this.editstatus = !this.editstatus;
     },
   },
-  mounted() {
-    this.getStoreInfo();
+  created() {
+    this.getInfoHandler();
   },
 };
 </script>
