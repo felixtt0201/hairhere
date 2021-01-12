@@ -90,12 +90,7 @@
             <div class="col-md-3 border-left">
               <h4 class="font-en">About us</h4>
               <p>
-                歐式溫馨鄉村風格的 服務專業造型之外
-                身邊有可愛貓咪陪伴身邊真的很逗趣 歡迎愛貓咪的朋友們來朝聖唷
-                歐式溫馨鄉村風格的 服務專業造型之外
-                身邊有可愛貓咪陪伴身邊真的很逗趣 歡迎愛貓咪的朋友們來朝聖唷
-                歐式溫馨鄉村風格的 服務專業造型之外
-                身邊有可愛貓咪陪伴身邊真的很逗趣 歡迎愛貓咪的朋友們來朝聖唷
+                {{ basicData.Summary }}
               </p>
             </div>
             <div class="col-md-3 border-left">
@@ -110,28 +105,34 @@
               <ul class="p-0">
                 <li class="d-flex">
                   <h5 class="mr-2">聯絡電話</h5>
-                  (07)-2268725
+                  (07) - {{ basicData.Phone }}
                 </li>
                 <li class="d-flex">
                   <h5 class="mr-2  text-nowrap">店家地址</h5>
-                  高雄市苓雅區青年一路4巷21號
+                  {{ basicData.Address }}
                 </li>
                 <li class="d-flex">
                   <h5 class="mr-2  text-nowrap">營業時間</h5>
-                  每週二至日<br />上午10:30 - 下午6:00<br />
-                  (每週一公休）
+                  每週二至日<br />上午{{ business.BusinessHoursOpen }}～下午{{
+                    business.BusinessHoursClose
+                  }}<br />
+                  (每週一公休)
                 </li>
               </ul>
             </div>
             <div class="col-md-3 border-left">
               <h4 class="font-en">Follow us!</h4>
               <div class="d-flex">
-                <i class="fab fa-instagram mr-2"></i>
-                <p class="mb-0 font-en">樂髮手作 Hair Salon</p>
+                <a :href="basicData.Facebook"
+                  ><i class="fab fa-instagram mr-2"></i>
+                  <p class="mb-0 font-en">樂髮手作 Hair Salon</p></a
+                >
               </div>
               <div class="d-flex">
-                <i class="fab fa-facebook-square mr-2"></i>
-                <p class="mb-0 font-en">樂髮手作 Hair Salon</p>
+                <a :href="basicData.Facebook"
+                  ><i class="fab fa-facebook-square mr-2"></i>
+                  <p class="mb-0 font-en">樂髮手作 Hair Salon</p></a
+                >
               </div>
             </div>
           </div>
@@ -142,29 +143,13 @@
           <div class="row flex-column">
             <h2 class="text-center">服務項目</h2>
             <ul class="list-style p-0 line">
-              <li class="d-flex">
-                <span class="w-50 text-right pr-3">洗髮</span
-                ><span class="w-50 pl-3">$300 +</span>
-              </li>
-              <li class="d-flex">
-                <span class="w-50 text-right pr-3">剪髮</span
-                ><span class="w-50  pl-3">$3000 +</span>
-              </li>
-              <li class="d-flex">
-                <span class="w-50 text-right pr-3">染髮</span
-                ><span class="w-50 pl-3">$3009 +</span>
-              </li>
-              <li class="d-flex">
-                <span class="w-50 text-right pr-3">燙髮</span
-                ><span class="w-50 pl-3">$3001 +</span>
-              </li>
-              <li class="d-flex">
-                <span class="w-50 text-right pr-3">洗髮＋剪髮</span
-                ><span class="w-50 pl-3">$2500 +</span>
-              </li>
-              <li class="d-flex">
-                <span class="w-50 text-right pr-3">深層頭皮護髮</span
-                ><span class="w-50 pl-3">$3999 +</span>
+              <li
+                class="d-flex"
+                v-for="service in services"
+                :key="service.Name"
+              >
+                <span class="w-50 text-right pr-3">{{ service.Name }}</span
+                ><span class="w-50 pl-3">${{ service.UnitPrice }} +</span>
               </li>
             </ul>
             <router-link
@@ -223,10 +208,32 @@
 import { storeTotalInfo } from '@/js/AppServices';
 
 export default {
+  data() {
+    return {
+      basicData: {
+        // address: '',
+        // details: '',
+        // facebook: '',
+        // phone: '',
+        // summary: '',
+      },
+      business: {
+        // BusinessDaysOfWeek: '',
+        // BusinessHoursClose: '',
+        // BusinessHoursOpen: '',
+        // RestDayOfWeekString: '',
+      },
+      services: [],
+    };
+  },
   methods: {
     GetStoreInfo() {
       storeTotalInfo().then((res) => {
-        console.log(res);
+        console.log(res.data);
+        this.basicData = res.data.BasicData;
+        this.business = res.data.Business;
+        this.services = res.data.ServicesPublic;
+        console.log(this.services);
       });
     },
   },

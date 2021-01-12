@@ -67,6 +67,11 @@ const deleteDesigner = (dId) => storeApi.delete(`/DELETE/Designer?id=${dId}`);
 const putDesigner = (dId) => storeApi.put(`/PutDesigner?id=${dId}`);
 
 /** 設計師 */
+// get全部設計師
+const getAllDesigner = (data) =>
+  // eslint-disable-next-line implicit-arrow-linebreak
+  storeApi.get('/GET/DesignerList?storeId=2', data);
+
 // post新增設計師
 // const postDesinger = (data) =>
 //   // eslint-disable-next-line implicit-arrow-linebreak
@@ -88,4 +93,5 @@ export {
   postDesinger,
   deleteDesigner,
   putDesigner,
+  getAllDesigner,
 };
