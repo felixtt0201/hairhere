@@ -15,7 +15,7 @@
                   <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                 </div>
                 <validation-observer v-slot="{ invalid }">
-                  <form class="user" @submit.prevent="register">
+                  <form class="user" @submit.prevent="registerHandler">
                     <div class="row">
                       <div class="col">
                         <label for="account">帳號</label>
@@ -116,7 +116,7 @@
 </template>
 
 <script>
-import { storeRegister } from '@/js/AppServices';
+import { postStoreRegister } from '@/js/AppServices';
 
 export default {
   data() {
@@ -129,23 +129,23 @@ export default {
     };
   },
   methods: {
-    register() {
+    registerHandler() {
       const data = this.$qs.stringify({
         Email: this.registerInfo.account,
         Password: this.registerInfo.repassword,
       });
-      storeRegister(this.$qs.stringify(data)).then((res) => {
+      postStoreRegister(this.$qs.stringify(data)).then((res) => {
         if (res.data.status === false) {
-          this.unsuccessRegister();
+          this.unsuccessMessage();
         } else {
-          this.successRegister();
+          this.successMessage();
         }
         console.log(res);
       });
     },
 
     // 提示-不成功
-    unsuccessRegister() {
+    unsuccessMessage() {
       this.$swal({
         position: 'cneter',
         icon: 'error',
@@ -155,7 +155,7 @@ export default {
     },
 
     // 提示-成功
-    successRegister() {
+    successMessage() {
       this.$swal({
         position: 'center',
         icon: 'success',

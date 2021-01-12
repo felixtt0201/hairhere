@@ -3,8 +3,8 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800">設計師管理</h1>
     </div>
-    <div class="row row-cols-1 row-cols-md-4">
-      <div class="col mb-4">
+    <ul class="row row-cols-1 row-cols-md-4">
+      <li class="col mb-4" v-for="item in tempDesginersInfo" :key="item.Id">
         <div class="card h-100 border-0 shadow-sm">
           <img
             src="https://picsum.photos/300/200?random=11"
@@ -12,159 +12,31 @@
             alt=""
           />
           <div class="card-body">
-            <h5 class="card-title text-center">小明</h5>
+            <h5 class="card-title text-center">{{ item.Name }}</h5>
           </div>
           <div class="container mb-4">
             <div class="row justify-content-around">
               <a href="#" class="btn btn-success btn-circle">
                 <i class="fas fa-edit"></i>
               </a>
-              <a href="#" class="btn btn-danger btn-circle">
+              <a
+                href="#"
+                class="btn btn-danger btn-circle"
+                @click="deleteInfoHandler(item.Id)"
+              >
                 <i class="fas fa-trash"></i>
               </a>
             </div>
           </div>
         </div>
-      </div>
-      <div class="col mb-4">
-        <div class="card h-100 border-0 shadow-sm">
-          <img
-            src="https://picsum.photos/300/200?random=11"
-            class="card-img-top"
-            alt=""
-          />
-          <div class="card-body">
-            <h5 class="card-title text-center">小明</h5>
-          </div>
-          <div class="container mb-4">
-            <div class="row justify-content-around">
-              <a href="#" class="btn btn-success btn-circle">
-                <i class="fas fa-edit"></i>
-              </a>
-              <a href="#" class="btn btn-danger btn-circle">
-                <i class="fas fa-trash"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col mb-4">
-        <div class="card h-100 border-0 shadow-sm">
-          <img
-            src="https://picsum.photos/300/200?random=11"
-            class="card-img-top"
-            alt=""
-          />
-          <div class="card-body">
-            <h5 class="card-title text-center">小明</h5>
-          </div>
-          <div class="container mb-4">
-            <div class="row justify-content-around">
-              <a href="#" class="btn btn-success btn-circle">
-                <i class="fas fa-edit"></i>
-              </a>
-              <a href="#" class="btn btn-danger btn-circle">
-                <i class="fas fa-trash"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col mb-4">
-        <div class="card h-100 border-0 shadow-sm">
-          <img
-            src="https://picsum.photos/300/200?random=11"
-            class="card-img-top"
-            alt=""
-          />
-          <div class="card-body">
-            <h5 class="card-title text-center">小明</h5>
-          </div>
-          <div class="container mb-4">
-            <div class="row justify-content-around">
-              <a href="#" class="btn btn-success btn-circle">
-                <i class="fas fa-edit"></i>
-              </a>
-              <a href="#" class="btn btn-danger btn-circle">
-                <i class="fas fa-trash"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col mb-4">
-        <div class="card h-100 border-0 shadow-sm">
-          <img
-            src="https://picsum.photos/300/200?random=11"
-            class="card-img-top"
-            alt=""
-          />
-          <div class="card-body">
-            <h5 class="card-title text-center">小明</h5>
-          </div>
-          <div class="container mb-4">
-            <div class="row justify-content-around">
-              <a href="#" class="btn btn-success btn-circle">
-                <i class="fas fa-edit"></i>
-              </a>
-              <a href="#" class="btn btn-danger btn-circle">
-                <i class="fas fa-trash"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col mb-4">
-        <div class="card h-100 border-0 shadow-sm">
-          <img
-            src="https://picsum.photos/300/200?random=11"
-            class="card-img-top"
-            alt=""
-          />
-          <div class="card-body">
-            <h5 class="card-title text-center">小明</h5>
-          </div>
-          <div class="container mb-4">
-            <div class="row justify-content-around">
-              <a href="#" class="btn btn-success btn-circle">
-                <i class="fas fa-edit"></i>
-              </a>
-              <a href="#" class="btn btn-danger btn-circle">
-                <i class="fas fa-trash"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col mb-4">
-        <div class="card h-100 border-0 shadow-sm">
-          <img
-            src="https://picsum.photos/300/200?random=11"
-            class="card-img-top"
-            alt=""
-          />
-          <div class="card-body">
-            <h5 class="card-title text-center">小明</h5>
-          </div>
-          <div class="container mb-4">
-            <div class="row justify-content-around">
-              <a href="#" class="btn btn-success btn-circle">
-                <i class="fas fa-edit"></i>
-              </a>
-              <a href="#" class="btn btn-danger btn-circle">
-                <i class="fas fa-trash"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+      </li>
+    </ul>
     <div class="row justify-content-center mt-3 mb-3">
       <button
         type="button"
         class="btn btn-primary btn-lg btn-icon-split"
         data-toggle="modal"
-        data-target="#staticBackdrop"
+        data-target="#designerModal"
       >
         <span class="icon text-white-50">
           <i class="fas fa-user-plus"></i>
@@ -175,11 +47,11 @@
     <!--Modal-->
     <div
       class="modal fade text-gray-900"
-      id="staticBackdrop"
+      id="designerModal"
       data-backdrop="static"
       data-keyboard="false"
       tabindex="-1"
-      aria-labelledby="staticBackdropLabel"
+      aria-labelledby="designerModal"
       aria-hidden="true"
     >
       <div class="modal-dialog modal-lg" role="document">
@@ -279,7 +151,7 @@
                 <div class="form-row">
                   <div class="form-group col-md-6">
                     <div class="row"></div>
-                    <label for="account">帳號</label>
+                    <label for="account">帳號(請輸入E-mail)</label>
                     <input
                       type="email"
                       class="form-control"
@@ -340,7 +212,7 @@
             <button
               type="submit"
               class="btn btn-primary"
-              @click="addNewDesigner"
+              @click="addInfoHandler"
             >
               確認
             </button>
@@ -353,7 +225,13 @@
 </template>
 
 <script>
-import { postDesinger } from '@/js/AppServices';
+import {
+  postDesinger,
+  getDesignerList,
+  deleteDesigner,
+  putDesigner,
+} from '@/js/AppServices';
+import $ from 'jquery';
 
 export default {
   data() {
@@ -368,10 +246,20 @@ export default {
         details: '',
         sex: '',
       },
+      tempDesginersInfo: [],
     };
   },
   methods: {
-    addNewDesigner() {
+    // 取的全部設計師
+    getInfoHandler() {
+      getDesignerList().then((res) => {
+        console.log(res);
+        this.tempDesginersInfo = res.data;
+      });
+    },
+
+    // 新增設計師
+    addInfoHandler() {
       const data = this.$qs.stringify({
         Name: this.designerInfo.name,
         Email: this.designerInfo.account,
@@ -381,10 +269,77 @@ export default {
         Tel: this.designerInfo.tel,
         Detail: this.designerInfo.details,
       });
+      $('#designerModal').modal('show');
       postDesinger(data).then((res) => {
+        // console.log(res);
+        if (res.data.status === false && res.data.message === '帳號重複') {
+          this.$swal({
+            position: 'center',
+            icon: 'error',
+            title: '新增失敗',
+            text: '帳號重複',
+          });
+        } else if (res.data.status === false) {
+          this.unsuccessed();
+        } else {
+          const msg = '新增';
+          this.successed(msg);
+        }
+      });
+    },
+
+    // 刪除設計師
+    deleteInfoHandler(dId) {
+      this.$swal({
+        title: '您確定要刪除？',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: '確定',
+        cancelButtonColor: '#d33',
+        cancelButtonText: '取消',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          deleteDesigner(dId).then((res) => {
+            console.log(res);
+          });
+          const msg = '刪除';
+          this.successed(msg);
+        }
+      });
+    },
+
+    // 修改設計師資料
+    updateInfo() {
+      putDesigner().then((res) => {
         console.log(res);
       });
     },
+
+    // 提示-失敗
+    unsuccessed() {
+      this.$swal({
+        position: 'center',
+        icon: 'error',
+        title: '新增失敗',
+      }).then(() => {
+        this.getInfoHandler();
+      });
+    },
+    // 提示-成功
+    successed(msg) {
+      this.$swal({
+        position: 'center',
+        icon: 'success',
+        title: `${msg}成功`,
+      }).then(() => {
+        this.getInfoHandler();
+        $('#designerModal').modal('hide');
+      });
+    },
+  },
+  mounted() {
+    this.getInfoHandler();
   },
 };
 </script>

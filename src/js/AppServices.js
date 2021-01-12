@@ -19,38 +19,52 @@ const storeApi = axios.create({
 
 /** 店家 */
 // post店家登入
-const storeLogin = (data) => storeApi.post('/POST/Login/Store', data);
+const postStoreLogin = (data) => storeApi.post('/POST/Login/Store', data);
 
 // post店家註冊
-const storeRegister = (data) => storeApi.post('/POST/Store', data);
+const postStoreRegister = (data) => storeApi.post('/POST/Store', data);
 
 // get店家全部資料
-const storeTotalInfo = () => storeApi.get('/GET/Store?id=2');
+const getStoreTotalInfo = () => storeApi.get('/GET/Store?id=2');
 
 // put修改店家資料
-const updateStore = (data) => storeApi.put('/PUT/Store', data);
+const putStoreInfo = (data) => storeApi.put('/PUT/Store', data);
 
-// put修改店休日期
+// put修改店休日期 -未完
 const updateDayOf = (data) => storeApi.put('PUT/Holiday?id=8', data);
 
 /** 產品 */
 // get全部產品
-const storeProductList = () => storeApi.get('/GET/ProductList?storeId=2');
+const getStoreProductList = () => storeApi.get('/GET/ProductList?storeId=2');
 
 // post新增產品
-const postestoreProduct = (data) => storeApi.post('/POST/Product', data);
+const posteStoreProduct = (data) => storeApi.post('/POST/Product', data);
 
-// put修改產品
-const updatestoreProductList = (data, pId) =>
+// put修改產品資料
+const putStoreProductList = (data, pId) =>
   // eslint-disable-next-line implicit-arrow-linebreak
   storeApi.put(`/PUT/Product?id=${pId}`, data);
 
 // delete刪除產品
-const deletestoreProduct = (pId) =>
+const deleteStoreProduct = (pId) =>
   // eslint-disable-next-line implicit-arrow-linebreak
   storeApi.delete(`/DELETE/Product?id=${pId}`);
 
+/** 設計師 */
+// get設計師全部資料
+const getDesignerList = () => storeApi.get('/GET/DesignerList?storeId=2');
+
+// get單一設計師資料
+const getDesigner = (dId) => storeApi.get(`/GET/Designer?id=${dId}`);
+
+// post新增設計師
 const postDesinger = (data) => storeApi.post('/POST/Designer?storeid=2', data);
+
+// delete設計師
+const deleteDesigner = (dId) => storeApi.delete(`/DELETE/Designer?id=${dId}`);
+
+// put修改設計師資料
+const putDesigner = (dId) => storeApi.put(`/PutDesigner?id=${dId}`);
 
 /** 設計師 */
 // post新增設計師
@@ -60,14 +74,18 @@ const postDesinger = (data) => storeApi.post('/POST/Designer?storeid=2', data);
 
 // eslint-disable-next-line object-curly-newline
 export {
-  storeLogin,
-  storeRegister,
-  storeTotalInfo,
-  updateStore,
+  postStoreLogin,
+  postStoreRegister,
+  getStoreTotalInfo,
+  putStoreInfo,
   updateDayOf,
-  storeProductList,
-  updatestoreProductList,
-  postestoreProduct,
-  deletestoreProduct,
+  getStoreProductList,
+  posteStoreProduct,
+  putStoreProductList,
+  deleteStoreProduct,
+  getDesignerList,
+  getDesigner,
   postDesinger,
+  deleteDesigner,
+  putDesigner,
 };
