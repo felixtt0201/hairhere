@@ -51,8 +51,10 @@ const deleteStoreProduct = (pId) =>
   storeApi.delete(`/DELETE/Product?id=${pId}`);
 
 /** 設計師 */
-// get設計師全部資料
-const getDesignerList = () => storeApi.get('/GET/DesignerList?storeId=2');
+// get全部設計師
+const getAllDesigner = () =>
+  // eslint-disable-next-line implicit-arrow-linebreak
+  storeApi.get('/GET/DesignerList?storeId=2');
 
 // get單一設計師資料
 const getDesigner = (dId) => storeApi.get(`/GET/Designer?id=${dId}`);
@@ -67,10 +69,6 @@ const deleteDesigner = (dId) => storeApi.delete(`/DELETE/Designer?id=${dId}`);
 const putDesigner = (dId) => storeApi.put(`/PutDesigner?id=${dId}`);
 
 /** 設計師 */
-// get全部設計師
-const getAllDesigner = (data) =>
-  // eslint-disable-next-line implicit-arrow-linebreak
-  storeApi.get('/GET/DesignerList?storeId=2', data);
 
 // post新增設計師
 // const postDesinger = (data) =>
@@ -88,7 +86,6 @@ export {
   posteStoreProduct,
   putStoreProductList,
   deleteStoreProduct,
-  getDesignerList,
   getDesigner,
   postDesinger,
   deleteDesigner,

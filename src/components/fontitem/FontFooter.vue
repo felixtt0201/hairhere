@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { storeTotalInfo } from '@/js/AppServices';
+import { getStoreTotalInfo } from '@/js/AppServices';
 
 export default {
   data() {
@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     GetStoreInfo() {
-      storeTotalInfo().then((res) => {
+      getStoreTotalInfo().then((res) => {
         this.englishName = res.data.EnglishName;
         this.storeName = res.data.Name;
         this.basicData = res.data.BasicData;

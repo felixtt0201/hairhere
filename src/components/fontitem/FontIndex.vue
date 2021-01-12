@@ -205,7 +205,7 @@
 </template>
 
 <script>
-import { storeTotalInfo } from '@/js/AppServices';
+import { getStoreTotalInfo } from '@/js/AppServices';
 
 export default {
   data() {
@@ -228,7 +228,7 @@ export default {
   },
   methods: {
     GetStoreInfo() {
-      storeTotalInfo().then((res) => {
+      getStoreTotalInfo().then((res) => {
         console.log(res.data);
         this.basicData = res.data.BasicData;
         this.business = res.data.Business;

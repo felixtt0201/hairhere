@@ -227,7 +227,7 @@
 <script>
 import {
   postDesinger,
-  getDesignerList,
+  getAllDesigner,
   deleteDesigner,
   putDesigner,
 } from '@/js/AppServices';
@@ -252,7 +252,7 @@ export default {
   methods: {
     // 取的全部設計師
     getInfoHandler() {
-      getDesignerList().then((res) => {
+      getAllDesigner().then((res) => {
         console.log(res);
         this.tempDesginersInfo = res.data;
       });
