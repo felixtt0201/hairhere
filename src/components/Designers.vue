@@ -16,7 +16,11 @@
           </div>
           <div class="container mb-4">
             <div class="row justify-content-around">
-              <a href="#" class="btn btn-success btn-circle">
+              <a
+                href="#"
+                class="btn btn-success btn-circle"
+                @click="updateInfo(dId)"
+              >
                 <i class="fas fa-edit"></i>
               </a>
               <a
@@ -230,6 +234,7 @@ import {
   getAllDesigner,
   deleteDesigner,
   putDesigner,
+  getDesigner,
 } from '@/js/AppServices';
 import $ from 'jquery';
 
@@ -310,9 +315,12 @@ export default {
     },
 
     // 修改設計師資料
-    updateInfo() {
-      putDesigner().then((res) => {
-        console.log(res);
+    updateInfo(dId) {
+      getDesigner(dId).then((res) => {
+        console.log('singleIndo', res);
+      });
+      putDesigner(dId).then((res) => {
+        console.log('put', res);
       });
     },
 
