@@ -41,10 +41,10 @@
             >
           </li>
           <li class="nav-item">
-            <a
+            <router-link
+              to="/works"
               class="nav-link text-main--hover border-bottom pr-3 pl-3"
-              href="#"
-              >作品集</a
+              >作品集</router-link
             >
           </li>
           <li class="nav-item ">
@@ -56,10 +56,10 @@
           </li>
 
           <li class="nav-item ">
-            <a
+            <router-link
+              to="/searchList"
               class="nav-link text-main--hover border-bottom pr-3 pl-3"
-              href="#"
-              >查詢訂單</a
+              >查詢訂單</router-link
             >
           </li>
         </ul>

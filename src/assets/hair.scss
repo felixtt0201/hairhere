@@ -1,11 +1,13 @@
 $text-primary: #7d7265;
 $text-accent: rgba(255, 255, 255, 1);
-$text-sm: 12px;
 $bg-primary: rgba(205, 195, 183, 1);
 $bg-accent: rgba(29, 61, 74, 1);
 $font-family-en: 'Josefin Sans', sans-serif;
 $font-family-tw: 'Noto Sans TC', sans-serif;
-
+body {
+  font-family: 'cwTeXYen' !important;
+  font-size: 20px !important;
+}
 .text-main--hover {
   color: $text-primary !important;
   &:hover {
@@ -58,9 +60,8 @@ $font-family-tw: 'Noto Sans TC', sans-serif;
   right: 0;
   bottom: 0;
 }
-.bordera {
-  background-color: black;
-  border: 1px solid white;
+.btn {
+  font-size: 20px !important;
 }
 
 .line {
@@ -112,9 +113,6 @@ $font-family-tw: 'Noto Sans TC', sans-serif;
   height: 180px;
   background-position: center center;
   background-size: cover;
-}
-.text-sm {
-  font-size: $text-sm;
 }
 .footer-center {
   display: flex;

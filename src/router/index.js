@@ -35,6 +35,16 @@ const routes = [
         name: 'Confirm',
         component: () => import('../components/fontitem/Confirm.vue'),
       },
+      {
+        path: '/works',
+        name: 'Works',
+        component: () => import('../components/fontitem/Works.vue'),
+      },
+      {
+        path: '/searchList',
+        name: 'SearchList',
+        component: () => import('../components/fontitem/SearchList.vue'),
+      },
     ],
   },
   {

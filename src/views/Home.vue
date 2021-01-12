@@ -25,4 +25,6 @@ export default {
 @import './src/assets/designerSingle.scss';
 @import './src/assets/reservation.scss';
 @import './src/assets/confirm.scss';
+@import './src/assets/works.scss';
+@import './src/assets/searchList.scss';
 </style>

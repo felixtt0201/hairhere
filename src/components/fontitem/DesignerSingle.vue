@@ -5,14 +5,14 @@
       <div class="col-md-8 mb-4">
         <div class="row">
           <div
-            class="col-md-6 photo-size border"
+            class="col-md-6 photo-size"
             :style="{
               'background-image':
                 'url(' + require('@/assets/img/photo2.svg') + ')',
             }"
           ></div>
           <div
-            class="col-md-6 border d-flex flex-column justify-content-around align-items-center"
+            class="col-md-6 d-flex flex-column justify-content-around align-items-center"
           >
             <h4>社稷詩</h4>
             <p class="w-50 border-left">設計專業專業剪燙染護頭皮養護精緻編髮</p>
@@ -27,16 +27,16 @@
     <h4 class="title-line w-100 text-center mb-4 text-main">設計作品</h4>
     <div class="container">
       <div class="row justify-content-center">
-        <div class="col-md-10 border ">
+        <div class="col-md-10">
           <div class="row">
-            <div class="col-md-4 border">
+            <div class="col-md-4">
               <img
                 src="@/assets/img/photo1.png"
                 alt=""
                 style="height: 100%;width: 100%;"
               />
             </div>
-            <div class="col-md-8 border p40">
+            <div class="col-md-8 p40">
               <h4 class="mb-4">沙龍護髮</h4>
               <p class="mb-5 border-left">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor
