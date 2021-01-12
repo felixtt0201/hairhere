@@ -23,10 +23,6 @@ export default {
     Navbar,
     Sidebar,
     Footer,
-    // test,
-  },
-  created() {
-    console.log(document.cookie.split('=')[1]);
   },
 };
 </script>

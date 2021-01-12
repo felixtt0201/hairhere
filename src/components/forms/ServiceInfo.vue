@@ -1,6 +1,14 @@
 /* eslint-disable no-param-reassign */
 <template>
   <div id="serviceinfo" class="container-fluid">
+    <!-- <loading
+      :opacity="1"
+      color="#7e735d"
+      loader="bars"
+      background-color="#b7b9cc"
+      :active.sync="isLoading"
+      :is-full-page="fullPage"
+    ></loading> -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h4 class="h3 mb-0 text-gray-900 font-weight-bold">服務項目</h4>
     </div>
@@ -124,6 +132,10 @@ import {
 export default {
   data() {
     return {
+      // Loading遮罩
+      isLoading: true,
+      fullPage: true,
+
       servicesdata: {},
       editstatus: true,
       editId: '',
@@ -141,6 +153,7 @@ export default {
     // 取得產品資訊
     getServicesInfo() {
       storeProductList().then((res) => {
+        console.log(res);
         this.servicesdata = res.data;
       });
     },
@@ -201,12 +214,12 @@ export default {
     deleteProduct(pId) {
       this.$swal({
         title: '您確定要刪除？',
-        text: "You won't be able to revert this!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
+        confirmButtonText: '確定',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: '取消',
       }).then((result) => {
         if (result.isConfirmed) {
           deletestoreProduct(pId);

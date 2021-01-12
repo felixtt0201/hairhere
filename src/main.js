@@ -9,7 +9,8 @@ import {
 } from 'vee-validate';
 import TW from 'vee-validate/dist/locale/zh_TW.json';
 import * as rules from 'vee-validate/dist/rules';
-
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 import axios from 'axios';
 import qs from 'qs';
 import VueAxios from 'vue-axios';
@@ -27,6 +28,7 @@ localize('zh_TW', TW);
 Vue.component('ValidationObserver', ValidationObserver);
 Vue.component('ValidationProvider', ValidationProvider);
 Vue.prototype.$qs = qs;
+Vue.component('Loading', Loading);
 
 configure({
   classes: {

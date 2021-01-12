@@ -25,10 +25,13 @@ const storeLogin = (data) => storeApi.post('/POST/Login/Store', data);
 const storeRegister = (data) => storeApi.post('/POST/Store', data);
 
 // get店家全部資料
-const storeTotalInfo = () => storeApi.get('/GET/Store');
+const storeTotalInfo = () => storeApi.get('/GET/Store?id=2');
 
 // put修改店家資料
 const updateStore = (data) => storeApi.put('/PUT/Store', data);
+
+// put修改店休日期
+const updateDayOf = (data) => storeApi.put('PUT/Holiday?id=8', data);
 
 /** 產品 */
 // get全部產品
@@ -61,6 +64,7 @@ export {
   storeRegister,
   storeTotalInfo,
   updateStore,
+  updateDayOf,
   storeProductList,
   updatestoreProductList,
   postestoreProduct,

@@ -92,6 +92,16 @@
       </div>
     </li>
 
+    <li class="nav-item" @click="logout">
+      <router-link
+        class="nav-link font-weight-bold sidebarhover"
+        :to="{ name: 'login' }"
+      >
+        <i class="fas fa-sign-out-alt mr-2"></i>
+        <span>登出</span></router-link
+      >
+    </li>
+
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block" />
 
@@ -107,6 +117,17 @@
 import sidebarseffect from '@/js/sidebarseffect';
 
 export default {
+  methods: {
+    logout() {
+      this.$swal({
+        position: 'center',
+        icon: 'success',
+        title: '成功登出',
+        // showConfirmButton: false,
+        timer: 1500,
+      });
+    },
+  },
   mounted() {
     sidebarseffect();
   },

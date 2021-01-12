@@ -18,7 +18,7 @@
                     <div class="text-center">
                       <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                     </div>
-                    <form class="user" @submit.prevent="signin" method="post">
+                    <form class="user" @submit.prevent="signin">
                       <div class="form-group">
                         <input
                           type="email"
@@ -27,6 +27,7 @@
                           aria-describedby="emailHelp"
                           placeholder="Enter Email Address..."
                           v-model="store.email"
+                          required
                         />
                       </div>
                       <div class="form-group">
@@ -54,7 +55,6 @@
                       <button
                         class="btn btn-primary btn-user btn-block"
                         type="submit"
-                        @click="signin"
                       >
                         Login
                       </button>
@@ -102,7 +102,6 @@ export default {
           password: this.store.password,
         }),
       ).then((res) => {
-        console.log(res);
         if (res.data.status === false) {
           this.unsuccessMessage();
         } else {

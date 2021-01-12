@@ -14,17 +14,7 @@
 import Calendar from '../dashboarditem/Calendar.vue';
 
 export default {
-  methods: {
-    getInfo() {
-      const api = 'https://salon.rocket-coding.com/GET/Store/1';
-      this.axios.get(api).then((res) => {
-        console.log(res);
-      });
-    },
-  },
-  created() {
-    this.getInfo();
-  },
+  methods: {},
   components: {
     Calendar,
   },

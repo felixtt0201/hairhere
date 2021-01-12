@@ -1,5 +1,13 @@
 <template>
   <div id="storeinformation" class="mt-4">
+    <loading
+      :opacity="1"
+      color="#7e735d"
+      loader="bars"
+      background-color="#b7b9cc"
+      :active.sync="isLoading"
+      :is-full-page="fullPage"
+    ></loading>
     <div class="row">
       <div class="col">
         <div class="row justify-content-between">
@@ -95,14 +103,106 @@
               <p for="" v-if="editstatus" class="text-muted text-gray-800">
                 {{ storeInfo.DayOf }}
               </p>
-              <input
+              <div class="col-8" v-else>
+                <div class="col-6">
+                  <div class="custom-control custom-checkbox">
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      id="monday"
+                      value="2021-01-11"
+                      v-model="DayOf"
+                    />
+                    <label class="custom-control-label" for="monday"
+                      >星期一</label
+                    >
+                  </div>
+                  <div class="custom-control custom-checkbox">
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      id="tuesday"
+                      value="2021-01-12"
+                      v-model="DayOf"
+                    />
+                    <label class="custom-control-label" for="tuesday"
+                      >星期二</label
+                    >
+                  </div>
+                  <div class="custom-control custom-checkbox">
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      id="wednesday"
+                      value="2021-01-13"
+                      v-model="DayOf"
+                    />
+                    <label class="custom-control-label" for="wednesday"
+                      >星期三</label
+                    >
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="custom-control custom-checkbox">
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      id="thursday"
+                      value="2021-01-14"
+                      v-model="DayOf"
+                    />
+                    <label class="custom-control-label" for="thursday"
+                      >星期四</label
+                    >
+                  </div>
+                  <div class="custom-control custom-checkbox">
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      id="friday"
+                      value="2021-01-15"
+                      v-model="DayOf"
+                    />
+                    <label class="custom-control-label" for="friday"
+                      >星期五</label
+                    >
+                  </div>
+                  <div class="custom-control custom-checkbox">
+                    <input
+                      type="checkbox"
+                      class="custom-control-input chkbox"
+                      id="saturday"
+                      value="2021-01-16"
+                      v-model="DayOf"
+                    />
+                    <label class="custom-control-label" for="saturday"
+                      >星期六</label
+                    >
+                  </div>
+                  <div class="custom-control custom-checkbox">
+                    <input
+                      type="checkbox"
+                      class="custom-control-input chkbox"
+                      id="sunday"
+                      value="2021-01-17"
+                      v-model="DayOf"
+                    />
+                    <label class="custom-control-label" for="sunday"
+                      >星期日</label
+                    >
+                  </div>
+                  <span>{{ DayOf }}</span>
+                </div>
+              </div>
+
+              <!-- <input
                 v-else
                 type="text"
                 class="form-control"
                 id="dayof"
                 placeholder="請輸入星期幾 ex:星期日"
                 v-model="storeInfo.DayOf"
-              />
+              /> -->
             </div>
           </div>
           <div class="mb-3">
@@ -154,8 +254,6 @@
               >成員介紹：</label
             >
             <p for="" v-if="editstatus" class="text-muted text-gray-800">
-              <!-- {{ storeInfo.summary }}。 -->
-              <!-- <br /> -->
               {{ storeInfo.detail }}
             </p>
             <textarea
@@ -187,8 +285,13 @@ import { storeTotalInfo, updateStore } from '@/js/AppServices';
 export default {
   data() {
     return {
+      // Loading遮罩
+      isLoading: true,
+      fullPage: true,
+
       // 存放Api接回來的資料
       newdata: {},
+
       // 店家資料
       storeInfo: {
         title: '',
@@ -203,8 +306,12 @@ export default {
         businessTime: '',
         DayOf: '',
       },
+
       // 編輯的開關
       editstatus: true,
+
+      // 休假日
+      DayOf: [],
     };
   },
 
@@ -212,17 +319,20 @@ export default {
     // 取得店家資料
     getStoreInfo() {
       storeTotalInfo().then((res) => {
-        console.log(res);
-        this.newdata = res.data;
-        this.storeInfo.title = this.newdata.Name;
-        this.storeInfo.tel = this.newdata.BasicData.Phone;
-        this.storeInfo.address = this.newdata.BasicData.Address;
-        this.storeInfo.facebook = this.newdata.BasicData.Facebook;
-        this.storeInfo.detail = this.newdata.BasicData.Details;
-        this.storeInfo.summary = this.newdata.BasicData.Summary;
-        this.storeInfo.DayOf = this.newdata.Business.RestDayOfWeekString;
-        this.storeInfo.businessTimeOpen = this.newdata.Business.BusinessHoursOpen;
-        this.storeInfo.businessTimeClose = this.newdata.Business.BusinessHoursClose;
+        // console.log(res);
+        if (res.data.status === true) {
+          this.newdata = res.data;
+          this.storeInfo.title = this.newdata.Name;
+          this.storeInfo.tel = this.newdata.BasicData.Phone;
+          this.storeInfo.address = this.newdata.BasicData.Address;
+          this.storeInfo.facebook = this.newdata.BasicData.Facebook;
+          this.storeInfo.detail = this.newdata.BasicData.Details;
+          this.storeInfo.summary = this.newdata.BasicData.Summary;
+          this.storeInfo.DayOf = this.newdata.Business.RestDayOfWeekString;
+          this.storeInfo.businessTimeOpen = this.newdata.Business.BusinessHoursOpen;
+          this.storeInfo.businessTimeClose = this.newdata.Business.BusinessHoursClose;
+          this.isLoading = false;
+        }
       });
     },
 
