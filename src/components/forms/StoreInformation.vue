@@ -416,6 +416,7 @@ export default {
         Remark: '',
       });
       putStoreInfo(data).then((res) => {
+        console.log(res);
         if (res.status === 200) {
           this.successedMessage();
         }
@@ -430,6 +431,7 @@ export default {
         title: '修改成功',
       }).then(() => {
         this.edit();
+        this.getInfoHandler();
       });
     },
 

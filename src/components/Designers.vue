@@ -19,7 +19,7 @@
               <a
                 href="#"
                 class="btn btn-success btn-circle"
-                @click="updateInfo(item.Id)"
+                @click="openModalHandler(false, item)"
               >
                 <i class="fas fa-edit"></i>
               </a>
@@ -41,6 +41,7 @@
         class="btn btn-primary btn-lg btn-icon-split"
         data-toggle="modal"
         data-target="#designerModal"
+        @click="openModalHandler(true)"
       >
         <span class="icon text-white-50">
           <i class="fas fa-user-plus"></i>
@@ -58,171 +59,171 @@
       aria-labelledby="designerModal"
       aria-hidden="true"
     >
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content border-0">
-          <div class="modal-header bg-dark text-white">
-            <h5 class="modal-title" id="exampleModalLabel">
-              <span>新增設計師</span>
-            </h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="row">
-              <div class="col-sm-4">
-                <h2>設計師個人照片</h2>
-                <div class="form-group">
-                  <label for="designerphoto"
-                    >上傳照片
-                    <!-- <i class="fas fa-cog fa-spin"></i> -->
-                  </label>
-                  <input
-                    type="file"
-                    id="designerphoto"
-                    class="form-control"
-                    ref="files"
-                  />
-                </div>
-                <!-- <img
+      <form action="" @submit.prevent="addInfo">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content border-0">
+            <div class="modal-header bg-dark text-white">
+              <h5 class="modal-title" id="exampleModalLabel">
+                <span>新增設計師</span>
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-sm-4">
+                  <h2>設計師個人照片</h2>
+                  <div class="form-group">
+                    <label for="designerphoto"
+                      >上傳照片
+                      <!-- <i class="fas fa-cog fa-spin"></i> -->
+                    </label>
+                    <input
+                      type="file"
+                      id="designerphoto"
+                      class="form-control"
+                      ref="files"
+                    />
+                  </div>
+                  <!-- <img
                   img="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=828346ed697837ce808cae68d3ddc3cf&auto=format&fit=crop&w=1350&q=80"
                   class="img-fluid"
                   alt=""
                 /> -->
-              </div>
-              <div class="col-sm-8">
-                <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <label for="name">姓名</label>
+                </div>
+                <div class="col-sm-8">
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="name">姓名</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="category"
+                        placeholder="請輸入姓名"
+                        v-model="tempInfo.Name"
+                      />
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="sex">性別</label>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="inlineRadioOptions"
+                          id="male"
+                          value="0"
+                          v-model="tempInfo.GenderType"
+                        />
+                        <label class="form-check-label" for="0">男</label>
+                      </div>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="inlineRadioOptions"
+                          id="female"
+                          value="1"
+                          v-model="tempInfo.GenderType"
+                        />
+                        <label class="form-check-label" for="1">女</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="phone">電話/手機</label>
                     <input
                       type="text"
                       class="form-control"
-                      id="category"
-                      placeholder="請輸入姓名"
-                      v-model="designerInfo.name"
+                      id="phone"
+                      placeholder="請輸入電話/手機"
+                      v-model="tempInfo.tel"
                     />
                   </div>
-                  <div class="form-group col-md-6">
-                    <label for="sex">性別</label>
-                    <div class="form-check">
+                  <div class="form-group">
+                    <label for="lineId">LineID</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="lineId"
+                      placeholder="LineID"
+                    />
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <div class="row"></div>
+                      <label for="account">帳號(請輸入E-mail)</label>
                       <input
-                        class="form-check-input"
-                        type="radio"
-                        name="inlineRadioOptions"
-                        id="male"
-                        value="male"
-                        v-model="designerInfo.sex"
+                        type="email"
+                        class="form-control"
+                        id="account"
+                        placeholder="請輸入帳號"
+                        required
+                        v-model="tempInfo.Email"
                       />
-                      <label class="form-check-label" for="male">男</label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-group col-md-6">
+                      <div class="row"></div>
+                      <label for="password">密碼</label>
                       <input
-                        class="form-check-input"
-                        type="radio"
-                        name="inlineRadioOptions"
-                        id="female"
-                        value="female"
-                        v-model="designerInfo.sex"
+                        type="password"
+                        class="form-control"
+                        id="password"
+                        required
+                        placeholder="請輸入密碼"
                       />
-                      <label class="form-check-label" for="female">女</label>
                     </div>
                   </div>
-                </div>
-                <div class="form-group">
-                  <label for="phone">電話/手機</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="phone"
-                    placeholder="請輸入電話/手機"
-                    v-model="designerInfo.tel"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="lineId">LineID</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="lineId"
-                    placeholder="LineID"
-                  />
-                </div>
-                <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <div class="row"></div>
-                    <label for="account">帳號(請輸入E-mail)</label>
-                    <input
-                      type="email"
-                      class="form-control"
-                      id="account"
-                      placeholder="請輸入帳號"
-                      v-model="designerInfo.account"
-                    />
+                  <div class="form-row justify-content-end">
+                    <div class="form-group col-md-6">
+                      <div class="row"></div>
+                      <label for="repassword">再次輸入密碼</label>
+                      <input
+                        type="password"
+                        class="form-control"
+                        id="repassword"
+                        placeholder="再次輸入密碼"
+                        required
+                        v-model="tempInfo.Password"
+                      />
+                    </div>
                   </div>
-                  <div class="form-group col-md-6">
-                    <div class="row"></div>
-                    <label for="password">密碼</label>
-                    <input
-                      type="password"
+                  <hr />
+                  <div class="form-group">
+                    <label for="description">我的專長/特色</label>
+                    <textarea
+                      type="text"
                       class="form-control"
-                      id="password"
-                      placeholder="請輸入密碼"
-                      v-model="designerInfo.password"
-                    />
+                      id="description"
+                      placeholder="請輸入我的專長/特色"
+                      cols="30"
+                      rows="5"
+                      v-model="tempInfo.details"
+                    ></textarea>
                   </div>
-                </div>
-                <div class="form-row justify-content-end">
-                  <div class="form-group col-md-6">
-                    <div class="row"></div>
-                    <label for="repassword">再次輸入密碼</label>
-                    <input
-                      type="password"
-                      class="form-control"
-                      id="repassword"
-                      placeholder="再次輸入密碼"
-                      v-model="designerInfo.repassword"
-                    />
-                  </div>
-                </div>
-                <hr />
-                <div class="form-group">
-                  <label for="description">我的專長/特色</label>
-                  <textarea
-                    type="text"
-                    class="form-control"
-                    id="description"
-                    placeholder="請輸入我的專長/特色"
-                    cols="30"
-                    rows="5"
-                    v-model="designerInfo.details"
-                  ></textarea>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-outline-secondary"
-              data-dismiss="modal"
-            >
-              取消
-            </button>
-            <button
-              type="submit"
-              class="btn btn-primary"
-              @click="addInfoHandler"
-            >
-              確認
-            </button>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-outline-secondary"
+                data-dismiss="modal"
+              >
+                取消
+              </button>
+              <button type="submit" class="btn btn-primary">
+                確認
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      </form>
     </div>
     <!--Modal-->
   </div>
@@ -234,27 +235,27 @@ import {
   getAllDesigner,
   deleteDesigner,
   putDesigner,
-  getDesigner,
 } from '@/js/AppServices';
 import $ from 'jquery';
 
 export default {
   data() {
     return {
-      designerInfo: {
-        name: '',
-        tel: '',
-        LineID: '',
-        account: '',
-        password: '',
-        repassword: '',
-        details: '',
-        sex: '',
-      },
+      // tempInfo: {
+      //   name: '',
+      //   tel: '',
+      //   LineID: '',
+      //   account: '',
+      //   password: '',
+      //   repassword: '',
+      //   details: '',
+      //   sex: '',
+      // },
       // 全部設計師資料
       tempDesginersInfo: [],
       // 修改單一設計師資料
       tempInfo: {},
+      isNew: false,
     };
   },
   methods: {
@@ -265,34 +266,43 @@ export default {
       });
     },
 
-    // 新增設計師
-    addInfoHandler() {
-      const data = this.$qs.stringify({
-        Name: this.designerInfo.name,
-        Email: this.designerInfo.account,
-        Password: this.designerInfo.repassword,
-        Sex: this.designerInfo.sex,
-        LineID: this.designerInfo.LineID,
-        Tel: this.designerInfo.tel,
-        Detail: this.designerInfo.details,
-      });
-      $('#designerModal').modal('show');
-      postDesinger(data).then((res) => {
-        // console.log(res);
-        if (res.data.status === false && res.data.message === '帳號重複') {
-          this.$swal({
-            position: 'center',
-            icon: 'error',
-            title: '新增失敗',
-            text: '帳號重複',
-          });
-        } else if (res.data.status === false) {
-          this.unsuccessed();
-        } else {
-          const msg = '新增';
-          this.successed(msg);
-        }
-      });
+    // 新增或者修改設計師
+    addInfo() {
+      const postmsg = '新增';
+      const putmsg = '更新';
+      if (this.isNew) {
+        postDesinger(this.$qs.stringify(this.tempInfo)).then((res) => {
+          if (res.data.status === false && res.data.message === '帳號重複') {
+            this.$swal({
+              position: 'center',
+              icon: 'error',
+              title: '新增失敗',
+              text: '帳號重複',
+            });
+          } else if (res.data.status === false) {
+            this.unsuccessed(postmsg);
+          } else {
+            this.successed(postmsg);
+          }
+        });
+      } else {
+        putDesigner(this.$qs.stringify(this.tempInfo), this.tempInfo.Id).then(
+          (res) => {
+            if (res.data.status === false && res.data.message === '驗證錯誤') {
+              this.$swal({
+                position: 'center',
+                icon: 'error',
+                title: '更新失敗',
+                text: '帳號或密碼錯誤',
+              });
+            } else if (res.data.status === false) {
+              this.unsuccessed(putmsg);
+            } else {
+              this.successed(putmsg);
+            }
+          },
+        );
+      }
     },
 
     // 刪除設計師
@@ -316,31 +326,23 @@ export default {
       });
     },
 
-    // 修改設計師資料
-    updateInfo(dId) {
-      getDesigner(dId).then((res) => {
-        console.log('singleInfo', res);
-        this.tempInfo = res.data;
-        console.log(this.tempInfo);
-      });
-      const data = this.$qs.stringify({
-        id: dId,
-        Name: this.tempInfo.Name,
-        Email: this.tempInfo.Email,
-        Password: '123',
-      });
-      putDesigner(data, dId).then((res) => {
-        console.log('put', res);
-      });
+    openModalHandler(isNew, item) {
+      if (isNew) {
+        this.tempInfo = {};
+        this.isNew = true;
+      } else {
+        this.tempInfo = Object.assign(item, {});
+        this.isNew = false;
+      }
+      $('#designerModal').modal('show');
     },
-    // openModalHandler(isNew) {},
 
     // 提示-失敗
-    unsuccessed() {
+    unsuccessed(msg) {
       this.$swal({
         position: 'center',
         icon: 'error',
-        title: '新增失敗',
+        title: `${msg}失敗`,
       }).then(() => {
         this.getInfoHandler();
       });

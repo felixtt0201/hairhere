@@ -83,7 +83,7 @@
 
 <script>
 import { postStoreLogin } from '@/js/AppServices';
-import VueRouter from 'vue-router';
+// import VueRouter from 'vue-router';
 
 export default {
   data() {
@@ -106,18 +106,9 @@ export default {
           this.unsuccessMessage();
         } else {
           // 成功登入就把token存在 cookie
-          document.cookie = `mytoken=${res.data.token}`;
-
-          // router問題解決
-          const { isNavigationFailure, NavigationFailureType } = VueRouter;
-          this.$router.push({ name: 'Dashboard' }).catch((failure) => {
-            if (
-              isNavigationFailure(failure, NavigationFailureType.redirected)
-            ) {
-              // show a small notification to the user
-            }
-          });
-
+          const mytoken = res.data.token;
+          document.cookie = `hairToken=${mytoken}`;
+          this.$router.push({ name: 'Dashboard' });
           this.successMessage();
         }
       });

@@ -1,3 +1,4 @@
+/* eslint-disable quote-props */
 import axios from 'axios';
 
 const storeApi = axios.create({
@@ -5,17 +6,9 @@ const storeApi = axios.create({
   withCredentials: false,
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded',
-    Authorization: `Bearer ${document.cookie.split('=')[1]}`, // Bearer 跟 token 中間有一個空格
+    Authorization: `Bearer ${document.cookie.split('=')[1]}`,
   },
 });
-
-// const picuploaded = axios.create({
-//   baseURL: 'https://salon.rocket-coding.com',
-//   withCredentials: false,
-//   headers: {
-//     'Content-Type': 'multipart/form-data',
-//   },
-// });
 
 /** 店家 */
 // post店家登入
