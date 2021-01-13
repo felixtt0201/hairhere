@@ -102,12 +102,14 @@ export default {
           password: this.store.password,
         }),
       ).then((res) => {
+        console.log(res.data.token);
         if (res.data.status === false) {
           this.unsuccessMessage();
         } else {
           // 成功登入就把token存在 cookie
           const mytoken = res.data.token;
-          document.cookie = `hairToken=${mytoken}`;
+          localStorage.setItem('myToken', mytoken);
+          // document.cookie = `hairToken=${mytoken}`;
           this.$router.push({ name: 'Dashboard' });
           this.successMessage();
         }

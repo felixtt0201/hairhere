@@ -43,6 +43,8 @@ export default {
         title: '成功登出',
         // showConfirmButton: false,
         timer: 1500,
+      }).then(() => {
+        localStorage.clear();
       });
     },
   },
