@@ -1,5 +1,13 @@
 <template>
   <div id="designers" class="container-fluid">
+    <loading
+      :opacity="1"
+      color="#7e735d"
+      loader="bars"
+      background-color="#b7b9cc"
+      :active.sync="isLoading"
+      :is-full-page="fullPage"
+    ></loading>
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800">設計師管理</h1>
     </div>
@@ -59,7 +67,7 @@
       aria-labelledby="designerModal"
       aria-hidden="true"
     >
-      <form action="" @submit.prevent="addInfo">
+      <form action="" @submit.prevent="addInfoHandler">
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content border-0">
             <div class="modal-header bg-dark text-white">
@@ -241,17 +249,10 @@ import $ from 'jquery';
 export default {
   data() {
     return {
-      // tempInfo: {
-      //   name: '',
-      //   tel: '',
-      //   LineID: '',
-      //   account: '',
-      //   password: '',
-      //   repassword: '',
-      //   details: '',
-      //   sex: '',
-      // },
-      // 全部設計師資料
+      // Loading遮罩
+      isLoading: true,
+      fullPage: true,
+
       tempDesginersInfo: [],
       // 修改單一設計師資料
       tempInfo: {},
@@ -262,12 +263,16 @@ export default {
     // 取的全部設計師
     getInfoHandler() {
       getAllDesigner().then((res) => {
-        this.tempDesginersInfo = res.data;
+        console.log(res);
+        if (res.status === 200) {
+          this.tempDesginersInfo = res.data;
+          this.isLoading = false;
+        }
       });
     },
 
     // 新增或者修改設計師
-    addInfo() {
+    addInfoHandler() {
       const postmsg = '新增';
       const putmsg = '更新';
       if (this.isNew) {
@@ -359,7 +364,7 @@ export default {
       });
     },
   },
-  mounted() {
+  created() {
     this.getInfoHandler();
   },
 };
