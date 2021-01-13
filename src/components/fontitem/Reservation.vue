@@ -18,7 +18,7 @@
               class="col-md-6 d-flex flex-column justify-content-around align-items-center"
             >
               <h4>本次預約設計師</h4>
-              <h5>社稷師</h5>
+              <h5>{{ designer.Name }}</h5>
               <p class="w-50 border-left">
                 設計專業專業剪燙染護頭皮養護精緻編髮
               </p>
@@ -39,12 +39,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td><input type="checkbox" id="check1" />洗髮</td>
-            <td>＄300 +</td>
-            <td>60分鐘</td>
+          <tr v-for="product in products" :key="product.id">
+            <td><input type="checkbox" id="check1" />{{ product.Name }}</td>
+            <td>＄{{ product.UnitPrice }} +</td>
+            <td>{{ product.ServiceMinutes }}分鐘</td>
           </tr>
-          <tr>
+          <!-- <tr>
             <td><input type="checkbox" id="check1" />洗＋剪髮</td>
             <td>＄680 +</td>
             <td>60分鐘</td>
@@ -53,7 +53,7 @@
             <td><input type="checkbox" id="check1" />染髮</td>
             <td>＄2000 +</td>
             <td>60分鐘</td>
-          </tr>
+          </tr> -->
         </tbody>
       </table>
       <h4 class="title-line text-center mb-5 text-sm">項目結算</h4>
@@ -93,10 +93,35 @@
 
 <script>
 import CalendarFontVacation from '@/components/fontitem/CalendarFontVacation.vue';
+import { getDesigner, getStoreProductList } from '@/js/AppServices';
 
 export default {
+  data() {
+    return {
+      designer: {},
+      products: [],
+    };
+  },
   components: {
     CalendarFontVacation,
+  },
+  methods: {
+    getDesignerHandler() {
+      getDesigner(4).then((res) => {
+        console.log(res);
+        this.designer = res.data;
+      });
+    },
+    getProductHandler() {
+      getStoreProductList().then((res) => {
+        console.log(res);
+        this.products = res.data.BasicData;
+      });
+    },
+  },
+  created() {
+    this.getDesignerHandler();
+    this.getProductHandler();
   },
 };
 </script>

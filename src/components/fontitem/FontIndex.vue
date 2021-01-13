@@ -138,54 +138,6 @@
               </ul>
             </div>
           </div>
-          <!-- <div class="row">
-            <div class="col-md-3 border-left">
-              <h4 class="font-en">About us</h4>
-              <p>
-                {{ basicData.Summary }}
-              </p>
-            </div>
-            <div class="col-md-3 border-left">
-              <h4>服務項目</h4>
-              <p>
-                專業剪燙染護<br />頭皮養護 ｜設計染髮 | 精緻編髮<br />
-                彩妝及新娘秘書
-              </p>
-            </div>
-            <div class="col-md-3 border-left">
-              <h4>店家資訊</h4>
-              <ul class="p-0">
-                <li class="">
-                  <h5 class="mr-2">聯絡電話 (07) - {{ basicData.Phone }}</h5>
-                </li>
-                <li class="">
-                  <h5 class="mr-2">店家地址 {{ basicData.Address }}</h5>
-                </li>
-                <li class="">
-                  <h5 class="mr-2">營業時間</h5>
-                  每週二至日<br />上午{{ business.BusinessHoursOpen }}～下午{{
-                    business.BusinessHoursClose
-                  }}<br />
-                  (每週一公休)
-                </li>
-              </ul>
-            </div>
-            <div class="col-md-3 border-left">
-              <h4 class="font-en">Follow us!</h4>
-              <div>
-                <a :href="basicData.Facebook" class="d-flex"
-                  ><i class="fab fa-instagram mr-2"></i>
-                  <p class="mb-0 font-en">樂髮手作 Hair Salon</p></a
-                >
-              </div>
-              <div>
-                <a :href="basicData.Facebook" class="d-flex"
-                  ><i class="fab fa-facebook-square mr-2"></i>
-                  <p class="mb-0 font-en">樂髮手作 Hair Salon</p></a
-                >
-              </div>
-            </div>
-          </div> -->
         </div>
       </div>
       <div class="row justify-content-center bg-accent text-accent pb-3">
