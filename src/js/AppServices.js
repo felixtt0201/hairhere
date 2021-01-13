@@ -1,3 +1,4 @@
+/* eslint-disable quote-props */
 import axios from 'axios';
 
 const storeApi = axios.create({
@@ -5,17 +6,9 @@ const storeApi = axios.create({
   withCredentials: false,
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded',
-    Authorization: `Bearer ${document.cookie.split('=')[1]}`, // Bearer 跟 token 中間有一個空格
+    Authorization: `Bearer ${localStorage.getItem('myToken')}`,
   },
 });
-
-// const picuploaded = axios.create({
-//   baseURL: 'https://salon.rocket-coding.com',
-//   withCredentials: false,
-//   headers: {
-//     'Content-Type': 'multipart/form-data',
-//   },
-// });
 
 /** 店家 */
 // post店家登入
@@ -66,7 +59,9 @@ const postDesinger = (data) => storeApi.post('/POST/Designer?storeid=2', data);
 const deleteDesigner = (dId) => storeApi.delete(`/DELETE/Designer?id=${dId}`);
 
 // put修改設計師資料
-const putDesigner = (dId) => storeApi.put(`/PutDesigner?id=${dId}`);
+const putDesigner = (data, dId) =>
+  // eslint-disable-next-line implicit-arrow-linebreak
+  storeApi.put(`/PUT/Designer?id=${dId}`, data);
 
 /** 設計師 */
 
@@ -86,9 +81,9 @@ export {
   posteStoreProduct,
   putStoreProductList,
   deleteStoreProduct,
+  getAllDesigner,
   getDesigner,
   postDesinger,
   deleteDesigner,
   putDesigner,
-  getAllDesigner,
 };
