@@ -122,7 +122,7 @@
 </template>
 
 <script>
-import { getAllDesigner } from '@/js/AppServices';
+import { getAllDesigner } from '@/js/FontAppServices';
 
 export default {
   data() {

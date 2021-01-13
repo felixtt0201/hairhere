@@ -30,7 +30,7 @@
     <div
       class="container bg-accent text-reservation text-center pb-4 pt-5 mt-4"
     >
-      <table class="table table-borderless">
+      <table class="table table-borderless text-reservation">
         <thead class="table-borderless">
           <tr>
             <th scope="col">預約項目</th>
@@ -93,7 +93,7 @@
 
 <script>
 import CalendarFontVacation from '@/components/fontitem/CalendarFontVacation.vue';
-import { getDesigner, getStoreProductList } from '@/js/AppServices';
+import { getDesigner, getStoreProductList } from '@/js/FontAppServices';
 
 export default {
   data() {
@@ -107,7 +107,7 @@ export default {
   },
   methods: {
     getDesignerHandler() {
-      getDesigner(4).then((res) => {
+      getDesigner(7).then((res) => {
         console.log(res);
         this.designer = res.data;
       });

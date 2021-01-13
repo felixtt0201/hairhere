@@ -207,7 +207,7 @@
 </template>
 
 <script>
-import { getStoreTotalInfo } from '@/js/AppServices';
+import { getStoreTotalInfo } from '@/js/FontAppServices';
 
 export default {
   data() {
