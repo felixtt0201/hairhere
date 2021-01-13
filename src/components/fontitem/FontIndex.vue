@@ -165,7 +165,8 @@
     </div>
     <div class="container">
       <h4 class="title-line w-100 text-center mb-4 text-main">髮型作品</h4>
-      <ul class="list-style d-flex justify-content-center mb-5">
+      <Carsouel />
+      <!-- <ul class="list-style d-flex justify-content-center mb-5">
         <li
           class="background-img mr-5"
           style="background-image: url(https://images.unsplash.com/photo-1581674210501-c760093514e8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NTl8fGhhaXIlMjBzYWxvbnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60);"
@@ -182,7 +183,7 @@
           class="background-img mr-5"
           style="background-image: url(https://images.unsplash.com/photo-1586548634342-04801afc8b13?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MjA5fHxoYWlyJTIwc2Fsb258ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60);"
         ></li>
-      </ul>
+      </ul> -->
       <h4 class="title-line w-100 text-center mb-4 text-main">設計師</h4>
       <ul class="list-style d-flex justify-content-center mb-5">
         <li
@@ -208,8 +209,12 @@
 
 <script>
 import { getStoreTotalInfo } from '@/js/FontAppServices';
+import Carsouel from '@/components/fontitem/Carsouel.vue';
 
 export default {
+  components: {
+    Carsouel,
+  },
   data() {
     return {
       basicData: {

@@ -7,6 +7,7 @@ import {
   localize,
   configure,
 } from 'vee-validate';
+import VueSplide from '@splidejs/vue-splide';
 import TW from 'vee-validate/dist/locale/zh_TW.json';
 import * as rules from 'vee-validate/dist/rules';
 import Loading from 'vue-loading-overlay';
@@ -40,7 +41,7 @@ configure({
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
 Vue.use(VueSweetalert2);
-
+Vue.use(VueSplide);
 new Vue({
   router,
   store,
