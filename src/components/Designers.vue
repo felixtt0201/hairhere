@@ -19,7 +19,7 @@
               <a
                 href="#"
                 class="btn btn-success btn-circle"
-                @click="updateInfo(dId)"
+                @click="updateInfo(item.Id)"
               >
                 <i class="fas fa-edit"></i>
               </a>
@@ -251,14 +251,16 @@ export default {
         details: '',
         sex: '',
       },
+      // 全部設計師資料
       tempDesginersInfo: [],
+      // 修改單一設計師資料
+      tempInfo: {},
     };
   },
   methods: {
     // 取的全部設計師
     getInfoHandler() {
       getAllDesigner().then((res) => {
-        console.log(res);
         this.tempDesginersInfo = res.data;
       });
     },
@@ -317,12 +319,21 @@ export default {
     // 修改設計師資料
     updateInfo(dId) {
       getDesigner(dId).then((res) => {
-        console.log('singleIndo', res);
+        console.log('singleInfo', res);
+        this.tempInfo = res.data;
+        console.log(this.tempInfo);
       });
-      putDesigner(dId).then((res) => {
+      const data = this.$qs.stringify({
+        id: dId,
+        Name: this.tempInfo.Name,
+        Email: this.tempInfo.Email,
+        Password: '123',
+      });
+      putDesigner(data, dId).then((res) => {
         console.log('put', res);
       });
     },
+    // openModalHandler(isNew) {},
 
     // 提示-失敗
     unsuccessed() {

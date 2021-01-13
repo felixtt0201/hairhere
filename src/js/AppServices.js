@@ -66,7 +66,9 @@ const postDesinger = (data) => storeApi.post('/POST/Designer?storeid=2', data);
 const deleteDesigner = (dId) => storeApi.delete(`/DELETE/Designer?id=${dId}`);
 
 // put修改設計師資料
-const putDesigner = (dId) => storeApi.put(`/PutDesigner?id=${dId}`);
+const putDesigner = (data, dId) =>
+  // eslint-disable-next-line implicit-arrow-linebreak
+  storeApi.put(`/PUT/Designer?id=${dId}`, data);
 
 /** 設計師 */
 
@@ -86,9 +88,9 @@ export {
   posteStoreProduct,
   putStoreProductList,
   deleteStoreProduct,
+  getAllDesigner,
   getDesigner,
   postDesinger,
   deleteDesigner,
   putDesigner,
-  getAllDesigner,
 };
