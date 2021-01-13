@@ -85,8 +85,60 @@
             class="item-logo-position-absolute "
           />
         </div>
-        <div class="col-md-10  text-main">
-          <div class="row">
+        <div class="col-md-10 text-main">
+          <div class="row border-h70">
+            <div class="col-md-3 index-infomation">
+              <h4>About us</h4>
+              <p>
+                {{ basicData.Summary }}
+              </p>
+            </div>
+            <div class="col-md-2 index-infomation">
+              <h4>服務項目</h4>
+              <ul>
+                <li>專業剪燙染護</li>
+                <li>頭皮養護</li>
+                <li>設計染髮</li>
+                <li>精緻編髮</li>
+                <li>彩妝及新娘秘書</li>
+              </ul>
+            </div>
+            <div class="col-md-4 index-infomation">
+              <h4>店家資訊</h4>
+              <ul>
+                <li>聯絡電話 (07)-{{ basicData.Phone }}</li>
+                <li class="d-flex flex-column">
+                  <span>店家地址</span>高雄市苓雅區青年一路4巷21號
+                </li>
+                <li>
+                  營業時間
+                  <p>
+                    每週二至日 上午{{ business.BusinessHoursOpen }}~下午{{
+                      business.BusinessHoursClose
+                    }}
+                    <span class="d-block">(每週一公休)</span>
+                  </p>
+                </li>
+              </ul>
+            </div>
+            <div class="col-md-3 index-infomation">
+              <h4>Follow us</h4>
+              <ul>
+                <li>
+                  <a :href="basicData.Facebook" class="follow-icon">
+                    <i class="fab fa-instagram mr-2"></i>樂髮手作 Hair Salon</a
+                  >
+                </li>
+                <li>
+                  <a :href="basicData.Facebook" class="follow-icon">
+                    <i class="fab fa-facebook-square mr-2"></i>樂髮手作 Hair
+                    Salon</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- <div class="row">
             <div class="col-md-3 border-left">
               <h4 class="font-en">About us</h4>
               <p>
@@ -133,7 +185,7 @@
                 >
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="row justify-content-center bg-accent text-accent pb-3">

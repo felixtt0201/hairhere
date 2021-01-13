@@ -124,3 +124,21 @@ body {
     border-left: 1px solid $text-accent;
   }
 }
+
+.index-infomation {
+  display: flex;
+  flex-direction: column;
+  border-left: 2px solid $bg-primary !important;
+  height: 100%;
+  padding-left: 25px;
+}
+.border-h70 {
+  height: 80%;
+}
+.follow-icon {
+  text-decoration: none !important;
+  color: $text-primary;
+  &:hover {
+    color: $bg-accent;
+  }
+}
