@@ -19,10 +19,10 @@
         </button>
       </div>
     </div>
-    <h4 class="title-line w-100 text-center mt-5 mb-5 works-text-line">
-      作品集
-    </h4>
     <div class="container">
+      <h3 class="title-line w-100 text-center mt-5 mb-5 works-text-line">
+        作品集
+      </h3>
       <div class="row img-center">
         <div class="col-md-3">
           <img

@@ -68,6 +68,7 @@ const routes = [
   {
     path: '/Dashboard',
     name: 'Dashboard',
+    meta: { requiresAuth: true },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -76,6 +77,7 @@ const routes = [
       {
         path: 'designers',
         name: 'Designers',
+        meta: { requiresAuth: true },
         component: () => import('../components/Designers.vue'),
       },
       {

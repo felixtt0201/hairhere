@@ -46,3 +46,18 @@ new Vue({
   store,
   render: (h) => h(App),
 }).$mount('#app');
+
+// beforeEach
+// router.beforeEach((to, from, next) => {
+//   console.log('to', to, 'from', from, 'next', next);
+//   if (to.meta.requiresAuth) {
+//     const api = 'https://salon.rocket-coding.com/POST/Login/Store';
+//     axios.post(api).then((res) => {
+//       if (res.data.status) {
+//         next();
+//       } else {
+//         next({ path: '/Login' });
+//       }
+//     });
+//   }
+// });
