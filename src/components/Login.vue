@@ -1,4 +1,3 @@
-/* eslint-disable operator-linebreak */
 <template>
   <div
     id="login"
@@ -83,7 +82,6 @@
 
 <script>
 import { postStoreLogin } from '@/js/AppServices';
-// import VueRouter from 'vue-router';
 
 export default {
   data() {
@@ -102,13 +100,17 @@ export default {
           password: this.store.password,
         }),
       ).then((res) => {
-        console.log(res.data.token);
         if (res.data.status === false) {
           this.unsuccessMessage();
         } else {
           // 成功登入就把token存在 cookie
           const mytoken = res.data.token;
           localStorage.setItem('myToken', mytoken);
+          // const loginstatus = {
+          //   myToken: res.data.token,
+          //   status: true,
+          // };
+          // localStorage.setItem('myToken', JSON.stringify(loginstatus));
           // document.cookie = `hairToken=${mytoken}`;
           this.$router.push({ name: 'Dashboard' });
           this.successMessage();
@@ -134,6 +136,8 @@ export default {
         title: '登入成功',
         // showConfirmButton: false,
         timer: 1500,
+      }).then(() => {
+        localStorage.setItem('status', true);
       });
     },
   },
