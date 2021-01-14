@@ -27,22 +27,42 @@
         </div>
       </div>
     </div>
-    <div
-      class="container bg-accent text-reservation text-center pb-4 pt-5 mt-4"
-    >
+    <div class="container bg-accent text-reservation pb-4 pt-5 mt-4">
       <table class="table table-borderless text-reservation">
         <thead class="table-borderless">
           <tr>
-            <th scope="col">預約項目</th>
+            <!-- <th scope="col"></th> -->
+            <th scope="col" class="text-center">預約項目</th>
             <th scope="col">預期金額</th>
             <th scope="col">預估時間</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="product in products" :key="product.id">
-            <td><input type="checkbox" id="check1" />{{ product.Name }}</td>
+          <tr v-for="product in products" :key="product.Id">
+            <input
+              type="checkbox"
+              v-model="checklist"
+              :value="product"
+              :id="`${product.Id}`"
+            />
+            <td>
+              <label :for="`${product.Id}`">{{ product.ProductName }}</label>
+            </td>
+            <td>＄{{ product.UnitPrice }}＋</td>
+            <td>{{ product.ServiceMinutes }} 分鐘</td>
+            <!-- <label for="product.Id">{{ product.Name }}</label> -->
+            <!-- <td v-for="(val, index) in product" :key="index">{{ val }}</td> -->
+            <!-- <td>
+              <input
+                type="checkbox"
+                id="check1"
+                v-model="checklist"
+                :value="product.id"
+                @click="checksingle"
+              />{{ product.Name }}
+            </td>
             <td>＄{{ product.UnitPrice }} +</td>
-            <td>{{ product.ServiceMinutes }}分鐘</td>
+            <td>{{ product.ServiceMinutes }}分鐘</td> -->
           </tr>
           <!-- <tr>
             <td><input type="checkbox" id="check1" />洗＋剪髮</td>
@@ -83,7 +103,9 @@
           <label for="item">備註事項</label>
           <textarea id="item" cols="30" rows="4" class="mb-4"></textarea>
           <router-link to="/confirm">
-            <button type="button" class="btn-reservation">預約送出</button>
+            <button type="button" class="btn-reservation" @click="test">
+              預約送出
+            </button>
           </router-link>
         </form>
       </div>
@@ -93,13 +115,18 @@
 
 <script>
 import CalendarFontVacation from '@/components/fontitem/CalendarFontVacation.vue';
-import { getDesigner, getStoreProductList } from '@/js/FontAppServices';
+import {
+  getDesigner,
+  getStoreProductList,
+  postOrder,
+} from '@/js/FontAppServices';
 
 export default {
   data() {
     return {
       designer: {},
-      products: [],
+      products: [], // 遠端撈回的服務項目
+      checklist: [], // 加入勾選項目的位置
     };
   },
   components: {
@@ -107,7 +134,7 @@ export default {
   },
   methods: {
     getDesignerHandler() {
-      getDesigner(7).then((res) => {
+      getDesigner(4).then((res) => {
         console.log(res);
         this.designer = res.data;
       });
@@ -115,15 +142,49 @@ export default {
     getProductHandler() {
       getStoreProductList().then((res) => {
         console.log(res);
-        this.products = res.data.BasicData;
+        this.products = res.data.OrderDetails;
+      });
+    },
+    selectsingle(id) {
+      console.log(this.products);
+      console.log(id);
+      this.products.forEach((item) => {
+        if (item.Id === id) {
+          this.checklist.push(item);
+          console.log(this.checklist);
+        } else {
+          console.log('false');
+        }
+      });
+    },
+    test() {
+      const data = this.$qs.stringify({
+        OrderTime: '2021-1-12',
+        StoreRemark: '',
+        DesignerId: '4',
+        CustomerName: 'Tim',
+        CustomerPhone: '1234567890',
+        CustomerEmail: '',
+        CustomerIntroducer: '',
+        CustomerRemark: '',
+        OrderDetails: this.checklist,
+      });
+      postOrder(data).then((res) => {
+        console.log(res);
       });
     },
   },
   created() {
     this.getDesignerHandler();
     this.getProductHandler();
+    console.log(this.checklist);
   },
 };
 </script>
 
-<style></style>
+<style lang="scss">
+input:checked ~ td {
+  background-color: gray !important;
+  opacity: 0.8;
+}
+</style>

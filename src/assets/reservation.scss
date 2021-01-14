@@ -6,7 +6,7 @@ $text-reservation: #cb9861;
     color: $text-reservation !important;
   }
   input {
-    display: none;
+    // display: none;
     &:active {
       label {
         background-color: pink;

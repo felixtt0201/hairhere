@@ -59,6 +59,10 @@ const deleteDesigner = (dId) => storeApi.delete(`/DELETE/Designer?id=${dId}`);
 // put修改設計師資料
 const putDesigner = (dId) => storeApi.put(`/PutDesigner?id=${dId}`);
 
+/** 訂單 */
+// post新增訂單
+const postOrder = (data) => storeApi.post('/POST/Order', data);
+
 /** 設計師 */
 
 // post新增設計師
@@ -82,4 +86,5 @@ export {
   deleteDesigner,
   putDesigner,
   getAllDesigner,
+  postOrder,
 };
