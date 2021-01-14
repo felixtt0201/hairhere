@@ -2,8 +2,14 @@
   <div>
     <div class="container text-main">
       <div class="row">
-        <div class="col-md-6 ">
-          <img src="lefa_logo_all_cn.svg" alt="" />
+        <div class="col-md-6 step-center">
+          <ul class="step">
+            <li class="active">
+              選擇服務項目
+            </li>
+            <li>確認預約資訊</li>
+            <li>預約完成d(`･∀･)b</li>
+          </ul>
         </div>
         <div class="col-md-6">
           <div class="row">
@@ -31,7 +37,7 @@
       <table class="table table-borderless text-reservation">
         <thead class="table-borderless">
           <tr>
-            <!-- <th scope="col"></th> -->
+            <th scope="col"></th>
             <th scope="col" class="text-center">預約項目</th>
             <th scope="col">預期金額</th>
             <th scope="col">預估時間</th>
@@ -50,19 +56,6 @@
             </td>
             <td>＄{{ product.UnitPrice }}＋</td>
             <td>{{ product.ServiceMinutes }} 分鐘</td>
-            <!-- <label for="product.Id">{{ product.Name }}</label> -->
-            <!-- <td v-for="(val, index) in product" :key="index">{{ val }}</td> -->
-            <!-- <td>
-              <input
-                type="checkbox"
-                id="check1"
-                v-model="checklist"
-                :value="product.id"
-                @click="checksingle"
-              />{{ product.Name }}
-            </td>
-            <td>＄{{ product.UnitPrice }} +</td>
-            <td>{{ product.ServiceMinutes }}分鐘</td> -->
           </tr>
           <!-- <tr>
             <td><input type="checkbox" id="check1" />洗＋剪髮</td>

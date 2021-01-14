@@ -29,6 +29,7 @@ export default {
 @import './src/assets/confirm.scss';
 @import './src/assets/works.scss';
 @import './src/assets/searchList.scss';
+@import './src/assets/step.scss';
 .page-enter-active,
 .page-leave-active {
   transition: 1s;
