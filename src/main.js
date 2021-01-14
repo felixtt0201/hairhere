@@ -49,17 +49,19 @@ new Vue({
 }).$mount('#app');
 
 // beforeEach
-// router.beforeEach((to, from, next) => {
-//   console.log('to', to, 'from', from, 'next', next, document.cookie);
-//   const mycookie = document.cookie.split('=')[1];
-//   if (to.meta.requiresAuth) {
-//     const api = 'https://salon.rocket-coding.com/POST/Login/Store';
-//     axios.post(api).then((res) => {
-//       if (res.data.token === mycookie) {
-//         next();
-//       } else {
-//         next({ path: '/Login' });
-//       }
-//     });
-//   }
-// });
+router.beforeEach((to, from, next) => {
+  console.log('to', to, 'from', from, 'next', next);
+  console.log(localStorage.getItem('status'));
+  if (to.meta.requiresAuth) {
+    if (JSON.parse(localStorage.getItem('status')) === true) {
+      next();
+      console.log('info');
+    } else {
+      console.log('ben');
+      next({ path: '/Login' });
+    }
+  } else {
+    next();
+    console.log('login');
+  }
+});
