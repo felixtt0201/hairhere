@@ -171,7 +171,6 @@
                         class="form-control"
                         id="account"
                         placeholder="請輸入帳號"
-                        required
                         v-model="tempInfo.Email"
                       />
                     </div>
@@ -182,7 +181,6 @@
                         type="password"
                         class="form-control"
                         id="password"
-                        required
                         placeholder="請輸入密碼"
                       />
                     </div>
@@ -196,15 +194,14 @@
                         class="form-control"
                         id="repassword"
                         placeholder="再次輸入密碼"
-                        required
                         v-model="tempInfo.Password"
                       />
                     </div>
                   </div>
                   <hr />
                   <div class="form-group">
-                    <label for="description">我的專長/特色</label>
-                    <textarea
+                    <p for="description">我的專長/特色</p>
+                    <!-- <textarea
                       type="text"
                       class="form-control"
                       id="description"
@@ -212,7 +209,24 @@
                       cols="30"
                       rows="5"
                       v-model="tempInfo.details"
-                    ></textarea>
+                    ></textarea> -->
+                    <div
+                      class="custom-control custom-checkbox"
+                      v-for="skill in skills"
+                      :key="skill.id"
+                    >
+                      <input
+                        type="checkbox"
+                        class="custom-control-input"
+                        v-model="selectSkills"
+                        :id="skill.id"
+                        :value="skill"
+                      />
+                      <label class="custom-control-label" :for="skill.id">{{
+                        skill.title
+                      }}</label>
+                    </div>
+                    <!-- {{ selectSkills }} -->
                   </div>
                 </div>
               </div>
@@ -257,9 +271,46 @@ export default {
       // 修改單一設計師資料
       tempInfo: {},
       isNew: false,
+
+      skills: [
+        {
+          id: 1,
+          title: '染髮',
+        },
+        {
+          id: 2,
+          title: '洗髮',
+        },
+        {
+          id: 3,
+          title: '飄髮',
+        },
+        {
+          id: 4,
+          title: '剪髮',
+        },
+        {
+          id: 5,
+          title: '燙髮',
+        },
+        {
+          id: 6,
+          title: '捲髮',
+        },
+        {
+          id: 7,
+          title: '增髮',
+        },
+      ],
+      selectSkills: [],
     };
   },
   methods: {
+    // selectSkill
+    sendInfo() {
+      console.log(this.selectSkills);
+    },
+
     // 取的全部設計師
     getInfoHandler() {
       getAllDesigner().then((res) => {

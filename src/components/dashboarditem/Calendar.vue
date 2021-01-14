@@ -50,6 +50,18 @@
                       v-model="reservationInfo.cTel"
                     />
                   </div>
+                  <div class="form-group col-md-6">
+                    <label for="designer">選擇設計師</label>
+                    <select class="custom-select" v-model="dId">
+                      <option disabled value="">選擇設計師</option>
+                      <option
+                        v-for="designer in totalDesignerInfo"
+                        :key="designer.Id"
+                        :value="designer.Id"
+                        >{{ designer.Name }}</option
+                      >
+                    </select>
+                  </div>
                 </div>
                 <!--
                   選擇消費項目
@@ -57,75 +69,50 @@
                 <div class="form-gropu">
                   <label for="">請選擇消費項目（至少一項）</label>
                   <div class="form-row">
-                    <div class="form-gorup col-md-6">
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="flexCheckDefault"
-                        />
-                        <label class="form-check-label" for="flexCheckDefault">
-                          剪髮
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="flexCheckDefault"
-                        />
-                        <label class="form-check-label" for="flexCheckDefault">
-                          剪髮
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="flexCheckDefault"
-                        />
-                        <label class="form-check-label" for="flexCheckDefault">
-                          剪髮
-                        </label>
-                      </div>
-                    </div>
-                    <div class="form-gorup col-md-6">
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="flexCheckDefault"
-                        />
-                        <label class="form-check-label" for="flexCheckDefault">
-                          剪髮
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="flexCheckDefault"
-                        />
-                        <label class="form-check-label" for="flexCheckDefault">
-                          剪髮
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="flexCheckDefault"
-                        />
-                        <label class="form-check-label" for="flexCheckDefault">
-                          剪髮
-                        </label>
-                      </div>
+                    <div class="col-12">
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th scope="col">項目</th>
+                            <th scope="col">金額</th>
+                            <th scope="col">時間</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr
+                            v-for="info in totalServicesInfo"
+                            :key="info.ProductName"
+                          >
+                            <td>
+                              <div class="custom-control custom-checkbox">
+                                <input
+                                  type="checkbox"
+                                  class="custom-control-input"
+                                  :id="info.Id"
+                                  :value="info"
+                                  v-model="editInfo"
+                                />
+                                <label
+                                  class="custom-control-label"
+                                  style="width:120px"
+                                  :for="info.Id"
+                                  >{{ info.ProductName }}</label
+                                >
+                              </div>
+                            </td>
+                            <td>
+                              <label style="width:120px" :for="info.Id">{{
+                                info.UnitPrice
+                              }}</label>
+                            </td>
+                            <td>
+                              <label style="width:120px" :for="info.Id">{{
+                                info.ServiceMinutes
+                              }}</label>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                 </div>
@@ -175,16 +162,9 @@
                   <button
                     type="button"
                     class="btn btn-primary"
-                    @click="saveAlert"
+                    @click="postOrderHandler()"
                   >
                     確認
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-primary"
-                    @click="updateInfo"
-                  >
-                    編輯
                   </button>
                 </div>
               </div>
@@ -193,6 +173,13 @@
         </div>
       </div>
     </div>
+    <button
+      type="button"
+      class="btn btn-primary"
+      @click="gettotalOrderHandler()"
+    >
+      test
+    </button>
   </div>
 </template>
 
@@ -201,6 +188,12 @@ import FullCalendar from '@fullcalendar/vue';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import {
+  getAllDesigner,
+  getStoreProductList,
+  postOrder,
+  getOrder,
+} from '@/js/AppServices';
 import $ from 'jquery';
 
 export default {
@@ -243,10 +236,11 @@ export default {
         dateClick: this.openModal,
 
         // 時間區間
-        slotDuration: '0:30', // 區間30分鐘
+        slotDuration: '1:00', // 區間30分鐘
         slotMinTime: '9:00', // 開始
         slotMaxTime: '18:00', // 結束
         expandRows: true, // 適應有時間的高度(不然會是原本高度)
+        events: [{}],
       },
       reservationInfo: {
         cName: '',
@@ -254,15 +248,96 @@ export default {
         date: '',
         content: '',
       },
+      newaddevent: {},
 
       // 事件中叫出來資訊的存放區
       dateClickEvent: {},
       eventClickEvent: {},
       num: 1,
+
+      // getTotal設計師資料
+      totalDesignerInfo: [],
+
+      // get服務項目
+      totalServicesInfo: [],
+      // 選擇的項目，金額，時間
+      editInfo: [],
+      // 設計師ID
+      dId: '',
+
+      // OrderInfo
+      OrderInfo: [],
     };
   },
 
   methods: {
+    // getDesignerInfo
+    getDesignerHandler() {
+      getAllDesigner().then((res) => {
+        if (res.status === 200) {
+          this.totalDesignerInfo = res.data;
+        }
+      });
+    },
+    // getServicesInfo
+    getServicesHandler() {
+      getStoreProductList().then((res) => {
+        if (res.data.status === true) {
+          this.totalServicesInfo = res.data.OrderDetails;
+          // console.log(this.totalServicesInfo);
+        }
+      });
+    },
+
+    // getOrderInfo
+    gettotalOrderHandler() {
+      getOrder().then((res) => {
+        // console.log(res.data.BasicData);
+        this.OrderInfo = res.data.BasicData;
+      });
+      this.OrderInfo.forEach((item) => {
+        console.log(item.OrderTime);
+        const a = {
+          title: item.CustomerName,
+          start: item.OrderTime,
+        };
+
+        this.calendarOptions.events.push(a);
+      });
+    },
+
+    // postorder
+    postOrderHandler() {
+      // 將資訊post到Order
+      const data = this.$qs.stringify({
+        OrderTime: this.dateClickEvent.dateStr,
+        StoreRemark: '',
+        DesignerId: this.dId,
+        CustomerName: this.reservationInfo.cName,
+        CustomerPhone: this.reservationInfo.cTel,
+        CustomerEmail: '',
+        CustomerIntroducer: '',
+        CustomerRemark: '',
+        OrderDetails: this.editInfo,
+      });
+      postOrder(data).then((res) => {
+        if (res.data.status === true) {
+          this.$swal({
+            title: '成功預約',
+            position: 'center',
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1500,
+          }).then(() => {
+            this.editInfo = '';
+            this.dId = '';
+            this.reservationInfo = '';
+            $('#reservationModal').modal('hide');
+          });
+        }
+      });
+    },
+
     // ban預約的日期
     // eslint-disable-next-line consistent-return
     banDate(arg) {
@@ -300,8 +375,10 @@ export default {
         this.setInfo(),
       );
     },
+
     // 將輸入的訊息寫到選則的日期裡面
     setInfo() {
+      // 將資訊寫入日期中
       const selectedInfo = this.dateClickEvent.view.calendar;
       selectedInfo.unselect();
       selectedInfo.addEvent({
@@ -330,7 +407,7 @@ export default {
     // 編輯預約資訊
     updateInfo() {
       const selectedInfo = this.eventClickEvent;
-      console.log(selectedInfo);
+      // console.log(selectedInfo);
       selectedInfo.refetchEvents({
         title: this.reservationInfo.cName,
         start: this.dateClickEvent.dateStr,
@@ -360,6 +437,11 @@ export default {
       this.eventClickEvent.event.remove();
       $('#reservationModal').modal('hide');
     },
+  },
+  created() {
+    this.getDesignerHandler();
+    this.getServicesHandler();
+    // this.gettotalOrderHandler();
   },
 };
 </script>

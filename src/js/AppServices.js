@@ -63,13 +63,12 @@ const putDesigner = (data, dId) =>
   // eslint-disable-next-line implicit-arrow-linebreak
   storeApi.put(`/PUT/Designer?id=${dId}`, data);
 
-/** 設計師 */
+/** 訂單 */
+// post新增訂單
+const postOrder = (data) => storeApi.post('/POST/Order', data);
 
-// post新增設計師
-// const postDesinger = (data) =>
-//   // eslint-disable-next-line implicit-arrow-linebreak
-//   picuploaded.post('/POST/Designer?storeid=2', data);
-
+// get訂單
+const getOrder = () => storeApi.get('/GET/OrderList');
 // eslint-disable-next-line object-curly-newline
 export {
   postStoreLogin,
@@ -86,4 +85,6 @@ export {
   postDesinger,
   deleteDesigner,
   putDesigner,
+  postOrder,
+  getOrder,
 };
