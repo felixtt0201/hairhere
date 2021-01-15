@@ -100,22 +100,15 @@ export default {
           password: this.store.password,
         }),
       ).then((res) => {
-        if (res.data.status === false) {
-          this.unsuccessMessage();
-        } else {
-          // 成功登入就把token存在 cookie
+        // console.log(res);
+        if (res.data.status) {
           const mytoken = res.data.token;
           localStorage.setItem('myToken', mytoken);
           localStorage.setItem('status', true);
-          // const loginstatus = {
-          //   myToken: res.data.token,
-          //   status: true,
-          // };
-          // localStorage.setItem('myToken', JSON.stringify(loginstatus));
-          // document.cookie = `hairToken=${mytoken}`;
-          // this.$router.push({ name: 'Dashboard' });
           this.$router.push('/Dashboard');
           this.successMessage();
+        } else {
+          this.unsuccessMessage();
         }
       });
     },

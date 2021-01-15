@@ -11,7 +11,13 @@
       aria-hidden="true"
     >
       <div class="modal-dialog modal-lg container" role="document">
-        <div class="row"></div>
+        <loading
+          :opacity="1"
+          color="#7e735d"
+          loader="bars"
+          background-color="#b7b9cc"
+          :active.sync="isLoading"
+        ></loading>
         <div class="modal-content border-0">
           <div class="modal-header bg-dark text-white">
             <h5 class="modal-title" id="exampleModalLabel">
@@ -31,28 +37,42 @@
               <div class="col-sm-8">
                 <div class="form-row">
                   <div class="form-group col-md-6">
-                    <label for="cName">顧客姓名</label>
+                    <label for="cName" class="font-weight-bold"
+                      >顧客姓名：</label
+                    >
                     <input
                       type="text"
                       class="form-control"
                       id="cName"
                       placeholder="請輸入客人姓名"
                       v-model="reservationInfo.cName"
+                      v-if="editStatus"
                     />
+                    <p v-else>{{ tempOrderInfo.CustomerName }}</p>
                   </div>
                   <div class="form-group col-md-6">
-                    <label for="tel">手機號碼/電話</label>
+                    <label for="tel" class="font-weight-bold"
+                      >手機號碼/電話：</label
+                    >
                     <input
                       type="unit"
                       class="form-control"
                       id="tel"
                       placeholder="請輸入手機號碼/電話"
                       v-model="reservationInfo.cTel"
+                      v-if="editStatus"
                     />
+                    <p v-else>{{ tempOrderInfo.CustomerPhone }}</p>
                   </div>
                   <div class="form-group col-md-6">
-                    <label for="designer">選擇設計師</label>
-                    <select class="custom-select" v-model="dId">
+                    <label for="designer" class="font-weight-bold"
+                      >選擇設計師：</label
+                    >
+                    <select
+                      class="custom-select"
+                      v-model="dId"
+                      v-if="editStatus"
+                    >
                       <option disabled value="">選擇設計師</option>
                       <option
                         v-for="designer in totalDesignerInfo"
@@ -61,13 +81,16 @@
                         >{{ designer.Name }}</option
                       >
                     </select>
+                    <p v-else>{{ tempOrderInfo.DesignerName }}</p>
                   </div>
                 </div>
                 <!--
                   選擇消費項目
                 -->
                 <div class="form-gropu">
-                  <label for="">請選擇消費項目（至少一項）</label>
+                  <label for="" class="font-weight-bold"
+                    >請選擇消費項目（至少一項）</label
+                  >
                   <div class="form-row">
                     <div class="col-12">
                       <table class="table table-bordered">
@@ -78,13 +101,16 @@
                             <th scope="col">時間</th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody v-if="editStatus">
                           <tr
                             v-for="info in totalServicesInfo"
                             :key="info.ProductName"
                           >
                             <td>
-                              <div class="custom-control custom-checkbox">
+                              <div
+                                class="custom-control custom-checkbox"
+                                v-if="editStatus"
+                              >
                                 <input
                                   type="checkbox"
                                   class="custom-control-input"
@@ -99,6 +125,7 @@
                                   >{{ info.ProductName }}</label
                                 >
                               </div>
+                              <p v-else>{{ info.ProductName }}</p>
                             </td>
                             <td>
                               <label style="width:120px" :for="info.Id">{{
@@ -109,6 +136,22 @@
                               <label style="width:120px" :for="info.Id">{{
                                 info.ServiceMinutes
                               }}</label>
+                            </td>
+                          </tr>
+                        </tbody>
+                        <tbody v-else>
+                          <tr
+                            v-for="info in tempOrderInfo.Detail"
+                            :key="info.ProductName"
+                          >
+                            <td>
+                              <p>{{ info.ProductName }}</p>
+                            </td>
+                            <td>
+                              <p>{{ info.UnitPrice }}</p>
+                            </td>
+                            <td>
+                              <p>{{ info.ServiceMinutes }}</p>
                             </td>
                           </tr>
                         </tbody>
@@ -136,7 +179,9 @@
                     class="form-control"
                     id="content"
                     placeholder="客人的備註"
+                    v-if="editStatus"
                   ></textarea>
+                  <p v-else>{{ tempOrderInfo.CustomerRemark }}</p>
                 </div>
               </div>
             </div>
@@ -145,26 +190,32 @@
                 <div class="col-4">
                   <button
                     type="button"
+                    class="btn btn-outline-secondary mr-2"
+                    data-dismiss="modal"
+                    v-if="editStatus"
+                  >
+                    取消
+                  </button>
+                  <button
                     class="btn btn-danger"
+                    style="min-width:140px"
+                    v-else
                     @click="deletAlert"
                   >
-                    刪除
+                    取消此筆訂單
                   </button>
                 </div>
                 <div class="col-auto">
                   <button
                     type="button"
-                    class="btn btn-outline-secondary mr-2"
-                    data-dismiss="modal"
-                  >
-                    取消
-                  </button>
-                  <button
-                    type="button"
                     class="btn btn-primary"
                     @click="postOrderHandler()"
+                    v-if="editStatus"
                   >
                     確認
+                  </button>
+                  <button class="btn btn-primary" data-dismiss="modal" v-else>
+                    返回
                   </button>
                 </div>
               </div>
@@ -173,13 +224,6 @@
         </div>
       </div>
     </div>
-    <button
-      type="button"
-      class="btn btn-primary"
-      @click="gettotalOrderHandler()"
-    >
-      test
-    </button>
   </div>
 </template>
 
@@ -193,6 +237,8 @@ import {
   getStoreProductList,
   postOrder,
   getOrder,
+  getOrderDetail,
+  patchOrderDetailStatus,
 } from '@/js/AppServices';
 import $ from 'jquery';
 
@@ -222,6 +268,8 @@ export default {
         //   endTime: '18:00', // an end time (6pm in this example)
         // },
         initialView: 'dayGridMonth',
+        // 開啟時要顯示的事件
+        // initialEvents: [],
         // validRange: { start: new Date().toISOString().slice(0, 10) },
         locale: 'tw',
         // editable: true, // 付費開啟拖拉功能
@@ -267,6 +315,17 @@ export default {
 
       // OrderInfo
       OrderInfo: [],
+
+      // tempOrderInfo
+      tempOrderInfo: {},
+      // 開關
+      editStatus: true,
+
+      // selectOrderId
+      selectOrderId: '',
+
+      // loadingStatus
+      isLoading: true,
     };
   },
 
@@ -290,16 +349,16 @@ export default {
     },
 
     // getOrderInfo
-    gettotalOrderHandler() {
-      getOrder().then((res) => {
+    async gettotalOrderHandler() {
+      await getOrder().then((res) => {
         this.OrderInfo = res.data.BasicData;
       });
-      this.OrderInfo.forEach((item) => {
+      await this.OrderInfo.forEach((item) => {
         const showOrderDetails = {
           title: item.CustomerName,
           start: item.OrderTime,
+          OrderID: item.Id,
         };
-
         this.calendarOptions.events.push(showOrderDetails);
       });
     },
@@ -318,8 +377,14 @@ export default {
         CustomerRemark: '',
         OrderDetails: this.editInfo,
       });
+
       postOrder(data).then((res) => {
+        console.log(res);
         if (res.data.status === true) {
+          this.calendarOptions.events = [];
+          this.editInfo = [];
+          this.dId = '';
+          this.reservationInfo = '';
           this.$swal({
             title: '成功預約',
             position: 'center',
@@ -327,10 +392,8 @@ export default {
             showConfirmButton: false,
             timer: 1500,
           }).then(() => {
-            this.editInfo = '';
-            this.dId = '';
-            this.reservationInfo = '';
             $('#reservationModal').modal('hide');
+            this.gettotalOrderHandler();
           });
         }
       });
@@ -352,7 +415,7 @@ export default {
 
     // 開啟Modal 並把api的訊息存到data中的dateClickEvent
     openModal(e) {
-      // console.log('openModel', e.dayEl.className);
+      this.editStatus = true;
       this.reservationInfo = {};
       if (e.dayEl.classList.contains('fc-BeforeDay')) {
         alert('過去日期不能預約');
@@ -361,64 +424,25 @@ export default {
         this.dateClickEvent = e;
       }
     },
-    saveAlert() {
-      this.$swal(
-        {
-          title: '成功預約',
-          position: 'center',
-          icon: 'success',
-          showConfirmButton: false,
-          timer: 1500,
-        },
-        this.setInfo(),
-      );
-    },
-
-    // 將輸入的訊息寫到選則的日期裡面
-    setInfo() {
-      // 將資訊寫入日期中
-      const selectedInfo = this.dateClickEvent.view.calendar;
-      selectedInfo.unselect();
-      selectedInfo.addEvent({
-        // eslint-disable-next-line no-plusplus
-        id: this.num++,
-        title: this.reservationInfo.cName,
-        start: this.dateClickEvent.dateStr,
-        // extendedProps
-        tel: this.reservationInfo.cTel,
-        name: this.reservationInfo.cName,
-      });
-      $('#reservationModal').modal('hide');
-    },
 
     // 點選有存儲過的資訊打開內容
     getSelectInfo(e) {
-      this.eventClickEvent = e;
-      // eslint-disable-next-line prefer-object-spread
-      this.reservationInfo = Object.assign({}, e.evnet);
-      this.reservationInfo.cName = e.event.title;
-      this.reservationInfo.cTel = e.event.extendedProps.tel;
-      // console.log(e.event.extendedProps);
-      $('#reservationModal').modal('show');
-    },
-
-    // 編輯預約資訊
-    updateInfo() {
-      const selectedInfo = this.eventClickEvent;
-      // console.log(selectedInfo);
-      selectedInfo.refetchEvents({
-        title: this.reservationInfo.cName,
-        start: this.dateClickEvent.dateStr,
-        // extendedProps
-        tel: this.reservationInfo.cTel,
-        name: this.reservationInfo.cName,
+      this.editStatus = false;
+      this.tempOrderInfo = {};
+      this.selectOrderId = e.event.extendedProps.OrderID;
+      getOrderDetail(this.selectOrderId).then((res) => {
+        if (res.data.status) {
+          this.isLoading = false;
+          this.tempOrderInfo = res.data.BasicData;
+        }
       });
+      $('#reservationModal').modal('show');
     },
 
     // 刪除資訊
     deletAlert() {
       this.$swal({
-        title: '你確定要刪除嗎？',
+        title: '你確定要取消嗎？',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#d33 ',
@@ -427,19 +451,27 @@ export default {
         cancelButtonText: '取消',
       }).then((result) => {
         if (result.isConfirmed) {
-          this.$swal('成功刪除預約', this.deleteInfo());
+          this.$swal('成功取消預約', this.deleteInfo());
         }
       });
     },
     deleteInfo() {
-      this.eventClickEvent.event.remove();
-      $('#reservationModal').modal('hide');
+      const data = this.$qs.stringify({
+        status: '0',
+        Remark: '修改成功',
+      });
+      patchOrderDetailStatus(this.selectOrderId, data).then((res) => {
+        console.log(res);
+      });
+    },
+    changeStatus() {
+      this.editStatus = !this.editStatus;
     },
   },
-  created() {
+  mounted() {
     this.getDesignerHandler();
     this.getServicesHandler();
-    // this.gettotalOrderHandler();
+    this.gettotalOrderHandler();
   },
 };
 </script>

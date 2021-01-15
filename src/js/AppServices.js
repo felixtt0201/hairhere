@@ -69,6 +69,13 @@ const postOrder = (data) => storeApi.post('/POST/Order', data);
 
 // get訂單
 const getOrder = () => storeApi.get('/GET/OrderList');
+// get單一訂單
+const getOrderDetail = (oId) => storeApi.get(`/GET/Order?id=${oId}`);
+// patch 訂單狀態
+const patchOrderDetailStatus = (oId, data) =>
+  // eslint-disable-next-line implicit-arrow-linebreak
+  storeApi.patch(`PATCH/Order?id=${oId}`, data);
+
 // eslint-disable-next-line object-curly-newline
 export {
   postStoreLogin,
@@ -87,4 +94,6 @@ export {
   putDesigner,
   postOrder,
   getOrder,
+  getOrderDetail,
+  patchOrderDetailStatus,
 };

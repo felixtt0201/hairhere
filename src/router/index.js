@@ -84,16 +84,19 @@ const routes = [
       {
         path: 'information', // 店家資訊
         name: '',
+        meta: { requiresAuth: true },
         component: () => import('../components/Information.vue'),
         children: [
           {
             path: '',
             name: 'StoreInformation',
+            meta: { requiresAuth: true },
             component: () => import('../components/forms/StoreInformation.vue'),
           },
           {
             path: 'serviceinfo',
             name: 'ServiceInfo',
+            meta: { requiresAuth: true },
             component: () => import('../components/forms/ServiceInfo.vue'),
           },
         ],
@@ -101,16 +104,19 @@ const routes = [
       {
         path: 'portfolio', // 作品集
         name: 'Portfolio',
+        meta: { requiresAuth: true },
         component: () => import('../components/Portfolio.vue'),
       },
       {
         path: 'checkout', // 結帳管理
         name: 'Checkout',
+        meta: { requiresAuth: true },
         component: () => import('../components/Checkout.vue'),
       },
       {
         path: 'forms', // 表單管理
         name: 'Forms',
+        meta: { requiresAuth: true },
         component: () => import('../components/Forms.vue'),
         children: [
           {
@@ -121,16 +127,19 @@ const routes = [
           {
             path: 'vaction',
             name: 'Vaction',
+            meta: { requiresAuth: true },
             component: () => import('../components/forms/Vaction.vue'),
           },
           {
             path: 'performance',
             name: 'Performance',
+            meta: { requiresAuth: true },
             component: () => import('../components/forms/Performance.vue'),
           },
           {
             path: 'historicalOrders',
             name: 'HistoricalOrders',
+            meta: { requiresAuth: true },
             component: () => import('../components/forms/HistoricalOrders.vue'),
           },
         ],
