@@ -32,7 +32,7 @@
           <div class="carousel-item">
             <img
               class="d-block w-100"
-              src="@/assets/img/carsouel-test.jpg"
+              src="@/assets/img/line_banner.jpg"
               alt="Second slide"
             />
             <div class="carousel-caption d-none d-md-block">
@@ -150,12 +150,13 @@
                 v-for="service in services"
                 :key="service.Name"
               >
+                {{ service }}
                 <span class="w-50 text-right pr-3">{{ service.Name }}</span
                 ><span class="w-50 pl-3">${{ service.UnitPrice }} +</span>
               </li>
             </ul>
             <router-link
-              to="/reservation"
+              to="/reservationF"
               class="btn btn-secondary mx-auto rounded-0"
               >立即預約</router-link
             >
@@ -246,6 +247,7 @@ export default {
   },
   mounted() {
     this.GetStoreInfo();
+    console.log(this.basicData);
   },
 };
 </script>

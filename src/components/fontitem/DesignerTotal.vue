@@ -16,7 +16,10 @@
           <h4>{{ designer.Name }}</h4>
           <p class="w-50 border-left">設計專業專業剪燙染護頭皮養護精緻編髮</p>
           <!-- routerlink連結至預約頁面 -->
-          <router-link to="/reservation" class="btn rounded-0 designer-btn">
+          <router-link
+            :to="`/reservationF/${designer.Id}`"
+            class="btn rounded-0 designer-btn"
+          >
             立即預約</router-link
           >
         </div>
@@ -29,71 +32,13 @@
         >
           <!-- routerlink連結至設計師個人 -->
           <router-link
-            to="/designerSingle"
+            :to="`/designerSingle/${designer.Id}`"
             class="btn designer-btn rounded-0 mb-4"
           >
             更多作品
           </router-link>
         </div>
       </div>
-      <!-- <div class="row mb-3">
-        <div
-          class="col-md-4 photo-size"
-          :style="{
-            'background-image':
-              'url(' + require('@/assets/img/photo2.svg') + ')',
-          }"
-        ></div>
-        <div
-          class="col-md-4 d-flex flex-column justify-content-around align-items-center"
-        >
-          <h4>社稷詩</h4>
-          <p class="w-50 border-left">設計專業專業剪燙染護頭皮養護精緻編髮</p>
-          <button type="button" class="btn designer-btn rounded-0">
-            立即預約
-          </button>
-        </div>
-        <div
-          class="col-md-4 photo-size  btn-viewmore"
-          :style="{
-            'background-image':
-              'url(' + require('@/assets/img/photo1.png') + ')',
-          }"
-        >
-          <button type="button" class="btn designer-btn  rounded-0 mb-4">
-            更多作品
-          </button>
-        </div>
-      </div>
-      <div class="row mb-5">
-        <div
-          class="col-md-4 photo-size"
-          :style="{
-            'background-image':
-              'url(' + require('@/assets/img/photo2.svg') + ')',
-          }"
-        ></div>
-        <div
-          class="col-md-4 d-flex flex-column justify-content-around align-items-center"
-        >
-          <h4>社稷詩</h4>
-          <p class="w-50 border-left">設計專業專業剪燙染護頭皮養護精緻編髮</p>
-          <button type="button" class="btn designer-btn  rounded-0">
-            立即預約
-          </button>
-        </div>
-        <div
-          class="col-md-4 photo-size  btn-viewmore"
-          :style="{
-            'background-image':
-              'url(' + require('@/assets/img/photo1.png') + ')',
-          }"
-        >
-          <button type="button" class="btn designer-btn  rounded-0 mb-4">
-            更多作品
-          </button>
-        </div>
-      </div> -->
       <!-- 分頁 -->
       <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">

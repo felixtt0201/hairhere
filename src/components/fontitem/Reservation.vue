@@ -25,8 +25,8 @@
             >
               <h4>本次預約設計師</h4>
               <h5>{{ designer.Name }}</h5>
-              <p class="w-50 border-left">
-                設計專業專業剪燙染護頭皮養護精緻編髮
+              <p class="border-left">
+                {{ designer.Details }}
               </p>
             </div>
           </div>
@@ -57,16 +57,6 @@
             <td>＄{{ product.UnitPrice }}＋</td>
             <td>{{ product.ServiceMinutes }} 分鐘</td>
           </tr>
-          <!-- <tr>
-            <td><input type="checkbox" id="check1" />洗＋剪髮</td>
-            <td>＄680 +</td>
-            <td>60分鐘</td>
-          </tr>
-          <tr>
-            <td><input type="checkbox" id="check1" />染髮</td>
-            <td>＄2000 +</td>
-            <td>60分鐘</td>
-          </tr> -->
         </tbody>
       </table>
       <h4 class="title-line text-center mb-5 text-sm">項目結算</h4>
@@ -120,6 +110,7 @@ export default {
       designer: {},
       products: [], // 遠端撈回的服務項目
       checklist: [], // 加入勾選項目的位置
+      listId: '',
     };
   },
   components: {
@@ -127,7 +118,7 @@ export default {
   },
   methods: {
     getDesignerHandler() {
-      getDesigner(4).then((res) => {
+      getDesigner(this.listId).then((res) => {
         console.log(res);
         this.designer = res.data;
       });
@@ -139,8 +130,6 @@ export default {
       });
     },
     selectsingle(id) {
-      console.log(this.products);
-      console.log(id);
       this.products.forEach((item) => {
         if (item.Id === id) {
           this.checklist.push(item);
@@ -168,9 +157,9 @@ export default {
     },
   },
   created() {
+    this.listId = this.$route.params.listId; // 抓取參數
     this.getDesignerHandler();
     this.getProductHandler();
-    console.log(this.checklist);
   },
 };
 </script>

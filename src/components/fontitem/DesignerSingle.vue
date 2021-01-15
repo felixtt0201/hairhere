@@ -14,9 +14,12 @@
           <div
             class="col-md-6 d-flex flex-column justify-content-around align-items-center"
           >
-            <h4>社稷詩</h4>
-            <p class="w-50 border-left">設計專業專業剪燙染護頭皮養護精緻編髮</p>
-            <router-link to="/reservation" class="btn rounded-0 designer-btn">
+            <h4>{{ designer.Name }}</h4>
+            <p class="w-50 border-left">{{ designer.Details }}</p>
+            <router-link
+              :to="`/reservationF/${designerId}`"
+              class="btn rounded-0 designer-btn"
+            >
               立即預約</router-link
             >
           </div>
@@ -39,10 +42,9 @@
             <div class="col-md-8 p40">
               <h4 class="mb-4">沙龍護髮</h4>
               <p class="mb-5 border-left">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor
-                doloribus consequuntur velit nisi, dolores dicta debitis iusto
-                voluptate! Excepturi, ad voluptatem! Vel enim et, tempora
-                deleniti placeat ad odit distinctio.
+                本次預約設計師師師師本次預約設計師師師師本次預約設計師師師師本次預約設計師
+                師師師本次預約設計師師師師本次預約設計師師師師本次預約設計師師師師本次預約設計師師師師本次預約設計師師師師本次預約設計師師師師
+                本次預約設計師師師師本次預約設計師師師師本次預約設計師師師師本次預約設計師師師師
               </p>
               <ul class="d-flex justify-content-center p-0 mb-4">
                 <li class="designer-tag">沙龍護髮</li>
@@ -71,7 +73,29 @@
 </template>
 
 <script>
-export default {};
+import { getDesigner } from '@/js/FontAppServices';
+
+export default {
+  data() {
+    return {
+      designerId: '',
+      designer: '',
+    };
+  },
+  methods: {
+    getInfoHandler() {
+      getDesigner(this.designerId).then((res) => {
+        this.designer = res.data;
+        console.log(this.designer);
+      });
+    },
+  },
+  created() {
+    this.designerId = this.$route.params.id;
+    console.log(this.designerId);
+    this.getInfoHandler();
+  },
+};
 </script>
 
 <style></style>
