@@ -31,7 +31,7 @@
           @submit.prevent="putInfoHandler"
         >
           <div class="row">
-            <div class="col-md-4 mb-3">
+            <div class="col-md-6 mb-3">
               <label for="title" class="font-weight-bold">店家名稱：</label>
               <p
                 for=""
@@ -49,7 +49,7 @@
                 v-model="storeInfo.title"
               />
             </div>
-            <div class="col-md-4 mb-3">
+            <div class="col-md-6 mb-3">
               <label for="title" class="font-weight-bold"
                 >店家名稱：(英文)</label
               >
@@ -69,6 +69,8 @@
                 v-model="storeInfo.engtitle"
               />
             </div>
+          </div>
+          <div class="row">
             <div class="col-md-4 mb-3">
               <label for="tel" class="font-weight-bold">店家電話：</label>
               <p
@@ -87,42 +89,6 @@
                 v-model="storeInfo.tel"
               />
             </div>
-            <!-- <div class="col-md-6 mb-3">
-              <label for="title" class="font-weight-bold">店家名稱：</label>
-              <p
-                for=""
-                v-if="editstatus"
-                class="text-muted text-gray-800 text-gray-800"
-              >
-                {{ storeInfo.title }}
-              </p>
-              <input
-                v-else
-                type="text"
-                class="form-control"
-                id="title"
-                placeholder="請輸入名稱 ex:樂髮手作"
-                v-model="storeInfo.title"
-              />
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="tel" class="font-weight-bold">店家電話：</label>
-              <p
-                for=""
-                v-if="editstatus"
-                class="text-muted text-gray-800 text-gray-800"
-              >
-                {{ storeInfo.tel }}
-              </p>
-              <input
-                v-else
-                type="tel"
-                class="form-control"
-                id="tel"
-                placeholder="請輸入電話or手機"
-                v-model="storeInfo.tel"
-              />
-            </div> -->
           </div>
           <div class="row">
             <div class="col-md-6 mb-3">
@@ -275,9 +241,13 @@
               v-model="storeInfo.address"
             />
           </div>
-          <div class="mb-3">
-            <label for="lastName" class="font-weight-bold">Facebook：</label>
-            <p for="" v-if="editstatus" class="text-muted text-gray-800">
+          <div class="col-mb-3">
+            <label for="facebook" class="font-weight-bold">Facebook：</label>
+            <p
+              for="facebook"
+              v-if="editstatus"
+              class="text-muted text-gray-800"
+            >
               {{ storeInfo.facebook }}
             </p>
             <input
@@ -287,6 +257,26 @@
               id="facebook"
               placeholder="請輸入臉書網址 ex:xxxxx.facebook"
               v-model="storeInfo.facebook"
+            />
+          </div>
+          <div class="col-mb-3">
+            <label for="instagram：" class="font-weight-bold"
+              >Instagram：</label
+            >
+            <p
+              for="facebook"
+              v-if="editstatus"
+              class="text-muted text-gray-800"
+            >
+              {{ storeInfo.instagram }}
+            </p>
+            <input
+              v-else
+              type="text"
+              class="form-control"
+              id="instagram："
+              placeholder="請輸入臉書網址 ex:xxxxx.instagram："
+              v-model="storeInfo.instagram"
             />
           </div>
           <div class="form-group">
@@ -362,6 +352,7 @@ export default {
         businessTimeClose: '',
         businessTime: '',
         DayOf: '',
+        instagram: '',
       },
 
       // 編輯的開關
@@ -376,7 +367,7 @@ export default {
     // 取得店家資料
     getInfoHandler() {
       getStoreTotalInfo().then((res) => {
-        // console.log(res);
+        console.log(res);
         if (res.data.status === true) {
           this.newdata = res.data;
           this.storeInfo.title = this.newdata.Name;
@@ -384,6 +375,7 @@ export default {
           this.storeInfo.tel = this.newdata.BasicData.Phone;
           this.storeInfo.address = this.newdata.BasicData.Address;
           this.storeInfo.facebook = this.newdata.BasicData.Facebook;
+          this.storeInfo.instagram = this.newdata.BasicData.Instagram;
           this.storeInfo.detail = this.newdata.BasicData.Details;
           this.storeInfo.summary = this.newdata.BasicData.Summary;
           this.storeInfo.DayOf = this.newdata.Business.RestDayOfWeekString;
@@ -404,16 +396,12 @@ export default {
         BusinessHoursOpen: this.storeInfo.businessTimeOpen,
         EnglishName: this.storeInfo.engtitle,
         BusinessHoursClose: this.storeInfo.businessTimeClose,
-        Instagram: '',
+        Instagram: this.storeInfo.instagram,
         Facebook: this.storeInfo.facebook,
-        Twitter: '',
-        Web: '',
         Name: this.storeInfo.title,
         Phone: this.storeInfo.tel,
         Summary: this.storeInfo.summary,
         Details: this.storeInfo.detail,
-        Impressum: '',
-        Remark: '',
       });
       putStoreInfo(data).then((res) => {
         console.log(res);

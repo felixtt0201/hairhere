@@ -292,17 +292,15 @@ export default {
     // getOrderInfo
     gettotalOrderHandler() {
       getOrder().then((res) => {
-        // console.log(res.data.BasicData);
         this.OrderInfo = res.data.BasicData;
       });
       this.OrderInfo.forEach((item) => {
-        console.log(item.OrderTime);
-        const a = {
+        const showOrderDetails = {
           title: item.CustomerName,
           start: item.OrderTime,
         };
 
-        this.calendarOptions.events.push(a);
+        this.calendarOptions.events.push(showOrderDetails);
       });
     },
 
