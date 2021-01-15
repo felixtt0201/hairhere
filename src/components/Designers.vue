@@ -117,31 +117,6 @@
                         v-model="tempInfo.Name"
                       />
                     </div>
-                    <div class="form-group col-md-6">
-                      <label for="sex">性別</label>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          name="inlineRadioOptions"
-                          id="male"
-                          value="0"
-                          v-model="tempInfo.GenderType"
-                        />
-                        <label class="form-check-label" for="0">男</label>
-                      </div>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          name="inlineRadioOptions"
-                          id="female"
-                          value="1"
-                          v-model="tempInfo.GenderType"
-                        />
-                        <label class="form-check-label" for="1">女</label>
-                      </div>
-                    </div>
                   </div>
                   <div class="form-group">
                     <label for="phone">電話/手機</label>
@@ -150,7 +125,17 @@
                       class="form-control"
                       id="phone"
                       placeholder="請輸入電話/手機"
-                      v-model="tempInfo.tel"
+                      v-model="tempInfo.Phone"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="instagram">Instagram</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="instagram"
+                      placeholder="instagram"
+                      v-model="tempInfo.Instagram"
                     />
                   </div>
                   <div class="form-group">
@@ -201,32 +186,15 @@
                   <hr />
                   <div class="form-group">
                     <p for="description">我的專長/特色</p>
-                    <!-- <textarea
+                    <textarea
                       type="text"
                       class="form-control"
                       id="description"
                       placeholder="請輸入我的專長/特色"
                       cols="30"
                       rows="5"
-                      v-model="tempInfo.details"
-                    ></textarea> -->
-                    <div
-                      class="custom-control custom-checkbox"
-                      v-for="skill in skills"
-                      :key="skill.id"
-                    >
-                      <input
-                        type="checkbox"
-                        class="custom-control-input"
-                        v-model="selectSkills"
-                        :id="skill.id"
-                        :value="skill"
-                      />
-                      <label class="custom-control-label" :for="skill.id">{{
-                        skill.title
-                      }}</label>
-                    </div>
-                    <!-- {{ selectSkills }} -->
+                      v-model="tempInfo.Details"
+                    ></textarea>
                   </div>
                 </div>
               </div>
@@ -271,38 +239,6 @@ export default {
       // 修改單一設計師資料
       tempInfo: {},
       isNew: false,
-
-      skills: [
-        {
-          id: 1,
-          title: '染髮',
-        },
-        {
-          id: 2,
-          title: '洗髮',
-        },
-        {
-          id: 3,
-          title: '飄髮',
-        },
-        {
-          id: 4,
-          title: '剪髮',
-        },
-        {
-          id: 5,
-          title: '燙髮',
-        },
-        {
-          id: 6,
-          title: '捲髮',
-        },
-        {
-          id: 7,
-          title: '增髮',
-        },
-      ],
-      selectSkills: [],
     };
   },
   methods: {
