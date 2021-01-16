@@ -150,13 +150,12 @@
                 v-for="service in services"
                 :key="service.Name"
               >
-                {{ service }}
                 <span class="w-50 text-right pr-3">{{ service.Name }}</span
                 ><span class="w-50 pl-3">${{ service.UnitPrice }} +</span>
               </li>
             </ul>
             <router-link
-              to="/reservationF"
+              to="/designerTotal"
               class="btn btn-secondary mx-auto rounded-0"
               >立即預約</router-link
             >

@@ -7,13 +7,15 @@
 
         <label for="c1"><input type="checkbox" id="c1" />短髮(不過下巴)</label>
 
-        <label for="c1"><input type="checkbox" id="c1" />中髮(及肩長度)</label>
+        <label for="c1"
+          ><input type="checkbox" id="c1" />中長髮(及肩長度)</label
+        >
         <label for="c1"><input type="checkbox" id="c1" />長髮(過肩膀)</label>
         <label for="c1"><input type="checkbox" id="c1" />染髮</label>
 
-        <label for="c1"><input type="checkbox" id="c1" />燙髮</label>
+        <label for="c1"><input type="checkbox" id="c1" />特殊/設計染髮</label>
 
-        <label for="c1"><input type="checkbox" id="c1" />剪髮</label>
+        <label for="c1"><input type="checkbox" id="c1" />燙髮</label>
         <button type="button" class="btn w-100">
           <i class="fas fa-search mr-3"></i>搜尋
         </button>
@@ -123,8 +125,6 @@
   </div>
 </template>
 
-<script>
-export default {};
-</script>
+<script></script>
 
 <style></style>
