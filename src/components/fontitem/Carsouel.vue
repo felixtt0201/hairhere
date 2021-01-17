@@ -52,6 +52,7 @@ export default {
   data() {
     return {
       options: {
+        type: 'loop',
         rewind: true,
         width: '100%',
         // gap: '1rem',
@@ -60,7 +61,7 @@ export default {
         perPage: 4, // 確定每頁應顯示多少張幻燈片
         // gap: 1,
         pagination: false,
-        interval: 5000, // 移動時間
+        interval: 3000, // 移動時間
         pauseOnHover: true, // 是否在懸停滑塊時停止自動播放
         cover: true,
         breakpoints: {
@@ -74,9 +75,9 @@ export default {
     };
   },
   methods: {
-    moved(splide, newIndex) {
-      console.log('moved', newIndex);
-    },
+    // moved(splide, newIndex) {
+    //   console.log('moved', newIndex);
+    // },
   },
 };
 </script>

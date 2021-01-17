@@ -7,6 +7,7 @@
       <router-link to="/login">後台登入</router-link>
       <router-view></router-view>
     </div>
+    <cartest />
   </div>
 </template>
 
