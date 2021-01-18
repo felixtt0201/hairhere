@@ -7,8 +7,9 @@
       id="reservationModal"
       tabindex="-1"
       role="dialog"
-      aria-labelledby="exampleModalLabel"
+      aria-labelledby="reservationModal"
       aria-hidden="true"
+      @keydown.esc="cancelMouseEvnetHandler"
     >
       <div class="modal-dialog modal-lg container" role="document">
         <!-- <loading
@@ -20,7 +21,7 @@
         ></loading> -->
         <div class="modal-content border-0">
           <div class="modal-header bg-dark text-white">
-            <h5 class="modal-title" id="exampleModalLabel">
+            <h5 class="modal-title" id="reservationModal">
               <span>新增預約</span>
             </h5>
             <button
@@ -51,13 +52,13 @@
                     <p v-else>{{ tempOrderInfo.CustomerName }}</p>
                   </div>
                   <div class="form-group col-md-6">
-                    <label for="tel" class="font-weight-bold"
+                    <label for="cTel" class="font-weight-bold"
                       >手機號碼/電話：</label
                     >
                     <input
                       type="unit"
                       class="form-control"
-                      id="tel"
+                      id="cTel"
                       placeholder="請輸入手機號碼/電話"
                       v-model="reservationInfo.cTel"
                       v-if="editStatus"
@@ -91,8 +92,8 @@
                   <label for="" class="font-weight-bold"
                     >請選擇消費項目（至少一項）</label
                   >
-                  <div class="form-row">
-                    <div class="col-12">
+                  <div class="">
+                    <div class="">
                       <table class="table table-bordered">
                         <thead>
                           <tr>
@@ -163,7 +164,9 @@
                 <hr />
 
                 <div class="form-group">
-                  <label for="description">店家備註</label>
+                  <label for="description" class="font-weight-bold"
+                    >店家備註</label
+                  >
                   <textarea
                     type="text"
                     class="form-control"
@@ -173,7 +176,7 @@
                   ></textarea>
                 </div>
                 <div class="form-group">
-                  <label for="content">顧客備註</label>
+                  <label for="content" class="font-weight-bold">顧客備註</label>
                   <textarea
                     type="text"
                     class="form-control"
@@ -183,14 +186,10 @@
                   ></textarea>
                   <p v-else>{{ tempOrderInfo.CustomerRemark }}</p>
                 </div>
-              </div>
-            </div>
-            <div class="container">
-              <div class="row justify-content-between">
-                <div class="col-4">
+                <div class="row justify-content-between">
                   <button
                     type="button"
-                    class="btn btn-outline-secondary mr-2"
+                    class="btn btn-outline-secondary"
                     data-dismiss="modal"
                     v-if="editStatus"
                   >
@@ -204,8 +203,7 @@
                   >
                     取消此筆訂單
                   </button>
-                </div>
-                <div class="col-auto">
+
                   <button
                     type="button"
                     class="btn btn-primary"
@@ -252,8 +250,8 @@ export default {
       calendarOptions: {
         plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
         headerToolbar: {
-          left: 'dayGridMonth,timeGridWeek',
-          center: 'title',
+          left: 'title',
+          center: '',
           right: 'prev,today,next',
         },
         views: {
@@ -261,32 +259,20 @@ export default {
             allDayText: '時間',
           },
         },
-        // businessHours: {
-        //   daysOfWeek: [1, 2, 3, 4, 5, 6, 7], // Monday - Thursday
-
-        //   startTime: '09:00', // a start time (10am in this example)
-        //   endTime: '18:00', // an end time (6pm in this example)
-        // },
-        initialView: 'dayGridMonth',
-        // 開啟時要顯示的事件
-        // initialEvents: [],
-        // validRange: { start: new Date().toISOString().slice(0, 10) },
+        initialView: 'timeGridWeek',
         locale: 'tw',
-        // editable: true, // 付費開啟拖拉功能
         selectable: true,
         selectMirror: true,
         dayMaxEvents: true,
         weekends: true,
-        // select: this.openModal,
         eventClick: this.getSelectInfo,
         dayCellClassNames: this.banDate,
-        // eventsSet: this.handleEvents,
         dateClick: this.openModal,
 
         // 時間區間
         slotDuration: '1:00', // 區間30分鐘
-        slotMinTime: '9:00', // 開始
-        slotMaxTime: '18:00', // 結束
+        slotMinTime: '10:00', // 開始
+        slotMaxTime: '19:00', // 結束
         expandRows: true, // 適應有時間的高度(不然會是原本高度)
         events: [{}],
       },
@@ -343,13 +329,14 @@ export default {
       getStoreProductList().then((res) => {
         if (res.data.status === true) {
           this.totalServicesInfo = res.data.OrderDetails;
-          // console.log(this.totalServicesInfo);
         }
       });
     },
 
     // getOrderInfo
     async gettotalOrderHandler() {
+      await this.getDesignerHandler();
+      await this.getServicesHandler();
       await getOrder().then((res) => {
         this.OrderInfo = res.data.BasicData;
       });
@@ -452,6 +439,7 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           this.$swal('成功取消預約', this.deleteInfo());
+          this.gettotalOrderHandler();
         }
       });
     },
@@ -465,13 +453,13 @@ export default {
       });
     },
 
-    changeStatus() {
-      this.editStatus = !this.editStatus;
+    cancelMouseEvnetHandler() {
+      this.dateClickEvent.view.calendar.unselect();
     },
   },
   mounted() {
-    this.getDesignerHandler();
-    this.getServicesHandler();
+    // this.getDesignerHandler();
+    // this.getServicesHandler();
     this.gettotalOrderHandler();
   },
 };
