@@ -11,13 +11,13 @@
       aria-hidden="true"
     >
       <div class="modal-dialog modal-lg container" role="document">
-        <loading
+        <!-- <loading
           :opacity="1"
           color="#7e735d"
           loader="bars"
           background-color="#b7b9cc"
           :active.sync="isLoading"
-        ></loading>
+        ></loading> -->
         <div class="modal-content border-0">
           <div class="modal-header bg-dark text-white">
             <h5 class="modal-title" id="exampleModalLabel">
@@ -457,7 +457,7 @@ export default {
     },
     deleteInfo() {
       const data = this.$qs.stringify({
-        status: '0',
+        OrderStatus: '0',
         Remark: '修改成功',
       });
       patchOrderDetailStatus(this.selectOrderId, data).then((res) => {
