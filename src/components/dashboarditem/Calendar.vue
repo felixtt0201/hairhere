@@ -2,98 +2,110 @@
 <template>
   <div>
     <FullCalendar :options="calendarOptions" />
-    <div
-      class="modal fade"
-      id="reservationModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="reservationModal"
-      aria-hidden="true"
-      @keydown.esc="cancelMouseEvnetHandler"
-    >
-      <div class="modal-dialog modal-lg container" role="document">
-        <!-- <loading
+    <loading
+      :opacity="1"
+      color="#7e735d"
+      loader="bars"
+      background-color="#b7b9cc"
+      :active.sync="isLoading"
+      :is-full-page="fullPage"
+    ></loading>
+    <form @submit.prevent="postOrderHandler">
+      <div
+        class="modal fade"
+        id="reservationModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="reservationModal"
+        aria-hidden="true"
+        @keydown.esc="cancelMouseEvnetHandler"
+      >
+        <loading
           :opacity="1"
           color="#7e735d"
           loader="bars"
           background-color="#b7b9cc"
           :active.sync="isLoading"
-        ></loading> -->
-        <div class="modal-content border-0">
-          <div class="modal-header bg-dark text-white">
-            <h5 class="modal-title" id="reservationModal">
-              <span>新增預約</span>
-            </h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="row justify-content-center">
-              <div class="col-sm-8">
-                <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <label for="cName" class="font-weight-bold"
-                      >顧客姓名：</label
-                    >
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="cName"
-                      placeholder="請輸入客人姓名"
-                      v-model="reservationInfo.cName"
-                      v-if="editStatus"
-                    />
-                    <p v-else>{{ tempOrderInfo.CustomerName }}</p>
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label for="cTel" class="font-weight-bold"
-                      >手機號碼/電話：</label
-                    >
-                    <input
-                      type="unit"
-                      class="form-control"
-                      id="cTel"
-                      placeholder="請輸入手機號碼/電話"
-                      v-model="reservationInfo.cTel"
-                      v-if="editStatus"
-                    />
-                    <p v-else>{{ tempOrderInfo.CustomerPhone }}</p>
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label for="designer" class="font-weight-bold"
-                      >選擇設計師：</label
-                    >
-                    <select
-                      class="custom-select"
-                      v-model="dId"
-                      v-if="editStatus"
-                    >
-                      <option disabled value="">選擇設計師</option>
-                      <option
-                        v-for="designer in totalDesignerInfo"
-                        :key="designer.Id"
-                        :value="designer.Id"
-                        >{{ designer.Name }}</option
+          :is-full-page="fullPage"
+        ></loading>
+        <div class="modal-dialog modal-lg container" role="document">
+          <div class="modal-content border-0">
+            <div class="modal-header bg-dark text-white">
+              <h5 class="modal-title" id="reservationModal">
+                <span>新增預約</span>
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row justify-content-center">
+                <div class="col-sm-8">
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="cName" class="font-weight-bold"
+                        >顧客姓名：</label
                       >
-                    </select>
-                    <p v-else>{{ tempOrderInfo.DesignerName }}</p>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="cName"
+                        placeholder="請輸入客人姓名"
+                        v-model="reservationInfo.cName"
+                        v-if="editStatus"
+                        required
+                      />
+                      <p v-else>{{ tempOrderInfo.CustomerName }}</p>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="cTel" class="font-weight-bold"
+                        >手機號碼/電話：</label
+                      >
+                      <input
+                        type="unit"
+                        class="form-control"
+                        id="cTel"
+                        placeholder="請輸入手機號碼/電話"
+                        v-model="reservationInfo.cTel"
+                        v-if="editStatus"
+                        required
+                      />
+                      <p v-else>{{ tempOrderInfo.CustomerPhone }}</p>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="designer" class="font-weight-bold"
+                        >選擇設計師：</label
+                      >
+                      <select
+                        class="custom-select"
+                        v-model="dId"
+                        v-if="editStatus"
+                        required
+                      >
+                        <option disabled value="">選擇設計師</option>
+                        <option
+                          v-for="designer in totalDesignerInfo"
+                          :key="designer.Id"
+                          :value="designer.Id"
+                          >{{ designer.Name }}</option
+                        >
+                      </select>
+                      <p v-else>{{ tempOrderInfo.DesignerName }}</p>
+                    </div>
                   </div>
-                </div>
-                <!--
+                  <!--
                   選擇消費項目
                 -->
-                <div class="form-gropu">
-                  <label for="" class="font-weight-bold"
-                    >請選擇消費項目（至少一項）</label
-                  >
-                  <div class="">
-                    <div class="">
+                  <div class="form-gropu">
+                    <label for="" class="font-weight-bold"
+                      >請選擇消費項目（至少一項）</label
+                    >
+                    <div class="table-responsive-sm">
                       <table class="table table-bordered">
                         <thead>
                           <tr>
@@ -159,69 +171,70 @@
                       </table>
                     </div>
                   </div>
-                </div>
-                <!--- 選擇消費項目end-->
-                <hr />
+                  <!--- 選擇消費項目end-->
+                  <hr />
 
-                <div class="form-group">
-                  <label for="description" class="font-weight-bold"
-                    >店家備註</label
-                  >
-                  <textarea
-                    type="text"
-                    class="form-control"
-                    id="description"
-                    placeholder="請輸入備註"
-                    v-model="reservationInfo.content"
-                  ></textarea>
-                </div>
-                <div class="form-group">
-                  <label for="content" class="font-weight-bold">顧客備註</label>
-                  <textarea
-                    type="text"
-                    class="form-control"
-                    id="content"
-                    placeholder="客人的備註"
-                    v-if="editStatus"
-                  ></textarea>
-                  <p v-else>{{ tempOrderInfo.CustomerRemark }}</p>
-                </div>
-                <div class="row justify-content-between">
-                  <button
-                    type="button"
-                    class="btn btn-outline-secondary"
-                    data-dismiss="modal"
-                    v-if="editStatus"
-                  >
-                    取消
-                  </button>
-                  <button
-                    class="btn btn-danger"
-                    style="min-width:140px"
-                    v-else
-                    @click="deletAlert"
-                  >
-                    取消此筆訂單
-                  </button>
+                  <div class="form-group">
+                    <label for="description" class="font-weight-bold"
+                      >店家備註</label
+                    >
+                    <textarea
+                      type="text"
+                      class="form-control"
+                      id="description"
+                      placeholder="請輸入備註"
+                      v-model="reservationInfo.content"
+                    ></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="content" class="font-weight-bold"
+                      >顧客備註</label
+                    >
+                    <textarea
+                      type="text"
+                      class="form-control"
+                      id="content"
+                      placeholder="客人的備註"
+                      v-if="editStatus"
+                    ></textarea>
+                    <p v-else>{{ tempOrderInfo.CustomerRemark }}</p>
+                  </div>
+                  <div class="row justify-content-between">
+                    <button
+                      type="button"
+                      class="btn btn-outline-secondary"
+                      data-dismiss="modal"
+                      v-if="editStatus"
+                    >
+                      取消
+                    </button>
+                    <button
+                      class="btn btn-danger"
+                      style="min-width:140px"
+                      v-else
+                      @click="deletAlert"
+                    >
+                      取消此筆訂單
+                    </button>
 
-                  <button
-                    type="button"
-                    class="btn btn-primary"
-                    @click="postOrderHandler()"
-                    v-if="editStatus"
-                  >
-                    確認
-                  </button>
-                  <button class="btn btn-primary" data-dismiss="modal" v-else>
-                    返回
-                  </button>
+                    <button
+                      type="submit"
+                      class="btn btn-primary"
+                      v-if="editStatus"
+                    >
+                      確認
+                    </button>
+                    <button class="btn btn-primary" data-dismiss="modal" v-else>
+                      返回
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </form>
   </div>
 </template>
 
@@ -312,6 +325,7 @@ export default {
 
       // loadingStatus
       isLoading: true,
+      fullPage: true,
     };
   },
 
@@ -338,7 +352,10 @@ export default {
       await this.getDesignerHandler();
       await this.getServicesHandler();
       await getOrder().then((res) => {
-        this.OrderInfo = res.data.BasicData;
+        if (res.data.status) {
+          this.isLoading = false;
+          this.OrderInfo = res.data.BasicData;
+        }
       });
       await this.OrderInfo.forEach((item) => {
         const showOrderDetails = {
@@ -366,7 +383,6 @@ export default {
       });
 
       postOrder(data).then((res) => {
-        console.log(res);
         if (res.data.status === true) {
           this.calendarOptions.events = [];
           this.editInfo = [];
@@ -403,6 +419,7 @@ export default {
     // 開啟Modal 並把api的訊息存到data中的dateClickEvent
     openModal(e) {
       this.editStatus = true;
+      this.isLoading = false;
       this.reservationInfo = {};
       if (e.dayEl.classList.contains('fc-BeforeDay')) {
         alert('過去日期不能預約');
@@ -419,7 +436,6 @@ export default {
       this.selectOrderId = e.event.extendedProps.OrderID;
       getOrderDetail(this.selectOrderId).then((res) => {
         if (res.data.status) {
-          this.isLoading = false;
           this.tempOrderInfo = res.data.BasicData;
         }
       });
@@ -438,8 +454,15 @@ export default {
         cancelButtonText: '取消',
       }).then((result) => {
         if (result.isConfirmed) {
-          this.$swal('成功取消預約', this.deleteInfo());
-          this.gettotalOrderHandler();
+          $('#reservationModal').modal('hide');
+          this.$swal(
+            {
+              icon: 'success',
+              title: '成功取消預約',
+              timer: 1500,
+            },
+            this.deleteInfo(),
+          );
         }
       });
     },

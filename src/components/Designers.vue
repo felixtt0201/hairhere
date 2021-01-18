@@ -149,7 +149,6 @@
                   </div>
                   <div class="form-row">
                     <div class="form-group col-md-6">
-                      <div class="row"></div>
                       <label for="account">帳號(請輸入E-mail)</label>
                       <input
                         type="email"
@@ -160,7 +159,6 @@
                       />
                     </div>
                     <div class="form-group col-md-6">
-                      <div class="row"></div>
                       <label for="password">密碼</label>
                       <input
                         type="password"
@@ -172,7 +170,6 @@
                   </div>
                   <div class="form-row justify-content-end">
                     <div class="form-group col-md-6">
-                      <div class="row"></div>
                       <label for="repassword">再次輸入密碼</label>
                       <input
                         type="password"
@@ -183,6 +180,7 @@
                       />
                     </div>
                   </div>
+                  <div class="form-row"></div>
                   <hr />
                   <div class="form-group">
                     <p for="description">我的專長/特色</p>
@@ -199,7 +197,7 @@
                 </div>
               </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer justify-content-between">
               <button
                 type="button"
                 class="btn btn-outline-secondary"
@@ -345,6 +343,7 @@ export default {
         position: 'center',
         icon: 'success',
         title: `${msg}成功`,
+        timer: 1500,
       }).then(() => {
         this.getInfoHandler();
         $('#designerModal').modal('hide');

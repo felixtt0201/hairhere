@@ -27,14 +27,14 @@
             <p>NT:2350</p>
           </td>
           <td>
-            <div class="badge badge-danger text-gray-900" style="width: 6rem;">
+            <div class="badge badge-danger text-gray-900" style="width: 100px;">
               未結帳
             </div>
           </td>
           <td>
             <button
               class="btn btn-warning text-gray-900"
-              style="width: 6rem;"
+              style="width: 100px;"
               type="button"
               data-toggle="modal"
               data-target="#exampleModal"
@@ -55,12 +55,15 @@
             <p>NT:2350</p>
           </td>
           <td>
-            <div class="badge badge-success text-gray-900" style="width: 6rem;">
+            <div
+              class="badge badge-success text-gray-900"
+              style="width: 100px;"
+            >
               已結帳
             </div>
           </td>
           <td>
-            <button class="btn btn-success text-gray-900" style="width: 6rem;">
+            <button class="btn btn-success text-gray-900" style="width: 100px;">
               帳單明細
             </button>
           </td>
@@ -119,7 +122,7 @@
                 </table>
               </div>
               <div class="form-group border-bottom border-dark">
-                <h5>服務項目：</h5>
+                <h5 class="">服務項目：</h5>
                 <table class="table table-hover ">
                   <thead>
                     <tr class=" table-borderless text-gray-900">

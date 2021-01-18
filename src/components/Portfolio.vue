@@ -222,7 +222,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-4">
+              <div class="col-6">
                 <div id="dataTable_filter" class="dataTables_filter">
                   <label for="exampleFormControlSelect1">設計師姓名</label>
                   <select class="form-control" id="exampleFormControlSelect1">
@@ -235,71 +235,78 @@
                   </select>
                 </div>
               </div>
-              <div class="col-8">
+              <div class="col-6">
                 <label>作品分類（多選）</label>
-                <div class="col-6">
-                  <div class="custom-control custom-checkbox">
-                    <input
-                      type="checkbox"
-                      class="custom-control-input"
-                      id="customCheck1"
-                    />
-                    <label class="custom-control-label" for="customCheck1"
-                      >男生髮型</label
-                    >
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input
-                      type="checkbox"
-                      class="custom-control-input"
-                      id="customCheck2"
-                    />
-                    <label class="custom-control-label" for="customCheck2"
-                      >女生髮型</label
-                    >
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input
-                      type="checkbox"
-                      class="custom-control-input"
-                      id="customCheck3"
-                    />
-                    <label class="custom-control-label" for="customCheck3"
-                      >長髮</label
-                    >
-                  </div>
+                <div class="custom-control custom-checkbox">
+                  <input
+                    type="checkbox"
+                    class="custom-control-input"
+                    id="male"
+                    value="男"
+                  />
+                  <label class="custom-control-label" for="male">男生</label>
                 </div>
-                <div class="col-6">
-                  <div class="custom-control custom-checkbox">
-                    <input
-                      type="checkbox"
-                      class="custom-control-input"
-                      id="customCheck4"
-                    />
-                    <label class="custom-control-label" for="customCheck4"
-                      >短髮</label
-                    >
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input
-                      type="checkbox"
-                      class="custom-control-input"
-                      id="customCheck5"
-                    />
-                    <label class="custom-control-label" for="customCheck5"
-                      >染髮</label
-                    >
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input
-                      type="checkbox"
-                      class="custom-control-input chkbox"
-                      id="customCheck6"
-                    />
-                    <label class="custom-control-label" for="customCheck6"
-                      >燙髮</label
-                    >
-                  </div>
+                <div class="custom-control custom-checkbox">
+                  <input
+                    type="checkbox"
+                    class="custom-control-input"
+                    id="female"
+                    value="女"
+                  />
+                  <label class="custom-control-label" for="female">女生</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input
+                    type="checkbox"
+                    class="custom-control-input"
+                    id="longhair"
+                    value="長髮"
+                  />
+                  <label class="custom-control-label" for="longhair"
+                    >長髮</label
+                  >
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input
+                    type="checkbox"
+                    class="custom-control-input"
+                    id="shorthair"
+                    value="短髮"
+                  />
+                  <label class="custom-control-label" for="shorthair"
+                    >短髮</label
+                  >
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input
+                    type="checkbox"
+                    class="custom-control-input"
+                    id="dyehair"
+                    value="染髮"
+                  />
+                  <label class="custom-control-label" for="dyehair">染髮</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input
+                    type="checkbox"
+                    class="custom-control-input chkbox"
+                    id="permhair"
+                    value="燙髮"
+                  />
+                  <label class="custom-control-label" for="permhair"
+                    >燙髮</label
+                  >
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input
+                    type="checkbox"
+                    class="custom-control-input chkbox"
+                    id="specialpermhair"
+                    value="設計染"
+                  />
+                  <label class="custom-control-label" for="specialpermhair"
+                    >特殊/設計染</label
+                  >
                 </div>
               </div>
             </div>
@@ -319,7 +326,7 @@
               </div>
             </div>
           </div>
-          <div class="modal-footer">
+          <div class="modal-footer justify-content-between">
             <button
               type="button"
               class="btn btn-outline-secondary"

@@ -26,7 +26,7 @@
                           <div class="form-group">
                             <input
                               type="email"
-                              id="Account"
+                              id="account"
                               class="form-control form-control-user"
                               placeholder="帳號 / Email Address"
                               v-model="registerInfo.account"
@@ -82,13 +82,6 @@
                     >
                       註冊
                     </button>
-                    <!-- <a
-                      href="login.html"
-                      class="btn btn-primary btn-user btn-block"
-                      :disabled="invalid"
-                    >
-                      註冊
-                    </a> -->
                     <hr />
                   </form>
                 </validation-observer>

@@ -49,14 +49,14 @@ new Vue({
 }).$mount('#app');
 
 // beforeEach
-router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth) {
-    if (JSON.parse(localStorage.getItem('status')) === true) {
-      next();
-    } else {
-      next({ path: '/Login' });
-    }
-  } else {
-    next();
-  }
-});
+// router.beforeEach((to, from, next) => {
+//   if (to.meta.requiresAuth) {
+//     if (JSON.parse(localStorage.getItem('status')) === true) {
+//       next();
+//     } else {
+//       next({ path: '/Login' });
+//     }
+//   } else {
+//     next();
+//   }
+// });
