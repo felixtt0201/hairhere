@@ -1,8 +1,17 @@
 $text-reservation: #cb9861;
 .text-reservation {
-  color: $text-reservation;
+  .table,
+  h4,
+  h5 {
+    color: $text-reservation !important;
+  }
   input {
-    display: none;
+    // display: none;
+    &:active {
+      label {
+        background-color: pink;
+      }
+    }
   }
   td,
   span {

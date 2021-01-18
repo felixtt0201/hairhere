@@ -8,7 +8,7 @@
       <div class="footer-list">
         <div class="d-flex align-items-center">
           <i class="fas fa-phone-square-alt mr-2"></i>
-          <p class="mb-1">(07)-{{ basicData.Phone }}</p>
+          <p class="mb-0">(07)-{{ basicData.Phone }}</p>
         </div>
         <div class="d-flex align-items-center">
           <i class="fas fa-home mr-2"></i>
@@ -16,14 +16,20 @@
         </div>
       </div>
       <div class="footer-list">
-        <div class="d-flex align-items-center">
-          <a :href="basicData.Facebook">
+        <div>
+          <a
+            :href="basicData.Facebook"
+            class="d-flex align-items-center follow-icon"
+          >
             <i class="fab fa-instagram mr-2"></i>
-            <p class="mb-1">{{ storeName }} Hair Salon</p></a
+            <p class="m-0">{{ storeName }} Hair Salon</p></a
           >
         </div>
         <div class="d-flex align-items-center">
-          <a :href="basicData.Facebook">
+          <a
+            :href="basicData.Facebook"
+            class="d-flex align-items-center follow-icon"
+          >
             <i class="fab fa-facebook-square mr-2"></i>
             <p class="mb-0">{{ storeName }} Hair Salon</p></a
           >
@@ -34,7 +40,7 @@
 </template>
 
 <script>
-import { getStoreTotalInfo } from '@/js/AppServices';
+import { getStoreTotalInfo } from '@/js/FontAppServices';
 
 export default {
   data() {

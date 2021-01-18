@@ -7,6 +7,7 @@ import {
   localize,
   configure,
 } from 'vee-validate';
+import VueSplide from '@splidejs/vue-splide';
 import TW from 'vee-validate/dist/locale/zh_TW.json';
 import * as rules from 'vee-validate/dist/rules';
 import Loading from 'vue-loading-overlay';
@@ -40,7 +41,7 @@ configure({
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
 Vue.use(VueSweetalert2);
-
+Vue.use(VueSplide);
 new Vue({
   router,
   store,
@@ -53,7 +54,7 @@ router.beforeEach((to, from, next) => {
     if (JSON.parse(localStorage.getItem('status')) === true) {
       next();
     } else {
-      next({ name: 'login' });
+      next({ path: '/Login' });
     }
   } else {
     next();

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <nav class="navbar navbar-expand-md navbar-light nav-h">
       <a class="navbar-brand" href="#">
         <h1

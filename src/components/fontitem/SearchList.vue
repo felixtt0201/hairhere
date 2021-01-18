@@ -11,7 +11,6 @@
           <label for="tel"
             >電話<input type="tel" placeholder="請輸入電話號碼"
           /></label>
-
           <label for="email"
             >信箱<input type="email" placeholder="請輸入信箱"
           /></label>

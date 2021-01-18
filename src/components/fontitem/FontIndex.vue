@@ -32,7 +32,7 @@
           <div class="carousel-item">
             <img
               class="d-block w-100"
-              src="@/assets/img/carsouel-test.jpg"
+              src="@/assets/img/line_banner.jpg"
               alt="Second slide"
             />
             <div class="carousel-caption d-none d-md-block">
@@ -138,54 +138,6 @@
               </ul>
             </div>
           </div>
-          <!-- <div class="row">
-            <div class="col-md-3 border-left">
-              <h4 class="font-en">About us</h4>
-              <p>
-                {{ basicData.Summary }}
-              </p>
-            </div>
-            <div class="col-md-3 border-left">
-              <h4>服務項目</h4>
-              <p>
-                專業剪燙染護<br />頭皮養護 ｜設計染髮 | 精緻編髮<br />
-                彩妝及新娘秘書
-              </p>
-            </div>
-            <div class="col-md-3 border-left">
-              <h4>店家資訊</h4>
-              <ul class="p-0">
-                <li class="">
-                  <h5 class="mr-2">聯絡電話 (07) - {{ basicData.Phone }}</h5>
-                </li>
-                <li class="">
-                  <h5 class="mr-2">店家地址 {{ basicData.Address }}</h5>
-                </li>
-                <li class="">
-                  <h5 class="mr-2">營業時間</h5>
-                  每週二至日<br />上午{{ business.BusinessHoursOpen }}～下午{{
-                    business.BusinessHoursClose
-                  }}<br />
-                  (每週一公休)
-                </li>
-              </ul>
-            </div>
-            <div class="col-md-3 border-left">
-              <h4 class="font-en">Follow us!</h4>
-              <div>
-                <a :href="basicData.Facebook" class="d-flex"
-                  ><i class="fab fa-instagram mr-2"></i>
-                  <p class="mb-0 font-en">樂髮手作 Hair Salon</p></a
-                >
-              </div>
-              <div>
-                <a :href="basicData.Facebook" class="d-flex"
-                  ><i class="fab fa-facebook-square mr-2"></i>
-                  <p class="mb-0 font-en">樂髮手作 Hair Salon</p></a
-                >
-              </div>
-            </div>
-          </div> -->
         </div>
       </div>
       <div class="row justify-content-center bg-accent text-accent pb-3">
@@ -203,7 +155,7 @@
               </li>
             </ul>
             <router-link
-              to="/reservation"
+              to="/designerTotal"
               class="btn btn-secondary mx-auto rounded-0"
               >立即預約</router-link
             >
@@ -213,26 +165,10 @@
     </div>
     <div class="container">
       <h4 class="title-line w-100 text-center mb-4 text-main">髮型作品</h4>
-      <ul class="list-style d-flex justify-content-center mb-5">
-        <li
-          class="background-img mr-5"
-          style="background-image: url(https://images.unsplash.com/photo-1581674210501-c760093514e8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NTl8fGhhaXIlMjBzYWxvbnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60);"
-        ></li>
-        <li
-          class="background-img mr-5"
-          style="background-image: url(https://images.unsplash.com/photo-1605980625600-88b46abafa8d?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NDh8fGhhaXIlMjBzYWxvbnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60);"
-        ></li>
-        <li
-          class="background-img mr-5"
-          style="background-image: url(https://images.unsplash.com/photo-1444820518794-41bbbccf4ccd?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTZ8fGhhaXIlMjBzYWxvbnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60);"
-        ></li>
-        <li
-          class="background-img mr-5"
-          style="background-image: url(https://images.unsplash.com/photo-1586548634342-04801afc8b13?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MjA5fHxoYWlyJTIwc2Fsb258ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60);"
-        ></li>
-      </ul>
+      <Carsouel />
       <h4 class="title-line w-100 text-center mb-4 text-main">設計師</h4>
-      <ul class="list-style d-flex justify-content-center mb-5">
+      <Carsouel />
+      <!-- <ul class="list-style d-flex justify-content-center mb-5">
         <li
           class="background-img mr-5"
           style="background-image: url(https://images.unsplash.com/photo-1581674210501-c760093514e8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NTl8fGhhaXIlMjBzYWxvbnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60);"
@@ -249,15 +185,19 @@
           class="background-img mr-5"
           style="background-image: url(https://images.unsplash.com/photo-1586548634342-04801afc8b13?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MjA5fHxoYWlyJTIwc2Fsb258ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60);"
         ></li>
-      </ul>
+      </ul> -->
     </div>
   </div>
 </template>
 
 <script>
-import { getStoreTotalInfo } from '@/js/AppServices';
+import { getStoreTotalInfo } from '@/js/FontAppServices';
+import Carsouel from '@/components/fontitem/Carsouel.vue';
 
 export default {
+  components: {
+    Carsouel,
+  },
   data() {
     return {
       basicData: {
@@ -289,6 +229,7 @@ export default {
   },
   mounted() {
     this.GetStoreInfo();
+    console.log(this.basicData);
   },
 };
 </script>

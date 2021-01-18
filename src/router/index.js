@@ -21,12 +21,12 @@ const routes = [
         component: () => import('../components/fontitem/DesignerTotal.vue'),
       },
       {
-        path: '/designerSingle',
+        path: '/designerSingle/:id',
         name: 'DesignerSingle',
         component: () => import('../components/fontitem/DesignerSingle.vue'),
       },
       {
-        path: '/reservation',
+        path: '/reservationF/:listId',
         name: 'Reservation',
         component: () => import('../components/fontitem/Reservation.vue'),
       },
