@@ -9,7 +9,7 @@
       <div class="col-6">
         <p>請選擇設計師：</p>
         <select class="custom-select">
-          <option selected disabled hidden>選擇設計師</option>
+          <option disabled value="">選擇設計師</option>
           <option>小明</option>
           <option>小王</option>
           <option>小美</option>
@@ -20,7 +20,7 @@
       <div class="col-6">
         <p>請選擇日期：</p>
         <select class="custom-select">
-          <option selected disabled hidden>選擇日期</option>
+          <option disabled value="">選擇日期</option>
           <option>20210101</option>
           <option>20210102</option>
           <option>20210103</option>

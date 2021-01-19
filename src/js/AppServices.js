@@ -63,12 +63,22 @@ const putDesigner = (data, dId) =>
   // eslint-disable-next-line implicit-arrow-linebreak
   storeApi.put(`/PUT/Designer?id=${dId}`, data);
 
-/** 設計師 */
+/** 訂單 */
+// post新增訂單
+const postOrder = (data) => storeApi.post('/POST/Order', data);
 
-// post新增設計師
-// const postDesinger = (data) =>
-//   // eslint-disable-next-line implicit-arrow-linebreak
-//   picuploaded.post('/POST/Designer?storeid=2', data);
+// get訂單
+const getOrder = () => storeApi.get('/GET/OrderList');
+// get單一訂單
+const getOrderDetail = (oId) => storeApi.get(`/GET/Order?id=${oId}`);
+// patch 訂單狀態
+const patchOrderDetailStatus = (oId, data) =>
+  // eslint-disable-next-line implicit-arrow-linebreak
+  storeApi.patch(`PATCH/Order?id=${oId}`, data);
+
+/** 作品 */
+// post新增作品
+const postPortfolio = (data) => storeApi.post('/POST/Portfolio', data);
 
 // eslint-disable-next-line object-curly-newline
 export {
@@ -86,4 +96,9 @@ export {
   postDesinger,
   deleteDesigner,
   putDesigner,
+  postOrder,
+  getOrder,
+  getOrderDetail,
+  patchOrderDetailStatus,
+  postPortfolio,
 };

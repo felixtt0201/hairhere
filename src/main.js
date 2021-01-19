@@ -49,19 +49,14 @@ new Vue({
 }).$mount('#app');
 
 // beforeEach
-router.beforeEach((to, from, next) => {
-  console.log('to', to, 'from', from, 'next', next);
-  console.log(localStorage.getItem('status'));
-  if (to.meta.requiresAuth) {
-    if (JSON.parse(localStorage.getItem('status')) === true) {
-      next();
-      console.log('info');
-    } else {
-      console.log('ben');
-      next({ path: '/Login' });
-    }
-  } else {
-    next();
-    console.log('login');
-  }
-});
+// router.beforeEach((to, from, next) => {
+//   if (to.meta.requiresAuth) {
+//     if (JSON.parse(localStorage.getItem('status')) === true) {
+//       next();
+//     } else {
+//       next({ path: '/Login' });
+//     }
+//   } else {
+//     next();
+//   }
+// });

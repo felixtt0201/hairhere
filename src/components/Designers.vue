@@ -71,7 +71,7 @@
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content border-0">
             <div class="modal-header bg-dark text-white">
-              <h5 class="modal-title" id="exampleModalLabel">
+              <h5 class="modal-title" id="designerModal">
                 <span>新增設計師</span>
               </h5>
               <button
@@ -117,31 +117,6 @@
                         v-model="tempInfo.Name"
                       />
                     </div>
-                    <div class="form-group col-md-6">
-                      <label for="sex">性別</label>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          name="inlineRadioOptions"
-                          id="male"
-                          value="0"
-                          v-model="tempInfo.GenderType"
-                        />
-                        <label class="form-check-label" for="0">男</label>
-                      </div>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          name="inlineRadioOptions"
-                          id="female"
-                          value="1"
-                          v-model="tempInfo.GenderType"
-                        />
-                        <label class="form-check-label" for="1">女</label>
-                      </div>
-                    </div>
                   </div>
                   <div class="form-group">
                     <label for="phone">電話/手機</label>
@@ -150,7 +125,17 @@
                       class="form-control"
                       id="phone"
                       placeholder="請輸入電話/手機"
-                      v-model="tempInfo.tel"
+                      v-model="tempInfo.Phone"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="instagram">Instagram</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="instagram"
+                      placeholder="instagram"
+                      v-model="tempInfo.Instagram"
                     />
                   </div>
                   <div class="form-group">
@@ -164,46 +149,41 @@
                   </div>
                   <div class="form-row">
                     <div class="form-group col-md-6">
-                      <div class="row"></div>
                       <label for="account">帳號(請輸入E-mail)</label>
                       <input
                         type="email"
                         class="form-control"
                         id="account"
                         placeholder="請輸入帳號"
-                        required
                         v-model="tempInfo.Email"
                       />
                     </div>
                     <div class="form-group col-md-6">
-                      <div class="row"></div>
                       <label for="password">密碼</label>
                       <input
                         type="password"
                         class="form-control"
                         id="password"
-                        required
                         placeholder="請輸入密碼"
                       />
                     </div>
                   </div>
                   <div class="form-row justify-content-end">
                     <div class="form-group col-md-6">
-                      <div class="row"></div>
                       <label for="repassword">再次輸入密碼</label>
                       <input
                         type="password"
                         class="form-control"
                         id="repassword"
                         placeholder="再次輸入密碼"
-                        required
                         v-model="tempInfo.Password"
                       />
                     </div>
                   </div>
+                  <div class="form-row"></div>
                   <hr />
                   <div class="form-group">
-                    <label for="description">我的專長/特色</label>
+                    <p for="description">我的專長/特色</p>
                     <textarea
                       type="text"
                       class="form-control"
@@ -211,13 +191,13 @@
                       placeholder="請輸入我的專長/特色"
                       cols="30"
                       rows="5"
-                      v-model="tempInfo.details"
+                      v-model="tempInfo.Details"
                     ></textarea>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer justify-content-between">
               <button
                 type="button"
                 class="btn btn-outline-secondary"
@@ -260,6 +240,11 @@ export default {
     };
   },
   methods: {
+    // selectSkill
+    sendInfo() {
+      console.log(this.selectSkills);
+    },
+
     // 取的全部設計師
     getInfoHandler() {
       getAllDesigner().then((res) => {
@@ -358,6 +343,7 @@ export default {
         position: 'center',
         icon: 'success',
         title: `${msg}成功`,
+        timer: 1500,
       }).then(() => {
         this.getInfoHandler();
         $('#designerModal').modal('hide');

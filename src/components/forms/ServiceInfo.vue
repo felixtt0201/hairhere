@@ -33,8 +33,6 @@
               <p v-show="editId !== item.Id">NT. {{ item.UnitPrice }}</p>
               <input
                 type="text"
-                name=""
-                id=""
                 v-show="editId === item.Id"
                 v-model="item.UnitPrice"
               />
@@ -43,8 +41,6 @@
               <p v-show="editId !== item.Id">{{ item.ServiceMinutes }}</p>
               <input
                 type="text"
-                name=""
-                id=""
                 v-show="editId === item.Id"
                 v-model="item.ServiceMinutes"
               />
