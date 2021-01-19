@@ -107,7 +107,7 @@
       </button>
     </div>
     <!--Modal-->
-    <form @submit.prevent="">
+    <form @submit.prevent="postInfoHandler">
       <div
         class="modal fade text-gray-900"
         id="staticBackdrop"
@@ -372,47 +372,47 @@ export default {
     },
 
     // 新增作品
-    // () {
-    //   this.fileUploading = true;
-    //   let photo1 = document.querySelector('#Photo1').files[0];
-    //   let photo2 = document.querySelector('#Photo2').files[0];
-    //   let photo3 = document.querySelector('#Photo3').files[0];
-    //   const data = new FormData();
-    //   data.append('Name', this.addInfo.title);
-    //   data.append('Summary', this.addInfo.summary);
-    //   data.append('DesignerId', this.addInfo.designerId);
-    //   data.append('Photo1', photo1);
-    //   data.append('Photo2', photo2);
-    //   data.append('Photo3', photo3);
-    //   data.append('Category', this.addInfo.category.toString());
-    //   postPortfolio(data)
-    //     .then((res) => {
-    //       console.log(res);
-    //       if (res.data.status === true) {
-    //         this.fileUploading = false;
-    //         this.addInfo = [];
-    //         photo1 = '';
-    //         photo2 = '';
-    //         photo3 = '';
-    //         this.$swal({
-    //           title: '新增成功',
-    //           position: 'center',
-    //           icon: 'success',
-    //           showConfirmButton: false,
-    //           timer: 1500,
-    //         });
-    //       }
-    //     })
-    //     .catch(() => {
-    //       this.$swal({
-    //         title: '伺服器故障',
-    //         position: 'center',
-    //         icon: 'error',
-    //         showConfirmButton: false,
-    //         timer: 1500,
-    //       });
-    //     });
-    // },
+    postInfoHandler() {
+      this.fileUploading = true;
+      let photo1 = document.querySelector('#Photo1').files[0];
+      let photo2 = document.querySelector('#Photo2').files[0];
+      let photo3 = document.querySelector('#Photo3').files[0];
+      const data = new FormData();
+      data.append('Name', this.addInfo.title);
+      data.append('Summary', this.addInfo.summary);
+      data.append('DesignerId', this.addInfo.designerId);
+      data.append('Photo1', photo1);
+      data.append('Photo2', photo2);
+      data.append('Photo3', photo3);
+      data.append('Category', this.addInfo.category.toString());
+      postPortfolio(data)
+        .then((res) => {
+          console.log(res);
+          if (res.data.status === true) {
+            this.fileUploading = false;
+            this.addInfo = [];
+            photo1 = '';
+            photo2 = '';
+            photo3 = '';
+            this.$swal({
+              title: '新增成功',
+              position: 'center',
+              icon: 'success',
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+        })
+        .catch(() => {
+          this.$swal({
+            title: '伺服器故障',
+            position: 'center',
+            icon: 'error',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        });
+    },
   },
   mounted() {
     $('.carousel').carousel();
