@@ -71,7 +71,7 @@
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content border-0">
             <div class="modal-header bg-dark text-white">
-              <h5 class="modal-title" id="exampleModalLabel">
+              <h5 class="modal-title" id="designerModal">
                 <span>新增設計師</span>
               </h5>
               <button

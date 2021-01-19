@@ -76,6 +76,10 @@ const patchOrderDetailStatus = (oId, data) =>
   // eslint-disable-next-line implicit-arrow-linebreak
   storeApi.patch(`PATCH/Order?id=${oId}`, data);
 
+/** 作品 */
+// post新增作品
+const postPortfolio = (data) => storeApi.post('/POST/Portfolio', data);
+
 // eslint-disable-next-line object-curly-newline
 export {
   postStoreLogin,
@@ -96,4 +100,5 @@ export {
   getOrder,
   getOrderDetail,
   patchOrderDetailStatus,
+  postPortfolio,
 };
