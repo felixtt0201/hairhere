@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-md-6 step-center">
           <ul class="step">
-            <li class="active">
+            <li class="active-step">
               選擇服務項目
             </li>
             <li>確認預約資訊</li>
@@ -63,16 +63,9 @@
       <div class="item-total">
         <div class="item-total-group w-75">
           <h5>預期金額</h5>
-          <span class="mr-5">$300 ＋</span>
+          <span class="mr-5">${{ TotalMoney.moneytotal }}+</span>
           <h5>預估時間</h5>
-          <span class="mr-3">2小時</span>
-        </div>
-      </div>
-    </div>
-    <div class="container border py-5">
-      <div class="row">
-        <div class="col">
-          <CalendarFontVacation />
+          <span class="mr-3">{{ TotalMoney.timetotal }}分鐘</span>
         </div>
       </div>
     </div>
@@ -80,15 +73,22 @@
       <div class="information pt-3">
         <h4 class="title-line text-center mb-4">顧客資訊</h4>
         <form class="form-reservation">
-          <label for="name">預約姓名</label><input type="name" id="name" />
-          <label for="tel">手機號碼</label><input type="tel" id="tel" />
-          <label for="email">Email</label><input type="email" id="email" />
-          <label for="item">備註事項</label>
-          <textarea id="item" cols="30" rows="4" class="mb-4"></textarea>
-          <router-link to="/confirm">
-            <button type="button" class="btn-reservation" @click="test">
-              預約送出
-            </button>
+          <label for="name">預約姓名</label
+          ><input type="name" id="name" v-model="name" />
+          <label for="tel">手機號碼</label
+          ><input type="tel" id="tel" v-model="tel" />
+          <label for="email">Email</label
+          ><input type="email" id="email" v-model="email" />
+          <label for="remarks">備註事項</label>
+          <textarea
+            id="remarks"
+            cols="30"
+            rows="4"
+            class="mb-4"
+            v-model="remarks"
+          ></textarea>
+          <router-link to="/confirm" class="btn-reservation btn" @click="test">
+            預約送出
           </router-link>
         </form>
       </div>
@@ -97,7 +97,6 @@
 </template>
 
 <script>
-import CalendarFontVacation from '@/components/fontitem/CalendarFontVacation.vue';
 import {
   getDesigner,
   getStoreProductList,
@@ -111,10 +110,26 @@ export default {
       products: [], // 遠端撈回的服務項目
       checklist: [], // 加入勾選項目的位置
       listId: '',
+      name: '',
+      tel: '',
+      email: '',
+      remarks: '',
+      orderTime: '',
     };
   },
-  components: {
-    CalendarFontVacation,
+  computed: {
+    TotalMoney() {
+      const array = {
+        moneytotal: 0,
+        timetotal: 0,
+      };
+      this.checklist.forEach((i) => {
+        array.moneytotal += i.UnitPrice;
+        array.timetotal += i.ServiceMinutes;
+      });
+      // eslint-disable-next-line no-sequences
+      return array;
+    },
   },
   methods: {
     getDesignerHandler() {

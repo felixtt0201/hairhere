@@ -28,45 +28,46 @@
       <!-- <div class="col-md-1 border"></div> -->
     </div>
     <h4 class="title-line w-100 text-center mb-4 text-main">設計作品</h4>
-    <div class="row img-center">
-      <div class="col-md-3">
-        <img
-          src="https://images.unsplash.com/photo-1605980766335-d3a41c7332a1?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTZ8fGhhaXJ8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-          alt=""
-          class="img-size"
-        />
-        <div class="works-btn"></div>
+    <!-- workDetails -->
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-10">
+          <div class="row">
+            <div class="col-md-4">
+              <img
+                src="@/assets/img/photo1.png"
+                alt=""
+                style="height: 100%;width: 100%;"
+              />
+            </div>
+            <div class="col-md-8 p40">
+              <h4 class="mb-4">沙龍護髮</h4>
+              <p class="mb-5 border-left">
+                本次預約設計師師師師本次預約設計師師師師本次預約設計師師師師本次預約設計師
+                師師師本次預約設計師師師師本次預約設計師師師師本次預約設計師師師師本次預約設計師師師師本次預約設計師師師師本次預約設計師師師師
+                本次預約設計師師師師本次預約設計師師師師本次預約設計師師師師本次預約設計師師師師
+              </p>
+              <ul class="d-flex justify-content-center p-0 mb-4">
+                <li class="designer-tag">沙龍護髮</li>
+                <li class="designer-tag">解構護髮</li>
+                <li class="designer-tag">梨花護髮</li>
+              </ul>
+              <ul class="d-flex justify-content-center p-0">
+                <li class="mr-4">
+                  <img src="@/assets/img/z23255028O.png" alt="" />
+                </li>
 
-        <router-link to="/DesignerSingleWork" class="img-btn"
-          >See More</router-link
-        >
-      </div>
-      <div class="col-md-3">
-        <img
-          src="https://images.unsplash.com/photo-1605980766335-d3a41c7332a1?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTZ8fGhhaXJ8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-          alt=""
-          class="img-size"
-        />
-        <div class="works-btn"></div>
-        <button type="button" class="img-btn">立即預約</button>
-      </div>
-      <div class="col-md-3">
-        <img
-          src="https://images.unsplash.com/photo-1605980766335-d3a41c7332a1?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTZ8fGhhaXJ8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-          alt=""
-          class="img-size"
-        />
-        <div class="works-btn"></div>
-        <button type="button" class="img-btn">立即預約</button>
-      </div>
-      <div class="col-md-3">
-        <img
-          src="https://images.unsplash.com/photo-1605980766335-d3a41c7332a1?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTZ8fGhhaXJ8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-          alt=""
-          class="img-size"
-        />
-        <div class="works-btn"></div>
-        <button type="button" class="img-btn">立即預約</button>
+                <li class="mr-4">
+                  <img src="@/assets/img/z23255028O.png" alt="" />
+                </li>
+
+                <li class="mr-4">
+                  <img src="@/assets/img/z23255028O.png" alt="" />
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <nav aria-label="Page navigation example">

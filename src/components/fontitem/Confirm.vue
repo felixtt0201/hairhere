@@ -2,8 +2,14 @@
   <div>
     <div class="container text-main">
       <div class="row">
-        <div class="col-md-6 ">
-          <img src="lefa_logo_all_cn.svg" alt="" />
+        <div class="col-md-6 step-center">
+          <ul class="step">
+            <li class="active">
+              選擇服務項目
+            </li>
+            <li class="active-step">確認預約資訊</li>
+            <li>預約完成d(`･∀･)b</li>
+          </ul>
         </div>
         <div class="col-md-6">
           <div class="row">
@@ -87,7 +93,9 @@
           </li>
         </ul>
       </div>
-      <button type="button" class="btn custom-information-btn">確認送出</button>
+      <router-link to="/orderCompleted" class="btn custom-information-btn"
+        >確認送出</router-link
+      >
     </div>
   </div>
 </template>

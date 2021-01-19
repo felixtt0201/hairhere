@@ -63,6 +63,13 @@ const putDesigner = (dId) => storeApi.put(`/PutDesigner?id=${dId}`);
 // post新增訂單
 const postOrder = (data) => storeApi.post('/POST/Order', data);
 
+/** 作品 */
+// get全部作品
+const getworks = () => storeApi.get('/GET/PortfolioList');
+// get查詢作品關鍵字
+const searchworks = (data, name) =>
+  // eslint-disable-next-line implicit-arrow-linebreak
+  storeApi.get(`/GET/Portfolio?search=${data}&name=${name}`);
 /** 設計師 */
 
 // post新增設計師
@@ -87,4 +94,6 @@ export {
   putDesigner,
   getAllDesigner,
   postOrder,
+  getworks,
+  searchworks,
 };

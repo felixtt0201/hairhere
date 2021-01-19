@@ -33,7 +33,8 @@
           <!-- routerlink連結至設計師個人 -->
           <router-link
             :to="`/designerSingle/${designer.Id}`"
-            class="btn designer-btn rounded-0 mb-4"
+            class="btn designer-btn a rounded-0 mb-4"
+            data-hover="立即預約"
           >
             更多作品
           </router-link>
@@ -50,11 +51,6 @@
           <li class="page-item" v-for="num in 10" :key="num">
             <a class="page-link" href="#">{{ num }}</a>
           </li>
-          <!-- <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a class="page-link" href="#">4</a></li>
-          <li class="page-item"><a class="page-link" href="#">5</a></li>
-          <li class="page-item"><a class="page-link" href="#">6</a></li> -->
           <li class="page-item">
             <a class="page-link path" href="#" aria-label="Next"
               ><i class="fas fa-chevron-right"></i>

@@ -16,32 +16,45 @@ const routes = [
         component: () => import('../components/fontitem/FontIndex.vue'),
       },
       {
-        path: '/designerTotal',
+        path: 'designerTotal',
         name: 'DesignerTotal',
         component: () => import('../components/fontitem/DesignerTotal.vue'),
       },
       {
-        path: '/designerSingle/:id',
+        path: 'designerSingle/:id',
         name: 'DesignerSingle',
         component: () => import('../components/fontitem/DesignerSingle.vue'),
       },
       {
-        path: '/reservationF/:listId',
+        // 單一設計師 單一作品詳細
+        path: 'DesignerSingleWork',
+        name: 'DesignerSingleWork',
+        component: () =>
+          // eslint-disable-next-line implicit-arrow-linebreak
+          import('../components/fontitem/DesignerSingleWork.vue'),
+      },
+      {
+        path: 'reservationF/:listId',
         name: 'Reservation',
         component: () => import('../components/fontitem/Reservation.vue'),
       },
       {
-        path: '/confirm',
+        path: 'confirm',
         name: 'Confirm',
         component: () => import('../components/fontitem/Confirm.vue'),
       },
       {
-        path: '/works',
+        path: 'orderCompleted',
+        name: 'OrderCompleted',
+        component: () => import('../components/fontitem/OrderCompleted.vue'),
+      },
+      {
+        path: 'works',
         name: 'Works',
         component: () => import('../components/fontitem/Works.vue'),
       },
       {
-        path: '/searchList',
+        path: 'searchList',
         name: 'SearchList',
         component: () => import('../components/fontitem/SearchList.vue'),
       },

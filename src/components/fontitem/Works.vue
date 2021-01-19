@@ -2,21 +2,57 @@
   <div>
     <div class="container text-main works-center">
       <div class="works-filter">
-        <label for="c1"><input type="checkbox" id="c1" />男生</label>
-        <label for="c1"><input type="checkbox" id="c1" />女生</label>
-
-        <label for="c1"><input type="checkbox" id="c1" />短髮(不過下巴)</label>
-
         <label for="c1"
-          ><input type="checkbox" id="c1" />中長髮(及肩長度)</label
+          ><input
+            type="checkbox"
+            id="c1"
+            value="男"
+            v-model="list"
+          />男生</label
         >
-        <label for="c1"><input type="checkbox" id="c1" />長髮(過肩膀)</label>
-        <label for="c1"><input type="checkbox" id="c1" />染髮</label>
+        <label for="c2"
+          ><input
+            type="checkbox"
+            id="c2"
+            value="女"
+            v-model="list"
+          />女生</label
+        >
 
-        <label for="c1"><input type="checkbox" id="c1" />特殊/設計染髮</label>
+        <label for="c3"
+          ><input
+            type="checkbox"
+            id="c3"
+            value="短髮"
+            v-model="list"
+          />短髮(不過下巴)</label
+        >
 
-        <label for="c1"><input type="checkbox" id="c1" />燙髮</label>
-        <button type="button" class="btn w-100">
+        <label for="c14"
+          ><input
+            type="checkbox"
+            id="c14"
+            value="中長髮"
+          />中長髮(及肩長度)</label
+        >
+        <label for="c15"
+          ><input type="checkbox" id="c15" value="長髮" />長髮(過肩膀)</label
+        >
+        <label for="c16"
+          ><input type="checkbox" id="c16" value="染髮" />染髮</label
+        >
+
+        <label for="c17"
+          ><input type="checkbox" id="c17" value="設計染" />特殊/設計染髮</label
+        >
+
+        <label for="c18"
+          ><input type="checkbox" id="c18" value="燙髮" />燙髮</label
+        >
+        <label for="work"
+          >搜尋<input type="text" placeholder="搜尋作品名稱"
+        /></label>
+        <button type="button" class="btn w-100" @click="search">
           <i class="fas fa-search mr-3"></i>搜尋
         </button>
       </div>
@@ -25,9 +61,16 @@
       <h3 class="title-line w-100 text-center mt-5 mb-5 works-text-line">
         作品集
       </h3>
-      <cartest></cartest>
+      <!-- <cartest></cartest> -->
       <div class="row img-center">
-        <div class="col-md-3">
+        <div class="col-md-3" v-for="work in worksarray" :key="work.Id">
+          {{ work }}
+          <img :src="work.Photo1" alt="" class="img-size" />
+          <p>{{ work.Name }}</p>
+          <div class="works-btn"></div>
+          <button type="button" class="img-btn">立即預約</button>
+        </div>
+        <!-- <div class="col-md-3">
           <img
             src="https://images.unsplash.com/photo-1605980766335-d3a41c7332a1?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTZ8fGhhaXJ8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
             alt=""
@@ -53,18 +96,9 @@
           />
           <div class="works-btn"></div>
           <button type="button" class="img-btn">立即預約</button>
-        </div>
-        <div class="col-md-3">
-          <img
-            src="https://images.unsplash.com/photo-1605980766335-d3a41c7332a1?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTZ8fGhhaXJ8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-            alt=""
-            class="img-size"
-          />
-          <div class="works-btn"></div>
-          <button type="button" class="img-btn">立即預約</button>
-        </div>
+        </div> -->
       </div>
-      <div class="row img-center">
+      <!-- <div class="row img-center">
         <div class="col-md-3">
           <img
             src="https://images.unsplash.com/photo-1605980766335-d3a41c7332a1?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTZ8fGhhaXJ8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
@@ -101,7 +135,7 @@
           <div class="works-btn"></div>
           <button type="button" class="img-btn">立即預約</button>
         </div>
-      </div>
+      </div> -->
       <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
           <li class="page-item">
@@ -127,11 +161,37 @@
 </template>
 
 <script>
-import cartest from './cartest.vue';
+import { getworks, searchworks } from '@/js/FontAppServices';
+// import cartest from './cartest.vue';
 
 export default {
   components: {
-    cartest,
+    // cartest,
+  },
+  data() {
+    return {
+      worksarray: [],
+      list: [],
+    };
+  },
+  methods: {
+    getHandlerInfo() {
+      getworks().then((res) => {
+        console.log(res);
+        this.worksarray = res.data.BasicData;
+        console.log(this.worksarray);
+      });
+    },
+    search() {
+      const bb = this.list.toString();
+      searchworks(bb, '').then((res) => {
+        console.log(res);
+        console.log(bb);
+      });
+    },
+  },
+  created() {
+    this.getHandlerInfo();
   },
 };
 </script>

@@ -141,25 +141,23 @@
         </div>
       </div>
       <div class="row justify-content-center bg-accent text-accent pb-3">
-        <div class="col-md-8 letter-space mt-4">
+        <div class="col-md-8 menu-item mt-4">
           <div class="row flex-column">
             <h2 class="text-center">服務項目</h2>
-            <ul class="list-style p-0 line">
+            <ul class="p-0 line">
               <li
                 class="d-flex"
                 v-for="service in services"
                 :key="service.Name"
               >
-                <span class="w-50 text-right pr-3">{{ service.Name }}</span
-                ><span class="w-50 pl-3">${{ service.UnitPrice }} +</span>
+                <span class="w-50 text-right pr-4">{{ service.Name }}</span
+                ><span class="w-50 pl-4">${{ service.UnitPrice }} +</span>
               </li>
             </ul>
-            <router-link
-              to="/designerTotal"
-              class="btn btn-secondary mx-auto rounded-0"
-              >立即預約</router-link
-            >
           </div>
+          <router-link to="/designerTotal" class="menu-btn"
+            >立即預約</router-link
+          >
         </div>
       </div>
     </div>

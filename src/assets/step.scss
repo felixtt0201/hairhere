@@ -9,8 +9,20 @@
   counter-reset: step;
   color: #1d3d4a;
   font-size: 22px;
-  .border {
-    background-color: pink;
+  .active-step {
+    // 當前項目變色
+    &::before {
+      background-color: #d6997a;
+    }
+  }
+  .active {
+    // 當前項目及進度條變色
+    &::before {
+      background-color: #d6997a;
+    }
+    &::after {
+      background-color: #1d3d4a;
+    }
   }
   li {
     width: 33%;
@@ -31,7 +43,7 @@
       border-radius: 50%;
       line-height: 40px;
       z-index: 50;
-      background-color: #d6997a;
+      background-color: white;
       box-shadow: 1px 2px 3px #d6997a;
       color: #1d3d4a;
     }
@@ -42,7 +54,7 @@
       width: 100%;
       // height: 2px;
       height: 3px;
-      background-color: #1d3d4a;
+      background-color: rgb(227, 225, 225);
       top: 15px;
       // left: 5px;
       right: -80px;
