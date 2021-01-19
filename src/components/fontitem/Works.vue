@@ -33,24 +33,49 @@
             type="checkbox"
             id="c14"
             value="中長髮"
+            v-model="list"
           />中長髮(及肩長度)</label
         >
         <label for="c15"
-          ><input type="checkbox" id="c15" value="長髮" />長髮(過肩膀)</label
+          ><input
+            type="checkbox"
+            id="c15"
+            value="長髮"
+            v-model="list"
+          />長髮(過肩膀)</label
         >
         <label for="c16"
-          ><input type="checkbox" id="c16" value="染髮" />染髮</label
+          ><input
+            type="checkbox"
+            id="c16"
+            value="染髮"
+            v-model="list"
+          />染髮</label
         >
 
         <label for="c17"
-          ><input type="checkbox" id="c17" value="設計染" />特殊/設計染髮</label
+          ><input
+            type="checkbox"
+            id="c17"
+            value="設計染"
+            v-model="list"
+          />特殊/設計染髮</label
         >
 
         <label for="c18"
-          ><input type="checkbox" id="c18" value="燙髮" />燙髮</label
+          ><input
+            type="checkbox"
+            id="c18"
+            value="燙髮"
+            v-model="list"
+          />燙髮</label
         >
         <label for="work"
-          >搜尋<input type="text" placeholder="搜尋作品名稱"
+          ><input
+            type="text"
+            class="searchInput"
+            placeholder="搜尋作品名稱"
+            v-model="searchInput"
         /></label>
         <button type="button" class="btn w-100" @click="search">
           <i class="fas fa-search mr-3"></i>搜尋
@@ -61,9 +86,10 @@
       <h3 class="title-line w-100 text-center mt-5 mb-5 works-text-line">
         作品集
       </h3>
-      <!-- <cartest></cartest> -->
       <div class="row img-center">
         <div class="col-md-3" v-for="work in worksarray" :key="work.Id">
+          {{ searchinput }}
+          <hr />
           {{ work }}
           <img :src="work.Photo1" alt="" class="img-size" />
           <p>{{ work.Name }}</p>
@@ -162,17 +188,25 @@
 
 <script>
 import { getworks, searchworks } from '@/js/FontAppServices';
-// import cartest from './cartest.vue';
 
 export default {
-  components: {
-    // cartest,
-  },
   data() {
     return {
       worksarray: [],
-      list: [],
+      list: [], // checkbox勾選倒入
+      searchInput: '',
+      filterarray: [],
     };
+  },
+  computed: {
+    // 關鍵字搜索
+    searchinput() {
+      // eslint-disable-next-line arrow-body-style
+      this.worksarray.filter((i) => {
+        return this.filterarray.push(i.Name.match(this.searchInput));
+      });
+      return this.filterarray;
+    },
   },
   methods: {
     getHandlerInfo() {
@@ -183,10 +217,13 @@ export default {
       });
     },
     search() {
+      console.log(this.list);
       const bb = this.list.toString();
-      searchworks(bb, '').then((res) => {
+      console.log(bb);
+      searchworks(bb).then((res) => {
         console.log(res);
         console.log(bb);
+        this.worksarray = res.data.BasicData;
       });
     },
   },

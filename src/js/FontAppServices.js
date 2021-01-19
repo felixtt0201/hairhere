@@ -67,9 +67,9 @@ const postOrder = (data) => storeApi.post('/POST/Order', data);
 // get全部作品
 const getworks = () => storeApi.get('/GET/PortfolioList');
 // get查詢作品關鍵字
-const searchworks = (data, name) =>
+const searchworks = (data) =>
   // eslint-disable-next-line implicit-arrow-linebreak
-  storeApi.get(`/GET/Portfolio?search=${data}&name=${name}`);
+  storeApi.get(`/GET/PortfolioList?search=${data}`);
 /** 設計師 */
 
 // post新增設計師

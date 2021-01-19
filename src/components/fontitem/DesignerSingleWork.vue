@@ -47,12 +47,14 @@
                 師師師本次預約設計師師師師本次預約設計師師師師本次預約設計師師師師本次預約設計師師師師本次預約設計師師師師本次預約設計師師師師
                 本次預約設計師師師師本次預約設計師師師師本次預約設計師師師師本次預約設計師師師師
               </p>
+              <cartest />
               <ul class="d-flex justify-content-center p-0 mb-4">
                 <li class="designer-tag">沙龍護髮</li>
                 <li class="designer-tag">解構護髮</li>
                 <li class="designer-tag">梨花護髮</li>
               </ul>
-              <ul class="d-flex justify-content-center p-0">
+
+              <!-- <ul class="d-flex justify-content-center p-0">
                 <li class="mr-4">
                   <img src="@/assets/img/z23255028O.png" alt="" />
                 </li>
@@ -64,7 +66,7 @@
                 <li class="mr-4">
                   <img src="@/assets/img/z23255028O.png" alt="" />
                 </li>
-              </ul>
+              </ul> -->
             </div>
           </div>
         </div>
@@ -95,8 +97,12 @@
 
 <script>
 import { getDesigner } from '@/js/FontAppServices';
+import cartest from './cartest.vue';
 
 export default {
+  components: {
+    cartest,
+  },
   data() {
     return {
       designerId: '',

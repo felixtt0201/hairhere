@@ -14,9 +14,10 @@ body {
 .text-main--hover {
   color: $text-primary !important;
   &:hover {
-    color: $text-accent !important;
+    color: white !important;
     background: $bg-primary !important;
     border-radius: 2px;
+    box-shadow: inset 1px 1px 1px;
   }
 }
 .text-main {

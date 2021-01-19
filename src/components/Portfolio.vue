@@ -107,7 +107,7 @@
       </button>
     </div>
     <!--Modal-->
-    <form @submit.prevent="">
+    <form @submit.prevent="postInfoHandler">
       <div
         class="modal fade text-gray-900"
         id="staticBackdrop"
@@ -141,8 +141,8 @@
                     type="file"
                     id="Photo1"
                     class="form-control"
-                    ref="files"
                     name="Photo1"
+                    ref="files"
                     required
                   />
                   <img
@@ -158,8 +158,8 @@
                     type="file"
                     id="Photo2"
                     class="form-control"
-                    ref="files"
                     name="Photo2"
+                    ref="files"
                   />
                   <img
                     img="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=828346ed697837ce808cae68d3ddc3cf&auto=format&fit=crop&w=1350&q=80"
@@ -174,8 +174,8 @@
                     type="file"
                     id="Photo3"
                     class="form-control"
-                    ref="files"
                     name="Photo3"
+                    ref="files"
                   />
                   <img
                     img="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=828346ed697837ce808cae68d3ddc3cf&auto=format&fit=crop&w=1350&q=80"
@@ -345,7 +345,7 @@
 
 <script>
 import $ from 'jquery';
-import { postPortfolio, getAllDesigner } from '@/js/AppServices';
+import { getAllDesigner, postPortfolio } from '@/js/AppServices';
 
 export default {
   data() {
@@ -372,47 +372,49 @@ export default {
     },
 
     // 新增作品
-    // () {
-    //   this.fileUploading = true;
-    //   let photo1 = document.querySelector('#Photo1').files[0];
-    //   let photo2 = document.querySelector('#Photo2').files[0];
-    //   let photo3 = document.querySelector('#Photo3').files[0];
-    //   const data = new FormData();
-    //   data.append('Name', this.addInfo.title);
-    //   data.append('Summary', this.addInfo.summary);
-    //   data.append('DesignerId', this.addInfo.designerId);
-    //   data.append('Photo1', photo1);
-    //   data.append('Photo2', photo2);
-    //   data.append('Photo3', photo3);
-    //   data.append('Category', this.addInfo.category.toString());
-    //   postPortfolio(data)
-    //     .then((res) => {
-    //       console.log(res);
-    //       if (res.data.status === true) {
-    //         this.fileUploading = false;
-    //         this.addInfo = [];
-    //         photo1 = '';
-    //         photo2 = '';
-    //         photo3 = '';
-    //         this.$swal({
-    //           title: '新增成功',
-    //           position: 'center',
-    //           icon: 'success',
-    //           showConfirmButton: false,
-    //           timer: 1500,
-    //         });
-    //       }
-    //     })
-    //     .catch(() => {
-    //       this.$swal({
-    //         title: '伺服器故障',
-    //         position: 'center',
-    //         icon: 'error',
-    //         showConfirmButton: false,
-    //         timer: 1500,
-    //       });
-    //     });
-    // },
+    postInfoHandler() {
+      this.fileUploading = true;
+      let photo1 = document.querySelector('#Photo1').files[0];
+      let photo2 = document.querySelector('#Photo2').files[0];
+      let photo3 = document.querySelector('#Photo3').files[0];
+      const data = new FormData();
+      data.append('Name', this.addInfo.title);
+      data.append('Summary', this.addInfo.summary);
+      data.append('DesignerId', this.addInfo.designerId);
+      data.append('Photo1', photo1);
+      data.append('Photo2', photo2);
+      data.append('Photo3', photo3);
+      data.append('Category', this.addInfo.category.toString());
+      console.log(data);
+      postPortfolio(data)
+        .then((res) => {
+          console.log(res);
+          if (res.data.status) {
+            this.fileUploading = false;
+            this.addInfo = [];
+            photo1 = '';
+            photo2 = '';
+            photo3 = '';
+            this.$swal({
+              title: '新增成功',
+              position: 'center',
+              icon: 'success',
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$swal({
+            title: '伺服器故障',
+            position: 'center',
+            icon: 'error',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        });
+    },
   },
   mounted() {
     $('.carousel').carousel();
