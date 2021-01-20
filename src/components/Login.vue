@@ -100,7 +100,7 @@ export default {
           password: this.store.password,
         }),
       ).then((res) => {
-        // console.log(res);
+        console.log(res);
         if (res.data.status) {
           const mytoken = res.data.token;
           localStorage.setItem('myToken', mytoken);
