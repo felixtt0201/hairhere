@@ -302,11 +302,11 @@ export default {
 
   methods: {
     // 取得店家資料
-    async getInfoHandler() {
-      await getStoreTotalInfo().then((res) => {
+    getInfoHandler() {
+      getStoreTotalInfo().then((res) => {
+        this.isLoading = false;
         if (res.data.status === true) {
           console.log(res);
-          this.isLoading = false;
           this.newdata = res.data;
           this.setDayof = this.newdata.Business.RestDayOfWeek.toString();
         }

@@ -249,8 +249,8 @@ export default {
     getInfoHandler() {
       getAllDesigner().then((res) => {
         console.log(res);
-        if (res.status === 200) {
-          this.tempDesginersInfo = res.data;
+        if (res.data.status === true) {
+          this.tempDesginersInfo = res.data.BasicData;
           this.isLoading = false;
         }
       });
