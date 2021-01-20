@@ -79,9 +79,14 @@ const postPortfolio = (data) => storeApi.post('/POST/Portfolio', data);
 /** 帳單 */
 // get全部帳單
 const getBillList = () => storeApi.get('/GET/BillList');
-
+// get單一帳單
+const getSingleBill = (billId) => storeApi.get(`/GET/Bill?id=${billId}`);
 // post帳單
 const postBill = (data) => storeApi.post('/POST/Bill', data);
+// patch帳單狀態
+const patchBillStatus = (billId, data) =>
+  // eslint-disable-next-line implicit-arrow-linebreak
+  storeApi.patch(`/PATCH/Bill?id=${billId}`, data);
 
 // eslint-disable-next-line object-curly-newline
 export {
@@ -104,5 +109,7 @@ export {
   patchOrderDetailStatus,
   postPortfolio,
   getBillList,
+  getSingleBill,
   postBill,
+  patchBillStatus,
 };
