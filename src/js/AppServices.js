@@ -1,4 +1,3 @@
-/* eslint-disable quote-props */
 import axios from 'axios';
 
 const storeApi = axios.create({
@@ -22,9 +21,6 @@ const getStoreTotalInfo = () => storeApi.get('/GET/Store?id=2');
 
 // put修改店家資料
 const putStoreInfo = (data) => storeApi.put('/PUT/Store', data);
-
-// put修改店休日期 -未完
-const updateDayOf = (data) => storeApi.put('PUT/Holiday?id=8', data);
 
 /** 產品 */
 // get全部產品
@@ -71,7 +67,7 @@ const postOrder = (data) => storeApi.post('/POST/Order', data);
 const getOrder = () => storeApi.get('/GET/OrderList');
 // get單一訂單
 const getOrderDetail = (oId) => storeApi.get(`/GET/Order?id=${oId}`);
-// patch 訂單狀態
+// patch訂單狀態
 const patchOrderDetailStatus = (oId, data) =>
   // eslint-disable-next-line implicit-arrow-linebreak
   storeApi.patch(`PATCH/Order?id=${oId}`, data);
@@ -80,13 +76,19 @@ const patchOrderDetailStatus = (oId, data) =>
 // post新增作品
 const postPortfolio = (data) => storeApi.post('/POST/Portfolio', data);
 
+/** 帳單 */
+// get全部帳單
+const getBillList = () => storeApi.get('/GET/BillList');
+
+// post帳單
+const postBill = (data) => storeApi.post('/POST/Bill', data);
+
 // eslint-disable-next-line object-curly-newline
 export {
   postStoreLogin,
   postStoreRegister,
   getStoreTotalInfo,
   putStoreInfo,
-  updateDayOf,
   getStoreProductList,
   posteStoreProduct,
   putStoreProductList,
@@ -101,4 +103,6 @@ export {
   getOrderDetail,
   patchOrderDetailStatus,
   postPortfolio,
+  getBillList,
+  postBill,
 };

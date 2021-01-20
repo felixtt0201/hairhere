@@ -141,7 +141,6 @@
                     type="file"
                     id="Photo1"
                     class="form-control"
-                    ref="files"
                     name="Photo1"
                     required
                   />
@@ -158,7 +157,6 @@
                     type="file"
                     id="Photo2"
                     class="form-control"
-                    ref="files"
                     name="Photo2"
                   />
                   <img
@@ -174,7 +172,6 @@
                     type="file"
                     id="Photo3"
                     class="form-control"
-                    ref="files"
                     name="Photo3"
                   />
                   <img
@@ -227,7 +224,6 @@
                       id="male"
                       value="男"
                       v-model="addInfo.category"
-                      required
                     />
                     <label class="custom-control-label" for="male">男生</label>
                   </div>
@@ -385,6 +381,7 @@ export default {
       data.append('Photo2', photo2);
       data.append('Photo3', photo3);
       data.append('Category', this.addInfo.category.toString());
+      console.log(data);
       postPortfolio(data)
         .then((res) => {
           console.log(res);
@@ -411,6 +408,7 @@ export default {
             showConfirmButton: false,
             timer: 1500,
           });
+          this.fileUploading = false;
         });
     },
   },

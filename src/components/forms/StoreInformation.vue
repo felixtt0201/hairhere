@@ -1,13 +1,13 @@
 <template>
   <div id="storeinformation" class="mt-4">
-    <!-- <loading
+    <loading
       :opacity="1"
       color="#7e735d"
       loader="bars"
       background-color="#b7b9cc"
       :active.sync="isLoading"
       :is-full-page="fullPage"
-    ></loading> -->
+    ></loading>
     <div class="row justify-content-between">
       <h4 class="mb-3 ml-3 text-gray-900 font-weight-bold">基本資料</h4>
       <button
@@ -112,7 +112,7 @@
                   type="checkbox"
                   class="custom-control-input"
                   id="monday"
-                  value="2021-01-11"
+                  value="1"
                   v-model="DayOf"
                 />
                 <label class="custom-control-label" for="monday">星期一</label>
@@ -122,7 +122,7 @@
                   type="checkbox"
                   class="custom-control-input"
                   id="tuesday"
-                  value="2021-01-12"
+                  value="2"
                   v-model="DayOf"
                 />
                 <label class="custom-control-label" for="tuesday">星期二</label>
@@ -132,7 +132,7 @@
                   type="checkbox"
                   class="custom-control-input"
                   id="wednesday"
-                  value="2021-01-13"
+                  value="3"
                   v-model="DayOf"
                 />
                 <label class="custom-control-label" for="wednesday"
@@ -146,7 +146,7 @@
                   type="checkbox"
                   class="custom-control-input"
                   id="thursday"
-                  value="2021-01-14"
+                  value="4"
                   v-model="DayOf"
                 />
                 <label class="custom-control-label" for="thursday"
@@ -158,7 +158,7 @@
                   type="checkbox"
                   class="custom-control-input"
                   id="friday"
-                  value="2021-01-15"
+                  value="5"
                   v-model="DayOf"
                 />
                 <label class="custom-control-label" for="friday">星期五</label>
@@ -168,7 +168,7 @@
                   type="checkbox"
                   class="custom-control-input chkbox"
                   id="saturday"
-                  value="2021-01-16"
+                  value="6"
                   v-model="DayOf"
                 />
                 <label class="custom-control-label" for="saturday"
@@ -180,7 +180,7 @@
                   type="checkbox"
                   class="custom-control-input chkbox"
                   id="sunday"
-                  value="2021-01-17"
+                  value="0"
                   v-model="DayOf"
                 />
                 <label class="custom-control-label" for="sunday">星期日</label>
@@ -315,6 +315,7 @@ export default {
         businessTime: '',
         DayOf: '',
         instagram: '',
+        password: '',
       },
 
       // 編輯的開關
@@ -353,7 +354,7 @@ export default {
       const data = this.$qs.stringify({
         Id: '2',
         Email: 'store@store',
-        Password: '123',
+        // Password: '123',
         Address: this.storeInfo.address,
         BusinessHoursOpen: this.storeInfo.businessTimeOpen,
         EnglishName: this.storeInfo.engtitle,
@@ -364,6 +365,7 @@ export default {
         Phone: this.storeInfo.tel,
         Summary: this.storeInfo.summary,
         Details: this.storeInfo.detail,
+        RestDayOfWeek: this.DayOf.toString(),
       });
       putStoreInfo(data).then((res) => {
         console.log(res);
