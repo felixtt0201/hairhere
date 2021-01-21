@@ -58,40 +58,23 @@
       >
     </li>
     <li class="nav-item">
-      <a
-        class="nav-link collapsed font-weight-bold sidebarhover"
-        href="#"
-        data-toggle="collapse"
-        data-target="#collapseTwo"
-        aria-expanded="true"
-        aria-controls="collapseTwo"
+      <router-link
+        class="nav-link font-weight-bold sidebarhover"
+        :to="{ name: 'ReservationBack' }"
       >
-        <i class="fas fa-fw fa-chart-area mr-2"></i>
-        <span>表單管理</span>
-      </a>
-      <div
-        id="collapseTwo"
-        class="collapse"
-        aria-labelledby="headingTwo"
-        data-parent="#accordionSidebar"
+        <i class="far fa-calendar-check"></i>
+        <span>預約表</span></router-link
       >
-        <div class="bg-white py-2 collapse-inner rounded">
-          <router-link class="collapse-item" :to="{ name: 'ReservationList' }"
-            >預約表
-          </router-link>
-          <router-link class="collapse-item" :to="{ name: 'Vaction' }"
-            >休假表
-          </router-link>
-          <router-link class="collapse-item" :to="{ name: 'Performance' }"
-            >業績表
-          </router-link>
-          <router-link class="collapse-item" :to="{ name: 'HistoricalOrders' }"
-            >歷史訂單
-          </router-link>
-        </div>
-      </div>
     </li>
-
+    <li class="nav-item">
+      <router-link
+        class="nav-link font-weight-bold sidebarhover"
+        :to="{ name: 'HistoricalOrders' }"
+      >
+        <i class="fas fa-money-check mr-2"></i>
+        <span>歷史帳單</span></router-link
+      >
+    </li>
     <li class="nav-item" @click="logout">
       <router-link
         class="nav-link font-weight-bold sidebarhover"

@@ -47,6 +47,10 @@ const getAllDesigner = () =>
 
 // get單一設計師資料
 const getDesigner = (dId) => storeApi.get(`/GET/Designer?id=${dId}`);
+// get 單一設計師資料(後台)
+const getDesignerInfoBack = (dId) =>
+  // eslint-disable-next-line implicit-arrow-linebreak
+  storeApi.get(`/GET/Designer/Detail?id=${dId}`);
 
 // post新增設計師
 const postDesinger = (data) => storeApi.post('/POST/Designer?storeid=2', data);
@@ -110,6 +114,7 @@ export {
   deleteStoreProduct,
   getAllDesigner,
   getDesigner,
+  getDesignerInfoBack,
   postDesinger,
   patchDesignerPhoto,
   patchDesignerStatus,
