@@ -27,7 +27,7 @@ const routes = [
       },
       {
         // 單一設計師 單一作品詳細
-        path: 'DesignerSingleWork',
+        path: 'DesignerSingleWork/:workId',
         name: 'DesignerSingleWork',
         component: () =>
           // eslint-disable-next-line implicit-arrow-linebreak
@@ -39,7 +39,7 @@ const routes = [
         component: () => import('../components/fontitem/Reservation.vue'),
       },
       {
-        path: 'confirm',
+        path: 'confirm/:orderId',
         name: 'Confirm',
         component: () => import('../components/fontitem/Confirm.vue'),
       },

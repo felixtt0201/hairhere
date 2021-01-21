@@ -101,7 +101,25 @@
 </template>
 
 <script>
-export default {};
+// import { getOrder } from '@/js/FontAppServices';
+
+export default {
+  data() {
+    return {
+      aa: '',
+    };
+  },
+  methods: {
+    getInfoHandler(aa) {
+      this.$http.get(`https://salon.rocket-coding.com/Get/Order?id=${aa}`);
+    },
+  },
+  created() {
+    this.aa = this.$route.params.orderId;
+    console.log(this.aa);
+    this.getInfoHandler(this.aa);
+  },
+};
 </script>
 
 <style></style>

@@ -75,7 +75,7 @@ export default {
     getInfoHandler() {
       getAllDesigner().then((res) => {
         console.log(res);
-        this.designers = res.data;
+        this.designers = res.data.BasicData;
         console.log(this.designers);
       });
     },

@@ -87,28 +87,59 @@
             class="mb-4"
             v-model="remarks"
           ></textarea>
-          <router-link to="/confirm" class="btn-reservation btn" @click="test">
-            預約送出
-          </router-link>
+          <!-- <router-link
+            :to="`/confirm/${orderId}`"
+            class="btn-reservation btn"
+            @click="test"
+            >預約送出
+          </router-link> -->
+          <button type="button" class="btn" @click="test">預約送出</button>
         </form>
-        <input type="date" />123
-        <select name="" id="">
-          <option value="10">10:00</option>
-          <option value="11">11:00</option>
-          <option value="12">12:00</option>
-          <option value="13">13:00</option>
-          <option value="14">14:00</option>
-          <option value="15">15:00</option>
-          <option value="16">16:00</option>
-          <option value="17">17:00</option>
-          <option value="18">18:00</option>
-        </select>
+        <template>
+          <div>
+            <date-picker
+              v-model="time1"
+              type="datetime"
+              value-type="format"
+              placeholder="Select datetime"
+              :show-time-panel="showTimePanel"
+              @close="handleOpenChange"
+              :time-picker-options="{
+                start: '10:00',
+                step: '00:60',
+                end: '18:00',
+              }"
+              format="YYYY-MM-DD HH:mm a"
+              :disabled-date="notBeforeToday"
+              :disabled-time="notBeforeTodayTwelveOClock"
+            >
+              <template v-slot:footer>
+                <button class="mx-btn mx-btn-text" @click="toggleTimePanel">
+                  {{ showTimePanel ? 'select date' : 'select time' }}
+                </button>
+              </template>
+            </date-picker>
+            <!-- <date-picker
+              v-model="time2"
+              type="time"
+              :hour-options="hours"
+              format="HH:mm a"
+              :time-picker-options="{
+                start: '10:00',
+                step: '00:60',
+                end: '18:00',
+              }"
+            ></date-picker> -->
+          </div>
+        </template>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
 import {
   getDesigner,
   getStoreProductList,
@@ -116,9 +147,15 @@ import {
 } from '@/js/FontAppServices';
 
 export default {
+  components: { DatePicker },
   data() {
     return {
-      designer: {},
+      //
+      time1: null, // 日曆1
+      time2: null,
+      showTimePanel: false,
+      //
+      designer: {}, // 單一設計師詳細
       products: [], // 遠端撈回的服務項目
       checklist: [], // 加入勾選項目的位置
       listId: '',
@@ -127,6 +164,7 @@ export default {
       email: '',
       remarks: '',
       orderTime: '',
+      orderId: '', // post後回傳訂單Id
     };
   },
   computed: {
@@ -144,10 +182,26 @@ export default {
     },
   },
   methods: {
+    toggleTimePanel() {
+      this.showTimePanel = !this.showTimePanel;
+    },
+    handleOpenChange() {
+      this.showTimePanel = false;
+    },
+    testa() {
+      console.log(this.time1);
+    },
+    //
     getDesignerHandler() {
       getDesigner(this.listId).then((res) => {
         console.log(res);
         this.designer = res.data;
+        this.OrderDate = res.data.OrderDate;
+        this.OrderDate.forEach((i) => {
+          console.log(res);
+          this.date = Date.parse(i);
+          console.log(this.date);
+        });
       });
     },
     getProductHandler() {
@@ -167,19 +221,24 @@ export default {
       });
     },
     test() {
-      const data = this.$qs.stringify({
-        OrderTime: '2021-1-12',
+      const data1 = this.$qs.stringify({
+        OrderTime: this.time1,
         StoreRemark: '',
-        DesignerId: '4',
-        CustomerName: 'Tim',
-        CustomerPhone: '1234567890',
-        CustomerEmail: '',
+        DesignerId: this.listId,
+        CustomerName: this.name,
+        CustomerPhone: this.tel,
+        CustomerEmail: this.email,
         CustomerIntroducer: '',
-        CustomerRemark: '',
+        CustomerRemark: this.remarks,
         OrderDetails: this.checklist,
       });
-      postOrder(data).then((res) => {
+      postOrder(data1).then((res) => {
+        console.log(this.time1);
         console.log(res);
+        if (res.data) {
+          this.orderId = res.data.orderId;
+          // this.$router.push(`/confirm/${this.orderId}`);
+        }
       });
     },
   },

@@ -16,7 +16,35 @@
 .works-text-line {
   color: #1d3d4a;
 }
-
+// hover test
+.size {
+  border: 2px solid red !important;
+  width: 300px;
+  height: 300px;
+  position: relative;
+}
+.img-size {
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+  &:hover + .b {
+    display: block !important;
+    transition: all 0.5s;
+  }
+}
+.b {
+  width: 100%;
+  height: 100%;
+  background-color: gray;
+  z-index: 50;
+  display: none !important;
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .works-center {
   display: flex;
   justify-content: center;
@@ -35,28 +63,25 @@
   text-align: center;
   margin-bottom: 30px;
 }
-.img-size {
-  width: 180px;
-  height: 250px;
-}
-.works-btn {
-  transition: all 0.5s;
-  position: absolute;
-  top: 0;
-  left: 52px;
-  width: 180px;
-  height: 250px;
-  background-color: #d6997a;
-  opacity: 0;
-  line-height: 400px;
-  box-shadow: 1px 3px 3px;
-  &:hover {
-    opacity: 0.4;
-    & + .img-btn {
-      opacity: 1;
-    }
-  }
-}
+
+// .works-btn {
+//   transition: all 0.5s;
+//   position: absolute;
+//   top: 0;
+//   left: 52px;
+//   width: 180px;
+//   height: 250px;
+//   background-color: #d6997a;
+//   opacity: 0;
+//   line-height: 400px;
+//   box-shadow: 1px 3px 3px;
+//   &:hover {
+//     opacity: 0.4;
+//     & + .img-btn {
+//       opacity: 1;
+//     }
+//   }
+// }
 .img-btn {
   transition: all 0.5s;
   position: absolute;

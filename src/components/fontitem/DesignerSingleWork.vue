@@ -33,70 +33,29 @@
       <div class="row justify-content-center">
         <div class="col-md-10">
           <div class="row">
-            <div class="col-md-4">
-              <img
-                src="@/assets/img/photo1.png"
-                alt=""
-                style="height: 100%;width: 100%;"
-              />
-            </div>
-            <div class="col-md-8 p40">
-              <h4 class="mb-4">沙龍護髮</h4>
-              <p class="mb-5 border-left">
-                本次預約設計師師師師本次預約設計師師師師本次預約設計師師師師本次預約設計師
-                師師師本次預約設計師師師師本次預約設計師師師師本次預約設計師師師師本次預約設計師師師師本次預約設計師師師師本次預約設計師師師師
-                本次預約設計師師師師本次預約設計師師師師本次預約設計師師師師本次預約設計師師師師
-              </p>
+            <div class="col-md-12 p40">
               <cartest />
-              <ul class="d-flex justify-content-center p-0 mb-4">
-                <li class="designer-tag">沙龍護髮</li>
-                <li class="designer-tag">解構護髮</li>
-                <li class="designer-tag">梨花護髮</li>
-              </ul>
-
-              <!-- <ul class="d-flex justify-content-center p-0">
-                <li class="mr-4">
-                  <img src="@/assets/img/z23255028O.png" alt="" />
-                </li>
-
-                <li class="mr-4">
-                  <img src="@/assets/img/z23255028O.png" alt="" />
-                </li>
-
-                <li class="mr-4">
-                  <img src="@/assets/img/z23255028O.png" alt="" />
-                </li>
-              </ul> -->
             </div>
+            <!-- <div class="col-md-4">
+              <h4 class="mb-4">{{ workDetail.Name }}</h4>
+              <p class="mb-5 border-left">
+                {{ workDetail.Summary }}
+              </p>
+              <ul class="d-flex justify-content-center p-0 mb-4">
+                <li class="designer-tag" v-for="tag in category" :key="tag">
+                  {{ tag }}
+                </li>
+              </ul>
+            </div> -->
           </div>
         </div>
       </div>
     </div>
-    <nav aria-label="Page navigation example">
-      <ul class="pagination justify-content-center">
-        <li class="page-item">
-          <a class="page-link path" href="#" aria-label="Previous"
-            ><i class="fas fa-chevron-left"></i>
-          </a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">4</a></li>
-        <li class="page-item"><a class="page-link" href="#">5</a></li>
-        <li class="page-item"><a class="page-link" href="#">6</a></li>
-        <li class="page-item">
-          <a class="page-link path" href="#" aria-label="Next"
-            ><i class="fas fa-chevron-right"></i>
-          </a>
-        </li>
-      </ul>
-    </nav>
   </div>
 </template>
 
 <script>
-import { getDesigner } from '@/js/FontAppServices';
+import { getSingleWork } from '@/js/FontAppServices';
 import cartest from './cartest.vue';
 
 export default {
@@ -107,19 +66,26 @@ export default {
     return {
       designerId: '',
       designer: '',
+      workId: '', // params接到的id
+      workDetail: '', // get到的詳細資料
+      category: [],
     };
   },
   methods: {
     getInfoHandler() {
-      getDesigner(this.designerId).then((res) => {
-        this.designer = res.data;
-        console.log(this.designer);
+      getSingleWork(this.workId).then((res) => {
+        this.workDetail = res.data.BasicData;
+        console.log(this.workDetail);
+        this.category = this.workDetail.Category;
+        this.designerId = this.workDetail.DesignerId;
       });
     },
   },
   created() {
-    this.designerId = this.$route.params.id;
-    console.log(this.designerId);
+    // this.designerId = this.$route.params.id;
+    // console.log(this.designerId);
+    this.workId = this.$route.params.workId;
+    console.log(this.workId);
     this.getInfoHandler();
   },
 };

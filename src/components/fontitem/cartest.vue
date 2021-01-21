@@ -1,12 +1,30 @@
 <template>
   <div>
     <!-- Main slider -->
-    <splide :options="primaryOptions" ref="primary">
-      <splide-slide v-for="slide in slides" :key="slide.src">
-        <img :src="slide.src" />
-      </splide-slide>
-    </splide>
-
+    <template class="d-flex">
+      <splide :options="primaryOptions" ref="primary">
+        <template v-slot:controls>
+          <div>
+            <h4>超級飄飄卷</h4>
+            <p class="mb-5 border-left">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Perferendis, laborum?
+            </p>
+            <ul class="d-flex justify-content-center p-0 mb-4">
+              <li class="designer-tag">
+                護髮
+              </li>
+              <li class="designer-tag">
+                護髮
+              </li>
+            </ul>
+          </div>
+        </template>
+        <splide-slide v-for="slide in slides" :key="slide.src">
+          <img :src="slide.src" />
+        </splide-slide>
+      </splide>
+    </template>
     <!-- Thumbnail slider -->
     <splide :options="secondaryOptions" ref="secondary">
       <splide-slide v-for="slide in slides" :key="slide.src">
@@ -85,5 +103,11 @@ export default {
 .splide__arrow--next,
 .splide__arrow--prev {
   background-color: transparent;
+}
+#splide01 {
+  display: flex;
+}
+#splide01-track {
+  width: 60%;
 }
 </style>

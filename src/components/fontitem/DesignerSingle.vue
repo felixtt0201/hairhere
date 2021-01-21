@@ -29,19 +29,21 @@
     </div>
     <h4 class="title-line w-100 text-center mb-4 text-main">設計作品</h4>
     <div class="row img-center">
-      <div class="col-md-3">
-        <img
-          src="https://images.unsplash.com/photo-1605980766335-d3a41c7332a1?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTZ8fGhhaXJ8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-          alt=""
-          class="img-size"
-        />
+      <div
+        class="col-md-3"
+        v-for="designerWork in designerWorks"
+        :key="designerWork.Id"
+      >
+        <img :src="`${designerWork.Photo1}`" alt="" class="img-size" />
         <div class="works-btn"></div>
-
-        <router-link to="/DesignerSingleWork" class="img-btn"
+        <router-link
+          :to="`/DesignerSingleWork/${designerWork.Id}`"
+          class="img-btn"
           >See More</router-link
         >
+        {{ designerWork.Id }}
       </div>
-      <div class="col-md-3">
+      <!-- <div class="col-md-3">
         <img
           src="https://images.unsplash.com/photo-1605980766335-d3a41c7332a1?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTZ8fGhhaXJ8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
           alt=""
@@ -67,7 +69,7 @@
         />
         <div class="works-btn"></div>
         <button type="button" class="img-btn">立即預約</button>
-      </div>
+      </div> -->
     </div>
     <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center">
@@ -100,13 +102,17 @@ export default {
     return {
       designerId: '',
       designer: '',
+      designerWorks: [],
     };
   },
   methods: {
     getInfoHandler() {
       getDesigner(this.designerId).then((res) => {
+        console.log(res);
         this.designer = res.data;
         console.log(this.designer);
+        this.designerWorks = this.designer.Portfolios.BasicData;
+        console.log(this.designerWorks);
       });
     },
   },

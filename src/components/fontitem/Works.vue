@@ -75,9 +75,9 @@
             type="text"
             class="searchInput"
             placeholder="搜尋作品名稱"
-            v-model="searchInput"
+            v-model.trim="searchInput"
         /></label>
-        <button type="button" class="btn w-100" @click="search">
+        <button type="button" class="btn w-100" @click="searchItem">
           <i class="fas fa-search mr-3"></i>搜尋
         </button>
       </div>
@@ -87,42 +87,24 @@
         作品集
       </h3>
       <div class="row img-center">
-        <div class="col-md-3" v-for="work in worksarray" :key="work.Id">
-          {{ searchinput }}
-          <hr />
-          {{ work }}
+        <!-- 測試關鍵字搜索 -->
+        <div
+          class="col-md-3 size"
+          v-for="work in searchInputText"
+          :key="work.Id"
+        >
           <img :src="work.Photo1" alt="" class="img-size" />
-          <p>{{ work.Name }}</p>
-          <div class="works-btn"></div>
-          <button type="button" class="img-btn">立即預約</button>
+          <div class="b">
+            <p>{{ work.Name }}</p>
+            <p>{{ work.Category }}</p>
+            <button class="btn btn-primary">
+              {{ work.Id }}
+              <router-link :to="`/designerSingle/${work.Id}`"
+                >立即預約</router-link
+              >
+            </button>
+          </div>
         </div>
-        <!-- <div class="col-md-3">
-          <img
-            src="https://images.unsplash.com/photo-1605980766335-d3a41c7332a1?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTZ8fGhhaXJ8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-            alt=""
-            class="img-size"
-          />
-          <div class="works-btn"></div>
-          <button type="button" class="img-btn">立即預約</button>
-        </div>
-        <div class="col-md-3">
-          <img
-            src="https://images.unsplash.com/photo-1605980766335-d3a41c7332a1?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTZ8fGhhaXJ8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-            alt=""
-            class="img-size"
-          />
-          <div class="works-btn"></div>
-          <button type="button" class="img-btn">立即預約</button>
-        </div>
-        <div class="col-md-3">
-          <img
-            src="https://images.unsplash.com/photo-1605980766335-d3a41c7332a1?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTZ8fGhhaXJ8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-            alt=""
-            class="img-size"
-          />
-          <div class="works-btn"></div>
-          <button type="button" class="img-btn">立即預約</button>
-        </div> -->
       </div>
       <!-- <div class="row img-center">
         <div class="col-md-3">
@@ -164,17 +146,24 @@
       </div> -->
       <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
-          <li class="page-item">
+          <li class="page-item" :class="{ disabled: (i = 1) }">
             <a class="page-link path" href="#" aria-label="Previous"
               ><i class="fas fa-chevron-left"></i>
             </a>
           </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li
+            class="page-item"
+            v-for="page in pages"
+            :key="page"
+            @click="changePage(page, 4)"
+          >
+            <a class="page-link" href="#">{{ page }}</a>
+          </li>
+          <!-- <li class="page-item"><a class="page-link" href="#">2</a></li>
           <li class="page-item"><a class="page-link" href="#">3</a></li>
           <li class="page-item"><a class="page-link" href="#">4</a></li>
           <li class="page-item"><a class="page-link" href="#">5</a></li>
-          <li class="page-item"><a class="page-link" href="#">6</a></li>
+          <li class="page-item"><a class="page-link" href="#">6</a></li> -->
           <li class="page-item">
             <a class="page-link path" href="#" aria-label="Next"
               ><i class="fas fa-chevron-right"></i>
@@ -187,43 +176,60 @@
 </template>
 
 <script>
-import { getworks, searchworks } from '@/js/FontAppServices';
+import { getpages, searchworks } from '@/js/FontAppServices';
 
 export default {
   data() {
     return {
-      worksarray: [],
+      worksarray: [], // 回傳資料位置
       list: [], // checkbox勾選倒入
-      searchInput: '',
-      filterarray: [],
+      searchInput: '', // 關鍵字搜索輸入
+      pages: '',
+      paginationhas_pre: '',
+      paginationhas_next: '',
+      // get全部作品回傳資料
+      count: '',
+      index: 1,
+      limit: 4,
     };
   },
   computed: {
     // 關鍵字搜索
-    searchinput() {
-      // eslint-disable-next-line arrow-body-style
-      this.worksarray.filter((i) => {
-        return this.filterarray.push(i.Name.match(this.searchInput));
-      });
-      return this.filterarray;
+    searchInputText() {
+      if (this.searchInput) {
+        return this.worksarray.filter(
+          (item) => item.Name.indexOf(this.searchInput) !== -1, // 有找到值
+        );
+      }
+      return this.worksarray;
     },
   },
   methods: {
+    // 渲染作品集＆切換分頁
+    // changePage(page, show) {
+    //   getpages(page, show).then((res) => {
+    //     console.log(res, page);
+    //     this.worksarray = res.data.BasicData;
+    //     console.log(this.worksarray);
+    //   });
+    // },
     getHandlerInfo() {
-      getworks().then((res) => {
+      getpages(this.index, 8).then((res) => {
+        console.log(this.index);
         console.log(res);
+        this.pages = Math.ceil(res.data.Count / res.data.Limit);
+        console.log(this.pages);
         this.worksarray = res.data.BasicData;
         console.log(this.worksarray);
       });
     },
-    search() {
-      console.log(this.list);
-      const bb = this.list.toString();
-      console.log(bb);
-      searchworks(bb).then((res) => {
+    searchItem() {
+      const searchItemArray = this.list.toString();
+      searchworks(searchItemArray, 2, 3).then((res) => {
         console.log(res);
-        console.log(bb);
+        this.pages = Math.ceil(res.data.Count / 3);
         this.worksarray = res.data.BasicData;
+        console.log(this.worksarray);
       });
     },
   },
@@ -233,4 +239,7 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.menu-btn {
+}
+</style>

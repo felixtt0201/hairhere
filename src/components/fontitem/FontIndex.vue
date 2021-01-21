@@ -116,7 +116,9 @@
                     每週二至日 上午{{ business.BusinessHoursOpen }}~下午{{
                       business.BusinessHoursClose
                     }}
-                    <span class="d-block">(每週一公休)</span>
+                    <span class="d-block"
+                      >(每週{{ business.RestDayOfWeek[0] }}公休)</span
+                    >
                   </p>
                 </li>
               </ul>
