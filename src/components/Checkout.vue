@@ -50,11 +50,15 @@
                 帳單
               </button>
             </td>
-            <td
-              class="btn btn-success text-center mt-1"
-              :class="{ 'btn-danger': list.OrderStatus == '已取消' }"
-            >
-              {{ list.OrderStatus }}
+            <td>
+              <p
+                class="bg-gradient-info rounded text-center"
+                :class="{
+                  'bg-gradient-danger rounded': list.OrderStatus == '已取消',
+                }"
+              >
+                {{ list.OrderStatus }}
+              </p>
             </td>
           </tr>
         </tbody>
@@ -388,7 +392,16 @@
                 <button
                   type="button"
                   class="btn btn-danger"
-                  @click="patchStatusHandler(editInfo.Id)"
+                  @click="changeStatus(editInfo.Id)"
+                  v-if="editInfo.OrderStatus == '已結算'"
+                >
+                  取消帳單
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-danger disabled"
+                  aria-disabled="true"
+                  v-else
                 >
                   取消帳單
                 </button>
@@ -545,13 +558,38 @@ export default {
     },
 
     // patch更改帳單狀態
+    changeStatus(billId) {
+      this.$swal({
+        title: '你確定要取消嗎？',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33 ',
+        confirmButtonText: '確定',
+        cancelButtonColor: '#3085d6',
+        cancelButtonText: '取消',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $('#checkoutMoadel').modal('hide');
+          this.$swal(
+            {
+              icon: 'success',
+              title: '成功取消此筆帳單',
+              timer: 1500,
+            },
+            this.patchStatusHandler(billId),
+          );
+        }
+      });
+    },
+
     patchStatusHandler(billId) {
       const data = this.$qs.stringify({
         BillStatus: '0',
         StoreRemark: '"asdas"',
       });
-      patchBillStatus(billId, data).then((res) => {
-        console.log(res);
+      patchBillStatus(billId, data).then(() => {
+        // console.log(res);
+        this.getAllBillList();
       });
     },
 
