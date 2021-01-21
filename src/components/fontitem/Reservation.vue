@@ -106,6 +106,7 @@
               @close="handleOpenChange"
               format="YYYY-MM-DD"
               :disabled-date="notBeforeToday"
+              @pick="aa"
             >
             </date-picker>
             <!-- <date-picker
@@ -133,6 +134,7 @@ import {
   getDesigner,
   getStoreProductList,
   postOrder,
+  getFreetime,
 } from '@/js/FontAppServices';
 
 export default {
@@ -189,11 +191,12 @@ export default {
         console.log(res);
         this.designer = res.data;
         this.OrderDate = res.data.OrderDate;
-        this.OrderDate.forEach((i) => {
-          console.log(res);
-          this.date = Date.parse(i);
-          console.log(this.date);
-        });
+      });
+    },
+    // 測試點選時間回傳值
+    aa() {
+      getFreetime(this.listId, this.time1).then((res) => {
+        console.log(res);
       });
     },
     getProductHandler() {
