@@ -99,25 +99,14 @@
           <div>
             <date-picker
               v-model="time1"
-              type="datetime"
+              type="date"
               value-type="format"
               placeholder="Select datetime"
               :show-time-panel="showTimePanel"
               @close="handleOpenChange"
-              :time-picker-options="{
-                start: '10:00',
-                step: '00:60',
-                end: '18:00',
-              }"
-              format="YYYY-MM-DD HH:mm a"
+              format="YYYY-MM-DD"
               :disabled-date="notBeforeToday"
-              :disabled-time="notBeforeTodayTwelveOClock"
             >
-              <template v-slot:footer>
-                <button class="mx-btn mx-btn-text" @click="toggleTimePanel">
-                  {{ showTimePanel ? 'select date' : 'select time' }}
-                </button>
-              </template>
             </date-picker>
             <!-- <date-picker
               v-model="time2"
@@ -191,6 +180,9 @@ export default {
     testa() {
       console.log(this.time1);
     },
+    notBeforeToday(date) {
+      return date < new Date(new Date().setHours(0, 0, 0, 0));
+    },
     //
     getDesignerHandler() {
       getDesigner(this.listId).then((res) => {
@@ -210,16 +202,16 @@ export default {
         this.products = res.data.OrderDetails;
       });
     },
-    selectsingle(id) {
-      this.products.forEach((item) => {
-        if (item.Id === id) {
-          this.checklist.push(item);
-          console.log(this.checklist);
-        } else {
-          console.log('false');
-        }
-      });
-    },
+    // selectsingle(id) {
+    //   this.products.forEach((item) => {
+    //     if (item.Id === id) {
+    //       this.checklist.push(item);
+    //       console.log(this.checklist);
+    //     } else {
+    //       console.log('false');
+    //     }
+    //   });
+    // },
     test() {
       const data1 = this.$qs.stringify({
         OrderTime: this.time1,
