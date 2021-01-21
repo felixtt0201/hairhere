@@ -127,7 +127,7 @@ export default {
         Email: this.registerInfo.account,
         Password: this.registerInfo.repassword,
       });
-      postStoreRegister(this.$qs.stringify(data)).then((res) => {
+      postStoreRegister(data).then((res) => {
         if (res.data.status === false) {
           this.unsuccessMessage();
         } else {

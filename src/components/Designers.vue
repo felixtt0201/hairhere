@@ -14,11 +14,7 @@
     <ul class="row row-cols-1 row-cols-md-4">
       <li class="col mb-4" v-for="item in tempDesginersInfo" :key="item.Id">
         <div class="card h-100 border-0 shadow-sm">
-          <img
-            src="https://picsum.photos/300/200?random=11"
-            class="card-img-top"
-            alt=""
-          />
+          <img :src="item.PicturePath" class="card-img-top" alt="" />
           <div class="card-body">
             <h5 class="card-title text-center">{{ item.Name }}</h5>
           </div>
@@ -26,16 +22,24 @@
             <div class="row justify-content-around">
               <a
                 href="#"
-                class="btn btn-success btn-circle"
-                @click="openModalHandler(false, item)"
+                class="btn btn-primary btn-circle"
+                @click="openModalHandler(false, item.Id)"
+                v-if="item.WorkStatus == '在職中'"
               >
+                <i class="fas fa-edit"></i>
+              </a>
+              <a href="#" class="btn btn-primary btn-circle disabled" v-else>
                 <i class="fas fa-edit"></i>
               </a>
               <a
                 href="#"
                 class="btn btn-danger btn-circle"
                 @click="deleteInfoHandler(item.Id)"
+                v-if="item.WorkStatus == '在職中'"
               >
+                <i class="fas fa-trash"></i>
+              </a>
+              <a href="#" class="btn btn-danger btn-circle disabled" v-else>
                 <i class="fas fa-trash"></i>
               </a>
             </div>
@@ -58,6 +62,7 @@
       </button>
     </div>
     <!--Modal-->
+    <!---新增設計師-->
     <div
       class="modal fade text-gray-900"
       id="designerModal"
@@ -66,8 +71,9 @@
       tabindex="-1"
       aria-labelledby="designerModal"
       aria-hidden="true"
+      v-if="isNew"
     >
-      <form action="" @submit.prevent="addInfoHandler">
+      <form action="" @submit.prevent="postInfoHandler">
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content border-0">
             <div class="modal-header bg-dark text-white">
@@ -86,24 +92,160 @@
             <div class="modal-body">
               <div class="row">
                 <div class="col-sm-4">
-                  <h2>設計師個人照片</h2>
+                  <h2>設計資料</h2>
+                </div>
+                <div class="col-sm-8">
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="name">姓名</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="category"
+                        placeholder="請輸入姓名"
+                        v-model="addNewInfo.dName"
+                      />
+                    </div>
+                  </div>
                   <div class="form-group">
-                    <label for="designerphoto"
-                      >上傳照片
-                      <!-- <i class="fas fa-cog fa-spin"></i> -->
-                    </label>
+                    <label for="phone">電話/手機</label>
                     <input
-                      type="file"
-                      id="designerphoto"
+                      type="text"
                       class="form-control"
-                      ref="files"
+                      id="phone"
+                      placeholder="請輸入電話/手機"
+                      v-model="addNewInfo.dPhone"
                     />
                   </div>
-                  <!-- <img
-                  img="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=828346ed697837ce808cae68d3ddc3cf&auto=format&fit=crop&w=1350&q=80"
-                  class="img-fluid"
-                  alt=""
-                /> -->
+                  <div class="form-group">
+                    <label for="instagram">Instagram</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="instagram"
+                      placeholder="instagram"
+                      v-model="addNewInfo.dInstagram"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="lineId">LineID</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="lineId"
+                      placeholder="LineID"
+                      v-model="addNewInfo.dLine"
+                    />
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="account">帳號(請輸入E-mail)</label>
+                      <input
+                        type="email"
+                        class="form-control"
+                        id="account"
+                        placeholder="請輸入帳號"
+                        v-model="addNewInfo.dEmail"
+                      />
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="password">密碼</label>
+                      <input
+                        type="password"
+                        class="form-control"
+                        id="password"
+                        placeholder="請輸入密碼"
+                        v-model="addNewInfo.dPassword"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-row"></div>
+                  <hr />
+                  <div class="form-group">
+                    <p for="description">我的專長/特色</p>
+                    <textarea
+                      type="text"
+                      class="form-control"
+                      id="description"
+                      placeholder="請輸入我的專長/特色"
+                      cols="30"
+                      rows="5"
+                      v-model="addNewInfo.dDetails"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button
+                type="button"
+                class="btn btn-outline-secondary"
+                data-dismiss="modal"
+              >
+                取消
+              </button>
+              <button type="submit" class="btn btn-primary">
+                確認
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!--編輯設計師-->
+    <div
+      class="modal fade text-gray-900"
+      id="designerModal"
+      data-backdrop="static"
+      data-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="designerModal"
+      aria-hidden="true"
+      v-else
+    >
+      <form @submit.prevent="putSingleInfoHander(tempInfo.Id)">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content border-0">
+            <div class="modal-header bg-dark text-white">
+              <h5 class="modal-title" id="designerModal">
+                <span>編輯設計師</span>
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-sm-4">
+                  <h2>設計資料</h2>
+                  <div class="form-group">
+                    <label for="designerphoto"
+                      >個人照片上傳
+                      <i class="fas fa-cog fa-spin" v-if="donewithUpload"></i>
+                    </label>
+                    <div class="file btn btn-lg btn-primary">
+                      上傳圖片
+                      <input
+                        type="file"
+                        id="designerphoto"
+                        class="form-control btn myinput"
+                        ref="files"
+                        @change="uploadPhotoHandler(tempInfo.Id)"
+                      />
+                    </div>
+                  </div>
+                  <img
+                    img="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=828346ed697837ce808cae68d3ddc3cf&auto=format&fit=crop&w=1350&q=80"
+                    class="img-fluid"
+                    alt=""
+                    :src="tempInfo.PicturePath"
+                  />
                 </div>
                 <div class="col-sm-8">
                   <div class="form-row">
@@ -145,6 +287,7 @@
                       class="form-control"
                       id="lineId"
                       placeholder="LineID"
+                      v-model="tempInfo.Line"
                     />
                   </div>
                   <div class="form-row">
@@ -165,17 +308,6 @@
                         class="form-control"
                         id="password"
                         placeholder="請輸入密碼"
-                      />
-                    </div>
-                  </div>
-                  <div class="form-row justify-content-end">
-                    <div class="form-group col-md-6">
-                      <label for="repassword">再次輸入密碼</label>
-                      <input
-                        type="password"
-                        class="form-control"
-                        id="repassword"
-                        placeholder="再次輸入密碼"
                         v-model="tempInfo.Password"
                       />
                     </div>
@@ -206,7 +338,7 @@
                 取消
               </button>
               <button type="submit" class="btn btn-primary">
-                確認
+                編輯
               </button>
             </div>
           </div>
@@ -221,8 +353,10 @@
 import {
   postDesinger,
   getAllDesigner,
-  deleteDesigner,
+  getDesignerInfoBack,
   putDesigner,
+  patchDesignerStatus,
+  patchDesignerPhoto,
 } from '@/js/AppServices';
 import $ from 'jquery';
 
@@ -233,73 +367,120 @@ export default {
       isLoading: true,
       fullPage: true,
 
+      // 接全部的設計師資料
       tempDesginersInfo: [],
+
+      // 新增設計師
+      addNewInfo: {
+        dName: '',
+        dPhone: '',
+        dInstagram: '',
+        dLine: '',
+        dEmail: '',
+        dPassword: '',
+        dDetails: '',
+      },
+
       // 修改單一設計師資料
       tempInfo: {},
       isNew: false,
+      donewithUpload: false,
     };
   },
   methods: {
-    // selectSkill
-    sendInfo() {
-      console.log(this.selectSkills);
-    },
-
     // 取的全部設計師
     getInfoHandler() {
       getAllDesigner().then((res) => {
-        console.log(res);
-        if (res.status === 200) {
-          this.tempDesginersInfo = res.data;
+        if (res.data.status === true) {
+          this.tempDesginersInfo = res.data.BasicData;
           this.isLoading = false;
         }
       });
     },
 
-    // 新增或者修改設計師
-    addInfoHandler() {
-      const postmsg = '新增';
-      const putmsg = '更新';
-      if (this.isNew) {
-        postDesinger(this.$qs.stringify(this.tempInfo)).then((res) => {
-          if (res.data.status === false && res.data.message === '帳號重複') {
-            this.$swal({
-              position: 'center',
-              icon: 'error',
-              title: '新增失敗',
-              text: '帳號重複',
-            });
-          } else if (res.data.status === false) {
-            this.unsuccessed(postmsg);
-          } else {
-            this.successed(postmsg);
-          }
-        });
-      } else {
-        putDesigner(this.$qs.stringify(this.tempInfo), this.tempInfo.Id).then(
-          (res) => {
-            if (res.data.status === false && res.data.message === '驗證錯誤') {
-              this.$swal({
-                position: 'center',
-                icon: 'error',
-                title: '更新失敗',
-                text: '帳號或密碼錯誤',
-              });
-            } else if (res.data.status === false) {
-              this.unsuccessed(putmsg);
-            } else {
-              this.successed(putmsg);
-            }
-          },
-        );
-      }
+    // 取得單一設計師
+    getSingleInfoHandler(id) {
+      this.isNew = false;
+      this.tempInfo = {};
+      getDesignerInfoBack(id).then((res) => {
+        console.log(res);
+        this.tempInfo = res.data;
+      });
+    },
+    // 新增設計師
+    postInfoHandler() {
+      const data = this.$qs.stringify({
+        Email: this.addNewInfo.dEmail,
+        Password: this.addNewInfo.dPassword,
+        Name: this.addNewInfo.dName,
+        Phone: this.addNewInfo.dPhone,
+        Instagram: this.addNewInfo.dInstagram,
+        Details: this.addNewInfo.Details,
+        Line: this.addNewInfo.dLine,
+      });
+      const smsg = '新增';
+      postDesinger(data).then((res) => {
+        console.log(res);
+        if (res.data.status === true) {
+          this.successed(smsg);
+        } else {
+          this.unsuccessed(smsg);
+        }
+      });
     },
 
-    // 刪除設計師
+    // 編輯單一設計師
+    putSingleInfoHander(dId) {
+      const data = this.$qs.stringify({
+        Id: this.tempInfo.Id,
+        Picture: this.tempInfo.Picture,
+        Birthday: '',
+        StoreId: 2,
+        Name: this.tempInfo.Name,
+        Phone: this.tempInfo.Phone,
+        Email: this.tempInfo.Email,
+        Password: this.tempInfo.Password,
+        OldPassword: this.tempInfo.OldPassword,
+        PasswordSalt: this.tempInfo.PasswordSalt,
+        Summary: '',
+        Instagram: this.tempInfo.Instagram,
+        Facebook: '',
+        Twitter: '',
+        Web: '',
+        Details: this.tempInfo.Details,
+        EnglishName: '',
+        Skill: '',
+        Line: this.tempInfo.Line,
+        WorkStatus: 1,
+      });
+      putDesigner(data, dId).then((res) => {
+        if (res.data.status === true) {
+          const psmg = '更新';
+          this.successed(psmg);
+        }
+        console.log(res.data.status);
+      });
+    },
+
+    // 上傳照片
+    uploadPhotoHandler(dId) {
+      this.donewithUpload = true;
+      const designerPhoto = this.$refs.files.files[0];
+      const formData = new FormData();
+      formData.append('file-to-upload', designerPhoto);
+      patchDesignerPhoto(dId, formData).then((res) => {
+        console.log('pic', res);
+        this.donewithUpload = false;
+        this.getSingleInfoHandler(dId);
+      });
+    },
+
+    // 修改設計師狀態 (在職/離職)
     deleteInfoHandler(dId) {
       this.$swal({
-        title: '您確定要刪除？',
+        title: '您確定要更改此設計師狀態？',
         icon: 'warning',
+        text: '將設計師狀態更改為離職',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         confirmButtonText: '確定',
@@ -307,22 +488,34 @@ export default {
         cancelButtonText: '取消',
       }).then((result) => {
         if (result.isConfirmed) {
-          deleteDesigner(dId).then((res) => {
-            console.log(res);
-          });
-          const msg = '刪除';
-          this.successed(msg);
+          this.$swal(
+            {
+              icon: 'success',
+              title: '更改成功',
+              timer: 1500,
+            },
+            this.changeStatusHandler(dId),
+          );
         }
       });
     },
+    changeStatusHandler(dId) {
+      const data = this.$qs.stringify({
+        WorkStatus: '0',
+      });
+      patchDesignerStatus(data, dId).then(() => {
+        this.getInfoHandler();
+        // console.log(res);
+      });
+    },
 
-    openModalHandler(isNew, item) {
+    // 判斷是新增設計師or編輯設計師
+    openModalHandler(isNew, id) {
       if (isNew) {
         this.tempInfo = {};
         this.isNew = true;
       } else {
-        this.tempInfo = Object.assign(item, {});
-        this.isNew = false;
+        this.getSingleInfoHandler(id);
       }
       $('#designerModal').modal('show');
     },
@@ -346,6 +539,7 @@ export default {
         timer: 1500,
       }).then(() => {
         this.getInfoHandler();
+        this.addNewInfo = {};
         $('#designerModal').modal('hide');
       });
     },
@@ -356,4 +550,12 @@ export default {
 };
 </script>
 
-<style lang="scss" scopeded></style>
+<style lang="scss" scopeded>
+.myinput {
+  position: absolute;
+  font-size: 50px;
+  opacity: 0;
+  right: 0;
+  top: 0;
+}
+</style>

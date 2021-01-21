@@ -133,9 +133,9 @@ const routes = [
         component: () => import('../components/Forms.vue'),
         children: [
           {
-            path: 'reservation',
-            name: 'ReservationList',
-            component: () => import('../components/forms/Reservation.vue'),
+            path: 'reservationback',
+            name: 'ReservationBack',
+            component: () => import('../components/forms/ReservationBack.vue'),
           },
           {
             path: 'vaction',

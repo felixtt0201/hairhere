@@ -227,7 +227,6 @@
                       id="male"
                       value="男"
                       v-model="addInfo.category"
-                      required
                     />
                     <label class="custom-control-label" for="male">男生</label>
                   </div>
@@ -404,8 +403,7 @@ export default {
             });
           }
         })
-        .catch((error) => {
-          console.log(error);
+        .catch(() => {
           this.$swal({
             title: '伺服器故障',
             position: 'center',
@@ -413,6 +411,7 @@ export default {
             showConfirmButton: false,
             timer: 1500,
           });
+          this.fileUploading = false;
         });
     },
   },

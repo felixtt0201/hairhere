@@ -1,4 +1,3 @@
-/* eslint-disable quote-props */
 import axios from 'axios';
 
 const storeApi = axios.create({
@@ -22,9 +21,6 @@ const getStoreTotalInfo = () => storeApi.get('/GET/Store?id=2');
 
 // put修改店家資料
 const putStoreInfo = (data) => storeApi.put('/PUT/Store', data);
-
-// put修改店休日期 -未完
-const updateDayOf = (data) => storeApi.put('PUT/Holiday?id=8', data);
 
 /** 產品 */
 // get全部產品
@@ -51,17 +47,31 @@ const getAllDesigner = () =>
 
 // get單一設計師資料
 const getDesigner = (dId) => storeApi.get(`/GET/Designer?id=${dId}`);
+// get 單一設計師資料(後台)
+const getDesignerInfoBack = (dId) =>
+  // eslint-disable-next-line implicit-arrow-linebreak
+  storeApi.get(`/GET/Designer/Detail?id=${dId}`);
 
 // post新增設計師
 const postDesinger = (data) => storeApi.post('/POST/Designer?storeid=2', data);
 
 // delete設計師
-const deleteDesigner = (dId) => storeApi.delete(`/DELETE/Designer?id=${dId}`);
+// const deleteDesigner = (dId) => storeApi.delete(`/DELETE/Designer?id=${dId}`);
+
+// patch修改設計師狀態(在職/離職)
+const patchDesignerStatus = (data, dId) =>
+  // eslint-disable-next-line implicit-arrow-linebreak
+  storeApi.patch(`/PATCH/Designer?id=${dId}`, data);
 
 // put修改設計師資料
 const putDesigner = (data, dId) =>
   // eslint-disable-next-line implicit-arrow-linebreak
   storeApi.put(`/PUT/Designer?id=${dId}`, data);
+
+// patch上傳設計師照片
+const patchDesignerPhoto = (dId, data) =>
+  // eslint-disable-next-line implicit-arrow-linebreak
+  storeApi.patch(`/PATCH/Designer/Picture?id=${dId}`, data);
 
 /** 訂單 */
 // post新增訂單
@@ -71,7 +81,7 @@ const postOrder = (data) => storeApi.post('/POST/Order', data);
 const getOrder = () => storeApi.get('/GET/OrderList');
 // get單一訂單
 const getOrderDetail = (oId) => storeApi.get(`/GET/Order?id=${oId}`);
-// patch 訂單狀態
+// patch訂單狀態
 const patchOrderDetailStatus = (oId, data) =>
   // eslint-disable-next-line implicit-arrow-linebreak
   storeApi.patch(`PATCH/Order?id=${oId}`, data);
@@ -80,25 +90,42 @@ const patchOrderDetailStatus = (oId, data) =>
 // post新增作品
 const postPortfolio = (data) => storeApi.post('/POST/Portfolio', data);
 
+/** 帳單 */
+// get全部帳單
+const getBillList = () => storeApi.get('/GET/BillList');
+// get單一帳單
+const getSingleBill = (billId) => storeApi.get(`/GET/Bill?id=${billId}`);
+// post帳單
+const postBill = (data) => storeApi.post('/POST/Bill', data);
+// patch帳單狀態
+const patchBillStatus = (billId, data) =>
+  // eslint-disable-next-line implicit-arrow-linebreak
+  storeApi.patch(`/PATCH/Bill?id=${billId}`, data);
+
 // eslint-disable-next-line object-curly-newline
 export {
   postStoreLogin,
   postStoreRegister,
   getStoreTotalInfo,
   putStoreInfo,
-  updateDayOf,
   getStoreProductList,
   posteStoreProduct,
   putStoreProductList,
   deleteStoreProduct,
   getAllDesigner,
   getDesigner,
+  getDesignerInfoBack,
   postDesinger,
-  deleteDesigner,
+  patchDesignerPhoto,
+  patchDesignerStatus,
   putDesigner,
   postOrder,
   getOrder,
   getOrderDetail,
   patchOrderDetailStatus,
   postPortfolio,
+  getBillList,
+  getSingleBill,
+  postBill,
+  patchBillStatus,
 };
