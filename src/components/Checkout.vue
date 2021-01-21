@@ -98,7 +98,9 @@
                   <tbody class="text-gray-800">
                     <tr>
                       <th scope="row">日期：</th>
-                      <td><input type="date" v-model="checkInfo.date" /></td>
+                      <td>
+                        <input type="date" v-model="checkInfo.date" />
+                      </td>
                     </tr>
                     <tr>
                       <th scope="row">設計師：</th>

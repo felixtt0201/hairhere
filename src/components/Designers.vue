@@ -26,16 +26,24 @@
             <div class="row justify-content-around">
               <a
                 href="#"
-                class="btn btn-success btn-circle"
+                class="btn btn-primary btn-circle"
                 @click="openModalHandler(false, item)"
+                v-if="item.WorkStatus == '在職中'"
               >
+                <i class="fas fa-edit"></i>
+              </a>
+              <a href="#" class="btn btn-primary btn-circle disabled" v-else>
                 <i class="fas fa-edit"></i>
               </a>
               <a
                 href="#"
                 class="btn btn-danger btn-circle"
                 @click="deleteInfoHandler(item.Id)"
+                v-if="item.WorkStatus == '在職中'"
               >
+                <i class="fas fa-trash"></i>
+              </a>
+              <a href="#" class="btn btn-danger btn-circle disabled" v-else>
                 <i class="fas fa-trash"></i>
               </a>
             </div>
@@ -86,24 +94,25 @@
             <div class="modal-body">
               <div class="row">
                 <div class="col-sm-4">
-                  <h2>設計師個人照片</h2>
-                  <div class="form-group">
+                  <h2>設計資料</h2>
+                  <div class="form-group" v-if="!isNew">
                     <label for="designerphoto"
-                      >上傳照片
-                      <!-- <i class="fas fa-cog fa-spin"></i> -->
+                      >個人照片上傳
+                      <i class="fas fa-cog fa-spin" v-if="donewithUpload"></i>
                     </label>
                     <input
                       type="file"
                       id="designerphoto"
                       class="form-control"
                       ref="files"
+                      @change="uploadPhotoHandler(tempInfo.Id)"
                     />
                   </div>
-                  <!-- <img
-                  img="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=828346ed697837ce808cae68d3ddc3cf&auto=format&fit=crop&w=1350&q=80"
-                  class="img-fluid"
-                  alt=""
-                /> -->
+                  <img
+                    img="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=828346ed697837ce808cae68d3ddc3cf&auto=format&fit=crop&w=1350&q=80"
+                    class="img-fluid"
+                    alt=""
+                  />
                 </div>
                 <div class="col-sm-8">
                   <div class="form-row">
@@ -221,8 +230,9 @@
 import {
   postDesinger,
   getAllDesigner,
-  deleteDesigner,
   putDesigner,
+  patchDesignerPhoto,
+  patchDesignerStatus,
 } from '@/js/AppServices';
 import $ from 'jquery';
 
@@ -237,6 +247,7 @@ export default {
       // 修改單一設計師資料
       tempInfo: {},
       isNew: false,
+      donewithUpload: false,
     };
   },
   methods: {
@@ -248,7 +259,7 @@ export default {
     // 取的全部設計師
     getInfoHandler() {
       getAllDesigner().then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.data.status === true) {
           this.tempDesginersInfo = res.data.BasicData;
           this.isLoading = false;
@@ -278,6 +289,7 @@ export default {
       } else {
         putDesigner(this.$qs.stringify(this.tempInfo), this.tempInfo.Id).then(
           (res) => {
+            console.log(res);
             if (res.data.status === false && res.data.message === '驗證錯誤') {
               this.$swal({
                 position: 'center',
@@ -295,11 +307,24 @@ export default {
       }
     },
 
-    // 刪除設計師
+    // 上傳照片
+    uploadPhotoHandler(dId) {
+      this.donewithUpload = true;
+      const designerPhoto = this.$refs.files.files[0];
+      const formData = new FormData();
+      formData.append('file-to-upload', designerPhoto);
+      patchDesignerPhoto(dId, formData).then((res) => {
+        this.donewithUpload = false;
+        console.log(res);
+      });
+    },
+
+    // 修改設計師狀態 (在職/離職)
     deleteInfoHandler(dId) {
       this.$swal({
-        title: '您確定要刪除？',
+        title: '您確定要更改此設計師狀態？',
         icon: 'warning',
+        text: '將設計師狀態更改為離職',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         confirmButtonText: '確定',
@@ -307,15 +332,28 @@ export default {
         cancelButtonText: '取消',
       }).then((result) => {
         if (result.isConfirmed) {
-          deleteDesigner(dId).then((res) => {
-            console.log(res);
-          });
-          const msg = '刪除';
-          this.successed(msg);
+          this.$swal(
+            {
+              icon: 'success',
+              title: '更改成功',
+              timer: 1500,
+            },
+            this.changeStatusHandler(dId),
+          );
         }
       });
     },
+    changeStatusHandler(dId) {
+      const data = this.$qs.stringify({
+        WorkStatus: '0',
+      });
+      patchDesignerStatus(data, dId).then(() => {
+        this.getInfoHandler();
+        // console.log(res);
+      });
+    },
 
+    // 判斷是新增設計師or編輯設計師
     openModalHandler(isNew, item) {
       if (isNew) {
         this.tempInfo = {};

@@ -52,12 +52,22 @@ const getDesigner = (dId) => storeApi.get(`/GET/Designer?id=${dId}`);
 const postDesinger = (data) => storeApi.post('/POST/Designer?storeid=2', data);
 
 // delete設計師
-const deleteDesigner = (dId) => storeApi.delete(`/DELETE/Designer?id=${dId}`);
+// const deleteDesigner = (dId) => storeApi.delete(`/DELETE/Designer?id=${dId}`);
+
+// patch修改設計師狀態(在職/離職)
+const patchDesignerStatus = (data, dId) =>
+  // eslint-disable-next-line implicit-arrow-linebreak
+  storeApi.patch(`/PATCH/Designer?id=${dId}`, data);
 
 // put修改設計師資料
 const putDesigner = (data, dId) =>
   // eslint-disable-next-line implicit-arrow-linebreak
   storeApi.put(`/PUT/Designer?id=${dId}`, data);
+
+// patch上傳設計師照片
+const patchDesignerPhoto = (dId, data) =>
+  // eslint-disable-next-line implicit-arrow-linebreak
+  storeApi.patch(`/PATCH/Designer/Picture?id=${dId}`, data);
 
 /** 訂單 */
 // post新增訂單
@@ -101,7 +111,8 @@ export {
   getAllDesigner,
   getDesigner,
   postDesinger,
-  deleteDesigner,
+  patchDesignerPhoto,
+  patchDesignerStatus,
   putDesigner,
   postOrder,
   getOrder,
