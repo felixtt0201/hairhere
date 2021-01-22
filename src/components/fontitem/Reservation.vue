@@ -69,6 +69,33 @@
         </div>
       </div>
     </div>
+    <div class="container border">
+      <template>
+        <div>
+          <date-picker
+            v-model="time1"
+            type="date"
+            value-type="format"
+            placeholder="Select datetime"
+            :show-time-panel="showTimePanel"
+            @close="handleOpenChange"
+            format="YYYY-MM-DD"
+            :disabled-date="notBeforeToday"
+            @pick="selectDate"
+          >
+          </date-picker>
+        </div>
+        <!-- 選擇日期後篩選出空閑時間 -->
+      </template>
+      <ul class="d-flex justify-content-between">
+        <li v-for="freetime in freeTimeList" :key="freetime">
+          <button class="btn border" @click="selectTime(freetime)">
+            {{ freetime.replace('T', ' ').replace(':00:00', ':00') }}
+          </button>
+        </li>
+      </ul>
+    </div>
+    <!-- 顧客資訊 -->
     <div class="container bg-reservation ">
       <div class="information pt-3">
         <h4 class="title-line text-center mb-4">顧客資訊</h4>
@@ -93,35 +120,10 @@
             @click="test"
             >預約送出
           </router-link> -->
-          <button type="button" class="btn" @click="test">預約送出</button>
+          <button type="button" class="btn" @click="test">
+            預約送出
+          </button>
         </form>
-        <template>
-          <div>
-            <date-picker
-              v-model="time1"
-              type="date"
-              value-type="format"
-              placeholder="Select datetime"
-              :show-time-panel="showTimePanel"
-              @close="handleOpenChange"
-              format="YYYY-MM-DD"
-              :disabled-date="notBeforeToday"
-              @pick="aa"
-            >
-            </date-picker>
-            <!-- <date-picker
-              v-model="time2"
-              type="time"
-              :hour-options="hours"
-              format="HH:mm a"
-              :time-picker-options="{
-                start: '10:00',
-                step: '00:60',
-                end: '18:00',
-              }"
-            ></date-picker> -->
-          </div>
-        </template>
       </div>
     </div>
   </div>
@@ -143,7 +145,6 @@ export default {
     return {
       //
       time1: null, // 日曆1
-      time2: null,
       showTimePanel: false,
       //
       designer: {}, // 單一設計師詳細
@@ -156,6 +157,8 @@ export default {
       remarks: '',
       orderTime: '',
       orderId: '', // post後回傳訂單Id
+      freeTimeList: [], // 回傳空閑時間
+      freetime: '',
     };
   },
   computed: {
@@ -179,9 +182,6 @@ export default {
     handleOpenChange() {
       this.showTimePanel = false;
     },
-    testa() {
-      console.log(this.time1);
-    },
     notBeforeToday(date) {
       return date < new Date(new Date().setHours(0, 0, 0, 0));
     },
@@ -194,10 +194,15 @@ export default {
       });
     },
     // 測試點選時間回傳值
-    aa() {
+    selectDate() {
       getFreetime(this.listId, this.time1).then((res) => {
         console.log(res);
+        this.freeTimeList = res.data.FreeTimeList;
+        console.log(this.freeTimeList);
       });
+    },
+    selectTime(selecTime) {
+      this.orderTime = selecTime;
     },
     getProductHandler() {
       getStoreProductList().then((res) => {
@@ -217,7 +222,7 @@ export default {
     // },
     test() {
       const data1 = this.$qs.stringify({
-        OrderTime: this.time1,
+        OrderTime: this.orderTime,
         StoreRemark: '',
         DesignerId: this.listId,
         CustomerName: this.name,
@@ -228,8 +233,6 @@ export default {
         OrderDetails: this.checklist,
       });
       postOrder(data1).then((res) => {
-        console.log(this.time1);
-        console.log(res);
         if (res.data) {
           this.orderId = res.data.orderId;
           this.$router.push(`/confirm/${this.orderId}`);
