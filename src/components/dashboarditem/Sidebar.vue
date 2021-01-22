@@ -62,7 +62,7 @@
         class="nav-link font-weight-bold sidebarhover"
         :to="{ name: 'ReservationBack' }"
       >
-        <i class="far fa-calendar-check"></i>
+        <i class="far fa-calendar-check mr-2"></i>
         <span>預約表</span></router-link
       >
     </li>

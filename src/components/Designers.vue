@@ -4,7 +4,7 @@
       :opacity="1"
       color="#7e735d"
       loader="bars"
-      background-color="#b7b9cc"
+      background-color="#c8d6e5"
       :active.sync="isLoading"
       :is-full-page="fullPage"
     ></loading>
@@ -20,15 +20,14 @@
           </div>
           <div class="container mb-4">
             <div class="row justify-content-around">
-              <a
-                href="#"
+              <button
                 class="btn btn-primary btn-circle"
                 @click="openModalHandler(false, item.Id)"
                 v-if="item.WorkStatus == '在職中'"
               >
                 <i class="fas fa-edit"></i>
-              </a>
-              <a href="#" class="btn btn-primary btn-circle disabled" v-else>
+              </button>
+              <a class="btn btn-primary btn-circle disabled" v-else>
                 <i class="fas fa-edit"></i>
               </a>
               <a
@@ -39,7 +38,7 @@
               >
                 <i class="fas fa-trash"></i>
               </a>
-              <a href="#" class="btn btn-danger btn-circle disabled" v-else>
+              <a class="btn btn-danger btn-circle disabled" v-else>
                 <i class="fas fa-trash"></i>
               </a>
             </div>
@@ -104,6 +103,7 @@
                         id="category"
                         placeholder="請輸入姓名"
                         v-model="addNewInfo.dName"
+                        required
                       />
                     </div>
                   </div>
@@ -115,6 +115,7 @@
                       id="phone"
                       placeholder="請輸入電話/手機"
                       v-model="addNewInfo.dPhone"
+                      required
                     />
                   </div>
                   <div class="form-group">
@@ -146,6 +147,7 @@
                         id="account"
                         placeholder="請輸入帳號"
                         v-model="addNewInfo.dEmail"
+                        required
                       />
                     </div>
                     <div class="form-group col-md-6">
@@ -156,6 +158,7 @@
                         id="password"
                         placeholder="請輸入密碼"
                         v-model="addNewInfo.dPassword"
+                        required
                       />
                     </div>
                   </div>
@@ -177,13 +180,14 @@
               </div>
             </div>
             <div class="modal-footer justify-content-between">
-              <button
+              <a
+                href="#top"
                 type="button"
                 class="btn btn-outline-secondary"
-                data-dismiss="modal"
+                @click="closeModalHandler"
               >
                 取消
-              </button>
+              </a>
               <button type="submit" class="btn btn-primary">
                 確認
               </button>
@@ -225,12 +229,9 @@
                 <div class="col-sm-4">
                   <h2>設計資料</h2>
                   <div class="form-group">
-                    <label for="designerphoto" class="pr-3"
-                      >個人照片上傳
-                      <i class="fas fa-cog fa-spin" v-if="donewithUpload"></i>
-                    </label>
                     <div class="file btn btn-lg btn-primary">
-                      上傳圖片
+                      個人照片上傳
+                      <i class="fas fa-cog fa-spin" v-if="donewithUpload"></i>
                       <input
                         type="file"
                         id="designerphoto"
@@ -330,13 +331,14 @@
               </div>
             </div>
             <div class="modal-footer justify-content-between">
-              <button
+              <a
+                href="#top"
                 type="button"
                 class="btn btn-outline-secondary"
-                data-dismiss="modal"
+                @click="closeModalHandler"
               >
                 取消
-              </button>
+              </a>
               <button type="submit" class="btn btn-primary">
                 編輯
               </button>
@@ -542,6 +544,9 @@ export default {
         this.addNewInfo = {};
         $('#designerModal').modal('hide');
       });
+    },
+    closeModalHandler() {
+      $('#designerModal').modal('hide');
     },
   },
   created() {

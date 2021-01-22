@@ -5,7 +5,7 @@
       :opacity="1"
       color="#7e735d"
       loader="bars"
-      background-color="#b7b9cc"
+      background-color="#c8d6e5"
       :active.sync="isLoading"
       :is-full-page="fullPage"
     ></loading>
@@ -105,7 +105,7 @@
                 v-model="newProduct.ServiceMinutes"
               />
             </td>
-            <td class="align-middle">
+            <td class="">
               <button
                 class="btn btn-success btn-sm"
                 @click="addNewProductHandler"
@@ -132,7 +132,7 @@ export default {
   data() {
     return {
       // Loading遮罩
-      isLoading: true,
+      isLoading: false,
       fullPage: true,
 
       servicesdata: {},
@@ -151,6 +151,7 @@ export default {
   methods: {
     // 取得產品資訊
     getInfoHandler() {
+      this.isLoading = true;
       getStoreProductList().then((res) => {
         if (res.data.status) {
           this.servicesdata = res.data.BasicData;

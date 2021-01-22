@@ -96,12 +96,12 @@ const routes = [
       },
       {
         path: 'information', // 店家資訊
-        name: '',
+        name: 'Information',
         meta: { requiresAuth: true },
         component: () => import('../components/Information.vue'),
         children: [
           {
-            path: '',
+            path: 'storeInformation',
             name: 'StoreInformation',
             meta: { requiresAuth: true },
             component: () => import('../components/forms/StoreInformation.vue'),

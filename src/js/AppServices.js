@@ -22,6 +22,9 @@ const getStoreTotalInfo = () => storeApi.get('/GET/Store?id=2');
 // put修改店家資料
 const putStoreInfo = (data) => storeApi.put('/PUT/Store', data);
 
+// get取得全部店家
+const getAllStoreInfo = () => storeApi.get('/GET/StoreList');
+
 /** 產品 */
 // get全部產品
 const getStoreProductList = () => storeApi.get('/GET/ProductList?storeId=2');
@@ -106,6 +109,7 @@ const patchBillStatus = (billId, data) =>
 export {
   postStoreLogin,
   postStoreRegister,
+  getAllStoreInfo,
   getStoreTotalInfo,
   putStoreInfo,
   getStoreProductList,

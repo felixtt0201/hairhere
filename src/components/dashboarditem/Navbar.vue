@@ -19,13 +19,14 @@
     </div>
     <ul class="navbar-nav ml-auto">
       <li class="mr-4">
-        <span>Benこ醬</span>
+        <span>{{ storeName }}</span>
       </li>
       <li>
         <router-link :to="{ name: 'login' }">
           <i
             class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-800"
             @click="logout"
+            v-if="isLogin"
           ></i>
         </router-link>
       </li>
@@ -34,8 +35,27 @@
 </template>
 
 <script>
+import { getAllStoreInfo } from '@/js/AppServices';
+
 export default {
+  data() {
+    return {
+      storeName: '',
+      isLogin: false,
+    };
+  },
   methods: {
+    getStoreName() {
+      const getId = JSON.parse(localStorage.getItem('storeId'));
+      getAllStoreInfo().then((res) => {
+        res.data.forEach((item) => {
+          if (item.Id === getId) {
+            this.storeName = item.Name;
+            this.isLogin = true;
+          }
+        });
+      });
+    },
     logout() {
       this.$swal({
         position: 'center',
@@ -47,6 +67,9 @@ export default {
         localStorage.clear();
       });
     },
+  },
+  created() {
+    this.getStoreName();
   },
 };
 </script>
