@@ -237,7 +237,7 @@ export default {
         console.log(res);
         if (res.data) {
           this.orderId = res.data.orderId;
-          // this.$router.push(`/confirm/${this.orderId}`);
+          this.$router.push(`/confirm/${this.orderId}`);
         }
       });
     },
