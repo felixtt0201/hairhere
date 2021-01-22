@@ -62,20 +62,31 @@ const putDesigner = (dId) => storeApi.put(`/PutDesigner?id=${dId}`);
 /** 訂單 */
 // post新增訂單
 const postOrder = (data) => storeApi.post('/POST/Order', data);
+
 // get單一訂單
 const getOrder = (data) => storeApi.get(`/Get/Order?id=${data}`);
+
+// get空閑時間
+const getFreetime = (designerId, selectTime) =>
+  // eslint-disable-next-line implicit-arrow-linebreak
+  storeApi.get(
+    `/Get/Designer/FreeTime?id=${designerId}&selectTime=${selectTime}`,
+  );
 
 /** 作品 */
 // get全部作品
 const getworkss = () => storeApi.get('/GET/PortfolioList');
+
 // get單一作品
 const getSingleWork = (workid) =>
   // eslint-disable-next-line implicit-arrow-linebreak
   storeApi.get(`/GET/Portfolio?id=${workid}`);
+
 // get分頁
 const getpages = (page, showWorks) =>
   // eslint-disable-next-line implicit-arrow-linebreak
   storeApi.get(`/GET/PortfolioList?Index=${page}&Limit=${showWorks}`);
+
 // get查詢作品關鍵字
 const searchworks = (data, page, show) =>
   // eslint-disable-next-line implicit-arrow-linebreak
@@ -109,4 +120,5 @@ export {
   searchworks,
   getOrder,
   getSingleWork,
+  getFreetime,
 };

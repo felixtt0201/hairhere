@@ -225,7 +225,7 @@
                 <div class="col-sm-4">
                   <h2>設計資料</h2>
                   <div class="form-group">
-                    <label for="designerphoto"
+                    <label for="designerphoto" class="pr-3"
                       >個人照片上傳
                       <i class="fas fa-cog fa-spin" v-if="donewithUpload"></i>
                     </label>
