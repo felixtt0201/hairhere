@@ -84,6 +84,7 @@
             <div class="row justify-content-around">
               <a href="#" class="btn btn-success btn-circle">
                 <i class="fas fa-edit"></i>
+                編輯
               </a>
               <a href="#" class="btn btn-danger btn-circle">
                 <i class="fas fa-trash"></i>
@@ -366,7 +367,7 @@ export default {
     getDesignersInfo() {
       getAllDesigner().then((res) => {
         console.log(res.data);
-        this.designerInfo = res.data;
+        this.designerInfo = res.data.BasicData;
       });
     },
 
