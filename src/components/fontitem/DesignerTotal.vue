@@ -2,7 +2,11 @@
   <div>
     <div class="container text-main">
       <h4 class="title-line w-100 text-center mb-4 text-main">設計師</h4>
-      <div class="row mb-3" v-for="designer in designers" :key="designer.id">
+      <div
+        class="row mb-4 mt-4"
+        v-for="designer in designers"
+        :key="designer.id"
+      >
         <div
           class="col-md-4 photo-size"
           :style="{
@@ -40,6 +44,7 @@
           </router-link>
         </div>
       </div>
+
       <!-- 分頁 -->
       <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">

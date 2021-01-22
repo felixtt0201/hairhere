@@ -103,8 +103,10 @@ export default {
         console.log(res);
         if (res.data.status) {
           const mytoken = res.data.token;
+          const myId = res.data.Id;
           localStorage.setItem('myToken', mytoken);
           localStorage.setItem('status', true);
+          localStorage.setItem('storeId', myId);
           this.$router.push('/Dashboard');
           this.successMessage();
         } else {

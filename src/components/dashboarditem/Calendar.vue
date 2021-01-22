@@ -6,7 +6,7 @@
       :opacity="1"
       color="#7e735d"
       loader="bars"
-      background-color="#b7b9cc"
+      background-color="#c8d6e5"
       :active.sync="isLoading"
       :is-full-page="fullPage"
     ></loading>
@@ -333,15 +333,15 @@ export default {
     // getDesignerInfo
     getDesignerHandler() {
       getAllDesigner().then((res) => {
-        if (res.status === 200) {
-          this.totalDesignerInfo = res.data;
+        if (res.data.status) {
+          this.totalDesignerInfo = res.data.BasicData;
         }
       });
     },
     // getServicesInfo
     getServicesHandler() {
       getStoreProductList().then((res) => {
-        if (res.data.status === true) {
+        if (res.data.status) {
           this.totalServicesInfo = res.data.OrderDetails;
         }
       });

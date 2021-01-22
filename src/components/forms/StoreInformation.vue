@@ -1,10 +1,10 @@
 <template>
-  <div id="storeinformation" class="mt-4">
+  <div id="storeinformation" class="container-fluid mt-4">
     <loading
       :opacity="1"
       color="#7e735d"
       loader="bars"
-      background-color="#b7b9cc"
+      background-color="#c8d6e5"
       :active.sync="isLoading"
       :is-full-page="fullPage"
     ></loading>
@@ -82,6 +82,7 @@
             {{ newdata.Business.BusinessHoursClose }}
           </p>
           <div v-else>
+            開始
             <input
               type="time"
               class="form-control"
@@ -90,6 +91,7 @@
               required
               v-model="newdata.Business.BusinessHoursOpen"
             />
+            結束
             <input
               type="time"
               class="form-control"
@@ -112,7 +114,7 @@
                   type="checkbox"
                   class="custom-control-input"
                   id="monday"
-                  value="1"
+                  value="一"
                   v-model="DayOf"
                 />
                 <label class="custom-control-label" for="monday">星期一</label>
@@ -122,7 +124,7 @@
                   type="checkbox"
                   class="custom-control-input"
                   id="tuesday"
-                  value="2"
+                  value="二"
                   v-model="DayOf"
                 />
                 <label class="custom-control-label" for="tuesday">星期二</label>
@@ -132,7 +134,7 @@
                   type="checkbox"
                   class="custom-control-input"
                   id="wednesday"
-                  value="3"
+                  value="三"
                   v-model="DayOf"
                 />
                 <label class="custom-control-label" for="wednesday"
@@ -146,7 +148,7 @@
                   type="checkbox"
                   class="custom-control-input"
                   id="thursday"
-                  value="4"
+                  value="四"
                   v-model="DayOf"
                 />
                 <label class="custom-control-label" for="thursday"
@@ -158,7 +160,7 @@
                   type="checkbox"
                   class="custom-control-input"
                   id="friday"
-                  value="5"
+                  value="五"
                   v-model="DayOf"
                 />
                 <label class="custom-control-label" for="friday">星期五</label>
@@ -168,7 +170,7 @@
                   type="checkbox"
                   class="custom-control-input chkbox"
                   id="saturday"
-                  value="6"
+                  value="六"
                   v-model="DayOf"
                 />
                 <label class="custom-control-label" for="saturday"
@@ -180,12 +182,11 @@
                   type="checkbox"
                   class="custom-control-input chkbox"
                   id="sunday"
-                  value="0"
+                  value="日"
                   v-model="DayOf"
                 />
                 <label class="custom-control-label" for="sunday">星期日</label>
               </div>
-              {{ DayOf }}
             </div>
           </div>
         </div>
@@ -285,11 +286,19 @@ export default {
   data() {
     return {
       // Loading遮罩
-      isLoading: true,
+      isLoading: false,
       fullPage: true,
 
       // 存放Api接回來的店家資料
-      newdata: {},
+      newdata: {
+        BasicData: {
+          Phone: '',
+        },
+        Business: {
+          BusinessHoursOpen: '',
+          BusinessHoursClose: '',
+        },
+      },
 
       // 編輯的開關
       editstatus: true,
@@ -303,12 +312,12 @@ export default {
   methods: {
     // 取得店家資料
     getInfoHandler() {
+      this.isLoading = true;
       getStoreTotalInfo().then((res) => {
-        this.isLoading = false;
-        if (res.data.status === true) {
-          console.log(res);
+        if (res.data.status) {
           this.newdata = res.data;
           this.setDayof = this.newdata.Business.RestDayOfWeek.toString();
+          this.isLoading = false;
         }
       });
     },
@@ -372,10 +381,7 @@ export default {
       this.editstatus = !this.editstatus;
     },
   },
-  // created() {
-  //   this.getInfoHandler();
-  // },
-  mounted() {
+  created() {
     this.getInfoHandler();
   },
 };

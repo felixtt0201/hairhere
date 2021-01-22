@@ -38,7 +38,7 @@
         <h4 class="title-line text-center">顧客資訊</h4>
         <div class="container pt-4">
           <div class="pt-3 custom-information">
-            <ul class="list-style p-0">
+            <!-- <ul class="list-style p-0">
               <li class="d-flex">
                 <p>預約姓名</p>
                 <p>蔡秉逸</p>
@@ -57,7 +57,7 @@
                   還我漂漂拳還我漂漂拳還我漂漂拳還我漂漂拳還我漂漂拳還我漂漂拳還我漂漂拳還我漂漂拳
                 </p>
               </li>
-            </ul>
+            </ul> -->
           </div>
         </div>
       </div>

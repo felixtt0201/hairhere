@@ -1,6 +1,14 @@
 /* eslint-disable vue/valid-v-else */ /* eslint-disable no-return-assign */
 <template>
   <div id="checkout" class="container-fluid">
+    <loading
+      :opacity="1"
+      color="#7e735d"
+      loader="bars"
+      background-color="#c8d6e5"
+      :active.sync="isLoading"
+      :is-full-page="fullPage"
+    ></loading>
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h3 class="text-gray-800">結帳管理</h3>
       <button
@@ -431,6 +439,8 @@ import $ from 'jquery';
 export default {
   data() {
     return {
+      isLoading: true,
+      fullPage: true,
       servicesInfo: [],
       designerInfo: [],
       status: true,
@@ -488,7 +498,10 @@ export default {
       await this.getServicesInfo();
       await this.getDesignersInfo();
       getBillList().then((res) => {
-        this.billListInfo = res.data.BasicData;
+        if (res.data.status) {
+          this.isLoading = false;
+          this.billListInfo = res.data.BasicData;
+        }
       });
     },
     // 取得單一帳單
@@ -496,8 +509,7 @@ export default {
       this.isNew = false;
       this.editInfo = {};
       getSingleBill(id).then((res) => {
-        console.log(res);
-        if (res.data.status === true) {
+        if (res.data.status) {
           $('#checkoutMoadel').modal('show');
           this.editInfo = res.data.BasicData;
         }
@@ -545,8 +557,7 @@ export default {
         BillDetails: this.addServicesInfo,
       });
       postBill(data).then((res) => {
-        console.log(res);
-        if (res.data.status === true) {
+        if (res.data.status) {
           this.successedMessage();
         } else {
           this.$swal({
@@ -590,7 +601,6 @@ export default {
         StoreRemark: '"asdas"',
       });
       patchBillStatus(billId, data).then(() => {
-        // console.log(res);
         this.getAllBillList();
       });
     },
@@ -631,8 +641,14 @@ export default {
 </script>
 
 <style lang="scss" scopeded>
-input,
-textarea {
-  background-color: #ffff !important;
+.table {
+  th,
+  td,
+  tr,
+  p {
+    vertical-align: middle !important;
+    margin: 0;
+    padding: 10px;
+  }
 }
 </style>
