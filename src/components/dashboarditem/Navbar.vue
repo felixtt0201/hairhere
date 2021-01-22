@@ -19,7 +19,7 @@
     </div>
     <ul class="navbar-nav ml-auto">
       <li class="mr-4">
-        <span>Cindy</span>
+        <span>Benこ醬</span>
       </li>
       <li>
         <router-link :to="{ name: 'login' }">
