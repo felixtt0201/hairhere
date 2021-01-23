@@ -74,6 +74,7 @@ export default {
         this.workDetail = res.data.BasicData;
         console.log(this.workDetail);
         this.category = this.workDetail.Category;
+        console.log(this.category);
         const designerId = this.workDetail.DesignerId;
         getDesigner(designerId).then((response) => {
           console.log(response);

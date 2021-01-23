@@ -393,7 +393,7 @@ export default {
     // 取的全部設計師
     getInfoHandler() {
       getAllDesigner().then((res) => {
-        if (res.data.status === true) {
+        if (res.data.status) {
           this.tempDesginersInfo = res.data.BasicData;
           this.isLoading = false;
         }
