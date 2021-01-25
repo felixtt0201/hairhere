@@ -5,32 +5,51 @@
         歷史訂單
       </h3>
     </div>
-    <div class="row">
-      <div class="col-6">
-        <p>請選擇設計師：</p>
-        <select class="custom-select">
-          <option disabled value="">選擇設計師</option>
-          <option>小明</option>
-          <option>小王</option>
-          <option>小美</option>
-          <option>小吉</option>
-          <option>小傑</option>
-        </select>
-      </div>
-      <div class="col-6">
-        <p>請選擇日期：</p>
-        <select class="custom-select">
-          <option disabled value="">選擇日期</option>
-          <option>20210101</option>
-          <option>20210102</option>
-          <option>20210103</option>
-          <option>20210104</option>
-          <option>20210105</option>
-        </select>
+    <div class="row mb-4">
+      <div class="col-md-8">
+        <p class="text-gray-900 font-weight-bold">請選擇日期：</p>
+        <input type="date" v-model="startTime" />
+        <input type="date" v-model="endTime" />
       </div>
     </div>
-    <button class="btn btn-success mt-4 mb-4">搜尋</button>
+    <div class="row mb-4">
+      <div class="col-12">
+        <p class="text-gray-900 font-weight-bold">訂單狀態：</p>
+        <label for="done">已結算</label>
+        <input type="radio" v-model="billStatus" value="1" id="done" />
+        <label for="cancel">已取消</label>
+        <input type="radio" v-model="billStatus" value="0" id="cancel" />
+      </div>
+    </div>
     <div class="row">
+      <div class="col-md-6">
+        <p class="text-gray-900 font-weight-bold">請選擇設計師：</p>
+        <select class="custom-select" v-model="dId">
+          <option disabled value="">選擇設計師</option>
+          <option
+            v-for="designer in designInfo"
+            :key="designer.Id"
+            :value="designer.Id"
+            >{{ designer.Name }}</option
+          >
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label for="customer" class="text-gray-900 font-weight-bold"
+          >請輸入顧客姓名：</label
+        >
+        <input
+          type="text"
+          id="customer"
+          placeholder="顧客姓名"
+          v-model.trim="customerName"
+        />
+      </div>
+    </div>
+    <button class="btn btn-success mt-4 mb-4" @click="searchCheckInfo">
+      搜尋
+    </button>
+    <div class="table-responsive-md">
       <table class="table table-hover table-sm table-borderless text-gray-900">
         <thead class="thead-dark">
           <tr>
@@ -39,77 +58,230 @@
             <th scope="col">客人姓名</th>
             <th scope="col">消費金額</th>
             <th scope="col">狀態</th>
-            <th scope="col"></th>
+            <th scope="col">明細</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr v-for="info in totalCheckInfo" :key="info.Id">
             <th scope="row">1</th>
             <td>
-              <p>小明</p>
+              {{ info.DesignerName }}
             </td>
             <td>
-              <p>Ａ＿Ａ</p>
+              {{ info.CustomerName }}
             </td>
-            <td>
-              <p>NT:2350</p>
-            </td>
-            <td>
-              <div
-                class="badge badge-danger text-gray-900"
-                style="width: 6rem;"
-              >
-                未結帳
-              </div>
-            </td>
-            <td>
-              <button
-                class="btn btn-warning text-gray-900"
-                style="width: 6rem;"
-                type="button"
-                data-toggle="modal"
-                data-target="#exampleModal"
-              >
-                結帳
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>
-              <p>小美</p>
-            </td>
-            <td>
-              <p>Ｑ＿Ｑ</p>
-            </td>
-            <td>
-              <p>NT:2350</p>
-            </td>
-            <td>
-              <div
-                class="badge badge-success text-gray-900"
-                style="width: 6rem;"
-              >
-                已結帳
-              </div>
+            <td>NT: {{ info.Amount }}</td>
+            <td
+              class="text-primary"
+              :class="{ 'text-danger': info.OrderStatus == '已取消' }"
+            >
+              {{ info.OrderStatus }}
             </td>
             <td>
               <button
                 class="btn btn-success text-gray-900"
                 style="width: 6rem;"
+                @click="getSingInfo(info.Id)"
               >
                 帳單明細
               </button>
             </td>
           </tr>
         </tbody>
+        <caption class="text-right">
+          小計：NT.
+          {{
+            caltotalPrice
+          }}
+        </caption>
       </table>
+    </div>
+
+    <!--帳單Modal-->
+    <div class="modal fade" id="checkoutMoadel" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="checkoutMoadel">帳單</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body text-gray-900">
+            <div
+              class="form-group border-bottom border-dark table-responsive-md"
+            >
+              <table class="table table-borderless">
+                <tbody class="text-gray-800">
+                  <tr>
+                    <th scope="row">日期：</th>
+                    <td>{{ singleCheckInfo.OrderTime }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">設計師：</th>
+                    <td>{{ singleCheckInfo.DesignerName }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">顧客：</th>
+                    <td>{{ singleCheckInfo.CustomerName }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">生日：</th>
+                    <td>{{ singleCheckInfo.CustomerBirthday }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">電話：</th>
+                    <td>{{ singleCheckInfo.CustomerPhone }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">介紹人：</th>
+                    <td>{{ singleCheckInfo.CustomerIntroducer }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div
+              class="form-group border-bottom border-dark table-responsive-md"
+            >
+              <h5 class="">服務項目：</h5>
+              <table class="table table-hover ">
+                <thead>
+                  <tr class=" table-borderless text-gray-900">
+                    <th scope="col">#</th>
+                    <th scope="col">項目</th>
+                    <th scope="col">金額</th>
+                  </tr>
+                </thead>
+                <tbody class="text-gray-800">
+                  <tr v-for="(i, index) in singleCheckInfo.Detail" :key="i.Id">
+                    <th scope="row">{{ index + 1 }}</th>
+                    <td>{{ i.ProductName }}</td>
+                    <td>{{ i.UnitPrice }}</td>
+                  </tr>
+                </tbody>
+                <caption class="text-right">
+                  消費金額：NT.{{
+                    singleCheckInfo.Amount
+                  }}
+                </caption>
+              </table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="col">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                關閉
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import {
+  postCheckInfo,
+  getBillList,
+  getAllDesigner,
+  getSingleBill,
+} from '@/js/AppServices';
+import $ from 'jquery';
+
+export default {
+  name: 'historicalOrderers',
+  inject: ['reload'],
+  data() {
+    return {
+      designInfo: [],
+      startTime: '',
+      endTime: '',
+      dId: '',
+      totalCheckInfo: [],
+      singleCheckInfo: {},
+      customerName: '',
+      billStatus: '',
+      amount: '',
+    };
+  },
+  computed: {
+    caltotalPrice() {
+      let total = 0;
+      // eslint-disable-next-line arrow-body-style
+      this.totalCheckInfo.forEach((item) => {
+        // eslint-disable-next-line no-return-assign
+        return (total += Number(item.Amount));
+      });
+      return total;
+    },
+  },
+  methods: {
+    // 查詢全部帳單
+    getCheckInfo() {
+      getBillList().then((res) => {
+        console.log('total', res);
+      });
+    },
+    // 查詢單一帳單
+    getSingInfo(cId) {
+      getSingleBill(cId).then((res) => {
+        this.singleCheckInfo = res.data.BasicData;
+        console.log('single', this.singleCheckInfo);
+        $('#checkoutMoadel').modal('show');
+      });
+    },
+
+    getDesignerInfo() {
+      getAllDesigner().then((res) => {
+        this.designInfo = res.data.BasicData;
+      });
+    },
+
+    searchCheckInfo() {
+      const data = this.$qs.stringify({
+        OrderTimeStart: this.startTime,
+        OrderTimeEnd: this.endTime,
+        BillStatus: this.billStatus,
+        CustomerName: this.customerName,
+        CustomerPhone: '',
+        CustomerIntroducer: '',
+        CustomerBirthdayStart: '',
+        CustomerBirthdayEnd: '',
+        DesignerId: this.dId,
+      });
+      postCheckInfo(data).then((res) => {
+        console.log(res.data);
+        if (res.data.status) {
+          this.totalCheckInfo = res.data.BasicData;
+          this.customerName = '';
+          this.dId = '';
+        } else {
+          this.$swal({
+            icon: 'error',
+            title: '查無此資料',
+            timer: 1500,
+          });
+          this.reload();
+        }
+      });
+    },
+  },
+
+  created() {
+    this.getCheckInfo();
+    this.getDesignerInfo();
+  },
+};
 </script>
 
 <style></style>

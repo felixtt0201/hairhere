@@ -435,6 +435,7 @@ export default {
       this.tempOrderInfo = {};
       this.selectOrderId = e.event.extendedProps.OrderID;
       getOrderDetail(this.selectOrderId).then((res) => {
+        console.log(res);
         if (res.data.status) {
           this.tempOrderInfo = res.data.BasicData;
         }
