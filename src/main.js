@@ -8,6 +8,7 @@ import {
   configure,
 } from 'vee-validate';
 import VueSplide from '@splidejs/vue-splide';
+// import VueAgile from 'vue-agile';
 import TW from 'vee-validate/dist/locale/zh_TW.json';
 import * as rules from 'vee-validate/dist/rules';
 import Loading from 'vue-loading-overlay';
@@ -41,7 +42,9 @@ configure({
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
 Vue.use(VueSweetalert2);
+// 輪播圖
 Vue.use(VueSplide);
+// Vue.use(VueAgile);
 new Vue({
   router,
   store,
