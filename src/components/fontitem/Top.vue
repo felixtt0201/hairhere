@@ -18,6 +18,5 @@ export default {};
   background: skyblue;
   position: fixed;
   bottom: 50%;
-  background-image: url('https://www.flaticon.com/authors/dave-gandy');
 }
 </style>
