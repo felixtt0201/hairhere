@@ -206,6 +206,7 @@
                   <input
                     type="text"
                     id="title"
+                    class="outlineShow"
                     placeholder="請輸入作品名稱 ex:閃電藍"
                     v-model="formProduct.Name"
                   />
@@ -215,23 +216,20 @@
               <div class="row">
                 <div class="col-6">
                   <div id="dataTable_filter" class="dataTables_filter">
-                    <label>設計師姓名：{{ formProduct.DesignerName }}</label>
+                    <label>設計師姓名：{{ dName }}</label>
                     <select
                       class="form-control"
                       v-model="formProduct.DesignerId"
+                      @change="showDesignerName(formProduct.DesignerId)"
+                      v-if="isNew"
                     >
-                      <option disabled selected value="">選擇設計師</option>
+                      <option disabled value="">選擇設計師</option>
                       <option
                         v-for="designer in designerInfo"
                         :key="designer.Id"
                         :value="designer.Id"
                         >{{ designer.Name }}</option
                       >
-                      <!-- <option>小明</option>
-                    <option>小王</option>
-                    <option>小美</option>
-                    <option>小吉</option>
-                    <option>小傑</option> -->
                     </select>
                   </div>
                 </div>
@@ -387,10 +385,19 @@ export default {
         // Photo3: '',
         // Summary: '',
       },
+      dName: '', // 顯示設計師名字
       isNew: true, // 判斷新增or編輯狀態
     };
   },
   methods: {
+    showDesignerName(id) {
+      this.designerInfo.forEach((i) => {
+        // eslint-disable-next-line
+        if (i.Id == id) {
+          this.dName = i.Name;
+        }
+      });
+    },
     // 取得設計師資訊
     getDesignersInfo() {
       getAllDesigner().then((res) => {
@@ -401,9 +408,7 @@ export default {
     // 取得作品資訊
     getInfoHandler() {
       getAllworkss().then((res) => {
-        console.log(res);
         this.comebackinfo = res.data.BasicData;
-        console.log(this.comebackinfo);
       });
     },
     openModal(isNew, product) {
@@ -413,8 +418,8 @@ export default {
         this.isNew = true;
       } else {
         this.formProduct = { ...product };
+        this.dName = this.formProduct.DesignerName;
         this.formProduct.Category = this.formProduct.Category.split(',');
-        console.log(this.formProduct);
         this.isNew = false;
       }
     },
@@ -451,8 +456,6 @@ export default {
         });
       } else {
         // 編輯作品:名稱 描述 分類
-        console.log(this.formProduct.Id);
-        console.log(this.formProduct);
         const data = this.$qs.stringify({
           Name: this.formProduct.Name,
           Summary: this.formProduct.Summary,
@@ -544,7 +547,7 @@ select {
   background-color: #ffff !important;
 }
 
-.itemtest {
+.itemshowDesignerName {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -552,5 +555,10 @@ select {
 
 .pro_opacity {
   opacity: 1;
+}
+.outlineShow {
+  border: 1px solid #d1d3e2;
+  padding: 3px;
+  border-radius: 10px !important;
 }
 </style>

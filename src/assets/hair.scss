@@ -82,6 +82,7 @@ body {
     background-color: $bg-accent;
     color: $text-accent;
     border: 2px solid $text-accent;
+    transition: 0.5s;
   }
   &:active {
     background-color: $btn-press;

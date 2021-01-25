@@ -103,20 +103,7 @@ export default {
       designerDetail: '', // get到的設計師詳細資料
       category: [], // get分類
       // slide
-      slides: [
-        {
-          src:
-            'https://salon.rocket-coding.com/UpFiles/Images/202101240917089149587.png',
-        },
-        {
-          src:
-            'https://images.unsplash.com/photo-1611314569822-e84c559262b5?ixid=MXwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-        },
-        {
-          src:
-            'https://images.unsplash.com/photo-1611314569822-e84c559262b5?ixid=MXwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-        },
-      ],
+      slides: [],
       primaryOptions: {
         type: 'loop',
         perPage: 1,
@@ -146,6 +133,10 @@ export default {
         this.workDetail = res.data.BasicData;
         this.category = this.workDetail.Category;
         const designerId = this.workDetail.DesignerId;
+        // this.slides.push({ src: this.workDetail.Photo1Path });
+        // this.slides.push({ src: this.workDetail.Photo2Path });
+        // this.slides.push({ src: this.workDetail.Photo3Path });
+        console.log(this.slides);
         getDesigner(designerId).then((response) => {
           console.log(response);
           this.designerDetail = response.data;
@@ -161,6 +152,19 @@ export default {
   mounted() {
     // Set the sync target.
     this.$refs.primary.sync(this.$refs.secondary.splide);
+    setTimeout(() => {
+      this.slides.push(
+        {
+          src: this.workDetail.Photo1Path,
+        },
+        {
+          src: this.workDetail.Photo2Path,
+        },
+        {
+          src: this.workDetail.Photo3Path,
+        },
+      );
+    }, 5000);
   },
 };
 </script>
