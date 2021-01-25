@@ -5,6 +5,7 @@
       <div id="content">
         <Navbar />
         <div>
+          <p class="ml-2">歡迎使用</p>
           <router-view></router-view>
         </div>
       </div>

@@ -127,35 +127,28 @@ const routes = [
         component: () => import('../components/Checkout.vue'),
       },
       {
-        path: 'forms', // 表單管理
-        name: 'Forms',
+        path: 'reservationback',
+        name: 'ReservationBack',
         meta: { requiresAuth: true },
-        component: () => import('../components/Forms.vue'),
-        children: [
-          {
-            path: 'reservationback',
-            name: 'ReservationBack',
-            component: () => import('../components/forms/ReservationBack.vue'),
-          },
-          {
-            path: 'vaction',
-            name: 'Vaction',
-            meta: { requiresAuth: true },
-            component: () => import('../components/forms/Vaction.vue'),
-          },
-          {
-            path: 'performance',
-            name: 'Performance',
-            meta: { requiresAuth: true },
-            component: () => import('../components/forms/Performance.vue'),
-          },
-          {
-            path: 'historicalOrders',
-            name: 'HistoricalOrders',
-            meta: { requiresAuth: true },
-            component: () => import('../components/forms/HistoricalOrders.vue'),
-          },
-        ],
+        component: () => import('../components/forms/ReservationBack.vue'),
+      },
+      {
+        path: 'vaction',
+        name: 'Vaction',
+        meta: { requiresAuth: true },
+        component: () => import('../components/forms/Vaction.vue'),
+      },
+      {
+        path: 'performance',
+        name: 'Performance',
+        meta: { requiresAuth: true },
+        component: () => import('../components/forms/Performance.vue'),
+      },
+      {
+        path: 'historicalOrders',
+        name: 'HistoricalOrders',
+        meta: { requiresAuth: true },
+        component: () => import('../components/forms/HistoricalOrders.vue'),
       },
     ],
   },

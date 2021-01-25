@@ -92,6 +92,152 @@
           </div>
         </div>
       </div>
+      <div class="col mb-4">
+        <div class="card h-100 border-0 shadow-sm">
+          <div
+            id="carouselExampleControls"
+            class="carousel slide"
+            data-ride="carousel"
+          >
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img
+                  src="https://picsum.photos/300/200?random=11"
+                  class="d-block w-100"
+                  alt="..."
+                />
+              </div>
+              <div class="carousel-item">
+                <img
+                  src="https://picsum.photos/300/200?random=12"
+                  class="d-block w-100"
+                  alt="..."
+                />
+              </div>
+              <div class="carousel-item">
+                <img
+                  src="https://picsum.photos/300/200?random=13"
+                  class="d-block w-100"
+                  alt="..."
+                />
+              </div>
+            </div>
+            <a
+              class="carousel-control-prev pro_opacity"
+              href="#carouselExampleControls"
+              role="button"
+              data-slide="prev"
+            >
+              <span
+                class="carousel-control-prev-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a
+              class="carousel-control-next pro_opacity"
+              href="#carouselExampleControls"
+              role="button"
+              data-slide="next"
+            >
+              <span
+                class="carousel-control-next-icon "
+                aria-hidden="true"
+              ></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title text-center text-gray-900">設計師：小明</h5>
+            <p class="card-text text-gray-800">
+              作品描述: .....
+            </p>
+          </div>
+          <div class="container mb-4">
+            <div class="row justify-content-around">
+              <a href="#" class="btn btn-success btn-circle">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a href="#" class="btn btn-danger btn-circle">
+                <i class="fas fa-trash"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col mb-4">
+        <div class="card h-100 border-0 shadow-sm">
+          <div
+            id="carouselExampleControls"
+            class="carousel slide"
+            data-ride="carousel"
+          >
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img
+                  src="https://picsum.photos/300/200?random=11"
+                  class="d-block w-100"
+                  alt="..."
+                />
+              </div>
+              <div class="carousel-item">
+                <img
+                  src="https://picsum.photos/300/200?random=12"
+                  class="d-block w-100"
+                  alt="..."
+                />
+              </div>
+              <div class="carousel-item">
+                <img
+                  src="https://picsum.photos/300/200?random=13"
+                  class="d-block w-100"
+                  alt="..."
+                />
+              </div>
+            </div>
+            <a
+              class="carousel-control-prev pro_opacity"
+              href="#carouselExampleControls"
+              role="button"
+              data-slide="prev"
+            >
+              <span
+                class="carousel-control-prev-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a
+              class="carousel-control-next pro_opacity"
+              href="#carouselExampleControls"
+              role="button"
+              data-slide="next"
+            >
+              <span
+                class="carousel-control-next-icon "
+                aria-hidden="true"
+              ></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title text-center text-gray-900">設計師：小明</h5>
+            <p class="card-text text-gray-800">
+              作品描述: .....
+            </p>
+          </div>
+          <div class="container mb-4">
+            <div class="row justify-content-around">
+              <a href="#" class="btn btn-success btn-circle">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a href="#" class="btn btn-danger btn-circle">
+                <i class="fas fa-trash"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="row justify-content-center mt-3 mb-3">
       <button
