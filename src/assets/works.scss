@@ -18,32 +18,40 @@
 }
 // hover test
 .size {
-  border: 2px solid red !important;
+  // border: 2px solid red !important;
   width: 300px;
   height: 300px;
   position: relative;
+  padding: 10px;
+  margin: 15px;
 }
 .img-size {
+  position: absolute;
+  top: 0;
+  right: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.5;
-  &:hover + .b {
-    display: block !important;
-    transition: all 0.5s;
+  &:hover + .imgbackground {
+    transition: all 2s;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: space-between;
   }
 }
-.b {
+.imgbackground {
   width: 100%;
   height: 100%;
   background-color: gray;
+  opacity: 0.8;
   z-index: 50;
   display: none !important;
   position: absolute;
   top: 0;
   right: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  .btn-primary {
+    background-color: $bg-accent;
+    border: 0;
+  }
 }
 .works-center {
   display: flex;

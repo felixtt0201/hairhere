@@ -93,16 +93,16 @@
           v-for="work in searchInputText"
           :key="work.Id"
         >
+          <h2>{{ work.Name }}{{ work.Category }}</h2>
           <img :src="work.Photo1" alt="" class="img-size" />
-          <div class="b">
+          <div class="imgbackground">
             <p>{{ work.Name }}</p>
             <p>{{ work.Category }}</p>
-            <button class="btn btn-primary">
-              {{ work.Id }}
-              <router-link :to="`/designerSingle/${work.Id}`"
-                >立即預約</router-link
-              >
-            </button>
+            <router-link
+              :to="`/designerSingle/${work.Id}`"
+              class="btn btn-primary"
+              >立即預約</router-link
+            >
           </div>
         </div>
       </div>
@@ -155,7 +155,7 @@
             class="page-item"
             v-for="page in pages"
             :key="page"
-            @click="changePage(page, 4)"
+            @click="changePage(page)"
           >
             <a class="page-link" href="#">{{ page }}</a>
           </li>
@@ -191,6 +191,7 @@ export default {
       count: '',
       index: 1,
       limit: 4,
+      status: true, // 執行分頁方法時判斷是否已進行篩選
     };
   },
   computed: {
@@ -213,23 +214,34 @@ export default {
     //     console.log(this.worksarray);
     //   });
     // },
+    changePage(page) {
+      if (this.status === false) {
+        console.log('change');
+        searchworks(this.list.toString(), page, 6).then((res) => {
+          console.log(res);
+          this.worksarray = res.data.BasicData;
+        });
+      } else {
+        getpages(page, 6).then((res) => {
+          console.log(res);
+          this.worksarray = res.data.BasicData;
+        });
+      }
+    },
     getHandlerInfo() {
-      getpages(this.index, 8).then((res) => {
-        console.log(this.index);
+      getpages(this.index, 6).then((res) => {
         console.log(res);
         this.pages = Math.ceil(res.data.Count / res.data.Limit);
-        console.log(this.pages);
         this.worksarray = res.data.BasicData;
-        console.log(this.worksarray);
       });
     },
     searchItem() {
       const searchItemArray = this.list.toString();
-      searchworks(searchItemArray, 2, 3).then((res) => {
+      searchworks(searchItemArray, this.index, 6).then((res) => {
         console.log(res);
         this.pages = Math.ceil(res.data.Count / 3);
         this.worksarray = res.data.BasicData;
-        console.log(this.worksarray);
+        this.status = false;
       });
     },
   },
@@ -239,7 +251,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.menu-btn {
-}
-</style>
+<style lang="scss" scoped></style>

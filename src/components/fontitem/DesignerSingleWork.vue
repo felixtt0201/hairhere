@@ -31,7 +31,39 @@
         <div class="col-md-10">
           <div class="row">
             <div class="col-md-12 p40">
-              <cartest />
+              <!-- <cartest /> -->
+              <!-- car -->
+              <!-- Main slider -->
+              <template class="d-flex">
+                <splide :options="primaryOptions" ref="primary">
+                  <template v-slot:controls>
+                    <div>
+                      <h4>{{ workDetail.Name }}</h4>
+                      <p class="mb-5 border-left">
+                        {{ workDetail.Summary }}
+                      </p>
+                      <ul class="d-flex justify-content-center p-0 mb-4">
+                        <li
+                          class="designer-tag"
+                          v-for="tag in workDetail.Category"
+                          :key="tag"
+                        >
+                          {{ tag }}
+                        </li>
+                      </ul>
+                    </div>
+                  </template>
+                  <splide-slide v-for="(slide, index) in slides" :key="index">
+                    <img :src="slide.src" class="border" />
+                  </splide-slide>
+                </splide>
+              </template>
+              <!-- Thumbnail slider -->
+              <splide :options="secondaryOptions" ref="secondary">
+                <splide-slide v-for="(slide, index) in slides" :key="index">
+                  <img :src="slide.src" class="border" />
+                </splide-slide>
+              </splide>
             </div>
             <!-- <div class="col-md-4">
               <h4 class="mb-4">{{ workDetail.Name }}</h4>
@@ -53,11 +85,15 @@
 
 <script>
 import { getSingleWork, getDesigner } from '@/js/FontAppServices';
-import cartest from './cartest.vue';
+import { Splide, SplideSlide } from '@splidejs/vue-splide';
+import '@splidejs/splide/dist/css/themes/splide-default.min.css';
+// import cartest from './cartest.vue';
 
 export default {
   components: {
-    cartest,
+    // cartest,
+    Splide,
+    SplideSlide,
   },
   data() {
     return {
@@ -66,14 +102,51 @@ export default {
       // designerId: '',
       designerDetail: '', // get到的設計師詳細資料
       category: [], // get分類
+      // slide
+      slides: [
+        // {
+        //   src: this.slide,
+        // },
+        // {
+        //   src: this.slide,
+        // },
+        // {
+        //   src: this.slide,
+        // },
+      ],
+      primaryOptions: {
+        type: 'loop',
+        perPage: 1,
+        perMove: 1,
+        gap: '1rem',
+        pagination: false,
+        arrows: true,
+        width: '70%',
+      },
+      secondaryOptions: {
+        type: 'slide',
+        rewind: true,
+        fixedWidth: 110,
+        fixedHeight: 70,
+        gap: '1rem',
+        pagination: false,
+        cover: true,
+        focus: 'center',
+        isNavigation: true,
+      },
     };
   },
   methods: {
     getInfoHandler() {
       getSingleWork(this.workId).then((res) => {
+        console.log(res);
         this.workDetail = res.data.BasicData;
-        console.log(this.workDetail);
         this.category = this.workDetail.Category;
+        // this.slides = this.workDetail.Path;
+        this.slides.push({ src: this.workDetail.Path[0] });
+        this.slides.push({ src: this.workDetail.Path[1] });
+        this.slides.push({ src: this.workDetail.Path[2] });
+        console.log(this.slides);
         const designerId = this.workDetail.DesignerId;
         getDesigner(designerId).then((response) => {
           console.log(response);
@@ -87,7 +160,30 @@ export default {
     console.log(this.workId);
     this.getInfoHandler();
   },
+  mounted() {
+    // Set the sync target.
+    this.$refs.primary.sync(this.$refs.secondary.splide);
+  },
 };
 </script>
 
-<style></style>
+<style>
+.splide__slide img {
+  /* width: 200px; */
+  height: 200px;
+}
+.my-class-arrows {
+  color: pink !important;
+  background-color: pink !important;
+}
+.splide__arrow--next,
+.splide__arrow--prev {
+  background-color: transparent;
+}
+#splide01 {
+  display: flex;
+}
+/* #splide01-track {
+  width: 60%;
+} */
+</style>

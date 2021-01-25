@@ -89,9 +89,20 @@ const patchOrderDetailStatus = (oId, data) =>
   // eslint-disable-next-line implicit-arrow-linebreak
   storeApi.patch(`PATCH/Order?id=${oId}`, data);
 
-/** 作品 */
+/** 作品 bycin */
 // post新增作品
 const postPortfolio = (data) => storeApi.post('/POST/Portfolio', data);
+
+// get全部作品
+const getAllworkss = () => storeApi.get('/GET/PortfolioList');
+
+// patch作品
+const patchWork = (workId, data) =>
+  // eslint-disable-next-line implicit-arrow-linebreak
+  storeApi.patch(`/PATCH/Portfolio?id=${workId}`, data);
+
+// delete作品
+const deleteWork = (workId) => storeApi.delete(`DELETE/Portfolio?id=${workId}`);
 
 /** 帳單 */
 // get全部帳單
@@ -133,6 +144,9 @@ export {
   getBillList,
   getSingleBill,
   postBill,
-  patchBillStatus,
   postCheckInfo,
+  patchBillStatus,
+  getAllworkss, // 要修改名字
+  patchWork,
+  deleteWork,
 };

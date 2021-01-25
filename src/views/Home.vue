@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <Top></Top>
     <FontHeader></FontHeader>
     <transition name="page" mode="out-in">
       <router-view :key="$route.path"></router-view>
@@ -11,12 +12,14 @@
 <script>
 import FontHeader from '@/components/fontitem/FontHeader.vue';
 import FontFooter from '@/components/fontitem/FontFooter.vue';
+import Top from '@/components/fontitem/Top.vue';
 
 export default {
   name: 'Home',
   components: {
     FontHeader,
     FontFooter,
+    Top,
   },
 };
 </script>
