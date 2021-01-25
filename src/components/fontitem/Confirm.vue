@@ -26,7 +26,7 @@
               <h4>本次預約設計師</h4>
               <h5>{{ orderDetails.DesignerName }}</h5>
               <p class="w-50 border-left">
-                這邊是設計師的描述
+                {{ orderDetails.DesignerSummary }}
               </p>
             </div>
           </div>
@@ -49,12 +49,12 @@
         <ul class="list-style p-0">
           <li
             class="d-flex justify-content-between"
-            v-for="aa in orderDetails.Detail"
-            :key="aa.Id"
+            v-for="detail in orderDetails.OrderDetails"
+            :key="detail.Id"
           >
-            <p>{{ aa.ProductName }}</p>
-            <p>＄{{ aa.UnitPrice }}</p>
-            <p>{{ aa.ServiceMinutes }}分鐘</p>
+            <p>{{ detail.ProductName }}</p>
+            <p>＄{{ detail.UnitPrice }}</p>
+            <p>{{ detail.ServiceMinutes }}分鐘</p>
           </li>
         </ul>
       </div>
@@ -91,15 +91,15 @@
           </li>
         </ul>
       </div>
-      <router-link to="/orderCompleted" class="btn custom-information-btn"
-        >確認送出</router-link
-      >
+      <button class="btn custom-information-btn" @click="submitOrder">
+        確認送出
+      </button>
     </div>
   </div>
 </template>
 
 <script>
-import { getOrder } from '@/js/FontAppServices';
+import { postOrder } from '@/js/FontAppServices';
 
 export default {
   data() {
@@ -110,19 +110,28 @@ export default {
     };
   },
   methods: {
+    // getSession
     getInfoHandler() {
-      getOrder(this.orderId).then((res) => {
+      const getorder = JSON.parse(sessionStorage.getItem('list'));
+      this.orderDetails = getorder;
+      console.log(this.orderDetails);
+      this.orderTime = this.orderDetails.OrderTime;
+    },
+    // 預約確認送出
+    submitOrder() {
+      const data = this.$qs.stringify(this.orderDetails);
+      postOrder(data).then((res) => {
         console.log(res);
-        this.orderDetails = res.data.BasicData;
-        // console.log(this.orderDetails);
-        this.orderTime = this.orderDetails.OrderTime;
-        // console.log(this.OrderTime);
+        if (res.data) {
+          this.orderId = res.data.orderId;
+          this.$router.push(`/orderCompleted/${this.orderId}`);
+        }
       });
     },
   },
   created() {
-    this.orderId = this.$route.params.orderId;
     this.getInfoHandler();
+    this.orderId = this.$route.params.orderId;
   },
 };
 </script>

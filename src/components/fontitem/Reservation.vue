@@ -104,8 +104,8 @@
           ><input type="name" id="name" v-model="name" />
           <label for="tel">手機號碼</label
           ><input type="tel" id="tel" v-model="tel" />
-          <label for="email">Email</label
-          ><input type="email" id="email" v-model="email" />
+          <label for="text">介紹人</label
+          ><input type="text" id="text" v-model="text" />
           <label for="remarks">備註事項</label>
           <textarea
             id="remarks"
@@ -117,10 +117,13 @@
           <!-- <router-link
             :to="`/confirm/${orderId}`"
             class="btn-reservation btn"
-            @click="test"
+            @click="submitOrder"
             >預約送出
           </router-link> -->
-          <button type="button" class="btn-reservation" @click="test">
+          <!-- <button type="button" class="btn-reservation" @click="submitOrder">
+            預約送出
+          </button> -->
+          <button type="button" class="btn-reservation" @click="addList">
             預約送出
           </button>
         </form>
@@ -135,7 +138,7 @@ import 'vue2-datepicker/index.css';
 import {
   getDesigner,
   getStoreProductList,
-  postOrder,
+  // postOrder,
   getFreetime,
 } from '@/js/FontAppServices';
 
@@ -153,7 +156,7 @@ export default {
       listId: '',
       name: '',
       tel: '',
-      email: '',
+      text: '',
       remarks: '',
       orderTime: '',
       orderId: '', // post後回傳訂單Id
@@ -220,24 +223,44 @@ export default {
     //     }
     //   });
     // },
-    test() {
-      const data1 = this.$qs.stringify({
+
+    // 預約頁面
+    // submitOrder() {
+    //   const data1 = this.$qs.stringify({
+    //     OrderTime: this.orderTime,
+    //     StoreRemark: '',
+    //     DesignerId: this.listId,
+    //     CustomerName: this.name,
+    //     CustomerPhone: this.tel,
+    //     CustomerIntroducer: this.text,
+    //     CustomerRemark: this.remarks,
+    //     OrderDetails: this.checklist,
+    //   });
+    //   postOrder(data1).then((res) => {
+    //     if (res.data) {
+    //       this.orderId = res.data.orderId;
+    //       this.$router.push(`/confirm/${this.orderId}`);
+    //     }
+    //   });
+    // },
+    addList() {
+      const data2 = JSON.stringify({
         OrderTime: this.orderTime,
         StoreRemark: '',
         DesignerId: this.listId,
+        DesignerName: this.designer.Name,
+        DesignerSummary: this.designer.Details,
         CustomerName: this.name,
         CustomerPhone: this.tel,
-        CustomerEmail: this.email,
-        CustomerIntroducer: '',
+        CustomerIntroducer: this.text,
         CustomerRemark: this.remarks,
         OrderDetails: this.checklist,
+        Amount: this.TotalMoney.moneytotal,
+        ServiceMinutes: this.TotalMoney.timetotal,
       });
-      postOrder(data1).then((res) => {
-        if (res.data) {
-          this.orderId = res.data.orderId;
-          this.$router.push(`/confirm/${this.orderId}`);
-        }
-      });
+      sessionStorage.setItem('list', data2);
+      console.log(data2);
+      this.$router.push('/confirm');
     },
   },
   created() {

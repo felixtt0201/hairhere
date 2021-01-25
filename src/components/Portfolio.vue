@@ -4,7 +4,7 @@
       <div class="col-sm-12 col-md-10">
         <h1 class="h3 mb-0 text-gray-800">作品集管理</h1>
       </div>
-      <div class="col-sm-12 col-md-2 mt-4">
+      <!-- <div class="col-sm-12 col-md-2 mt-4">
         <div id="dataTable_filter" class="dataTables_filter">
           <label for="exampleFormControlSelect1">作品搜尋</label>
           <select class="form-control" id="exampleFormControlSelect1">
@@ -16,7 +16,7 @@
             <option>小傑</option>
           </select>
         </div>
-      </div>
+      </div> -->
     </div>
     <!-- 作品資訊 -->
     <div class="row row-cols-1 row-cols-md-3 mt-4">
