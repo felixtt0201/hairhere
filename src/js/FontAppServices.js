@@ -91,12 +91,6 @@ const getpages = (page, showWorks) =>
 const searchworks = (data, page, show) =>
   // eslint-disable-next-line implicit-arrow-linebreak
   storeApi.get(`/GET/PortfolioList?index=${page}&limit=${show}&search=${data}`);
-/** 設計師 */
-
-// post新增設計師
-// const postDesinger = (data) =>
-//   // eslint-disable-next-line implicit-arrow-linebreak
-//   picuploaded.post('/POST/Designer?storeid=2', data);
 
 // eslint-disable-next-line object-curly-newline
 export {
