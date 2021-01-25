@@ -35,26 +35,9 @@
               <!-- car -->
               <!-- Main slider -->
               <template class="d-flex">
-                <splide :options="primaryOptions" ref="primary">
-                  <template v-slot:controls>
-                    <div>
-                      <h4>{{ workDetail.Name }}</h4>
-                      <p class="mb-5 border-left">
-                        {{ workDetail.Summary }}
-                      </p>
-                      <ul class="d-flex justify-content-center p-0 mb-4">
-                        <li
-                          class="designer-tag"
-                          v-for="tag in workDetail.Category"
-                          :key="tag"
-                        >
-                          {{ tag }}
-                        </li>
-                      </ul>
-                    </div>
-                  </template>
-                  <splide-slide v-for="(slide, index) in slides" :key="index">
-                    <img :src="slide.src" class="border" />
+                <splide :slides="slides">
+                  <splide-slide v-for="slide in slides" :key="slide.src">
+                    <img :src="slide.src" />
                   </splide-slide>
                 </splide>
               </template>
@@ -112,10 +95,6 @@ export default {
           src:
             'https://images.unsplash.com/photo-1611314569822-e84c559262b5?ixid=MXwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
         },
-        {
-          src:
-            'https://images.unsplash.com/photo-1611314569822-e84c559262b5?ixid=MXwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-        },
       ],
       primaryOptions: {
         type: 'loop',
@@ -159,8 +138,16 @@ export default {
     this.getInfoHandler();
   },
   mounted() {
+    setTimeout(() => {
+      this.slides.push({
+        src:
+          'https://images.unsplash.com/photo-1611314569822-e84c559262b5?ixid=MXwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+      });
+    }, 5000);
     // Set the sync target.
     this.$refs.primary.sync(this.$refs.secondary.splide);
+    this.$refs.primary.mount();
+    this.$refs.secondary.mount();
   },
 };
 </script>
