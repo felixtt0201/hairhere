@@ -120,7 +120,7 @@
             @click="test"
             >預約送出
           </router-link> -->
-          <button type="button" class="btn" @click="test">
+          <button type="button" class="btn-reservation" @click="test">
             預約送出
           </button>
         </form>

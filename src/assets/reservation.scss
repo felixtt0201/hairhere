@@ -5,14 +5,6 @@ $text-reservation: #cb9861;
   h5 {
     color: $text-reservation !important;
   }
-  input {
-    // display: none;
-    &:active {
-      label {
-        background-color: pink;
-      }
-    }
-  }
   td,
   span {
     color: $text-accent;
@@ -36,7 +28,6 @@ $text-reservation: #cb9861;
     background-color: $bg-accent;
   }
 }
-
 .form-reservation {
   display: flex;
   justify-content: center;
@@ -47,6 +38,7 @@ input {
   border: 0;
   width: 258px;
   margin-bottom: 5px;
+  outline: 0;
 }
 .btn-reservation {
   width: 100px !important;
