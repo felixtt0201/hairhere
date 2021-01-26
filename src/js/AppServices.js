@@ -104,6 +104,11 @@ const patchWork = (workId, data) =>
 // delete作品
 const deleteWork = (workId) => storeApi.delete(`DELETE/Portfolio?id=${workId}`);
 
+// get單一設計師全部作品
+const getDesignerWorks = (dId) =>
+  // eslint-disable-next-line implicit-arrow-linebreak
+  storeApi.get(`/GET/PortfolioList?designerId=${dId}`);
+
 /** 帳單 */
 // get全部帳單
 const getBillList = () => storeApi.get('/GET/BillList');
@@ -149,4 +154,5 @@ export {
   getAllworkss, // 要修改名字
   patchWork,
   deleteWork,
+  getDesignerWorks,
 };

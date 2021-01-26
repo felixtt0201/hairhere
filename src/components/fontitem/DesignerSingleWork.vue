@@ -99,6 +99,7 @@
 
 <script>
 import { getSingleWork, getDesigner } from '@/js/FontAppServices';
+
 import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 
 export default {

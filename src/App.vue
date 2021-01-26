@@ -5,7 +5,6 @@
       <router-link :to="{ name: 'DesignerSingle' }">DesignerSingle</router-link>
       <router-view v-if="isRouterAlive"></router-view>
     </div>
-    <cartest />
   </div>
 </template>
 

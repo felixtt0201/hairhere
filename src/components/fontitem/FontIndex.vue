@@ -114,9 +114,7 @@
                     每週二至日 上午{{ business.StoreOpen }}~下午{{
                       business.StoreClose
                     }}
-                    <span class="d-block"
-                      >(每週{{ business.RestDayOfWeek[0] }}公休)</span
-                    >
+                    <span class="d-block">(每週{{ dayof }}公休)</span>
                   </p>
                 </li>
               </ul>
@@ -145,11 +143,7 @@
           <div class="row flex-column">
             <h2 class="text-center">服務項目</h2>
             <ul class="p-0 line">
-              <li
-                class="d-flex"
-                v-for="service in services"
-                :key="service.Name"
-              >
+              <li class="d-flex" v-for="service in services" :key="service.Id">
                 <span class="w-50 text-right pr-4">{{ service.Name }}</span
                 ><span class="w-50 pl-4">${{ service.UnitPrice }} +</span>
               </li>
@@ -191,6 +185,7 @@ export default {
         // phone: '',
         // summary: '',
       },
+      dayof: '',
       business: {}, // 店家營業時間
       services: [], // 店家服務項目
       works: [], // 所有作品
@@ -203,13 +198,13 @@ export default {
         this.basicData = res.data.BasicData;
         this.business = res.data.Business;
         this.services = res.data.ServicesPublic;
+        console.log(this.services);
+        this.dayof = this.business.RestDayOfWeek.toString();
       });
     },
     getAllworks() {
       getworkss().then((res) => {
-        console.log(res);
         this.works = res.data.BasicData;
-        console.log(this.works);
       });
     },
     getAllDesigners() {
@@ -218,7 +213,7 @@ export default {
       });
     },
   },
-  mounted() {
+  created() {
     this.getInfoHandler();
     this.getAllworks();
     this.getAllDesigners();

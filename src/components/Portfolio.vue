@@ -1,68 +1,47 @@
 <template>
   <div id="portfolio" class="container-fluid">
-    <div class="row">
+    <loading
+      :opacity="1"
+      color="#7e735d"
+      loader="bars"
+      background-color="#c8d6e5"
+      :active.sync="isLoading"
+      :is-full-page="fullPage"
+    ></loading>
+    <div class="row flex-column">
       <div class="col-sm-12 col-md-10">
         <h1 class="h3 mb-0 text-gray-800">作品集管理</h1>
       </div>
-      <!-- <div class="col-sm-12 col-md-2 mt-4">
+      <div class="col-sm-12 col-md-2 mt-4">
         <div id="dataTable_filter" class="dataTables_filter">
           <label for="exampleFormControlSelect1">作品搜尋</label>
-          <select class="form-control" id="exampleFormControlSelect1">
-            <option selected disabled hidden>選擇設計師</option>
-            <option>小明</option>
-            <option>小王</option>
-            <option>小美</option>
-            <option>小吉</option>
-            <option>小傑</option>
+          <select class="form-control" v-model="dId">
+            <option disabled value="">選擇設計師</option>
+            <option
+              v-for="designer in designerInfo"
+              :key="designer.Id"
+              :value="designer.Id"
+              >{{ designer.Name }}</option
+            >
           </select>
         </div>
-      </div> -->
+        <div>
+          <button
+            class="btn btn-primary"
+            type="button "
+            @click="searchWorksHandler(dId)"
+          >
+            搜尋
+          </button>
+        </div>
+      </div>
     </div>
     <!-- 作品資訊 -->
     <div class="row row-cols-1 row-cols-md-3 mt-4">
       <div class="col mb-4" v-for="product in comebackinfo" :key="product.Id">
         <div class="card h-100 border-0 shadow-sm">
-          <div
-            id="carouselExampleControls"
-            class="carousel slide"
-            data-ride="carousel"
-          >
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img :src="product.Photo1" class="d-block w-100" alt="..." />
-              </div>
-              <div class="carousel-item">
-                <img :src="product.Photo2" class="d-block w-100" alt="..." />
-              </div>
-              <div class="carousel-item">
-                <img :src="product.Photo3" class="d-block w-100" alt="..." />
-              </div>
-            </div>
-            <a
-              class="carousel-control-prev pro_opacity"
-              href="#carouselExampleControls"
-              role="button"
-              data-slide="prev"
-            >
-              <span
-                class="carousel-control-prev-icon"
-                aria-hidden="true"
-              ></span>
-              <span class="sr-only">Previous</span>
-            </a>
-            <a
-              class="carousel-control-next pro_opacity"
-              href="#carouselExampleControls"
-              role="button"
-              data-slide="next"
-            >
-              <span
-                class="carousel-control-next-icon "
-                aria-hidden="true"
-              ></span>
-              <span class="sr-only">Next</span>
-            </a>
-          </div>
+          <img :src="product.Photo2" class="d-block w-100" alt="error" />
+
           <div class="card-body">
             <h5 class="card-title text-center text-gray-900">
               作品名稱：{{ product.Name }}
@@ -86,7 +65,6 @@
                 <i class="fas fa-edit"></i>
                 編輯
               </a>
-              {{ product.Id }}
               <a
                 href="#"
                 class="btn btn-danger btn-circle"
@@ -94,152 +72,6 @@
               >
                 <i class="fas fa-trash"></i>
                 刪除
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col mb-4">
-        <div class="card h-100 border-0 shadow-sm">
-          <div
-            id="carouselExampleControls"
-            class="carousel slide"
-            data-ride="carousel"
-          >
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img
-                  src="https://picsum.photos/300/200?random=11"
-                  class="d-block w-100"
-                  alt="..."
-                />
-              </div>
-              <div class="carousel-item">
-                <img
-                  src="https://picsum.photos/300/200?random=12"
-                  class="d-block w-100"
-                  alt="..."
-                />
-              </div>
-              <div class="carousel-item">
-                <img
-                  src="https://picsum.photos/300/200?random=13"
-                  class="d-block w-100"
-                  alt="..."
-                />
-              </div>
-            </div>
-            <a
-              class="carousel-control-prev pro_opacity"
-              href="#carouselExampleControls"
-              role="button"
-              data-slide="prev"
-            >
-              <span
-                class="carousel-control-prev-icon"
-                aria-hidden="true"
-              ></span>
-              <span class="sr-only">Previous</span>
-            </a>
-            <a
-              class="carousel-control-next pro_opacity"
-              href="#carouselExampleControls"
-              role="button"
-              data-slide="next"
-            >
-              <span
-                class="carousel-control-next-icon "
-                aria-hidden="true"
-              ></span>
-              <span class="sr-only">Next</span>
-            </a>
-          </div>
-          <div class="card-body">
-            <h5 class="card-title text-center text-gray-900">設計師：小明</h5>
-            <p class="card-text text-gray-800">
-              作品描述: .....
-            </p>
-          </div>
-          <div class="container mb-4">
-            <div class="row justify-content-around">
-              <a href="#" class="btn btn-success btn-circle">
-                <i class="fas fa-edit"></i>
-              </a>
-              <a href="#" class="btn btn-danger btn-circle">
-                <i class="fas fa-trash"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col mb-4">
-        <div class="card h-100 border-0 shadow-sm">
-          <div
-            id="carouselExampleControls"
-            class="carousel slide"
-            data-ride="carousel"
-          >
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img
-                  src="https://picsum.photos/300/200?random=11"
-                  class="d-block w-100"
-                  alt="..."
-                />
-              </div>
-              <div class="carousel-item">
-                <img
-                  src="https://picsum.photos/300/200?random=12"
-                  class="d-block w-100"
-                  alt="..."
-                />
-              </div>
-              <div class="carousel-item">
-                <img
-                  src="https://picsum.photos/300/200?random=13"
-                  class="d-block w-100"
-                  alt="..."
-                />
-              </div>
-            </div>
-            <a
-              class="carousel-control-prev pro_opacity"
-              href="#carouselExampleControls"
-              role="button"
-              data-slide="prev"
-            >
-              <span
-                class="carousel-control-prev-icon"
-                aria-hidden="true"
-              ></span>
-              <span class="sr-only">Previous</span>
-            </a>
-            <a
-              class="carousel-control-next pro_opacity"
-              href="#carouselExampleControls"
-              role="button"
-              data-slide="next"
-            >
-              <span
-                class="carousel-control-next-icon "
-                aria-hidden="true"
-              ></span>
-              <span class="sr-only">Next</span>
-            </a>
-          </div>
-          <div class="card-body">
-            <h5 class="card-title text-center text-gray-900">設計師：小明</h5>
-            <p class="card-text text-gray-800">
-              作品描述: .....
-            </p>
-          </div>
-          <div class="container mb-4">
-            <div class="row justify-content-around">
-              <a href="#" class="btn btn-success btn-circle">
-                <i class="fas fa-edit"></i>
-              </a>
-              <a href="#" class="btn btn-danger btn-circle">
-                <i class="fas fa-trash"></i>
               </a>
             </div>
           </div>
@@ -259,6 +91,33 @@
         <span class="text">新增作品</span>
       </button>
     </div>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" :class="{ disabled: (i = 1) }">
+          <a class="page-link path" href="#" aria-label="Previous"
+            ><i class="fas fa-chevron-left"></i>
+          </a>
+        </li>
+        <li
+          class="page-item"
+          v-for="page in pages"
+          :key="page"
+          @click="changePage(page)"
+        >
+          <a class="page-link" href="#">{{ page }}</a>
+        </li>
+        <!-- <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item"><a class="page-link" href="#">4</a></li>
+          <li class="page-item"><a class="page-link" href="#">5</a></li>
+          <li class="page-item"><a class="page-link" href="#">6</a></li> -->
+        <li class="page-item">
+          <a class="page-link path" href="#" aria-label="Next"
+            ><i class="fas fa-chevron-right"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
     <!--Modal-->
     <form @submit.prevent="postInfoHandler">
       <div
@@ -505,11 +364,16 @@ import {
   getAllworkss,
   patchWork,
   deleteWork,
+  getDesignerWorks,
 } from '@/js/AppServices';
 
 export default {
   data() {
     return {
+      // Loading遮罩
+      isLoading: true,
+      fullPage: true,
+
       designerInfo: [], // get設計師資訊
       fileUploading: false,
       comebackinfo: [], // get作品資訊
@@ -525,9 +389,28 @@ export default {
       },
       dName: '', // 顯示設計師名字
       isNew: true, // 判斷新增or編輯狀態
+      dId: '', // 設計師Id
     };
   },
   methods: {
+    // 分頁
+    changePage() {},
+    searchWorksHandler(id) {
+      getDesignerWorks(id).then((res) => {
+        console.log('search', res);
+        if (res.data.status) {
+          this.comebackinfo = res.data.BasicData;
+        } else {
+          this.$swal({
+            position: 'center',
+            icon: 'error',
+            title: '搜索失敗',
+            text: '此設計師無作品',
+          });
+          this.getWorkInfoHandler();
+        }
+      });
+    },
     showDesignerName(id) {
       this.designerInfo.forEach((i) => {
         // eslint-disable-next-line
@@ -539,14 +422,17 @@ export default {
     // 取得設計師資訊
     getDesignersInfo() {
       getAllDesigner().then((res) => {
-        console.log(res.data);
         this.designerInfo = res.data.BasicData;
       });
     },
     // 取得作品資訊
-    getInfoHandler() {
+    getWorkInfoHandler() {
       getAllworkss().then((res) => {
-        this.comebackinfo = res.data.BasicData;
+        if (res.data.status) {
+          console.log('work', res.data);
+          this.comebackinfo = res.data.BasicData;
+          this.isLoading = false;
+        }
       });
     },
     openModal(isNew, product) {
@@ -561,6 +447,7 @@ export default {
         this.isNew = false;
       }
     },
+
     // 新增作品
     postInfoHandler() {
       if (this.isNew) {
@@ -581,7 +468,7 @@ export default {
         postPortfolio(this.formProduct).then((res) => {
           console.log(res);
           if (res.data.status) {
-            this.getInfoHandler();
+            this.getWorkInfoHandler();
             $('#staticBackdrop').modal('hide');
             this.$swal({
               title: '新增成功',
@@ -602,7 +489,7 @@ export default {
         patchWork(this.formProduct.Id, data).then((res) => {
           console.log(res);
           if (res.data.status) {
-            this.getInfoHandler();
+            this.getWorkInfoHandler();
             $('#staticBackdrop').modal('hide');
             this.$swal({
               icon: 'success',
@@ -612,37 +499,8 @@ export default {
           }
         });
       }
-
-      // postPortfolio(data)
-      //   .then((res) => {
-      //     console.log(res);
-      //     if (res.data.status) {
-      //       this.fileUploading = false;
-      //       this.addInfo = [];
-      //       photo1 = '';
-      //       photo2 = '';
-      //       photo3 = '';
-      //       this.$swal({
-      //         title: '新增成功',
-      //         position: 'center',
-      //         icon: 'success',
-      //         showConfirmButton: false,
-      //         timer: 1500,
-      //       });
-      //       $('#staticBackdrop').modal('hide');
-      //     }
-      //   })
-      //   .catch(() => {
-      //     this.$swal({
-      //       title: '伺服器故障',
-      //       position: 'center',
-      //       icon: 'error',
-      //       showConfirmButton: false,
-      //       timer: 1500,
-      //     });
-      //     this.fileUploading = false;
-      //   });
     },
+
     // 刪除作品
     deleteInfoHandler(workId) {
       this.$swal({
@@ -662,14 +520,14 @@ export default {
             icon: 'success',
             position: 'center',
           }).then(() => {
-            this.getInfoHandler();
+            this.getWorkInfoHandler();
           });
         }
       });
     },
   },
   mounted() {
-    this.getInfoHandler();
+    this.getWorkInfoHandler();
     $('.carousel').carousel();
     this.getDesignersInfo();
     this.formProduct = new FormData();

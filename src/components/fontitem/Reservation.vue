@@ -33,106 +33,109 @@
         </div>
       </div>
     </div>
-    <div class="container bg-accent text-reservation pb-4 pt-5 mt-4">
-      <table class="table table-borderless text-reservation">
-        <thead class="table-borderless">
-          <tr>
-            <th scope="col"></th>
-            <th scope="col" class="text-center">預約項目</th>
-            <th scope="col">預期金額</th>
-            <th scope="col">預估時間</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="product in products" :key="product.Id">
-            <input
-              type="checkbox"
-              v-model="checklist"
-              :value="product"
-              :id="`${product.Id}`"
-            />
-            <td>
-              <label :for="`${product.Id}`">{{ product.ProductName }}</label>
-            </td>
-            <td>＄{{ product.UnitPrice }}＋</td>
-            <td>{{ product.ServiceMinutes }} 分鐘</td>
-          </tr>
-        </tbody>
-      </table>
-      <h4 class="title-line text-center mb-5 text-sm">項目結算</h4>
-      <div class="item-total">
-        <div class="item-total-group w-75">
-          <h5>預期金額</h5>
-          <span class="mr-5">${{ TotalMoney.moneytotal }}+</span>
-          <h5>預估時間</h5>
-          <span class="mr-3">{{ TotalMoney.timetotal }}分鐘</span>
+    <form @submit.prevent="addList">
+      <div class="container bg-accent text-reservation pb-4 pt-5 mt-4">
+        <table class="table table-borderless text-reservation">
+          <thead class="table-borderless">
+            <tr>
+              <th scope="col"></th>
+              <th scope="col" class="text-center">預約項目</th>
+              <th scope="col">預期金額</th>
+              <th scope="col">預估時間</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="product in products" :key="product.Id">
+              <input
+                type="checkbox"
+                v-model="checklist"
+                :value="product"
+                :id="`${product.Id}`"
+              />
+              <td>
+                <label :for="`${product.Id}`">{{ product.ProductName }}</label>
+              </td>
+              <td>＄{{ product.UnitPrice }}＋</td>
+              <td>{{ product.ServiceMinutes }} 分鐘</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h4 class="title-line text-center mb-5 text-sm">項目結算</h4>
+        <div class="item-total">
+          <div class="item-total-group w-75">
+            <h5>預期金額</h5>
+            <span class="mr-5">${{ TotalMoney.moneytotal }}+</span>
+            <h5>預估時間</h5>
+            <span class="mr-3">{{ TotalMoney.timetotal }}分鐘</span>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="container border">
-      <template>
-        <div>
-          <date-picker
-            v-model="time1"
-            type="date"
-            value-type="format"
-            placeholder="Select datetime"
-            :show-time-panel="showTimePanel"
-            @close="handleOpenChange"
-            format="YYYY-MM-DD"
-            :disabled-date="notBeforeToday"
-            @pick="selectDate"
-          >
-          </date-picker>
-        </div>
-        <!-- 選擇日期後篩選出空閑時間 -->
-      </template>
-      <ul class="d-flex justify-content-between">
-        <li v-for="freetime in freeTimeList" :key="freetime">
-          <button
-            type="button"
-            class="btn border"
-            @click="selectTime(freetime)"
-          >
-            {{ freetime.replace('T', ' ').replace(':00:00', ':00') }}
-          </button>
-        </li>
-      </ul>
-    </div>
-    <!-- 顧客資訊 -->
-    <div class="container bg-reservation ">
-      <div class="information pt-3">
-        <h4 class="title-line text-center mb-4">顧客資訊</h4>
-        <form class="form-reservation">
-          <label for="name">預約姓名</label
-          ><input type="name" id="name" v-model="name" required />
-          <label for="tel">手機號碼</label
-          ><input type="tel" id="tel" v-model="tel" />
-          <label for="text">介紹人</label
-          ><input type="text" id="text" v-model="text" />
-          <label for="remarks">備註事項</label>
-          <textarea
-            id="remarks"
-            cols="30"
-            rows="4"
-            class="mb-4"
-            v-model="remarks"
-          ></textarea>
-          <!-- <router-link
+      <div class="container border">
+        <template>
+          <div>
+            <date-picker
+              v-model="time1"
+              type="date"
+              value-type="format"
+              placeholder="Select datetime"
+              :show-time-panel="showTimePanel"
+              @close="handleOpenChange"
+              format="YYYY-MM-DD"
+              :disabled-date="notBeforeToday"
+              @pick="selectDate"
+            >
+            </date-picker>
+          </div>
+          <!-- 選擇日期後篩選出空閑時間 -->
+        </template>
+        <ul class="d-flex justify-content-between">
+          <li v-for="freetime in freeTimeList" :key="freetime">
+            <button
+              type="button"
+              class="btn border"
+              @click="selectTime(freetime)"
+            >
+              {{ freetime.replace('T', ' ').replace(':00:00', ':00') }}
+            </button>
+          </li>
+        </ul>
+      </div>
+      <!-- 顧客資訊 -->
+      <div class="container bg-reservation ">
+        <div class="information pt-3">
+          <h4 class="title-line text-center mb-4">顧客資訊</h4>
+          <div class="form-reservation">
+            <label for="name">預約姓名</label
+            ><input type="name" id="name" v-model="name" required />
+            <label for="tel">手機號碼</label
+            ><input type="tel" id="tel" v-model="tel" required />
+            <label for="text">介紹人</label
+            ><input type="text" id="text" v-model="text" required />
+            <label for="remarks">備註事項</label>
+            <textarea
+              id="remarks"
+              cols="30"
+              rows="4"
+              class="mb-4"
+              v-model="remarks"
+            ></textarea>
+            <!-- <router-link
             :to="`/confirm/${orderId}`"
             class="btn-reservation btn"
             @click="submitOrder"
             >預約送出
           </router-link> -->
-          <!-- <button type="button" class="btn-reservation" @click="submitOrder">
+            <!-- <button type="button" class="btn-reservation" @click="submitOrder">
             預約送出
           </button> -->
-          <button type="button" class="btn-reservation" @click="addList">
-            預約送出
-          </button>
-        </form>
+            <button type="submit" class="btn-reservation">
+              預約送出
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
+    </form>
   </div>
 </template>
 
@@ -195,7 +198,7 @@ export default {
     //
     getDesignerHandler() {
       getDesigner(this.listId).then((res) => {
-        console.log(res);
+        // console.log(res);
         this.designer = res.data;
         this.OrderDate = res.data.OrderDate;
       });
@@ -203,9 +206,9 @@ export default {
     // 測試點選時間回傳值
     selectDate() {
       getFreetime(this.listId, this.time1).then((res) => {
-        console.log(res);
+        // console.log(res);
         this.freeTimeList = res.data.FreeTimeList;
-        console.log(this.freeTimeList);
+        // console.log(this.freeTimeList);
       });
     },
     selectTime(selecTime) {
@@ -214,7 +217,7 @@ export default {
     },
     getProductHandler() {
       getStoreProductList().then((res) => {
-        console.log(res);
+        // console.log(res);
         this.products = res.data.OrderDetails;
       });
     },
@@ -263,9 +266,19 @@ export default {
         Amount: this.TotalMoney.moneytotal,
         ServiceMinutes: this.TotalMoney.timetotal,
       });
-      sessionStorage.setItem('list', data2);
-      console.log(data2);
-      // this.$router.push('/confirm');
+      // eslint-disable-next-line eqeqeq
+      if (this.checklist.length === 0 || this.orderTime === '') {
+        this.$swal({
+          position: 'center',
+          icon: 'error',
+          title: '輸入資訊錯誤',
+          text: '服務項目或者日期未選擇',
+        });
+      } else {
+        sessionStorage.setItem('list', data2);
+        console.log(data2);
+        this.$router.push('/confirm');
+      }
     },
   },
   created() {

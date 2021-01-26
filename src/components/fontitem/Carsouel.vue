@@ -26,7 +26,6 @@
 <script>
 import { Splide, SplideSlide } from '@splidejs/vue-splide';
 // import { getworkss } from '@/js/FontAppServices';
-
 import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 
 export default {
@@ -44,7 +43,7 @@ export default {
         // gap: '1rem',
         autoplay: true,
         autoWidth: true,
-        perPage: 4, // 確定每頁應顯示多少張幻燈片
+        perPage: 1, // 確定每頁應顯示多少張幻燈片
         // gap: 1,
         pagination: false,
         interval: 800, // 移動時間
