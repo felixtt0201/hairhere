@@ -228,7 +228,7 @@ export default {
     },
   },
   mounted() {
-    this.GetStoreInfo();
+    this.getInfoHandler();
     this.getAllworks();
     this.getAllDesigners();
   },

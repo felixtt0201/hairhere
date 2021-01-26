@@ -26,8 +26,6 @@
 <script>
 // import { getworkss } from '@/js/FontAppServices';
 import { Splide, SplideSlide } from '@splidejs/vue-splide';
-// import { getworkss } from '@/js/FontAppServices';
-
 import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 
 export default {
