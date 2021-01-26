@@ -165,9 +165,15 @@
     </div>
     <div class="container">
       <h4 class="title-line w-100 text-center mb-4 text-main">髮型作品</h4>
-      <Carsouel />
+      <!-- <Carsouel /> -->
       <h4 class="title-line w-100 text-center mb-4 text-main">設計師</h4>
-      <Carsouel />
+      <!-- <Carsouel /> -->
+      <h4 class="title-line w-100 text-center mb-4 text-main">測試</h4>
+      <CarsouelB
+        :starting-image="2"
+        :images="images"
+        :auto-slide-interval="2000"
+      />
       <!-- <ul class="list-style d-flex justify-content-center mb-5">
         <li
           class="background-img mr-5"
@@ -192,11 +198,13 @@
 
 <script>
 import { getStoreTotalInfo } from '@/js/FontAppServices';
-import Carsouel from '@/components/fontitem/Carsouel.vue';
+// import Carsouel from '@/components/fontitem/Carsouel.vue';
+import CarsouelB from '@/components/fontitem/CarsouelB.vue';
 
 export default {
   components: {
-    Carsouel,
+    // Carsouel,
+    CarsouelB,
   },
   data() {
     return {
@@ -214,22 +222,69 @@ export default {
         // RestDayOfWeekString: '',
       },
       services: [],
+      images: [
+        {
+          id: '1',
+          big: 'https://picsum.photos/200/300/?blur=2',
+          thumb: 'https://picsum.photos/200/300/?blur=2',
+        },
+        {
+          id: '2',
+          big: 'https://picsum.photos/id/237/200/300',
+          thumb: 'https://picsum.photos/id/237/200/300',
+        },
+        {
+          id: '3',
+          big: 'https://picsum.photos/200/300/?blur=3',
+          thumb: 'https://picsum.photos/200/300/?blur=3',
+        },
+      ],
+      // images: [
+      //   {
+      //     id: '',
+      //     big: '',
+      //     thumb: '',
+      //   },
+      // ],
     };
   },
   methods: {
-    GetStoreInfo() {
+    getInfoHandler() {
       getStoreTotalInfo().then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         this.basicData = res.data.BasicData;
         this.business = res.data.Business;
         this.services = res.data.ServicesPublic;
-        console.log(this.services);
+        // console.log(this.services);
       });
+    },
+    getSingleWorks() {
+      // getSingleWork(71).then((res) => {
+      //   console.log(res.data.BasicData);
+      //   const picData = res.data.BasicData;
+      //   console.log(picData.Photo1Path);
+      //   this.images.push({
+      //     id: '1',
+      //     big: picData.Photo1Path,
+      //     thumb: picData.Photo1Path,
+      //   });
+      //   this.images.push({
+      //     id: '2',
+      //     big: picData.Photo2Path,
+      //     thumb: picData.Photo3Path,
+      //   });
+      //   this.images.push({
+      //     id: '3',
+      //     big: picData.Photo3Path,
+      //     thumb: picData.Photo3Path,
+      //   });
+      // });
     },
   },
   mounted() {
-    this.GetStoreInfo();
-    console.log(this.basicData);
+    this.getSingleWorks();
+    this.getInfoHandler();
+    // console.log(this.basicData);
   },
 };
 </script>
