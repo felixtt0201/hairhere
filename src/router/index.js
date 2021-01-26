@@ -39,12 +39,12 @@ const routes = [
         component: () => import('../components/fontitem/Reservation.vue'),
       },
       {
-        path: 'confirm/:orderId',
+        path: 'confirm',
         name: 'Confirm',
         component: () => import('../components/fontitem/Confirm.vue'),
       },
       {
-        path: 'orderCompleted',
+        path: 'orderCompleted/:orderId',
         name: 'OrderCompleted',
         component: () => import('../components/fontitem/OrderCompleted.vue'),
       },

@@ -1,37 +1,22 @@
 <template>
-  <div class="wrapper">
+  <div>
     <splide
       :options="options"
       class="list-style d-flex justify-content-center mb-5"
     >
       <splide-slide
+        v-for="work in msg"
+        :key="work.Id"
         class="background-img mr-5"
-        :style="{ backgroundImage: `url(${pic1})` }"
+        :style="{ backgroundImage: `url(${work.Photo1})` }"
       >
       </splide-slide>
+      <!-- <h4 class="title-line w-100 text-center mb-4 text-main">設計師</h4> -->
       <splide-slide
+        v-for="designer in des"
+        :key="designer.Id"
         class="background-img mr-5"
-        :style="{ backgroundImage: `url(${pic2})` }"
-      >
-      </splide-slide>
-      <splide-slide
-        class="background-img mr-5"
-        :style="{ backgroundImage: `url(${pic3})` }"
-      >
-      </splide-slide>
-      <splide-slide
-        class="background-img mr-5"
-        :style="{ backgroundImage: `url(${pic1})` }"
-      >
-      </splide-slide>
-      <splide-slide
-        class="background-img mr-5"
-        :style="{ backgroundImage: `url(${pic2})` }"
-      >
-      </splide-slide>
-      <splide-slide
-        class="background-img mr-5"
-        :style="{ backgroundImage: `url(${pic3})` }"
+        :style="{ backgroundImage: `url(${designer.PicturePath})` }"
       >
       </splide-slide>
     </splide>
@@ -39,8 +24,10 @@
 </template>
 
 <script>
-import { getworkss } from '@/js/FontAppServices';
+// import { getworkss } from '@/js/FontAppServices';
 import { Splide, SplideSlide } from '@splidejs/vue-splide';
+// import { getworkss } from '@/js/FontAppServices';
+
 import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 
 export default {
@@ -48,6 +35,7 @@ export default {
     Splide,
     SplideSlide,
   },
+  props: ['msg', 'des'],
   data() {
     return {
       options: {
@@ -60,7 +48,7 @@ export default {
         perPage: 1, // 確定每頁應顯示多少張幻燈片
         // gap: 1,
         pagination: false,
-        interval: 3000, // 移動時間
+        interval: 500, // 移動時間
         pauseOnHover: true, // 是否在懸停滑塊時停止自動播放
         cover: true,
         breakpoints: {
@@ -71,27 +59,20 @@ export default {
           },
         },
       },
-      pic1: '',
-      pic2: '',
-      pic3: '',
+      // works: [],
     };
   },
-  methods: {
-    getPicInfo() {
-      getworkss().then((res) => {
-        this.pic1 = res.data.BasicData[0].Photo1;
-        this.pic2 = res.data.BasicData[0].Photo2;
-        this.pic3 = res.data.BasicData[0].Photo3;
-        // console.log(this.pic1, this.pic2, this.pic3);
-      });
-    },
-    // moved(splide, newIndex) {
-    //   console.log('moved', newIndex);
-    // },
-  },
-  created() {
-    this.getPicInfo();
-  },
+  // methods: {
+  //   getALlworks() {
+  //     getworkss().then((res) => {
+  //       console.log(res);
+  //       this.works = res.data.BasicData;
+  //     });
+  //   },
+  // },
+  // mounted() {
+  //   this.getALlworks();
+  // },
 };
 </script>
 

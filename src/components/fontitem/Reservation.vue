@@ -33,103 +33,107 @@
         </div>
       </div>
     </div>
-    <form @submit.prevent="sendOrderInfoHandler">
-      <div class="container bg-accent text-reservation pb-4 pt-5 mt-4">
-        <table class="table table-borderless text-reservation">
-          <thead class="table-borderless">
-            <tr>
-              <th scope="col"></th>
-              <th scope="col" class="text-center">預約項目</th>
-              <th scope="col">預期金額</th>
-              <th scope="col">預估時間</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="product in products" :key="product.Id">
-              <input
-                type="checkbox"
-                v-model="checklist"
-                :value="product"
-                :id="`${product.Id}`"
-              />
-              <td>
-                <label :for="`${product.Id}`">{{ product.ProductName }}</label>
-              </td>
-              <td>＄{{ product.UnitPrice }}＋</td>
-              <td>{{ product.ServiceMinutes }} 分鐘</td>
-            </tr>
-          </tbody>
-        </table>
+    <div class="container bg-accent text-reservation pb-4 pt-5 mt-4">
+      <table class="table table-borderless text-reservation">
+        <thead class="table-borderless">
+          <tr>
+            <th scope="col"></th>
+            <th scope="col" class="text-center">預約項目</th>
+            <th scope="col">預期金額</th>
+            <th scope="col">預估時間</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="product in products" :key="product.Id">
+            <input
+              type="checkbox"
+              v-model="checklist"
+              :value="product"
+              :id="`${product.Id}`"
+            />
+            <td>
+              <label :for="`${product.Id}`">{{ product.ProductName }}</label>
+            </td>
+            <td>＄{{ product.UnitPrice }}＋</td>
+            <td>{{ product.ServiceMinutes }} 分鐘</td>
+          </tr>
+        </tbody>
+      </table>
 
-        <h4 class="title-line text-center mb-5 text-sm">項目結算</h4>
-        <div class="item-total">
-          <div class="item-total-group w-75">
-            <h5>預期金額</h5>
-            <span class="mr-5">${{ TotalMoney.moneytotal }}+</span>
-            <h5>預估時間</h5>
-            <span class="mr-3">{{ TotalMoney.timetotal }}分鐘</span>
-          </div>
+      <h4 class="title-line text-center mb-5 text-sm">項目結算</h4>
+      <div class="item-total">
+        <div class="item-total-group w-75">
+          <h5>預期金額</h5>
+          <span class="mr-5">${{ TotalMoney.moneytotal }}+</span>
+          <h5>預估時間</h5>
+          <span class="mr-3">{{ TotalMoney.timetotal }}分鐘</span>
         </div>
       </div>
-      <div class="container border">
-        <template>
-          <div>
-            <date-picker
-              v-model="time1"
-              type="date"
-              value-type="format"
-              placeholder="Select datetime"
-              :show-time-panel="showTimePanel"
-              @close="handleOpenChange"
-              format="YYYY-MM-DD"
-              :disabled-date="notBeforeToday"
-              @pick="selectDate"
-            >
-            </date-picker>
-          </div>
-          <!-- 選擇日期後篩選出空閑時間 -->
-        </template>
-        <ul class="d-flex justify-content-between">
-          <li v-for="freetime in freeTimeList" :key="freetime">
-            <button class="btn border" @click="selectTime(freetime)">
-              {{ freetime.replace('T', ' ').replace(':00:00', ':00') }}
-            </button>
-          </li>
-        </ul>
-      </div>
-      <!-- 顧客資訊 -->
-      <div class="container bg-reservation ">
-        <div class="information pt-3">
-          <h4 class="title-line text-center mb-4">顧客資訊</h4>
-          <div class="form-reservation">
-            <label for="name">預約姓名</label
-            ><input type="name" id="name" v-model="name" required />
-            <label for="tel">手機號碼</label
-            ><input type="tel" id="tel" v-model="tel" required />
-            <label for="email">Email</label
-            ><input type="email" id="email" v-model="email" required />
-            <label for="remarks">備註事項</label>
-            <textarea
-              id="remarks"
-              cols="30"
-              rows="4"
-              class="mb-4"
-              v-model="remarks"
-            ></textarea>
-            <!-- <router-link
+    </div>
+    <div class="container border">
+      <template>
+        <div>
+          <date-picker
+            v-model="time1"
+            type="date"
+            value-type="format"
+            placeholder="Select datetime"
+            :show-time-panel="showTimePanel"
+            @close="handleOpenChange"
+            format="YYYY-MM-DD"
+            :disabled-date="notBeforeToday"
+            @pick="selectDate"
+          >
+          </date-picker>
+        </div>
+        <!-- 選擇日期後篩選出空閑時間 -->
+      </template>
+      <ul class="d-flex justify-content-between">
+        <li v-for="freetime in freeTimeList" :key="freetime">
+          <button
+            type="button"
+            class="btn border"
+            @click="selectTime(freetime)"
+          >
+            {{ freetime.replace('T', ' ').replace(':00:00', ':00') }}
+          </button>
+        </li>
+      </ul>
+    </div>
+    <!-- 顧客資訊 -->
+    <div class="container bg-reservation ">
+      <div class="information pt-3">
+        <h4 class="title-line text-center mb-4">顧客資訊</h4>
+        <form class="form-reservation">
+          <label for="name">預約姓名</label
+          ><input type="name" id="name" v-model="name" required />
+          <label for="tel">手機號碼</label
+          ><input type="tel" id="tel" v-model="tel" />
+          <label for="text">介紹人</label
+          ><input type="text" id="text" v-model="text" />
+          <label for="remarks">備註事項</label>
+          <textarea
+            id="remarks"
+            cols="30"
+            rows="4"
+            class="mb-4"
+            v-model="remarks"
+          ></textarea>
+          <!-- <router-link
             :to="`/confirm/${orderId}`"
             class="btn-reservation btn"
-            @click="test"
+            @click="submitOrder"
             >預約送出
           </router-link> -->
-            <input class="btn-reservation" type="submit" value="預約送出" />
-            <!-- <button class="btn-reservation" :disabled="invalid">
-                預約送出
-              </button> -->
-          </div>
-        </div>
+          <!-- <button type="button" class="btn-reservation" @click="submitOrder">
+            預約送出
+          </button> -->
+          <button type="button" class="btn-reservation" @click="addList">
+            預約送出
+          </button>
+        </form>
       </div>
-    </form>
+    </div>
   </div>
 </template>
 
@@ -139,7 +143,7 @@ import 'vue2-datepicker/index.css';
 import {
   getDesigner,
   getStoreProductList,
-  postOrder,
+  // postOrder,
   getFreetime,
 } from '@/js/FontAppServices';
 
@@ -157,7 +161,7 @@ export default {
       listId: '',
       name: '',
       tel: '',
-      email: '',
+      text: '',
       remarks: '',
       orderTime: '',
       orderId: '', // post後回傳訂單Id
@@ -208,6 +212,7 @@ export default {
     selectTime(selecTime) {
       console.log(this.orderTime);
       this.orderTime = selecTime;
+      console.log(this.orderTime);
     },
     getProductHandler() {
       getStoreProductList().then((res) => {
@@ -225,29 +230,48 @@ export default {
     //     }
     //   });
     // },
-    sendOrderInfoHandler() {
-      const data1 = this.$qs.stringify({
+
+    // 預約頁面
+    // submitOrder() {
+    //   const data1 = this.$qs.stringify({
+    //     OrderTime: this.orderTime,
+    //     StoreRemark: '',
+    //     DesignerId: this.listId,
+    //     CustomerName: this.name,
+    //     CustomerPhone: this.tel,
+    //     CustomerIntroducer: this.text,
+    //     CustomerRemark: this.remarks,
+    //     OrderDetails: this.checklist,
+    //   });
+    //   postOrder(data1).then((res) => {
+    //     if (res.data) {
+    //       this.orderId = res.data.orderId;
+    //       this.$router.push(`/confirm/${this.orderId}`);
+    //     }
+    //   });
+    // },
+    addList() {
+      const data2 = JSON.stringify({
         OrderTime: this.orderTime,
         StoreRemark: '',
         DesignerId: this.listId,
+        DesignerName: this.designer.Name,
+        DesignerSummary: this.designer.Details,
         CustomerName: this.name,
         CustomerPhone: this.tel,
-        CustomerEmail: this.email,
-        CustomerIntroducer: '',
+        CustomerIntroducer: this.text,
         CustomerRemark: this.remarks,
         OrderDetails: this.checklist,
+        Amount: this.TotalMoney.moneytotal,
+        ServiceMinutes: this.TotalMoney.timetotal,
       });
       if (this.checklist.length === 0) {
         console.log('1111');
       } else {
-        postOrder(data1).then((res) => {
-          console.log(res);
-          if (res.data) {
-            this.orderId = res.data.orderId;
-            // this.$router.push(`/confirm/${this.orderId}`);
-          }
-        });
+        sessionStorage.setItem('list', data2);
+        console.log(data2);
       }
+      // this.$router.push('/confirm');
     },
   },
   created() {

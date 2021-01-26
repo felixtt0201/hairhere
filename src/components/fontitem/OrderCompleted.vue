@@ -24,9 +24,9 @@
               class="col-md-6 d-flex flex-column justify-content-around align-items-center"
             >
               <h4>本次預約設計師</h4>
-              <h5>社稷師</h5>
+              <h5>{{ orderDetails.DesignerName }}</h5>
               <p class="w-50 border-left">
-                設計專業專業剪燙染護頭皮養護精緻編髮
+                {{ orderDetails.DesignerSummary }}
               </p>
             </div>
           </div>
@@ -38,26 +38,26 @@
         <h4 class="title-line text-center">顧客資訊</h4>
         <div class="container pt-4">
           <div class="pt-3 custom-information">
-            <!-- <ul class="list-style p-0">
+            <ul class="list-style p-0">
               <li class="d-flex">
                 <p>預約姓名</p>
-                <p>蔡秉逸</p>
+                <p>{{ orderDetails.CustomerName }}</p>
               </li>
               <li class="d-flex">
                 <p>手機號碼</p>
-                <p>0912-333-333</p>
+                <p>{{ orderDetails.CustomerPhone }}</p>
               </li>
               <li class="d-flex">
-                <p>信箱Email</p>
-                <p>ben123@g.com</p>
+                <p>介紹人</p>
+                <p>{{ orderDetails.CustomerIntroducer }}</p>
               </li>
               <li>
                 <p class="d-flex">備註事項</p>
                 <p>
-                  還我漂漂拳還我漂漂拳還我漂漂拳還我漂漂拳還我漂漂拳還我漂漂拳還我漂漂拳還我漂漂拳
+                  {{ orderDetails.CustomerRemark }}
                 </p>
               </li>
-            </ul> -->
+            </ul>
           </div>
         </div>
       </div>
@@ -66,20 +66,19 @@
           <!-- <h4 class="mb-4 title-line">預約資訊</h4> -->
           <div>
             <h5>預約時間</h5>
-            <p>2021/1/1 13:00</p>
+            <p>{{ orderTime.replace('T', ' ').replace(':00:00', ':00') }}</p>
           </div>
           <div>
             <h5>預約項目</h5>
             <ul class="list-style p-0">
-              <li class="d-flex justify-content-around">
-                <p>洗髮</p>
-                <p>$300</p>
-                <p>30分</p>
-              </li>
-              <li class="d-flex justify-content-around">
-                <p>染髮</p>
-                <p>$3000</p>
-                <p>120分</p>
+              <li
+                class="d-flex justify-content-between"
+                v-for="detail in orderDetails.Detail"
+                :key="detail.Id"
+              >
+                <p>{{ detail.ProductName }}</p>
+                <p>＄{{ detail.UnitPrice }}</p>
+                <p>{{ detail.ServiceMinutes }}分鐘</p>
               </li>
             </ul>
           </div>
@@ -87,11 +86,11 @@
           <div class="d-flex justify-content-around">
             <div class="d-flex">
               <h5 class="pr-5">預估總額</h5>
-              <p>$2300</p>
+              <p>＄{{ orderDetails.Amount }}</p>
             </div>
             <div class="d-flex">
               <h5 class="pr-5">預估時間</h5>
-              <p>150分</p>
+              <p>{{ orderDetails.ServiceMinutes }}分鐘</p>
             </div>
           </div>
         </div>
@@ -101,7 +100,29 @@
 </template>
 
 <script>
-export default {};
+import { getOrder } from '@/js/FontAppServices';
+
+export default {
+  data() {
+    return {
+      orderDetails: [],
+      orderTime: '',
+    };
+  },
+  methods: {
+    getInfoHandler() {
+      getOrder(this.orderId).then((res) => {
+        console.log(res);
+        this.orderDetails = res.data.BasicData;
+        this.orderTime = this.orderDetails.OrderTime;
+      });
+    },
+  },
+  created() {
+    this.orderId = this.$route.params.orderId;
+    this.getInfoHandler();
+  },
+};
 </script>
 
 <style lang="scss" scoped>

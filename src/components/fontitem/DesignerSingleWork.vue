@@ -30,12 +30,52 @@
       <div class="row justify-content-center">
         <div class="col-md-10">
           <div class="row">
-            <div class="col-md-12 p40">
-              <CarsouelB
-                :starting-image="2"
-                :images="images"
-                :auto-slide-interval="3000"
-              />
+            <div class="col-md-12 p40 d-flex">
+              <!-- Carsouel -->
+              <!-- Main slider -->
+              <template class="d-flex">
+                <splide :options="primaryOptions" ref="primary">
+                  <splide-slide
+                    v-for="(slide, index) in slides"
+                    :key="index"
+                    class="carsouelImg border"
+                    :style="{ backgroundImage: `url(${slide})` }"
+                  >
+                    <img :style="{ backgroundImage: `url(${slide})` }" />
+                  </splide-slide>
+                </splide>
+              </template>
+              <template>
+                <div></div>
+              </template>
+              <div class="ao">
+                <div>
+                  <h4>{{ workDetail.Name }}</h4>
+                  <p class="mb-5 border-left">
+                    {{ workDetail.Summary }}
+                  </p>
+                  <ul class="d-flex justify-content-center p-0 mb-4 border">
+                    <li
+                      class="designer-tag"
+                      v-for="tag in workDetail.Category"
+                      :key="tag"
+                    >
+                      {{ tag }}
+                    </li>
+                  </ul>
+                </div>
+                <!-- Thumbnail slider -->
+                <splide :options="secondaryOptions" ref="secondary">
+                  <splide-slide
+                    v-for="(slide, index) in slides"
+                    :key="index"
+                    :style="{ backgroundImage: `url(${slide})` }"
+                    class="carsouelImg"
+                  >
+                    <img :style="{ backgroundImage: `url(${slide})` }" />
+                  </splide-slide>
+                </splide>
+              </div>
             </div>
             <!-- <div class="col-md-4">
               <h4 class="mb-4">{{ workDetail.Name }}</h4>
@@ -58,8 +98,9 @@
 </template>
 
 <script>
-import { getSingleWork } from '@/js/FontAppServices';
-import CarsouelB from '@/components/fontitem/CarsouelB.vue';
+import { getSingleWork, getDesigner } from '@/js/FontAppServices';
+import { Splide, SplideSlide } from '@splidejs/vue-splide';
+import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 
 export default {
   components: {
@@ -72,48 +113,53 @@ export default {
       // designerId: '',
       designerDetail: '', // get到的設計師詳細資料
       category: [], // get分類
-      images: [
-        {
-          id: '',
-          big: '',
-          thumb: '',
-        },
+      // slide
+      slides: [
+        { backgroundImage: '' },
+        { backgroundImage: '' },
+        { backgroundImage: '' },
       ],
+      primaryOptions: {
+        type: 'loop',
+        perPage: 1,
+        perMove: 1,
+        gap: '1rem',
+        pagination: false,
+        arrows: false,
+        fixedWidth: 300,
+        fixedHeight: 300,
+      },
+      secondaryOptions: {
+        type: 'slide',
+        rewind: true,
+        fixedWidth: 150,
+        fixedHeight: 150,
+        gap: '2rem',
+        pagination: false,
+        cover: true,
+        focus: 'center',
+        arrows: false,
+        isNavigation: true,
+        interval: 3000,
+        autoplay: true,
+      },
     };
   },
   methods: {
     getInfoHandler() {
-      // getSingleWork(this.workId).then((res) => {
-      //   console.log(res);
-      //   this.workDetail = res.data.BasicData;
-      //   this.category = this.workDetail.Category;
-      //   const designerId = this.workDetail.DesignerId;
-      //   getDesigner(designerId).then((response) => {
-      //     console.log(response);
-      //     this.designerDetail = response.data;
-      //   });
-      // });
-      // getSingleWork(this.workId).then((res) => {
-      //   console.log(res.data.BasicData.PathArray);
-      // });
-      getSingleWork(71).then((res) => {
-        console.log(res.data.BasicData);
-        const picData = res.data.BasicData;
-        console.log(picData.Photo1Path);
-        this.images.push({
-          id: '1',
-          big: picData.Photo1Path,
-          thumb: picData.Photo1Path,
-        });
-        this.images.push({
-          id: '2',
-          big: picData.Photo2Path,
-          thumb: picData.Photo3Path,
-        });
-        this.images.push({
-          id: '3',
-          big: picData.Photo3Path,
-          thumb: picData.Photo3Path,
+      getSingleWork(this.workId).then((res) => {
+        console.log(res);
+        this.workDetail = res.data.BasicData;
+        this.category = this.workDetail.Category;
+        const designerId = this.workDetail.DesignerId;
+        // this.slides[0].src = this.workDetail.Photo1Path;
+        // this.slides[1].src = this.workDetail.Photo2Path;
+        // this.slides[2].src = this.workDetail.Photo3Path;
+        this.slides = this.workDetail.PathArray;
+        console.log(this.slides);
+        getDesigner(designerId).then((response) => {
+          console.log(response);
+          this.designerDetail = response.data;
         });
       });
     },
@@ -121,22 +167,22 @@ export default {
   created() {
     this.workId = this.$route.params.workId;
     this.getInfoHandler();
-    // console.log(this.workId);
+  },
+  mounted() {
+    // Set the sync target.
+    this.$refs.primary.sync(this.$refs.secondary.splide);
   },
 };
 </script>
 
-<style>
-#designerSingleWork {
-  font-family: 'Lato', sans-serif;
-  font-weight: 300;
-  margin: 0 auto;
-  max-width: 900px;
-  padding: 30px;
+<style lang="scss" scoped>
+.ao {
+  display: flex;
+  flex-direction: column;
 }
-
-.main {
-  margin-bottom: 30px;
+.splide__slide img {
+  /* width: 200px; */
+  height: 200px;
 }
 
 .thumbnails {
@@ -169,48 +215,25 @@ export default {
 .agile__dot {
   margin: 0 10px;
 }
-.agile__dot button {
-  background-color: #eee;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  display: block;
-  height: 10px;
-  font-size: 0;
-  line-height: 0;
-  margin: 0;
-  padding: 0;
-  transition-duration: 0.3s;
-  width: 10px;
+#splide01 {
+  max-width: 50%;
 }
-.agile__dot--current button,
-.agile__dot:hover button {
-  background-color: #888;
+#splide01-track {
+  width: 70%;
+}
+#splide02-track {
+  /* width: 500px; */
+  display: flex;
+  justify-content: space-between;
+  /* align-items: center; */
+}
+#splide02 {
+  margin-left: auto;
 }
 
-.slide {
-  align-items: center;
-  box-sizing: border-box;
-  color: #fff;
-  display: flex;
-  height: 450px;
-  justify-content: center;
-}
-.slide--thumbniail {
-  cursor: pointer;
-  height: 100px;
-  padding: 0 5px;
-  transition: opacity 0.3s;
-}
-.slide--thumbniail:hover {
-  opacity: 0.75;
-}
-.slide img {
-  height: 100%;
-  -o-object-fit: cover;
-  object-fit: cover;
-  -o-object-position: center;
-  object-position: center;
-  width: 100%;
+.carsouelImg {
+  background-position: center center;
+  background-repeat: no-repeat;
+  /* background-size: cover; */
 }
 </style>

@@ -32,7 +32,7 @@
           <div class="carousel-item">
             <img
               class="d-block w-100"
-              src="@/assets/img/line_banner.jpg"
+              src="@/assets/img/unnamed 1.svg"
               alt="Second slide"
             />
             <div class="carousel-caption d-none d-md-block">
@@ -89,9 +89,7 @@
           <div class="row border-h70">
             <div class="col-md-3 index-infomation">
               <h4>About us</h4>
-              <p>
-                {{ basicData.Summary }}
-              </p>
+              <p v-html="basicData.Summary"></p>
             </div>
             <div class="col-md-2 index-infomation">
               <h4>服務項目</h4>
@@ -113,8 +111,8 @@
                 <li>
                   營業時間
                   <p>
-                    每週二至日 上午{{ business.BusinessHoursOpen }}~下午{{
-                      business.BusinessHoursClose
+                    每週二至日 上午{{ business.StoreOpen }}~下午{{
+                      business.StoreClose
                     }}
                     <span class="d-block"
                       >(每週{{ business.RestDayOfWeek[0] }}公休)</span
@@ -165,35 +163,20 @@
     </div>
     <div class="container">
       <h4 class="title-line w-100 text-center mb-4 text-main">髮型作品</h4>
-      <Carsouel />
+      <Carsouel :msg="works" />
       <h4 class="title-line w-100 text-center mb-4 text-main">設計師</h4>
-      <Carsouel />
-      <!-- <ul class="list-style d-flex justify-content-center mb-5">
-        <li
-          class="background-img mr-5"
-          style="background-image: url(https://images.unsplash.com/photo-1581674210501-c760093514e8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NTl8fGhhaXIlMjBzYWxvbnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60);"
-        ></li>
-        <li
-          class="background-img mr-5"
-          style="background-image: url(https://images.unsplash.com/photo-1605980625600-88b46abafa8d?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NDh8fGhhaXIlMjBzYWxvbnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60);"
-        ></li>
-        <li
-          class="background-img mr-5"
-          style="background-image: url(https://images.unsplash.com/photo-1444820518794-41bbbccf4ccd?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTZ8fGhhaXIlMjBzYWxvbnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60);"
-        ></li>
-        <li
-          class="background-img mr-5"
-          style="background-image: url(https://images.unsplash.com/photo-1586548634342-04801afc8b13?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MjA5fHxoYWlyJTIwc2Fsb258ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60);"
-        ></li>
-      </ul> -->
+      <Carsouel :des="designers" />
     </div>
   </div>
 </template>
 
 <script>
-import { getStoreTotalInfo } from '@/js/FontAppServices';
+import {
+  getStoreTotalInfo,
+  getworkss,
+  getAllDesigner,
+} from '@/js/FontAppServices';
 import Carsouel from '@/components/fontitem/Carsouel.vue';
-// import CarsouelB from '@/components/fontitem/CarsouelB.vue';
 
 export default {
   components: {
@@ -216,23 +199,8 @@ export default {
         // RestDayOfWeekString: '',
       },
       services: [],
-      // images: [
-      //   {
-      //     id: '1',
-      //     big: 'https://picsum.photos/200/300/?blur=2',
-      //     thumb: 'https://picsum.photos/200/300/?blur=2',
-      //   },
-      //   {
-      //     id: '2',
-      //     big: 'https://picsum.photos/id/237/200/300',
-      //     thumb: 'https://picsum.photos/id/237/200/300',
-      //   },
-      //   {
-      //     id: '3',
-      //     big: 'https://picsum.photos/200/300/?blur=3',
-      //     thumb: 'https://picsum.photos/200/300/?blur=3',
-      //   },
-      // ],
+      works: [],
+      designers: [],
     };
   },
   methods: {
@@ -245,33 +213,24 @@ export default {
         // console.log(this.services);
       });
     },
-    getSingleWorks() {
-      // getSingleWork(71).then((res) => {
-      //   console.log(res.data.BasicData);
-      //   const picData = res.data.BasicData;
-      //   console.log(picData.Photo1Path);
-      //   this.images.push({
-      //     id: '1',
-      //     big: picData.Photo1Path,
-      //     thumb: picData.Photo1Path,
-      //   });
-      //   this.images.push({
-      //     id: '2',
-      //     big: picData.Photo2Path,
-      //     thumb: picData.Photo3Path,
-      //   });
-      //   this.images.push({
-      //     id: '3',
-      //     big: picData.Photo3Path,
-      //     thumb: picData.Photo3Path,
-      //   });
-      // });
+    getAllworks() {
+      getworkss().then((res) => {
+        console.log(res);
+        this.works = res.data.BasicData;
+        console.log(this.works);
+      });
+    },
+    getAllDesigners() {
+      getAllDesigner().then((res) => {
+        console.log(res);
+        this.designers = res.data.BasicData;
+      });
     },
   },
   mounted() {
-    this.getSingleWorks();
-    this.getInfoHandler();
-    // console.log(this.basicData);
+    this.GetStoreInfo();
+    this.getAllworks();
+    this.getAllDesigners();
   },
 };
 </script>
