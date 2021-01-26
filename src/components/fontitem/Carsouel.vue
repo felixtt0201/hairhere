@@ -47,7 +47,7 @@ export default {
         perPage: 4, // 確定每頁應顯示多少張幻燈片
         // gap: 1,
         pagination: false,
-        interval: 500, // 移動時間
+        interval: 800, // 移動時間
         // pauseOnHover: true, // 是否在懸停滑塊時停止自動播放
         cover: true,
         breakpoints: {
