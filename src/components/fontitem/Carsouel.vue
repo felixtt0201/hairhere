@@ -24,7 +24,6 @@
 </template>
 
 <script>
-import { getworkss } from '@/js/FontAppServices';
 import { Splide, SplideSlide } from '@splidejs/vue-splide';
 // import { getworkss } from '@/js/FontAppServices';
 
@@ -49,7 +48,7 @@ export default {
         // gap: 1,
         pagination: false,
         interval: 500, // 移動時間
-        pauseOnHover: true, // 是否在懸停滑塊時停止自動播放
+        // pauseOnHover: true, // 是否在懸停滑塊時停止自動播放
         cover: true,
         breakpoints: {
           // 斷點時候跑幾張

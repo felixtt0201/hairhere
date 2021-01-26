@@ -99,13 +99,9 @@
 
 <script>
 import { getSingleWork, getDesigner } from '@/js/FontAppServices';
-import { Splide, SplideSlide } from '@splidejs/vue-splide';
 import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 
 export default {
-  components: {
-    CarsouelB,
-  },
   data() {
     return {
       workId: '', // params接到的id

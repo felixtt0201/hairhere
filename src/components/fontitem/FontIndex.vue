@@ -180,8 +180,7 @@ import Carsouel from '@/components/fontitem/Carsouel.vue';
 
 export default {
   components: {
-    // Carsouel,
-    CarsouelB,
+    Carsouel,
   },
   data() {
     return {
@@ -192,25 +191,18 @@ export default {
         // phone: '',
         // summary: '',
       },
-      business: {
-        // BusinessDaysOfWeek: '',
-        // BusinessHoursClose: '',
-        // BusinessHoursOpen: '',
-        // RestDayOfWeekString: '',
-      },
-      services: [],
-      works: [],
-      designers: [],
+      business: {}, // 店家營業時間
+      services: [], // 店家服務項目
+      works: [], // 所有作品
+      designers: [], // 所有設計師
     };
   },
   methods: {
     getInfoHandler() {
       getStoreTotalInfo().then((res) => {
-        // console.log(res.data);
         this.basicData = res.data.BasicData;
         this.business = res.data.Business;
         this.services = res.data.ServicesPublic;
-        // console.log(this.services);
       });
     },
     getAllworks() {
@@ -222,13 +214,12 @@ export default {
     },
     getAllDesigners() {
       getAllDesigner().then((res) => {
-        console.log(res);
         this.designers = res.data.BasicData;
       });
     },
   },
   mounted() {
-    this.GetStoreInfo();
+    this.getInfoHandler();
     this.getAllworks();
     this.getAllDesigners();
   },

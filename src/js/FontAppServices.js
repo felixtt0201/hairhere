@@ -47,6 +47,11 @@ const getAllDesigner = () =>
   // eslint-disable-next-line implicit-arrow-linebreak
   storeApi.get('/GET/DesignerList?storeId=2');
 
+// get全部設計師＆分頁
+const getAllDesignerPage = (index, limit) =>
+  // eslint-disable-next-line implicit-arrow-linebreak
+  storeApi.get(`/GET/DesignerList?storeId=2&Index=${index}&Limit=${limit}`);
+
 // get單一設計師資料
 const getDesigner = (dId) => storeApi.get(`/GET/Designer?id=${dId}`);
 
@@ -115,4 +120,5 @@ export {
   getOrder,
   getSingleWork,
   getFreetime,
+  getAllDesignerPage,
 };
