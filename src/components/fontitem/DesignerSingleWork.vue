@@ -1,5 +1,5 @@
 <template>
-  <div class="container text-main">
+  <div class="container text-main" id="designerSingleWork">
     <div class="row justify-content-center">
       <!-- <div class="col-md-1 border"></div> -->
       <div class="col-md-8 mb-4">
@@ -88,6 +88,8 @@
                 </li>
               </ul>
             </div> -->
+            <!--new Ca-->
+            <div class="col-md-12 p40"></div>
           </div>
         </div>
       </div>
@@ -102,9 +104,7 @@ import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 
 export default {
   components: {
-    // cartest,
-    Splide,
-    SplideSlide,
+    CarsouelB,
   },
   data() {
     return {
@@ -184,13 +184,36 @@ export default {
   /* width: 200px; */
   height: 200px;
 }
-.my-class-arrows {
-  color: pink !important;
-  background-color: pink !important;
+
+.thumbnails {
+  margin: 0 -5px;
+  width: calc(100% + 10px);
 }
-.splide__arrow--next,
-.splide__arrow--prev {
-  background-color: transparent;
+
+.agile__nav-button {
+  background: transparent;
+  border: none;
+  color: #ccc;
+  cursor: pointer;
+  font-size: 24px;
+  transition-duration: 0.3s;
+}
+.thumbnails .agile__nav-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.thumbnails .agile__nav-button--prev {
+  left: -45px;
+}
+.thumbnails .agile__nav-button--next {
+  right: -45px;
+}
+.agile__nav-button:hover {
+  color: #888;
+}
+.agile__dot {
+  margin: 0 10px;
 }
 #splide01 {
   max-width: 50%;

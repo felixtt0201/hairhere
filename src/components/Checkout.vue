@@ -76,14 +76,7 @@
     <!--Modal--->
     <form>
       <!--新帳單--->
-      <div
-        class="modal fade"
-        id="checkoutMoadel"
-        tabindex="-1"
-        aria-labelledby="checkoutMoadel"
-        aria-hidden="true"
-        v-if="isNew"
-      >
+      <div class="modal fade" id="checkoutMoadel" tabindex="-1" v-if="isNew">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
@@ -285,14 +278,7 @@
       </div>
 
       <!--舊帳單--->
-      <div
-        class="modal fade"
-        id="checkoutMoadel"
-        tabindex="-1"
-        aria-labelledby="checkoutMoadel"
-        aria-hidden="true"
-        v-else
-      >
+      <div class="modal fade" id="checkoutMoadel" tabindex="-1" v-else>
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
@@ -364,7 +350,7 @@
                     </tr>
                   </thead>
                   <tbody class="text-gray-800">
-                    <tr v-for="(obj, index) in editInfo.Detail" :key="index">
+                    <tr v-for="(obj, index) in editInfo.Detail" :key="obj.Id">
                       <th scope="row">{{ index + 1 }}</th>
                       <td>{{ obj.ProductName }}</td>
                       <td>{{ obj.UnitPrice }}</td>

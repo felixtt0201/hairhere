@@ -180,7 +180,8 @@ import Carsouel from '@/components/fontitem/Carsouel.vue';
 
 export default {
   components: {
-    Carsouel,
+    // Carsouel,
+    CarsouelB,
   },
   data() {
     return {
@@ -203,13 +204,13 @@ export default {
     };
   },
   methods: {
-    GetStoreInfo() {
+    getInfoHandler() {
       getStoreTotalInfo().then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         this.basicData = res.data.BasicData;
         this.business = res.data.Business;
         this.services = res.data.ServicesPublic;
-        console.log(this.services);
+        // console.log(this.services);
       });
     },
     getAllworks() {

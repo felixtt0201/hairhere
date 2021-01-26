@@ -1,19 +1,36 @@
 <template>
   <div id="app">
     <div>
-      <!-- <router-link to="/">Home</router-link> | -->
-      <!-- <router-link to="/about">About</router-link>| -->
-      <!-- <router-link :to="{ name: 'Dashboard' }">Dashboard</router-link>｜ -->
       <router-link to="/login">後台登入</router-link>
       <router-link :to="{ name: 'DesignerSingle' }">DesignerSingle</router-link>
-      <router-view></router-view>
+      <router-view v-if="isRouterAlive"></router-view>
     </div>
     <cartest />
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  provide() {
+    return {
+      reload: this.reload,
+    };
+  },
+  data() {
+    return {
+      isRouterAlive: true,
+    };
+  },
+  methods: {
+    // 頁面重新整理
+    reload() {
+      this.isRouterAlive = false;
+      this.$nextTick(() => {
+        this.isRouterAlive = true;
+      });
+    },
+  },
+};
 </script>
 
 <style lang="scss">

@@ -115,6 +115,8 @@ const postBill = (data) => storeApi.post('/POST/Bill', data);
 const patchBillStatus = (billId, data) =>
   // eslint-disable-next-line implicit-arrow-linebreak
   storeApi.patch(`/PATCH/Bill?id=${billId}`, data);
+// 查詢帳單
+const postCheckInfo = (data) => storeApi.post('POST/Bill/Search', data);
 
 // eslint-disable-next-line object-curly-newline
 export {
@@ -142,6 +144,7 @@ export {
   getBillList,
   getSingleBill,
   postBill,
+  postCheckInfo,
   patchBillStatus,
   getAllworkss, // 要修改名字
   patchWork,
