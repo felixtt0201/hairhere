@@ -6,32 +6,32 @@
     >
       <splide-slide
         class="background-img mr-5"
-        style="background-image: url(https://images.unsplash.com/photo-1605980625600-88b46abafa8d?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NDh8fGhhaXIlMjBzYWxvbnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60);"
+        :style="{ backgroundImage: `url(${pic1})` }"
       >
       </splide-slide>
       <splide-slide
         class="background-img mr-5"
-        style="background-image: url(https://images.unsplash.com/photo-1586548634342-04801afc8b13?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MjA5fHxoYWlyJTIwc2Fsb258ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60);"
+        :style="{ backgroundImage: `url(${pic2})` }"
       >
       </splide-slide>
       <splide-slide
         class="background-img mr-5"
-        style="background-image: url(https://images.unsplash.com/photo-1581674210501-c760093514e8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NTl8fGhhaXIlMjBzYWxvbnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60);"
+        :style="{ backgroundImage: `url(${pic3})` }"
       >
       </splide-slide>
       <splide-slide
         class="background-img mr-5"
-        style="background-image: url(https://images.unsplash.com/photo-1581674210501-c760093514e8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NTl8fGhhaXIlMjBzYWxvbnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60);"
+        :style="{ backgroundImage: `url(${pic1})` }"
       >
       </splide-slide>
       <splide-slide
         class="background-img mr-5"
-        style="background-image: url(https://images.unsplash.com/photo-1581674210501-c760093514e8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NTl8fGhhaXIlMjBzYWxvbnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60);"
+        :style="{ backgroundImage: `url(${pic2})` }"
       >
       </splide-slide>
       <splide-slide
         class="background-img mr-5"
-        style="background-image: url(https://images.unsplash.com/photo-1581674210501-c760093514e8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NTl8fGhhaXIlMjBzYWxvbnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60);"
+        :style="{ backgroundImage: `url(${pic3})` }"
       >
       </splide-slide>
     </splide>
@@ -57,7 +57,7 @@ export default {
         // gap: '1rem',
         autoplay: true,
         autoWidth: true,
-        perPage: 4, // 確定每頁應顯示多少張幻燈片
+        perPage: 1, // 確定每頁應顯示多少張幻燈片
         // gap: 1,
         pagination: false,
         interval: 3000, // 移動時間
@@ -71,17 +71,18 @@ export default {
           },
         },
       },
-      pic: '',
+      pic1: '',
+      pic2: '',
+      pic3: '',
     };
   },
   methods: {
     getPicInfo() {
       getworkss().then((res) => {
-        // console.log(res.data.BasicData);
-        this.pic = res.data.BasicData[0].Photo1;
-        // res.data.BasicData.forEach((i) => {
-        //   console.log(i.Photo1, i.Id);
-        // });
+        this.pic1 = res.data.BasicData[0].Photo1;
+        this.pic2 = res.data.BasicData[0].Photo2;
+        this.pic3 = res.data.BasicData[0].Photo3;
+        // console.log(this.pic1, this.pic2, this.pic3);
       });
     },
     // moved(splide, newIndex) {

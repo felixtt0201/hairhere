@@ -92,6 +92,9 @@ const searchworks = (data, page, show) =>
   // eslint-disable-next-line implicit-arrow-linebreak
   storeApi.get(`/GET/PortfolioList?index=${page}&limit=${show}&search=${data}`);
 
+// post查詢訂單
+const postOrderInfo = (data) => storeApi.post('POST/Order/Search', data);
+
 // eslint-disable-next-line object-curly-newline
 export {
   postStoreLogin,
@@ -115,4 +118,5 @@ export {
   getOrder,
   getSingleWork,
   getFreetime,
+  postOrderInfo,
 };

@@ -165,15 +165,9 @@
     </div>
     <div class="container">
       <h4 class="title-line w-100 text-center mb-4 text-main">髮型作品</h4>
-      <!-- <Carsouel /> -->
+      <Carsouel />
       <h4 class="title-line w-100 text-center mb-4 text-main">設計師</h4>
-      <!-- <Carsouel /> -->
-      <h4 class="title-line w-100 text-center mb-4 text-main">測試</h4>
-      <CarsouelB
-        :starting-image="2"
-        :images="images"
-        :auto-slide-interval="2000"
-      />
+      <Carsouel />
       <!-- <ul class="list-style d-flex justify-content-center mb-5">
         <li
           class="background-img mr-5"
@@ -198,13 +192,13 @@
 
 <script>
 import { getStoreTotalInfo } from '@/js/FontAppServices';
-// import Carsouel from '@/components/fontitem/Carsouel.vue';
-import CarsouelB from '@/components/fontitem/CarsouelB.vue';
+import Carsouel from '@/components/fontitem/Carsouel.vue';
+// import CarsouelB from '@/components/fontitem/CarsouelB.vue';
 
 export default {
   components: {
-    // Carsouel,
-    CarsouelB,
+    Carsouel,
+    // CarsouelB,
   },
   data() {
     return {
@@ -222,28 +216,21 @@ export default {
         // RestDayOfWeekString: '',
       },
       services: [],
-      images: [
-        {
-          id: '1',
-          big: 'https://picsum.photos/200/300/?blur=2',
-          thumb: 'https://picsum.photos/200/300/?blur=2',
-        },
-        {
-          id: '2',
-          big: 'https://picsum.photos/id/237/200/300',
-          thumb: 'https://picsum.photos/id/237/200/300',
-        },
-        {
-          id: '3',
-          big: 'https://picsum.photos/200/300/?blur=3',
-          thumb: 'https://picsum.photos/200/300/?blur=3',
-        },
-      ],
       // images: [
       //   {
-      //     id: '',
-      //     big: '',
-      //     thumb: '',
+      //     id: '1',
+      //     big: 'https://picsum.photos/200/300/?blur=2',
+      //     thumb: 'https://picsum.photos/200/300/?blur=2',
+      //   },
+      //   {
+      //     id: '2',
+      //     big: 'https://picsum.photos/id/237/200/300',
+      //     thumb: 'https://picsum.photos/id/237/200/300',
+      //   },
+      //   {
+      //     id: '3',
+      //     big: 'https://picsum.photos/200/300/?blur=3',
+      //     thumb: 'https://picsum.photos/200/300/?blur=3',
       //   },
       // ],
     };
