@@ -4,6 +4,7 @@
       :options="options"
       class="list-style d-flex justify-content-center mb-5"
     >
+      <!-- <h4 class="title-line w-100 text-center mb-4 text-main">髮型作品</h4> -->
       <splide-slide
         v-for="work in msg"
         :key="work.Id"
@@ -46,7 +47,7 @@ export default {
         perPage: 1, // 確定每頁應顯示多少張幻燈片
         // gap: 1,
         pagination: false,
-        interval: 800, // 移動時間
+        interval: 600, // 移動時間
         // pauseOnHover: true, // 是否在懸停滑塊時停止自動播放
         cover: true,
         breakpoints: {
@@ -56,6 +57,10 @@ export default {
             destroy: true,
           },
         },
+      },
+      classes: {
+        prev: 'splide__arrow--prev carsourl-prev',
+        next: 'splide__arrow--next carsourl-next',
       },
       // works: [],
     };
@@ -74,8 +79,13 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.our-class-arrows {
-  color: black;
+<style lang="scss" .splide__arrow>
+.splide__arrow--next {
+  right: -25px !important;
+  background: transparent;
+}
+.splide__arrow--prev {
+  left: -40px !important;
+  background: transparent;
 }
 </style>
