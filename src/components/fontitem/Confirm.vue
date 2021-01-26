@@ -24,9 +24,9 @@
               class="col-md-6 d-flex flex-column justify-content-around align-items-center"
             >
               <h4>本次預約設計師</h4>
-              <h5>社稷師</h5>
+              <h5>{{ orderDetails.DesignerName }}</h5>
               <p class="w-50 border-left">
-                設計專業專業剪燙染護頭皮養護精緻編髮
+                這邊是設計師的描述
               </p>
             </div>
           </div>
@@ -40,20 +40,21 @@
       <hr />
       <div>
         <h5>預約時間</h5>
-        <p>2021/1/1 13:00</p>
+        <p>
+          {{ orderTime.replace('T', ' ').replace(':00:00', ':00') }}
+        </p>
       </div>
       <div>
         <h5>預約項目</h5>
         <ul class="list-style p-0">
-          <li class="d-flex justify-content-between">
-            <p>洗髮</p>
-            <p>$300</p>
-            <p>30分</p>
-          </li>
-          <li class="d-flex justify-content-between">
-            <p>染髮</p>
-            <p>$3000</p>
-            <p>120分</p>
+          <li
+            class="d-flex justify-content-between"
+            v-for="aa in orderDetails.Detail"
+            :key="aa.Id"
+          >
+            <p>{{ aa.ProductName }}</p>
+            <p>＄{{ aa.UnitPrice }}</p>
+            <p>{{ aa.ServiceMinutes }}分鐘</p>
           </li>
         </ul>
       </div>
@@ -61,9 +62,9 @@
       <h4 class="mb-4">－項目結算－</h4>
       <div>
         <h5>預估總額</h5>
-        <p>$2300</p>
+        <p>＄{{ orderDetails.Amount }}</p>
         <h5>預估時間</h5>
-        <p>150分</p>
+        <p>{{ orderDetails.ServiceMinutes }}分鐘</p>
       </div>
     </div>
     <div class="container bg-reservation pt-4">
@@ -72,23 +73,20 @@
         <ul class="list-style w-50">
           <li class="d-flex">
             <p>預約姓名</p>
-            <p>蔡秉逸</p>
+            <p>{{ orderDetails.CustomerName }}</p>
           </li>
           <li class="d-flex">
             <p>手機號碼</p>
-            <p>0912-333-333</p>
+            <p>{{ orderDetails.CustomerPhone }}</p>
           </li>
-          <li class="d-flex">
-            <p>信箱Email</p>
-            <p>ben123@g.com</p>
+          <li class="d-flex" v-if="orderDetails.CustomerIntroducer">
+            <p>介紹人</p>
+            <p>{{ orderDetails.CustomerIntroducer }}</p>
           </li>
-          <li>
+          <li v-if="orderDetails.CustomerRemark">
             <p>備註事項</p>
             <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Qui
-              ipsum nemo quos maiores incidunt debitis velit at, voluptas ipsa!
-              Labore voluptates saepe optio reiciendis laudantium accusantium
-              molestias quod adipisci id.
+              {{ orderDetails.CustomerRemark }}
             </p>
           </li>
         </ul>
@@ -101,23 +99,30 @@
 </template>
 
 <script>
-// import { getOrder } from '@/js/FontAppServices';
+import { getOrder } from '@/js/FontAppServices';
 
 export default {
   data() {
     return {
-      aa: '',
+      orderId: '',
+      orderDetails: [],
+      orderTime: '',
     };
   },
   methods: {
-    getInfoHandler(aa) {
-      this.$http.get(`https://salon.rocket-coding.com/Get/Order?id=${aa}`);
+    getInfoHandler() {
+      getOrder(this.orderId).then((res) => {
+        console.log(res);
+        this.orderDetails = res.data.BasicData;
+        // console.log(this.orderDetails);
+        this.orderTime = this.orderDetails.OrderTime;
+        // console.log(this.OrderTime);
+      });
     },
   },
   created() {
-    this.aa = this.$route.params.orderId;
-    console.log(this.aa);
-    this.getInfoHandler(this.aa);
+    this.orderId = this.$route.params.orderId;
+    this.getInfoHandler();
   },
 };
 </script>

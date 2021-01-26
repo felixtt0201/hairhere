@@ -1,22 +1,46 @@
 <template>
   <div>
     <a href="#top" class="top">
-      Top
+      TOP
     </a>
   </div>
 </template>
 
-<script>
-export default {};
-</script>
+<script></script>
 
 <style lang="scss">
 .top {
-  width: 50px;
-  height: 50px;
-  // padding: 20px;
-  background: skyblue;
+  // width: 50px;
+  // height: 50px;
+  background: #cdc3b7;
   position: fixed;
   bottom: 50%;
+  right: 0;
+  // z-index: 20;
+  text-decoration: none !important;
+  padding: 10px;
+  border-radius: 10px 40px;
+  color: #1d3d4a;
+  font-weight: bolder;
+  &:hover {
+    bottom: 52%;
+    right: 1px;
+    transition: all 0.5s;
+  }
+}
+// 滾動樣式
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(139, 15, 15, 0.3);
+  background-color: #cdc3b7;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  background-color: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #7d7265;
+  border: 1px solid #7d7265;
 }
 </style>

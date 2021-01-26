@@ -78,45 +78,7 @@
               </ul>
             </div> -->
             <!--new Ca-->
-            <div class="col-md-12 p40">
-              <VueAgile
-                class="main"
-                ref="main"
-                :options="options1"
-                :as-nav-for="asNavFor1"
-              >
-                <div
-                  class="slide"
-                  v-for="(slide, index) in slides"
-                  :key="index"
-                  :class="`slide--${index}`"
-                >
-                  <img :src="slide" />
-                </div>
-              </VueAgile>
-              <VueAgile
-                class="thumbnails"
-                ref="thumbnails"
-                :options="options2"
-                :as-nav-for="asNavFor2"
-              >
-                <div
-                  class="slide slide--thumbniail"
-                  v-for="(slide, index) in slides"
-                  :key="index"
-                  :class="`slide--${index}`"
-                  @click="$refs.thumbnails.goTo(index)"
-                >
-                  <img :src="slide" />
-                </div>
-                <template slot="prevButton"
-                  ><i class="fas fa-chevron-left"></i
-                ></template>
-                <template slot="nextButton"
-                  ><i class="fas fa-chevron-right"></i
-                ></template>
-              </VueAgile>
-            </div>
+            <div class="col-md-12 p40"></div>
           </div>
         </div>
       </div>
@@ -130,64 +92,20 @@ import { getSingleWork } from '@/js/FontAppServices';
 // import { Splide, SplideSlide } from '@splidejs/vue-splide';
 import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 // import cartest from './cartest.vue';
-import { VueAgile } from 'vue-agile';
 
 export default {
   components: {
     // cartest,
     // Splide,
     // SplideSlide,
-    VueAgile,
   },
   data() {
     return {
-      isActive: false,
       workId: '', // params接到的id
       workDetail: '', // get到的作品詳細資料
       // designerId: '',
       designerDetail: '', // get到的設計師詳細資料
       category: [], // get分類
-
-      // vue agile輪播圖資料
-      asNavFor1: [],
-      asNavFor2: [],
-      options1: {
-        dots: false,
-        fade: true,
-        navButtons: false,
-      },
-      options2: {
-        autoplay: true,
-        centerMode: true,
-        dots: false,
-        navButtons: false,
-        slidesToShow: 3,
-        responsive: [
-          {
-            breakpoint: 600,
-            settings: {
-              slidesToShow: 3,
-            },
-          },
-
-          {
-            breakpoint: 1000,
-            settings: {
-              navButtons: true,
-            },
-          },
-        ],
-      },
-      slides: [],
-      // slides: [
-      //   'https://images.unsplash.com/photo-1453831362806-3d5577f014a4?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ',
-      //   'https://images.unsplash.com/photo-1496412705862-e0088f16f791?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ',
-      //   'https://images.unsplash.com/photo-1506354666786-959d6d497f1a?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ',
-      //   'https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ',
-      //   'https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ',
-      //   'https://images.unsplash.com/photo-1472926373053-51b220987527?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ',
-      //   'https://images.unsplash.com/photo-1497534547324-0ebb3f052e88?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ',
-      // ],
     };
   },
   methods: {
@@ -204,17 +122,7 @@ export default {
       // });
 
       await getSingleWork(this.workId).then((res) => {
-        // const data = res.data.BasicData;
-        // this.slides.push({ src: data.Photo1Path });
-        // this.slides.push({ src: data.Photo2Path });
-        // this.slides.push({ src: data.Photo3Path });
         console.log(res.data.BasicData.PathArray);
-        // const newData = res.data.BasicData.PathArray;
-        // newData.forEach((i) => {
-        //   this.slides.push(i);
-        // });
-        this.slides = res.data.BasicData.PathArray;
-        // this.slides = this.slides.concat(res.data.BasicData.PathArray);
       });
       // this.isActive = true;
       this.$refs.main.reload();
@@ -224,23 +132,6 @@ export default {
   created() {
     this.workId = this.$route.params.workId;
     // console.log(this.workId);
-  },
-  mounted() {
-    setTimeout(() => {
-      this.slides.push({
-        src:
-          'https://images.unsplash.com/photo-1611314569822-e84c559262b5?ixid=MXwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-      });
-    }, 5000);
-    // Set the sync target.
-    // this.$refs.primary.sync(this.$refs.secondary.splide);
-    this.getInfoHandler();
-    // this.isActive = true;
-    this.asNavFor1.push(this.$refs.thumbnails);
-    this.asNavFor2.push(this.$refs.main);
-    console.log('123', this.$refs.main);
-    this.$refs.main.reload();
-    this.$refs.thumbnails.reload();
   },
 };
 </script>
