@@ -31,40 +31,11 @@
         <div class="col-md-10">
           <div class="row">
             <div class="col-md-12 p40">
-              <!-- <cartest /> -->
-              <!-- car -->
-              <!-- Main slider -->
-
-              <!-- <splide :options="primaryOptions" ref="primary">
-                <splide-slide
-                  v-for="(slide, index) in slides"
-                  :key="index"
-                  :id="`splide11-slide${index}`"
-                  aria-hidden="false"
-                  tabindex="0"
-                  class="is-active is-visible"
-                >
-                  <img :src="slide.src" />
-                </splide-slide>
-              </splide>
-
-              Thumbnail slider
-              <splide :options="secondaryOptions" ref="secondary">
-                <splide-slide
-                  v-for="(slide, index) in slides"
-                  :key="index"
-                  class="is-active is-visible"
-                  role="button"
-                  :id="`splide11-slide${index}`"
-                  aria-hidden="false"
-                  tabindex="0"
-                  :aria-controls="`splide11-slide${index}`"
-                  aria-current="true"
-                  :aria-label="`Go to slide ${index}`"
-                >
-                  <img :src="slide.src" />
-                </splide-slide>
-              </splide> -->
+              <CarsouelB
+                :starting-image="2"
+                :images="images"
+                :auto-slide-interval="3000"
+              />
             </div>
             <!-- <div class="col-md-4">
               <h4 class="mb-4">{{ workDetail.Name }}</h4>
@@ -88,16 +59,11 @@
 
 <script>
 import { getSingleWork } from '@/js/FontAppServices';
-// getDesigner
-// import { Splide, SplideSlide } from '@splidejs/vue-splide';
-import '@splidejs/splide/dist/css/themes/splide-default.min.css';
-// import cartest from './cartest.vue';
+import CarsouelB from '@/components/fontitem/CarsouelB.vue';
 
 export default {
   components: {
-    // cartest,
-    // Splide,
-    // SplideSlide,
+    CarsouelB,
   },
   data() {
     return {
@@ -106,10 +72,17 @@ export default {
       // designerId: '',
       designerDetail: '', // get到的設計師詳細資料
       category: [], // get分類
+      images: [
+        {
+          id: '',
+          big: '',
+          thumb: '',
+        },
+      ],
     };
   },
   methods: {
-    async getInfoHandler() {
+    getInfoHandler() {
       // getSingleWork(this.workId).then((res) => {
       //   console.log(res);
       //   this.workDetail = res.data.BasicData;
@@ -120,17 +93,34 @@ export default {
       //     this.designerDetail = response.data;
       //   });
       // });
-
-      await getSingleWork(this.workId).then((res) => {
-        console.log(res.data.BasicData.PathArray);
+      // getSingleWork(this.workId).then((res) => {
+      //   console.log(res.data.BasicData.PathArray);
+      // });
+      getSingleWork(71).then((res) => {
+        console.log(res.data.BasicData);
+        const picData = res.data.BasicData;
+        console.log(picData.Photo1Path);
+        this.images.push({
+          id: '1',
+          big: picData.Photo1Path,
+          thumb: picData.Photo1Path,
+        });
+        this.images.push({
+          id: '2',
+          big: picData.Photo2Path,
+          thumb: picData.Photo3Path,
+        });
+        this.images.push({
+          id: '3',
+          big: picData.Photo3Path,
+          thumb: picData.Photo3Path,
+        });
       });
-      // this.isActive = true;
-      this.$refs.main.reload();
-      this.$refs.thumbnails.reload();
     },
   },
   created() {
     this.workId = this.$route.params.workId;
+    this.getInfoHandler();
     // console.log(this.workId);
   },
 };

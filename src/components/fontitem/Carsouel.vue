@@ -39,10 +39,9 @@
 </template>
 
 <script>
+import { getworkss } from '@/js/FontAppServices';
 import { Splide, SplideSlide } from '@splidejs/vue-splide';
-
 import '@splidejs/splide/dist/css/themes/splide-default.min.css';
-// or
 
 export default {
   components: {
@@ -72,12 +71,25 @@ export default {
           },
         },
       },
+      pic: '',
     };
   },
   methods: {
+    getPicInfo() {
+      getworkss().then((res) => {
+        // console.log(res.data.BasicData);
+        this.pic = res.data.BasicData[0].Photo1;
+        // res.data.BasicData.forEach((i) => {
+        //   console.log(i.Photo1, i.Id);
+        // });
+      });
+    },
     // moved(splide, newIndex) {
     //   console.log('moved', newIndex);
     // },
+  },
+  created() {
+    this.getPicInfo();
   },
 };
 </script>
