@@ -60,6 +60,7 @@
             </tr>
           </tbody>
         </table>
+
         <h4 class="title-line text-center mb-5 text-sm">項目結算</h4>
         <div class="item-total">
           <div class="item-total-group w-75">
@@ -100,7 +101,7 @@
       <div class="container bg-reservation ">
         <div class="information pt-3">
           <h4 class="title-line text-center mb-4">顧客資訊</h4>
-          <form class="form-reservation">
+          <div class="form-reservation">
             <label for="name">預約姓名</label
             ><input type="name" id="name" v-model="name" required />
             <label for="tel">手機號碼</label
@@ -121,10 +122,11 @@
             @click="test"
             >預約送出
           </router-link> -->
-            <button type="submit" class="btn-reservation">
-              預約送出
-            </button>
-          </form>
+            <input class="btn-reservation" type="submit" value="預約送出" />
+            <!-- <button class="btn-reservation" :disabled="invalid">
+                預約送出
+              </button> -->
+          </div>
         </div>
       </div>
     </form>
@@ -190,7 +192,7 @@ export default {
     //
     getDesignerHandler() {
       getDesigner(this.listId).then((res) => {
-        console.log(res);
+        // console.log(res);
         this.designer = res.data;
         this.OrderDate = res.data.OrderDate;
       });
@@ -198,17 +200,18 @@ export default {
     // 測試點選時間回傳值
     selectDate() {
       getFreetime(this.listId, this.time1).then((res) => {
-        console.log(res);
+        // console.log(res);
         this.freeTimeList = res.data.FreeTimeList;
-        console.log(this.freeTimeList);
+        // console.log(this.freeTimeList);
       });
     },
     selectTime(selecTime) {
+      console.log(this.orderTime);
       this.orderTime = selecTime;
     },
     getProductHandler() {
       getStoreProductList().then((res) => {
-        console.log(res);
+        // console.log(res);
         this.products = res.data.OrderDetails;
       });
     },
@@ -234,12 +237,17 @@ export default {
         CustomerRemark: this.remarks,
         OrderDetails: this.checklist,
       });
-      postOrder(data1).then((res) => {
-        if (res.data) {
-          this.orderId = res.data.orderId;
-          // this.$router.push(`/confirm/${this.orderId}`);
-        }
-      });
+      if (this.checklist.length === 0) {
+        console.log('1111');
+      } else {
+        postOrder(data1).then((res) => {
+          console.log(res);
+          if (res.data) {
+            this.orderId = res.data.orderId;
+            // this.$router.push(`/confirm/${this.orderId}`);
+          }
+        });
+      }
     },
   },
   created() {
