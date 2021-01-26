@@ -186,9 +186,6 @@ export default {
     },
   },
   methods: {
-    test() {
-      console.log('show');
-    },
     toggleTimePanel() {
       this.showTimePanel = !this.showTimePanel;
     },
