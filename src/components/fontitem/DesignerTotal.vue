@@ -48,16 +48,31 @@
       <!-- 分頁 -->
       <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
-          <li class="page-item">
-            <a class="page-link path" href="#" aria-label="Previous"
+          <li class="page-item" :class="{ disabled: index == 1 }">
+            <a
+              class="page-link path"
+              href="#"
+              aria-label="Previous"
+              @click.prevent="getInfoHandler(index - 1)"
               ><i class="fas fa-chevron-left"></i>
             </a>
           </li>
-          <li class="page-item" v-for="num in 10" :key="num">
-            <a class="page-link" href="#">{{ num }}</a>
+          <!-- pageLi -->
+          <li
+            class="page-item"
+            v-for="page in pages"
+            :key="page"
+            @click="getInfoHandler(page)"
+          >
+            <a class="page-link" href="#">{{ page }}</a>
           </li>
-          <li class="page-item">
-            <a class="page-link path" href="#" aria-label="Next"
+          <!-- pageLi -->
+          <li class="page-item" :class="{ disabled: index == pages }">
+            <a
+              class="page-link path"
+              href="#"
+              aria-label="Next"
+              @click="getInfoHandler(index + 1)"
               ><i class="fas fa-chevron-right"></i>
             </a>
           </li>
@@ -68,20 +83,26 @@
 </template>
 
 <script>
-import { getAllDesigner } from '@/js/FontAppServices';
+import { getAllDesignerPage } from '@/js/FontAppServices';
 
 export default {
   data() {
     return {
       designers: [],
+      pages: [],
+      index: '',
     };
   },
   methods: {
-    getInfoHandler() {
-      getAllDesigner().then((res) => {
+    getInfoHandler(page) {
+      getAllDesignerPage(page, 3).then((res) => {
         console.log(res);
         this.designers = res.data.BasicData;
+        this.pages = Math.ceil(res.data.Count / res.data.Limit);
+        this.index = res.data.Index;
+        console.log(this.index);
         console.log(this.designers);
+        console.log('pages', this.pages, typeof this.pages);
       });
     },
   },

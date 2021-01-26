@@ -51,7 +51,7 @@ export default {
     };
   },
   methods: {
-    GetStoreInfo() {
+    getInfoHandler() {
       getStoreTotalInfo().then((res) => {
         this.englishName = res.data.EnglishName;
         this.storeName = res.data.Name;
@@ -60,7 +60,7 @@ export default {
     },
   },
   mounted() {
-    this.GetStoreInfo();
+    this.getInfoHandler();
   },
 };
 </script>
