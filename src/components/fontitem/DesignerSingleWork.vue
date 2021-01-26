@@ -30,40 +30,52 @@
       <div class="row justify-content-center">
         <div class="col-md-10">
           <div class="row">
-            <div class="col-md-12 p40">
-              <!-- <cartest /> -->
-              <!-- car -->
+            <div class="col-md-12 p40 d-flex">
+              <!-- Carsouel -->
               <!-- Main slider -->
               <template class="d-flex">
                 <splide :options="primaryOptions" ref="primary">
-                  <template v-slot:controls>
-                    <div>
-                      <h4>{{ workDetail.Name }}</h4>
-                      <p class="mb-5 border-left">
-                        {{ workDetail.Summary }}
-                      </p>
-                      <ul class="d-flex justify-content-center p-0 mb-4">
-                        <li
-                          class="designer-tag"
-                          v-for="tag in workDetail.Category"
-                          :key="tag"
-                        >
-                          {{ tag }}
-                        </li>
-                      </ul>
-                    </div>
-                  </template>
-                  <splide-slide v-for="(slide, index) in slides" :key="index">
-                    <img :src="slide.src" class="border" />
+                  <splide-slide
+                    v-for="(slide, index) in slides"
+                    :key="index"
+                    class="carsouelImg border"
+                    :style="{ backgroundImage: `url(${slide})` }"
+                  >
+                    <img :style="{ backgroundImage: `url(${slide})` }" />
                   </splide-slide>
                 </splide>
               </template>
-              <!-- Thumbnail slider -->
-              <splide :options="secondaryOptions" ref="secondary">
-                <splide-slide v-for="(slide, index) in slides" :key="index">
-                  <img :src="slide.src" class="border" />
-                </splide-slide>
-              </splide>
+              <template>
+                <div></div>
+              </template>
+              <div class="ao">
+                <div>
+                  <h4>{{ workDetail.Name }}</h4>
+                  <p class="mb-5 border-left">
+                    {{ workDetail.Summary }}
+                  </p>
+                  <ul class="d-flex justify-content-center p-0 mb-4 border">
+                    <li
+                      class="designer-tag"
+                      v-for="tag in workDetail.Category"
+                      :key="tag"
+                    >
+                      {{ tag }}
+                    </li>
+                  </ul>
+                </div>
+                <!-- Thumbnail slider -->
+                <splide :options="secondaryOptions" ref="secondary">
+                  <splide-slide
+                    v-for="(slide, index) in slides"
+                    :key="index"
+                    :style="{ backgroundImage: `url(${slide})` }"
+                    class="carsouelImg"
+                  >
+                    <img :style="{ backgroundImage: `url(${slide})` }" />
+                  </splide-slide>
+                </splide>
+              </div>
             </div>
             <!-- <div class="col-md-4">
               <h4 class="mb-4">{{ workDetail.Name }}</h4>
@@ -87,7 +99,6 @@
 import { getSingleWork, getDesigner } from '@/js/FontAppServices';
 import { Splide, SplideSlide } from '@splidejs/vue-splide';
 import '@splidejs/splide/dist/css/themes/splide-default.min.css';
-// import cartest from './cartest.vue';
 
 export default {
   components: {
@@ -103,26 +114,34 @@ export default {
       designerDetail: '', // get到的設計師詳細資料
       category: [], // get分類
       // slide
-      slides: [],
+      slides: [
+        { backgroundImage: '' },
+        { backgroundImage: '' },
+        { backgroundImage: '' },
+      ],
       primaryOptions: {
         type: 'loop',
         perPage: 1,
         perMove: 1,
         gap: '1rem',
         pagination: false,
-        arrows: true,
-        width: '70%',
+        arrows: false,
+        fixedWidth: 300,
+        fixedHeight: 300,
       },
       secondaryOptions: {
         type: 'slide',
         rewind: true,
-        fixedWidth: 110,
-        fixedHeight: 70,
-        gap: '1rem',
+        fixedWidth: 150,
+        fixedHeight: 150,
+        gap: '2rem',
         pagination: false,
         cover: true,
         focus: 'center',
+        arrows: false,
         isNavigation: true,
+        interval: 3000,
+        autoplay: true,
       },
     };
   },
@@ -133,9 +152,10 @@ export default {
         this.workDetail = res.data.BasicData;
         this.category = this.workDetail.Category;
         const designerId = this.workDetail.DesignerId;
-        // this.slides.push({ src: this.workDetail.Photo1Path });
-        // this.slides.push({ src: this.workDetail.Photo2Path });
-        // this.slides.push({ src: this.workDetail.Photo3Path });
+        // this.slides[0].src = this.workDetail.Photo1Path;
+        // this.slides[1].src = this.workDetail.Photo2Path;
+        // this.slides[2].src = this.workDetail.Photo3Path;
+        this.slides = this.workDetail.PathArray;
         console.log(this.slides);
         getDesigner(designerId).then((response) => {
           console.log(response);
@@ -146,30 +166,20 @@ export default {
   },
   created() {
     this.workId = this.$route.params.workId;
-    console.log(this.workId);
     this.getInfoHandler();
   },
   mounted() {
     // Set the sync target.
     this.$refs.primary.sync(this.$refs.secondary.splide);
-    setTimeout(() => {
-      this.slides.push(
-        {
-          src: this.workDetail.Photo1Path,
-        },
-        {
-          src: this.workDetail.Photo2Path,
-        },
-        {
-          src: this.workDetail.Photo3Path,
-        },
-      );
-    }, 5000);
   },
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+.ao {
+  display: flex;
+  flex-direction: column;
+}
 .splide__slide img {
   /* width: 200px; */
   height: 200px;
@@ -183,9 +193,24 @@ export default {
   background-color: transparent;
 }
 #splide01 {
-  display: flex;
+  max-width: 50%;
 }
-/* #splide01-track {
-  width: 60%;
-} */
+#splide01-track {
+  width: 70%;
+}
+#splide02-track {
+  /* width: 500px; */
+  display: flex;
+  justify-content: space-between;
+  /* align-items: center; */
+}
+#splide02 {
+  margin-left: auto;
+}
+
+.carsouelImg {
+  background-position: center center;
+  background-repeat: no-repeat;
+  /* background-size: cover; */
+}
 </style>

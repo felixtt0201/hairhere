@@ -144,14 +144,6 @@
               <div class="row">
                 <div class="col-md-4">
                   <h2>作品照片1</h2>
-                  <label for="image">輸入圖片網址</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="image"
-                    v-model="formProduct.Photo1"
-                    placeholder="請輸入圖片連結"
-                  />
                   <label for="Photo1">或上傳圖片</label>
                   <input
                     type="file"

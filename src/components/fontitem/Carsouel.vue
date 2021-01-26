@@ -1,37 +1,22 @@
 <template>
-  <div class="wrapper">
+  <div>
     <splide
       :options="options"
       class="list-style d-flex justify-content-center mb-5"
     >
       <splide-slide
+        v-for="work in msg"
+        :key="work.Id"
         class="background-img mr-5"
-        style="background-image: url(https://images.unsplash.com/photo-1605980625600-88b46abafa8d?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NDh8fGhhaXIlMjBzYWxvbnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60);"
+        :style="{ backgroundImage: `url(${work.Photo1})` }"
       >
       </splide-slide>
+      <!-- <h4 class="title-line w-100 text-center mb-4 text-main">設計師</h4> -->
       <splide-slide
+        v-for="designer in des"
+        :key="designer.Id"
         class="background-img mr-5"
-        style="background-image: url(https://images.unsplash.com/photo-1586548634342-04801afc8b13?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MjA5fHxoYWlyJTIwc2Fsb258ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60);"
-      >
-      </splide-slide>
-      <splide-slide
-        class="background-img mr-5"
-        style="background-image: url(https://images.unsplash.com/photo-1581674210501-c760093514e8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NTl8fGhhaXIlMjBzYWxvbnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60);"
-      >
-      </splide-slide>
-      <splide-slide
-        class="background-img mr-5"
-        style="background-image: url(https://images.unsplash.com/photo-1581674210501-c760093514e8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NTl8fGhhaXIlMjBzYWxvbnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60);"
-      >
-      </splide-slide>
-      <splide-slide
-        class="background-img mr-5"
-        style="background-image: url(https://images.unsplash.com/photo-1581674210501-c760093514e8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NTl8fGhhaXIlMjBzYWxvbnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60);"
-      >
-      </splide-slide>
-      <splide-slide
-        class="background-img mr-5"
-        style="background-image: url(https://images.unsplash.com/photo-1581674210501-c760093514e8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NTl8fGhhaXIlMjBzYWxvbnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60);"
+        :style="{ backgroundImage: `url(${designer.PicturePath})` }"
       >
       </splide-slide>
     </splide>
@@ -40,6 +25,7 @@
 
 <script>
 import { Splide, SplideSlide } from '@splidejs/vue-splide';
+// import { getworkss } from '@/js/FontAppServices';
 
 import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 // or
@@ -49,6 +35,7 @@ export default {
     Splide,
     SplideSlide,
   },
+  props: ['msg', 'des'],
   data() {
     return {
       options: {
@@ -61,7 +48,7 @@ export default {
         perPage: 4, // 確定每頁應顯示多少張幻燈片
         // gap: 1,
         pagination: false,
-        interval: 3000, // 移動時間
+        interval: 500, // 移動時間
         pauseOnHover: true, // 是否在懸停滑塊時停止自動播放
         cover: true,
         breakpoints: {
@@ -72,13 +59,20 @@ export default {
           },
         },
       },
+      // works: [],
     };
   },
-  methods: {
-    // moved(splide, newIndex) {
-    //   console.log('moved', newIndex);
-    // },
-  },
+  // methods: {
+  //   getALlworks() {
+  //     getworkss().then((res) => {
+  //       console.log(res);
+  //       this.works = res.data.BasicData;
+  //     });
+  //   },
+  // },
+  // mounted() {
+  //   this.getALlworks();
+  // },
 };
 </script>
 

@@ -89,7 +89,11 @@
       </template>
       <ul class="d-flex justify-content-between">
         <li v-for="freetime in freeTimeList" :key="freetime">
-          <button class="btn border" @click="selectTime(freetime)">
+          <button
+            type="button"
+            class="btn border"
+            @click="selectTime(freetime)"
+          >
             {{ freetime.replace('T', ' ').replace(':00:00', ':00') }}
           </button>
         </li>
@@ -101,7 +105,7 @@
         <h4 class="title-line text-center mb-4">顧客資訊</h4>
         <form class="form-reservation">
           <label for="name">預約姓名</label
-          ><input type="name" id="name" v-model="name" />
+          ><input type="name" id="name" v-model="name" required />
           <label for="tel">手機號碼</label
           ><input type="tel" id="tel" v-model="tel" />
           <label for="text">介紹人</label
@@ -206,6 +210,7 @@ export default {
     },
     selectTime(selecTime) {
       this.orderTime = selecTime;
+      console.log(this.orderTime);
     },
     getProductHandler() {
       getStoreProductList().then((res) => {
@@ -260,7 +265,7 @@ export default {
       });
       sessionStorage.setItem('list', data2);
       console.log(data2);
-      this.$router.push('/confirm');
+      // this.$router.push('/confirm');
     },
   },
   created() {
