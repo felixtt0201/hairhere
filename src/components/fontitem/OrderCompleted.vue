@@ -33,12 +33,12 @@
         </div>
       </div>
     </div>
-    <div class="container text-reservation pb-4 pt-5 mt-4 d-flex text-center">
+    <div class="container text-reservation mb-3 mt-5 d-flex text-center">
       <div class="col-md-6">
-        <h4 class="title-line text-center">顧客資訊</h4>
-        <div class="container pt-4">
-          <div class="pt-3 custom-information">
-            <ul class="list-style p-0">
+        <h4 class="title-line text-center">預約資訊</h4>
+        <div class="container">
+          <div class="pt-4">
+            <ul class="list-style p-0 custom-list">
               <li class="d-flex">
                 <p>預約姓名</p>
                 <p>{{ orderDetails.CustomerName }}</p>
@@ -47,12 +47,12 @@
                 <p>手機號碼</p>
                 <p>{{ orderDetails.CustomerPhone }}</p>
               </li>
-              <li class="d-flex">
+              <li class="d-flex" v-if="!orderDetails.CustomerIntroducer">
                 <p>介紹人</p>
                 <p>{{ orderDetails.CustomerIntroducer }}</p>
               </li>
-              <li>
-                <p class="d-flex">備註事項</p>
+              <li class="d-flex" v-if="!orderDetails.StoreRemark">
+                <p>備註事項</p>
                 <p>
                   {{ orderDetails.CustomerRemark }}
                 </p>
@@ -61,8 +61,8 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6 bg-accent">
-        <div class="container pt-4">
+      <div class="col-md-6 bg-accent p-4">
+        <div class="container p-5">
           <!-- <h4 class="mb-4 title-line">預約資訊</h4> -->
           <div>
             <h5>預約時間</h5>
@@ -115,6 +115,7 @@ export default {
         console.log(res);
         this.orderDetails = res.data.BasicData;
         this.orderTime = this.orderDetails.OrderTime;
+        console.log(this.orderDetails);
       });
     },
   },

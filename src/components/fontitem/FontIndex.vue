@@ -165,12 +165,12 @@
 </template>
 
 <script>
+import Carsouel from '@/components/fontitem/Carsouel.vue';
 import {
   getStoreTotalInfo,
   getworkss,
   getAllDesigner,
 } from '@/js/FontAppServices';
-import Carsouel from '@/components/fontitem/Carsouel.vue';
 
 export default {
   components: {

@@ -9,6 +9,7 @@
   counter-reset: step;
   color: #1d3d4a;
   font-size: 22px;
+  padding: 0;
   .active-step {
     // 當前項目變色
     &::before {
