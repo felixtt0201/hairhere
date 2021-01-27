@@ -399,7 +399,7 @@ export default {
       isNew: true, // 判斷新增or編輯狀態
       dId: 0, // 設計師Id
       pages: [],
-      index: '',
+      index: 0,
     };
   },
   methods: {
