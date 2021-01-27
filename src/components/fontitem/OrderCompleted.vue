@@ -33,7 +33,7 @@
         </div>
       </div>
     </div>
-    <div class="container text-reservation mb-3 mt-5 d-flex text-center">
+    <div class="container text-reservation mb-5 mt-5 d-flex text-center">
       <div class="col-md-6">
         <h4 class="title-line text-center">預約資訊</h4>
         <div class="container">
@@ -64,11 +64,11 @@
       <div class="col-md-6 bg-accent p-4">
         <div class="container p-5">
           <!-- <h4 class="mb-4 title-line">預約資訊</h4> -->
-          <div>
+          <div class="pb-3">
             <h5>預約時間</h5>
             <p>{{ orderTime.replace('T', ' ').replace(':00:00', ':00') }}</p>
           </div>
-          <div>
+          <div class="pb-3">
             <h5>預約項目</h5>
             <ul class="list-style p-0">
               <li
