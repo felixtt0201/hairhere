@@ -1,8 +1,9 @@
 <template>
   <div>
     <a href="#top" class="top">
-      <i class="fas fa-long-arrow-alt-up"></i>
-      <!-- <i class="fas fa-chevron-up"></i> -->
+      <p>Top</p>
+      <i class="fas fa-chevron-up"></i>
+      <img src="../../assets/img/mouse.png" alt="" />
     </a>
   </div>
 </template>
@@ -11,9 +12,9 @@
 
 <style lang="scss">
 .top {
-  // width: 50px;
-  // height: 50px;
-  background: #d6997a;
+  width: 70px;
+  height: 150px;
+  // background: #d6997a;
   // background: #f3ca55; // 檸檬的樣式
   position: fixed;
   bottom: 50%;
@@ -29,9 +30,19 @@
     right: 2px;
     transition: all 0.5s;
   }
-}
-i {
-  font-size: 30px;
+  img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 80px;
+    height: 70px;
+  }
+  p {
+    position: absolute;
+    top: -20px;
+    right: 25px;
+    font-size: 26px;
+  }
 }
 // 滾動樣式
 ::-webkit-scrollbar-track {
