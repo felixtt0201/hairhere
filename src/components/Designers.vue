@@ -126,7 +126,7 @@
             <div class="modal-body">
               <div class="row">
                 <div class="col-sm-4">
-                  <h2>設計資料</h2>
+                  <h2>設計師資料</h2>
                 </div>
                 <div class="col-sm-8">
                   <div class="form-row">
@@ -148,8 +148,14 @@
                         class="form-control"
                         id="category"
                         placeholder="可以選擇設計師代表顏色"
+                        list="colors"
                         v-model="addNewInfo.Color"
                       />
+                      <datalist id="colors">
+                        <option></option>
+                        <option></option>
+                      </datalist>
+                      {{ addNewInfo.Color }}
                     </div>
                   </div>
                   <div class="form-group">
@@ -313,7 +319,13 @@
                         id="category"
                         placeholder="可以選擇設計師代表顏色"
                         v-model="tempInfo.Color"
+                        list="colors"
                       />
+                      <datalist id="colors">
+                        <option></option>
+                        <option></option>
+                      </datalist>
+                      {{ tempInfo.Color }}
                     </div>
                   </div>
                   <div class="form-group">
