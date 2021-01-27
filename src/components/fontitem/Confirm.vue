@@ -91,9 +91,14 @@
           </li>
         </ul>
       </div>
-      <button class="btn custom-information-btn" @click="submitOrder">
-        確認送出
-      </button>
+      <div class="d-flex border confirm-btn">
+        <button class="btn custom-information-btn" @click="BackToList">
+          回上一步
+        </button>
+        <button class="btn custom-information-btn" @click="submitOrder">
+          確認送出
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -107,6 +112,7 @@ export default {
       orderId: '',
       orderDetails: [],
       orderTime: '',
+      designerId: '',
     };
   },
   methods: {
@@ -116,6 +122,7 @@ export default {
       this.orderDetails = getorder;
       console.log(this.orderDetails);
       this.orderTime = this.orderDetails.OrderTime;
+      this.designerId = this.orderDetails.DesignerId;
     },
     // 預約確認送出
     submitOrder() {
@@ -128,6 +135,11 @@ export default {
         }
       });
     },
+    // 回上一步修改資料
+    BackToList() {
+      this.$router.push(`/reservationF/${this.designerId}`);
+      // console.log(this.designerId);
+    },
   },
   created() {
     this.getInfoHandler();
@@ -136,4 +148,21 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss">
+.confirm-btn {
+  width: 300px;
+  margin: 0 auto;
+  margin-top: 20px;
+  button {
+    border: 2px solid white;
+    width: 50%;
+    border-radius: 0;
+    background-color: gainsboro;
+    font-size: 16px;
+    &:hover {
+      background-color: #1d3d4a;
+      color: white;
+    }
+  }
+}
+</style>

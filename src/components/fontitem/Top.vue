@@ -12,7 +12,7 @@
 .top {
   // width: 50px;
   // height: 50px;
-  background: #cdc3b7;
+  background: #d6997a;
   position: fixed;
   bottom: 50%;
   right: 0;
@@ -24,7 +24,7 @@
   font-weight: bolder;
   &:hover {
     bottom: 52%;
-    right: 1px;
+    right: 2px;
     transition: all 0.5s;
   }
 }

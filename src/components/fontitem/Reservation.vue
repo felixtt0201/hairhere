@@ -5,7 +5,7 @@
         <div class="col-md-6 step-center">
           <ul class="step">
             <li class="active-step">
-              選擇服務項目
+              1. 選擇服務項目<br />2. 選擇預約時間<br />3. 填寫顧客資訊
             </li>
             <li>確認預約資訊</li>
             <li>預約完成d(`･∀･)b</li>
@@ -71,14 +71,16 @@
           </div>
         </div>
       </div>
-      <div class="container border">
+      <div class="container p-5 border">
+        <h4 class="text-center mb-3">選擇預約時間</h4>
+
         <template>
-          <div>
+          <div class="text-center mb-4">
             <date-picker
               v-model="time1"
               type="date"
               value-type="format"
-              placeholder="Select datetime"
+              placeholder="select date"
               :show-time-panel="showTimePanel"
               @close="handleOpenChange"
               format="YYYY-MM-DD"
@@ -93,7 +95,7 @@
           <li v-for="freetime in freeTimeList" :key="freetime">
             <button
               type="button"
-              class="btn border"
+              class="btn border time-btn"
               @click="selectTime(freetime)"
             >
               {{ freetime.replace('T', ' ').replace(':00:00', ':00') }}
@@ -280,11 +282,28 @@ export default {
         this.$router.push('/confirm');
       }
     },
+    // 從確認資料頁面返回編輯，把資料倒回
+    patchList() {
+      const getorder = JSON.parse(sessionStorage.getItem('list'));
+      console.log(getorder);
+      this.orderTime = getorder.OrderTime;
+      this.listId = getorder.DesignerId;
+      this.designer.Name = getorder.DesignerName;
+      this.designer.Details = getorder.DesignerSummary;
+      this.name = getorder.CustomerName;
+      this.tel = getorder.CustomerPhone;
+      this.text = getorder.CustomerIntroducer;
+      this.remarks = getorder.CustomerRemark;
+      this.checklist = getorder.OrderDetails;
+      this.TotalMoney.moneytotal = getorder.Amount;
+      this.TotalMoney.timetotal = getorder.ServiceMinutes;
+    },
   },
   created() {
     this.listId = this.$route.params.listId; // 抓取參數
     this.getDesignerHandler();
     this.getProductHandler();
+    this.patchList();
   },
 };
 </script>
@@ -293,5 +312,16 @@ export default {
 input:checked ~ td {
   background-color: gray !important;
   opacity: 0.8;
+}
+.time-btn {
+  border: 1px solid gainsboro !important;
+  font-weight: bold;
+  &:focus {
+    border: 3px solid #dee2e6 !important;
+    outline: 0;
+    box-shadow: inset 2px 2px 2px 0px grey;
+    background-color: #e9ecef;
+    color: #1d3d4a;
+  }
 }
 </style>
