@@ -1,7 +1,8 @@
 <template>
   <div>
     <a href="#top" class="top">
-      TOP
+      <i class="fas fa-long-arrow-alt-up"></i>
+      <!-- <i class="fas fa-chevron-up"></i> -->
     </a>
   </div>
 </template>
@@ -13,6 +14,7 @@
   // width: 50px;
   // height: 50px;
   background: #d6997a;
+  // background: #f3ca55; // 檸檬的樣式
   position: fixed;
   bottom: 50%;
   right: 0;
@@ -27,6 +29,9 @@
     right: 2px;
     transition: all 0.5s;
   }
+}
+i {
+  font-size: 30px;
 }
 // 滾動樣式
 ::-webkit-scrollbar-track {
