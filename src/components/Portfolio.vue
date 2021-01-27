@@ -16,7 +16,7 @@
         <div id="dataTable_filter" class="dataTables_filter">
           <label for="exampleFormControlSelect1">作品搜尋</label>
           <select class="form-control" v-model="dId">
-            <option disabled value="">選擇設計師</option>
+            <option value="0" selected>全部設計師</option>
             <option
               v-for="designer in designerInfo"
               :key="designer.Id"
@@ -99,7 +99,7 @@
             class="page-link path"
             href="#"
             aria-label="Previous"
-            @click.prevent="getPageHandler(index - 1)"
+            @click.prevent="getPageHandler(dId, index - 1)"
             ><i class="fas fa-chevron-left"></i>
           </a>
         </li>
@@ -108,7 +108,7 @@
           class="page-item"
           v-for="page in pages"
           :key="page"
-          @click="getPageHandler(page)"
+          @click="getPageHandler(dId, page)"
         >
           <a class="page-link" href="#">{{ page }}</a>
         </li>
@@ -118,7 +118,7 @@
             class="page-link path"
             href="#"
             aria-label="Next"
-            @click="getPageHandler(index + 1)"
+            @click="getPageHandler(dId, index + 1)"
             ><i class="fas fa-chevron-right"></i>
           </a>
         </li>
@@ -370,12 +370,10 @@ import $ from 'jquery';
 import {
   getAllDesigner,
   postPortfolio,
-  getAllworkss,
   patchWork,
   deleteWork,
   getDesignerWorks,
 } from '@/js/AppServices';
-import { getpages } from '@/js/FontAppServices';
 
 export default {
   data() {
@@ -399,29 +397,35 @@ export default {
       },
       dName: '', // 顯示設計師名字
       isNew: true, // 判斷新增or編輯狀態
-      dId: '', // 設計師Id
+      dId: 0, // 設計師Id
       pages: [],
       index: '',
     };
   },
   methods: {
     // 分頁
-    getPageHandler(page) {
-      getpages(page, 6).then((res) => {
-        console.log('pages', res);
+    getPageHandler(dId, page) {
+      getDesignerWorks(dId, 6, page).then((res) => {
+        console.log('all', res);
         this.comebackinfo = res.data.BasicData;
         this.pages = Math.ceil(res.data.Count / res.data.Limit);
         this.index = res.data.Index;
-        // console.log(this.index);
-        // console.log(this.comebackinfo);
-        // console.log('pages', this.pages, typeof this.pages);
       });
+      // getpages(page, 6).then((res) => {
+      //   this.comebackinfo = res.data.BasicData;
+      //   this.pages = Math.ceil(res.data.Count / res.data.Limit);
+      //   this.index = res.data.Index;
+      //   // console.log(this.index);
+      //   // console.log(this.comebackinfo);
+      //   // console.log('pages', this.pages, typeof this.pages);
+      // });
     },
     searchWorksHandler(id) {
-      getDesignerWorks(id).then((res) => {
+      getDesignerWorks(id, 6).then((res) => {
         if (res.data.status) {
           this.comebackinfo = res.data.BasicData;
-          // this.getPageHandler();
+          this.pages = Math.ceil(res.data.Count / res.data.Limit);
+          this.index = res.data.Index;
         } else {
           this.$swal({
             position: 'center',
@@ -429,7 +433,7 @@ export default {
             title: '搜索失敗',
             text: '此設計師無作品',
           });
-          this.getWorkInfoHandler();
+          this.getPageHandler();
         }
       });
     },
@@ -449,13 +453,14 @@ export default {
     },
     // 取得作品資訊
     getWorkInfoHandler() {
-      getAllworkss().then((res) => {
+      getDesignerWorks(0, 6, 1).then((res) => {
         if (res.data.status) {
           this.comebackinfo = res.data.BasicData;
+          this.pages = Math.ceil(res.data.Count / res.data.Limit);
+          this.index = res.data.Index;
           this.isLoading = false;
         }
       });
-      this.getPageHandler();
     },
     openModal(isNew, product) {
       $('#staticBackdrop').modal('show');
@@ -548,13 +553,10 @@ export default {
       });
     },
   },
-  mounted() {
-    this.getPageHandler();
-  },
   created() {
     this.getWorkInfoHandler();
     this.getDesignersInfo();
-
+    // this.getPageHandler();
     this.formProduct = new FormData();
     this.formProduct.Category = [];
   },

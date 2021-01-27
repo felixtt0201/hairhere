@@ -25,7 +25,6 @@
     <form
       class="needs-validation text-left text-gray-900"
       novalidate
-      v-cloak
       @submit.prevent="putInfoHandler"
     >
       <div class="row mb-3">
@@ -62,7 +61,7 @@
         <div class="col-md-4">
           <label for="tel" class="font-weight-bold">店家電話：</label>
           <p v-if="editstatus" class="text-muted text-gray-800 text-gray-800">
-            {{ newdata.BasicData.Phone }}
+            {{ basicInfo.Phone }}
           </p>
           <input
             v-else
@@ -70,16 +69,16 @@
             class="form-control"
             id="tel"
             placeholder="請輸入電話or手機"
-            v-model="newdata.BasicData.Phone"
+            v-model="basicInfo.Phone"
           />
         </div>
       </div>
       <div class="row mb-3">
         <div class="col-md-6">
           <label for="businesstime" class="font-weight-bold">營業時間：</label>
-          <p for="" v-if="editstatus" class="text-muted text-gray-800">
-            {{ newdata.Business.BusinessHoursOpen }} ~
-            {{ newdata.Business.BusinessHoursClose }}
+          <p v-if="editstatus" class="text-muted text-gray-800">
+            {{ businessTime.BusinessHoursOpen }} ~
+            {{ businessTime.BusinessHoursClose }}
           </p>
           <div v-else>
             開始
@@ -89,7 +88,7 @@
               id="businesstime"
               placeholder="請輸入時間 ex:9:00"
               required
-              v-model="newdata.Business.BusinessHoursOpen"
+              v-model="businessTime.BusinessHoursOpen"
             />
             結束
             <input
@@ -98,7 +97,7 @@
               id="businesstime"
               placeholder="請輸入時間 ex:18:00"
               required
-              v-model="newdata.Business.BusinessHoursClose"
+              v-model="businessTime.BusinessHoursClose"
             />
           </div>
         </div>
@@ -195,7 +194,7 @@
         <div class="col-md-12">
           <label for="address" class="font-weight-bold">店家地址：</label>
           <p for="" v-if="editstatus" class="text-muted text-gray-800">
-            {{ newdata.BasicData.Address }}
+            {{ basicInfo.Address }}
           </p>
           <input
             v-else
@@ -203,7 +202,7 @@
             class="form-control"
             id="address"
             placeholder="請輸入完整地址 ex:高雄市前鎮區"
-            v-model="newdata.BasicData.Address"
+            v-model="basicInfo.Address"
           />
         </div>
       </div>
@@ -211,7 +210,7 @@
         <div class="col-md-12">
           <label for="facebook" class="font-weight-bold">Facebook：</label>
           <p v-if="editstatus" class="text-muted text-gray-800">
-            {{ newdata.BasicData.Facebook }}
+            {{ basicInfo.Facebook }}
           </p>
           <input
             v-else
@@ -219,7 +218,7 @@
             class="form-control"
             id="facebook"
             placeholder="請輸入臉書網址 ex:xxxxx.facebook"
-            v-model="newdata.BasicData.Facebook"
+            v-model="basicInfo.Facebook"
           />
         </div>
       </div>
@@ -227,7 +226,7 @@
         <div class="col">
           <label for="instagram" class="font-weight-bold">Instagram：</label>
           <p v-if="editstatus" class="text-muted text-gray-800">
-            {{ newdata.BasicData.Instagram }}
+            {{ basicInfo.Instagram }}
           </p>
           <input
             v-else
@@ -235,36 +234,40 @@
             class="form-control"
             id="instagram"
             placeholder="請輸入臉書網址 ex:xxxxx.instagram："
-            v-model="newdata.BasicData.Instagram"
+            v-model="basicInfo.Instagram"
           />
         </div>
       </div>
       <div class="form-group mb-4">
         <label for="summary" class="font-weight-bold">店家簡介：</label>
-        <p v-if="editstatus" class="text-muted text-gray-800">
-          {{ newdata.BasicData.Summary }}
-        </p>
+        <p
+          v-if="editstatus"
+          class="text-muted text-gray-800"
+          v-html="basicInfo.Summary"
+        ></p>
         <textarea
           v-else
           class="form-control"
           id="summary"
           rows="5"
           placeholder="請輸入內容"
-          v-model="newdata.BasicData.Summary"
+          v-model="basicInfo.Summary"
         ></textarea>
       </div>
       <div class="form-group mb-4">
         <label for="detail" class="font-weight-bold">成員介紹：</label>
-        <p v-if="editstatus" class="text-muted text-gray-800">
-          {{ newdata.BasicData.Details }}
-        </p>
+        <p
+          v-if="editstatus"
+          class="text-muted text-gray-800"
+          v-html="basicInfo.Details"
+        ></p>
         <textarea
           v-else
           class="form-control"
           id="detail"
           rows="5"
           placeholder="請輸入內容"
-          v-model="newdata.BasicData.Details"
+          v-model="basicInfo.Details"
         ></textarea>
       </div>
       <div class="row justify-content-between" v-show="!editstatus">
@@ -299,6 +302,9 @@ export default {
           BusinessHoursClose: '',
         },
       },
+      storeInfo: {},
+      basicInfo: {},
+      businessTime: {},
 
       // 編輯的開關
       editstatus: true,
@@ -316,7 +322,12 @@ export default {
       getStoreTotalInfo().then((res) => {
         if (res.data.status) {
           this.newdata = res.data;
-          this.setDayof = this.newdata.Business.RestDayOfWeek.toString();
+          console.log(this.newdata);
+          this.basicInfo = res.data.BasicData;
+          this.businessTime = res.data.Business;
+          // eslint-disable-next-line no-multi-assign
+          this.setDayof = this.newdata.Business.RestDayOfWeek?.toString();
+          this.DayOf = this.newdata.Business.RestDayOfWeek;
           this.isLoading = false;
         }
       });
@@ -344,9 +355,11 @@ export default {
       putStoreInfo(data).then((res) => {
         console.log(res);
         if (res.data.status === true) {
+          this.getInfoHandler();
           this.successedMessage();
           this.newdata = {};
         } else {
+          this.getInfoHandler();
           this.unsuccessedMessage();
         }
       });
@@ -360,7 +373,6 @@ export default {
         title: '修改成功',
       }).then(() => {
         this.edit();
-        this.getInfoHandler();
       });
     },
 
@@ -372,23 +384,17 @@ export default {
         title: '修改失敗',
       }).then(() => {
         this.edit();
-        this.getInfoHandler();
       });
     },
-
     // 切換編輯模式
     edit() {
       this.editstatus = !this.editstatus;
     },
   },
-  created() {
+  mounted() {
     this.getInfoHandler();
   },
 };
 </script>
 
-<style lang="scss" scopeded>
-[v-cloak] {
-  display: none;
-}
-</style>
+<style lang="scss" scopeded></style>
