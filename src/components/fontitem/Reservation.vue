@@ -1,5 +1,15 @@
 <template>
   <div>
+    <loading
+      :opacity="1"
+      color="#7e735d"
+      loader="bars"
+      background-color="#fff"
+      :active.sync="isLoading"
+      :is-full-page="fullPage"
+    >
+      <template slot="default"> <loadingitem></loadingitem></template
+    ></loading>
     <div class="container text-main">
       <div class="row">
         <div class="col-md-6 step-center">
@@ -150,11 +160,16 @@ import {
   // postOrder,
   getFreetime,
 } from '@/js/FontAppServices';
+import loadingitem from '../dashboarditem/loadingitem.vue';
 
 export default {
-  components: { DatePicker },
+  components: { DatePicker, loadingitem },
   data() {
     return {
+      // Loading遮罩
+      isLoading: true,
+      fullPage: true,
+
       //
       time1: null, // 日曆1
       showTimePanel: false,
@@ -203,6 +218,7 @@ export default {
         // console.log(res);
         this.designer = res.data;
         this.OrderDate = res.data.OrderDate;
+        this.isLoading = false;
       });
     },
     // 測試點選時間回傳值
@@ -221,6 +237,7 @@ export default {
       getStoreProductList().then((res) => {
         // console.log(res);
         this.products = res.data.OrderDetails;
+        this.isLoading = false;
       });
     },
     // selectsingle(id) {

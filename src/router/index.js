@@ -139,12 +139,6 @@ const routes = [
         component: () => import('../components/forms/Vaction.vue'),
       },
       {
-        path: 'performance',
-        name: 'Performance',
-        meta: { requiresAuth: true },
-        component: () => import('../components/forms/Performance.vue'),
-      },
-      {
         path: 'historicalOrders',
         name: 'HistoricalOrders',
         meta: { requiresAuth: true },

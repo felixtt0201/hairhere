@@ -1,5 +1,15 @@
 <template>
   <div>
+    <loading
+      :opacity="1"
+      color="#7e735d"
+      loader="bars"
+      background-color="#fff"
+      :active.sync="isLoading"
+      :is-full-page="fullPage"
+    >
+      <template slot="default"> <loadingitem></loadingitem></template
+    ></loading>
     <div class="container text-main works-center">
       <div class="works-filter">
         <label for="c1"
@@ -172,10 +182,16 @@
 
 <script>
 import { getpages, searchworks } from '@/js/FontAppServices';
+import loadingitem from '../dashboarditem/loadingitem.vue';
 
 export default {
+  components: { loadingitem },
   data() {
     return {
+      // Loading遮罩
+      isLoading: true,
+      fullPage: true,
+
       worksarray: [], // 回傳資料位置
       list: [], // checkbox勾選倒入
       searchInput: '', // 關鍵字搜索輸入
@@ -228,6 +244,7 @@ export default {
         console.log(res);
         this.pages = Math.ceil(res.data.Count / res.data.Limit);
         this.worksarray = res.data.BasicData;
+        this.isLoading = false;
       });
     },
     searchItem() {

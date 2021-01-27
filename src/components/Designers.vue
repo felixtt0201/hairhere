@@ -4,7 +4,7 @@
       :opacity="1"
       color="#7e735d"
       loader="bars"
-      background-color="#c8d6e5"
+      background-color="#fff"
       :active.sync="isLoading"
       :is-full-page="fullPage"
     ></loading>
@@ -104,6 +104,16 @@
                         placeholder="請輸入姓名"
                         v-model="addNewInfo.dName"
                         required
+                      />
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="name">選擇設計師代表色</label>
+                      <input
+                        type="color"
+                        class="form-control"
+                        id="category"
+                        placeholder="可以選擇設計師代表顏色"
+                        v-model="addNewInfo.Color"
                       />
                     </div>
                   </div>
@@ -260,6 +270,16 @@
                         v-model="tempInfo.Name"
                       />
                     </div>
+                    <div class="form-group col-md-6">
+                      <label for="name">選擇設計師代表色</label>
+                      <input
+                        type="color"
+                        class="form-control"
+                        id="category"
+                        placeholder="可以選擇設計師代表顏色"
+                        v-model="tempInfo.Color"
+                      />
+                    </div>
                   </div>
                   <div class="form-group">
                     <label for="phone">電話/手機</label>
@@ -381,6 +401,7 @@ export default {
         dEmail: '',
         dPassword: '',
         dDetails: '',
+        Color: '',
       },
 
       // 修改單一設計師資料
@@ -419,6 +440,7 @@ export default {
         Instagram: this.addNewInfo.dInstagram,
         Details: this.addNewInfo.Details,
         Line: this.addNewInfo.dLine,
+        Color: this.addNewInfo.Color,
       });
       const smsg = '新增';
       postDesinger(data).then((res) => {
@@ -454,13 +476,14 @@ export default {
         Skill: '',
         Line: this.tempInfo.Line,
         WorkStatus: 1,
+        Color: this.tempInfo.Color,
       });
       putDesigner(data, dId).then((res) => {
         if (res.data.status === true) {
           const psmg = '更新';
           this.successed(psmg);
         }
-        console.log(res.data.status);
+        console.log('put', res.data);
       });
     },
 

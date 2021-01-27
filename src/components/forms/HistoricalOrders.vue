@@ -1,5 +1,13 @@
 <template>
   <div id="historicalorders" class="container-fluid">
+    <loading
+      :opacity="1"
+      color="#7e735d"
+      loader="bars"
+      background-color="#fff"
+      :active.sync="isLoading"
+      :is-full-page="fullPage"
+    ></loading>
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h3 class="text-gray-800">
         歷史訂單
@@ -203,6 +211,10 @@ export default {
   inject: ['reload'],
   data() {
     return {
+      // Loading遮罩
+      isLoading: true,
+      fullPage: true,
+
       designInfo: [],
       startTime: '',
       endTime: '',
@@ -230,6 +242,7 @@ export default {
     getCheckInfo() {
       getBillList().then((res) => {
         console.log('total', res);
+        this.isLoading = false;
       });
     },
     // 查詢單一帳單

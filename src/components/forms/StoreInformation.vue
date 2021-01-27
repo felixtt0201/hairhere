@@ -4,7 +4,7 @@
       :opacity="1"
       color="#7e735d"
       loader="bars"
-      background-color="#c8d6e5"
+      background-color="#fff"
       :active.sync="isLoading"
       :is-full-page="fullPage"
     ></loading>

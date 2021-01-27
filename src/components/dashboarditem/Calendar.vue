@@ -6,7 +6,7 @@
       :opacity="1"
       color="#7e735d"
       loader="bars"
-      background-color="#c8d6e5"
+      background-color="#fff"
       :active.sync="isLoading"
       :is-full-page="fullPage"
     ></loading>
@@ -20,14 +20,6 @@
         aria-hidden="true"
         @keydown.esc="cancelMouseEvnetHandler"
       >
-        <loading
-          :opacity="1"
-          color="#7e735d"
-          loader="bars"
-          background-color="#b7b9cc"
-          :active.sync="isLoading"
-          :is-full-page="fullPage"
-        ></loading>
         <div class="modal-dialog modal-lg container" role="document">
           <div class="modal-content border-0">
             <div class="modal-header bg-dark text-white">
@@ -352,19 +344,31 @@ export default {
       await this.getDesignerHandler();
       await this.getServicesHandler();
       await getOrder().then((res) => {
+        console.log(res);
         if (res.data.status) {
           this.isLoading = false;
           this.OrderInfo = res.data.BasicData;
+          this.OrderInfo.forEach((item) => {
+            const showOrderDetails = {
+              title: item.CustomerName,
+              start: item.OrderTime,
+              end: item.EndTime,
+              OrderID: item.Id,
+              backgroundColor: item.Color,
+              borderColor: item.Color,
+            };
+            this.calendarOptions.events.push(showOrderDetails);
+          });
         }
       });
-      await this.OrderInfo.forEach((item) => {
-        const showOrderDetails = {
-          title: item.CustomerName,
-          start: item.OrderTime,
-          OrderID: item.Id,
-        };
-        this.calendarOptions.events.push(showOrderDetails);
-      });
+      // await this.OrderInfo.forEach((item) => {
+      //   const showOrderDetails = {
+      //     title: item.CustomerName,
+      //     start: item.OrderTime,
+      //     OrderID: item.Id,
+      //   };
+      //   this.calendarOptions.events.push(showOrderDetails);
+      // });
     },
 
     // postorder
@@ -381,25 +385,32 @@ export default {
         CustomerRemark: '',
         OrderDetails: this.editInfo,
       });
-
-      postOrder(data).then((res) => {
-        if (res.data.status === true) {
-          this.calendarOptions.events = [];
-          this.editInfo = [];
-          this.dId = '';
-          this.reservationInfo = '';
-          this.$swal({
-            title: '成功預約',
-            position: 'center',
-            icon: 'success',
-            showConfirmButton: false,
-            timer: 1500,
-          }).then(() => {
-            $('#reservationModal').modal('hide');
-            this.gettotalOrderHandler();
-          });
-        }
-      });
+      if (this.editInfo.length > 0) {
+        postOrder(data).then((res) => {
+          if (res.data.status === true) {
+            this.calendarOptions.events = [];
+            this.editInfo = [];
+            this.dId = '';
+            this.reservationInfo = '';
+            this.$swal({
+              title: '成功預約',
+              position: 'center',
+              icon: 'success',
+              showConfirmButton: false,
+              timer: 1500,
+            }).then(() => {
+              $('#reservationModal').modal('hide');
+              this.gettotalOrderHandler();
+            });
+          }
+        });
+      } else {
+        this.$swal({
+          title: '請選擇至少一項服務項目',
+          position: 'center',
+          icon: 'error',
+        });
+      }
     },
 
     // ban預約的日期
@@ -481,7 +492,7 @@ export default {
       this.dateClickEvent.view.calendar.unselect();
     },
   },
-  mounted() {
+  created() {
     // this.getDesignerHandler();
     // this.getServicesHandler();
     this.gettotalOrderHandler();

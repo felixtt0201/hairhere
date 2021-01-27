@@ -4,11 +4,9 @@
       :opacity="1"
       color="#7e735d"
       loader="bars"
-      background-color="#c8d6e5"
+      background-color="#fff"
       :active.sync="isLoading"
       :is-full-page="fullPage"
-    >
-      <template slot="default"> <loadingitem></loadingitem></template
     ></loading>
     <div class="row flex-column">
       <div class="col-sm-12 col-md-10">
@@ -214,6 +212,7 @@
                     class="outlineShow"
                     placeholder="請輸入作品名稱 ex:閃電藍"
                     v-model="formProduct.Name"
+                    required
                   />
                 </div>
               </div>
@@ -227,6 +226,7 @@
                       v-model="formProduct.DesignerId"
                       @change="showDesignerName(formProduct.DesignerId)"
                       v-if="isNew"
+                      required
                     >
                       <option disabled value="">選擇設計師</option>
                       <option
@@ -338,6 +338,7 @@
                       cols="30"
                       rows="5"
                       v-model="formProduct.Summary"
+                      required
                     ></textarea>
                   </div>
                 </div>
@@ -375,12 +376,8 @@ import {
   getDesignerWorks,
 } from '@/js/AppServices';
 import { getpages } from '@/js/FontAppServices';
-import loadingitem from './dashboarditem/loadingitem.vue';
 
 export default {
-  components: {
-    loadingitem,
-  },
   data() {
     return {
       // Loading遮罩
@@ -424,6 +421,7 @@ export default {
       getDesignerWorks(id).then((res) => {
         if (res.data.status) {
           this.comebackinfo = res.data.BasicData;
+          // this.getPageHandler();
         } else {
           this.$swal({
             position: 'center',
@@ -550,10 +548,13 @@ export default {
       });
     },
   },
+  mounted() {
+    this.getPageHandler();
+  },
   created() {
     this.getWorkInfoHandler();
     this.getDesignersInfo();
-    this.getPageHandler();
+
     this.formProduct = new FormData();
     this.formProduct.Category = [];
   },
@@ -580,80 +581,5 @@ select {
   border: 1px solid #d1d3e2;
   padding: 3px;
   border-radius: 10px !important;
-}
-
-.atom-spinner,
-.atom-spinner * {
-  box-sizing: border-box;
-}
-
-.atom-spinner {
-  height: 60px;
-  width: 60px;
-  overflow: hidden;
-}
-
-.atom-spinner .spinner-inner {
-  position: relative;
-  display: block;
-  height: 100%;
-  width: 100%;
-}
-
-.atom-spinner .spinner-circle {
-  display: block;
-  position: absolute;
-  color: #ff1d5e;
-  font-size: calc(60px * 0.24);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.atom-spinner .spinner-line {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  animation-duration: 1s;
-  border-left-width: calc(60px / 25);
-  border-top-width: calc(60px / 25);
-  border-left-color: #ff1d5e;
-  border-left-style: solid;
-  border-top-style: solid;
-  border-top-color: transparent;
-}
-
-.atom-spinner .spinner-line:nth-child(1) {
-  animation: atom-spinner-animation-1 1s linear infinite;
-  transform: rotateZ(120deg) rotateX(66deg) rotateZ(0deg);
-}
-
-.atom-spinner .spinner-line:nth-child(2) {
-  animation: atom-spinner-animation-2 1s linear infinite;
-  transform: rotateZ(240deg) rotateX(66deg) rotateZ(0deg);
-}
-
-.atom-spinner .spinner-line:nth-child(3) {
-  animation: atom-spinner-animation-3 1s linear infinite;
-  transform: rotateZ(360deg) rotateX(66deg) rotateZ(0deg);
-}
-
-@keyframes atom-spinner-animation-1 {
-  100% {
-    transform: rotateZ(120deg) rotateX(66deg) rotateZ(360deg);
-  }
-}
-
-@keyframes atom-spinner-animation-2 {
-  100% {
-    transform: rotateZ(240deg) rotateX(66deg) rotateZ(360deg);
-  }
-}
-
-@keyframes atom-spinner-animation-3 {
-  100% {
-    transform: rotateZ(360deg) rotateX(66deg) rotateZ(360deg);
-  }
 }
 </style>
