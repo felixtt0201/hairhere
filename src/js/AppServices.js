@@ -44,9 +44,9 @@ const deleteStoreProduct = (pId) =>
 
 /** 設計師 */
 // get全部設計師
-const getAllDesigner = () =>
+const getAllDesigner = (page, limit) =>
   // eslint-disable-next-line implicit-arrow-linebreak
-  storeApi.get('/GET/DesignerList?storeId=2');
+  storeApi.get(`/GET/DesignerList?storeId=2&Index=${page}&limit=${limit}`);
 
 // get單一設計師資料
 const getDesigner = (dId) => storeApi.get(`/GET/Designer?id=${dId}`);
@@ -105,9 +105,11 @@ const patchWork = (workId, data) =>
 const deleteWork = (workId) => storeApi.delete(`DELETE/Portfolio?id=${workId}`);
 
 // get單一設計師全部作品
-const getDesignerWorks = (dId) =>
+const getDesignerWorks = (dId, pages, index) =>
   // eslint-disable-next-line implicit-arrow-linebreak
-  storeApi.get(`/GET/PortfolioList?designerId=${dId}`);
+  storeApi.get(
+    `/GET/PortfolioList?designerId=${dId}&limit=${pages}&index=${index}`,
+  );
 
 /** 帳單 */
 // get全部帳單

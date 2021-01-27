@@ -60,6 +60,41 @@
         <span class="text">新增設計師</span>
       </button>
     </div>
+
+    <!-- 分頁 -->
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" :class="{ disabled: index == 1 }">
+          <a
+            class="page-link path"
+            href="#"
+            aria-label="Previous"
+            @click.prevent="getInfoHandler(index - 1)"
+            ><i class="fas fa-chevron-left"></i>
+          </a>
+        </li>
+        <!-- pageLi -->
+        <li
+          class="page-item"
+          v-for="page in pages"
+          :key="page"
+          @click="getInfoHandler(page)"
+        >
+          <a class="page-link" href="#">{{ page }}</a>
+        </li>
+        <!-- pageLi -->
+        <li class="page-item" :class="{ disabled: index == pages }">
+          <a
+            class="page-link path"
+            href="#"
+            aria-label="Next"
+            @click="getInfoHandler(index + 1)"
+            ><i class="fas fa-chevron-right"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!-- 分頁 -->
     <!--Modal-->
     <!---新增設計師-->
     <div
@@ -91,7 +126,7 @@
             <div class="modal-body">
               <div class="row">
                 <div class="col-sm-4">
-                  <h2>設計資料</h2>
+                  <h2>設計師資料</h2>
                 </div>
                 <div class="col-sm-8">
                   <div class="form-row">
@@ -113,8 +148,14 @@
                         class="form-control"
                         id="category"
                         placeholder="可以選擇設計師代表顏色"
+                        list="colors"
                         v-model="addNewInfo.Color"
                       />
+                      <datalist id="colors">
+                        <option></option>
+                        <option></option>
+                      </datalist>
+                      {{ addNewInfo.Color }}
                     </div>
                   </div>
                   <div class="form-group">
@@ -278,7 +319,13 @@
                         id="category"
                         placeholder="可以選擇設計師代表顏色"
                         v-model="tempInfo.Color"
+                        list="colors"
                       />
+                      <datalist id="colors">
+                        <option></option>
+                        <option></option>
+                      </datalist>
+                      {{ tempInfo.Color }}
                     </div>
                   </div>
                   <div class="form-group">
@@ -408,14 +455,20 @@ export default {
       tempInfo: {},
       isNew: false,
       donewithUpload: false,
+      pages: [],
+      index: 0,
     };
   },
   methods: {
     // 取的全部設計師
-    getInfoHandler() {
-      getAllDesigner().then((res) => {
+    getInfoHandler(page) {
+      getAllDesigner(page, 8).then((res) => {
+        console.log(res);
         if (res.data.status) {
           this.tempDesginersInfo = res.data.BasicData;
+          this.pages = Math.ceil(res.data.Count / res.data.Limit);
+          this.index = res.data.Index;
+
           this.isLoading = false;
         }
       });
