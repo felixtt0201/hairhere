@@ -5,7 +5,7 @@
       :opacity="1"
       color="#7e735d"
       loader="bars"
-      background-color="#c8d6e5"
+      background-color="#fff"
       :active.sync="isLoading"
       :is-full-page="fullPage"
     ></loading>
@@ -74,7 +74,7 @@
     </div>
 
     <!--Modal--->
-    <form>
+    <form @submit.prevent="postBillHandler">
       <!--新帳單--->
       <div class="modal fade" id="checkoutMoadel" tabindex="-1" v-if="isNew">
         <div class="modal-dialog modal-lg">
@@ -100,7 +100,7 @@
                     <tr>
                       <th scope="row">日期：</th>
                       <td>
-                        <input type="date" v-model="checkInfo.date" />
+                        <input type="date" v-model="checkInfo.date" required />
                       </td>
                     </tr>
                     <tr>
@@ -109,6 +109,7 @@
                         <select
                           class="form-control"
                           v-model="checkInfo.designerId"
+                          required
                         >
                           <option selected disabled>選擇設計師</option>
                           <option
@@ -129,6 +130,7 @@
                           id=""
                           placeholder="輸入顧客姓名"
                           v-model="checkInfo.cName"
+                          required
                         />
                       </td>
                     </tr>
@@ -139,6 +141,7 @@
                           type="date"
                           v-model="checkInfo.cBDay"
                           placeholder="請輸入客人生日"
+                          required
                         />
                       </td>
                     </tr>
@@ -149,6 +152,7 @@
                           type="text"
                           placeholder="輸入顧客電話"
                           v-model="checkInfo.cTel"
+                          required
                         />
                       </td>
                     </tr>
@@ -264,11 +268,7 @@
                 >
                   修改
                 </button> -->
-                <button
-                  type="button"
-                  class="btn btn-success"
-                  @click="postBillHandler"
-                >
+                <button type="submit" class="btn btn-success">
                   確定
                 </button>
               </div>
@@ -542,18 +542,24 @@ export default {
         CustomerBirthday: this.checkInfo.cBDay,
         BillDetails: this.addServicesInfo,
       });
-      postBill(data).then((res) => {
-        if (res.data.status) {
-          this.successedMessage();
-        } else {
-          this.$swal({
-            title: '新增失敗',
-            text: '請確認輸入資訊是否正確',
-            position: 'center',
-            icon: 'error',
-          });
-        }
-      });
+      if (this.addServicesInfo.length > 0) {
+        postBill(data).then((res) => {
+          if (res.data.status) {
+            this.successedMessage();
+          } else {
+            this.$swal({
+              title: '新增失敗',
+              text: '請確認輸入資訊是否正確',
+              position: 'center',
+              icon: 'error',
+            });
+          }
+        });
+      } else {
+        this.$swal({
+          title: '請填寫消費項目',
+        });
+      }
     },
 
     // patch更改帳單狀態

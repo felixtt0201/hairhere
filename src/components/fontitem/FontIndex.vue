@@ -1,5 +1,15 @@
 <template>
   <div>
+    <loading
+      :opacity="1"
+      color="#7e735d"
+      loader="bars"
+      background-color="#fff"
+      :active.sync="isLoading"
+      :is-full-page="fullPage"
+    >
+      <template slot="default"> <loadingitem></loadingitem></template
+    ></loading>
     <header class="mb-5">
       <div
         id="carouselExampleIndicators"
@@ -171,13 +181,19 @@ import {
   getworkss,
   getAllDesigner,
 } from '@/js/FontAppServices';
+import loadingitem from '../dashboarditem/loadingitem.vue';
 
 export default {
   components: {
     Carsouel,
+    loadingitem,
   },
   data() {
     return {
+      // Loading遮罩
+      isLoading: true,
+      fullPage: true,
+
       basicData: {
         // address: '',
         // details: '',
@@ -205,11 +221,13 @@ export default {
     getAllworks() {
       getworkss().then((res) => {
         this.works = res.data.BasicData;
+        this.isLoading = false;
       });
     },
     getAllDesigners() {
       getAllDesigner().then((res) => {
         this.designers = res.data.BasicData;
+        this.isLoading = false;
       });
     },
   },

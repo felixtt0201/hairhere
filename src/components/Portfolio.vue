@@ -4,7 +4,7 @@
       :opacity="1"
       color="#7e735d"
       loader="bars"
-      background-color="#c8d6e5"
+      background-color="#fff"
       :active.sync="isLoading"
       :is-full-page="fullPage"
     ></loading>
@@ -91,28 +91,34 @@
         <span class="text">新增作品</span>
       </button>
     </div>
+    <!---分頁-->
     <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center">
-        <li class="page-item" :class="{ disabled: (i = 1) }">
-          <a class="page-link path" href="#" aria-label="Previous"
+        <li class="page-item" :class="{ disabled: index == 1 }">
+          <a
+            class="page-link path"
+            href="#"
+            aria-label="Previous"
+            @click.prevent="getPageHandler(index - 1)"
             ><i class="fas fa-chevron-left"></i>
           </a>
         </li>
+        <!-- pageLi -->
         <li
           class="page-item"
           v-for="page in pages"
           :key="page"
-          @click="changePage(page)"
+          @click="getPageHandler(page)"
         >
           <a class="page-link" href="#">{{ page }}</a>
         </li>
-        <!-- <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a class="page-link" href="#">4</a></li>
-          <li class="page-item"><a class="page-link" href="#">5</a></li>
-          <li class="page-item"><a class="page-link" href="#">6</a></li> -->
-        <li class="page-item">
-          <a class="page-link path" href="#" aria-label="Next"
+        <!-- pageLi -->
+        <li class="page-item" :class="{ disabled: index == pages }">
+          <a
+            class="page-link path"
+            href="#"
+            aria-label="Next"
+            @click="getPageHandler(index + 1)"
             ><i class="fas fa-chevron-right"></i>
           </a>
         </li>
@@ -206,6 +212,7 @@
                     class="outlineShow"
                     placeholder="請輸入作品名稱 ex:閃電藍"
                     v-model="formProduct.Name"
+                    required
                   />
                 </div>
               </div>
@@ -219,6 +226,7 @@
                       v-model="formProduct.DesignerId"
                       @change="showDesignerName(formProduct.DesignerId)"
                       v-if="isNew"
+                      required
                     >
                       <option disabled value="">選擇設計師</option>
                       <option
@@ -330,6 +338,7 @@
                       cols="30"
                       rows="5"
                       v-model="formProduct.Summary"
+                      required
                     ></textarea>
                   </div>
                 </div>
@@ -366,6 +375,7 @@ import {
   deleteWork,
   getDesignerWorks,
 } from '@/js/AppServices';
+import { getpages } from '@/js/FontAppServices';
 
 export default {
   data() {
@@ -390,16 +400,28 @@ export default {
       dName: '', // 顯示設計師名字
       isNew: true, // 判斷新增or編輯狀態
       dId: '', // 設計師Id
+      pages: [],
+      index: '',
     };
   },
   methods: {
     // 分頁
-    changePage() {},
+    getPageHandler(page) {
+      getpages(page, 6).then((res) => {
+        console.log('pages', res);
+        this.comebackinfo = res.data.BasicData;
+        this.pages = Math.ceil(res.data.Count / res.data.Limit);
+        this.index = res.data.Index;
+        // console.log(this.index);
+        // console.log(this.comebackinfo);
+        // console.log('pages', this.pages, typeof this.pages);
+      });
+    },
     searchWorksHandler(id) {
       getDesignerWorks(id).then((res) => {
-        console.log('search', res);
         if (res.data.status) {
           this.comebackinfo = res.data.BasicData;
+          // this.getPageHandler();
         } else {
           this.$swal({
             position: 'center',
@@ -429,11 +451,11 @@ export default {
     getWorkInfoHandler() {
       getAllworkss().then((res) => {
         if (res.data.status) {
-          console.log('work', res.data);
           this.comebackinfo = res.data.BasicData;
           this.isLoading = false;
         }
       });
+      this.getPageHandler();
     },
     openModal(isNew, product) {
       $('#staticBackdrop').modal('show');
@@ -527,9 +549,12 @@ export default {
     },
   },
   mounted() {
+    this.getPageHandler();
+  },
+  created() {
     this.getWorkInfoHandler();
-    $('.carousel').carousel();
     this.getDesignersInfo();
+
     this.formProduct = new FormData();
     this.formProduct.Category = [];
   },
