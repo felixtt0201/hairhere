@@ -4,7 +4,7 @@
       :options="options"
       class="list-style d-flex justify-content-center mb-5"
     >
-      <!-- <h4 class="title-line w-100 text-center mb-4 text-main">髮型作品</h4> -->
+      <h4 class="title-line w-100 text-center mb-4 text-main">髮型作品</h4>
       <splide-slide
         v-for="work in msg"
         :key="work.Id"
@@ -14,9 +14,8 @@
         <router-link :to="`/DesignerSingleWork/${work.Id}`" class="ap"
           ><p>作品詳細</p></router-link
         >
-        <!-- {{ work }} -->
       </splide-slide>
-      <!-- <h4 class="title-line w-100 text-center mb-4 text-main">設計師</h4> -->
+      <h4 class="title-line w-100 text-center mb-4 text-main">設計師</h4>
       <splide-slide
         v-for="designer in des"
         :key="designer.Id"

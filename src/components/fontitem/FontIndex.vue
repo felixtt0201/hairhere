@@ -166,16 +166,40 @@
       </div>
     </div>
     <div class="container">
-      <h4 class="title-line w-100 text-center mb-4 text-main">髮型作品</h4>
-      <Carsouel :msg="works" />
+      <h4 class="title-line w-100 text-center mb-4 text-main">作品集</h4>
+      <swiper class="swiper" :options="swiperOption">
+        <swiper-slide v-for="work in works" :key="work.Id">
+          <router-link :to="`/DesignerSingleWork/${work.Id}`">
+            <img :src="`${work.Photo1}`" alt=""
+          /></router-link>
+        </swiper-slide>
+        <!-- <div class="swiper-pagination" slot="pagination"></div> -->
+        <!-- <div class="swiper-button-prev" slot="button-prev"></div> -->
+        <!-- <div class="swiper-button-next" slot="button-next"></div> -->
+      </swiper>
       <h4 class="title-line w-100 text-center mb-4 text-main">設計師</h4>
-      <Carsouel :des="designers" />
+      <swiper class="swiper mb-5" :options="swiperOption">
+        <swiper-slide
+          v-for="designer in designers"
+          :key="designer.Id"
+          style="width:150px;height:150px"
+        >
+          <router-link :to="`/designerSingle/${designer.Id}`">
+            <img :src="`${designer.PicturePath}`" alt="" />
+            /></router-link
+          >
+        </swiper-slide>
+        <!-- <div class="swiper-pagination" slot="pagination"></div> -->
+        <!-- <div class="swiper-button-prev" slot="button-prev"></div> -->
+        <!-- <div class="swiper-button-next" slot="button-next"></div> -->
+      </swiper>
     </div>
   </div>
 </template>
 
 <script>
-import Carsouel from '@/components/fontitem/Carsouel.vue';
+import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
+import 'swiper/css/swiper.css';
 import {
   getStoreTotalInfo,
   getworkss,
@@ -185,11 +209,32 @@ import loadingitem from '../dashboarditem/loadingitem.vue';
 
 export default {
   components: {
-    Carsouel,
     loadingitem,
+    Swiper,
+    SwiperSlide,
   },
   data() {
     return {
+      swiperOption: {
+        slidesPerView: 4,
+        spaceBetween: 30,
+        // centeredSlides: true,
+        // slidesPerGroup: 6,
+        loop: true,
+        // loopFillGroupWithBlank: true,
+        autoplay: {
+          delay: 2000,
+          disableOnInteraction: false,
+        },
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+      },
       // Loading遮罩
       isLoading: true,
       fullPage: true,
@@ -239,4 +284,49 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss">
+// .splide__arrow--next {
+//   right: -25px !important;
+//   background: transparent;
+// }
+// .splide__arrow--prev {
+//   left: -40px !important;
+//   background: transparent;
+// }
+// .background-img {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   position: relative;
+// }
+// .ap {
+//   position: absolute;
+//   background-color: pink;
+//   // display: inline;
+//   width: 100%;
+//   height: 85%;
+//   opacity: 0;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   text-decoration: none !important;
+//   bottom: -80px;
+//   &:hover {
+//     width: 85%;
+//     background-color: rgb(237, 224, 221);
+//     bottom: 0;
+//     transition: 0.5s;
+//     opacity: 0.8;
+//   }
+//   p {
+//     text-align: center;
+//     text-decoration: none !important;
+//     font-size: 20px;
+//     padding: 10px;
+//     color: #1d3d4a;
+//     font-weight: bolder;
+//     background-color: white;
+//     border-radius: 50px 50px 50px 0;
+//   }
+// }
+</style>

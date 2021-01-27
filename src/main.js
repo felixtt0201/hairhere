@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import Vue from 'vue';
 import VueSweetalert2 from 'vue-sweetalert2';
 import {
