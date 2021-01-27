@@ -301,19 +301,21 @@ export default {
     },
     // 從確認資料頁面返回編輯，把資料倒回
     patchList() {
-      const getorder = JSON.parse(sessionStorage.getItem('list'));
-      console.log(getorder);
-      this.orderTime = getorder.OrderTime;
-      this.listId = getorder.DesignerId;
-      this.designer.Name = getorder.DesignerName;
-      this.designer.Details = getorder.DesignerSummary;
-      this.name = getorder.CustomerName;
-      this.tel = getorder.CustomerPhone;
-      this.text = getorder.CustomerIntroducer;
-      this.remarks = getorder.CustomerRemark;
-      this.checklist = getorder.OrderDetails;
-      this.TotalMoney.moneytotal = getorder.Amount;
-      this.TotalMoney.timetotal = getorder.ServiceMinutes;
+      if (sessionStorage.getItem('list') != null) {
+        const getorder = JSON.parse(sessionStorage.getItem('list'));
+        console.log(getorder);
+        this.orderTime = getorder.OrderTime;
+        this.listId = getorder.DesignerId;
+        this.designer.Name = getorder.DesignerName;
+        this.designer.Details = getorder.DesignerSummary;
+        this.name = getorder.CustomerName;
+        this.tel = getorder.CustomerPhone;
+        this.text = getorder.CustomerIntroducer;
+        this.remarks = getorder.CustomerRemark;
+        this.checklist = getorder.OrderDetails;
+        this.TotalMoney.moneytotal = getorder.Amount;
+        this.TotalMoney.timetotal = getorder.ServiceMinutes;
+      }
     },
   },
   created() {

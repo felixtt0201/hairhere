@@ -54,7 +54,7 @@ export default {
         perPage: 4, // 確定每頁應顯示多少張幻燈片
         // gap: 1,
         pagination: false,
-        interval: 1500, // 移動時間
+        interval: 1200, // 移動時間
         // pauseOnHover: true, // 是否在懸停滑塊時停止自動播放
         cover: true,
         breakpoints: {
@@ -65,24 +65,9 @@ export default {
           },
         },
       },
-      classes: {
-        prev: 'splide__arrow--prev carsourl-prev',
-        next: 'splide__arrow--next carsourl-next',
-      },
       // works: [],
     };
   },
-  // methods: {
-  //   getALlworks() {
-  //     getworkss().then((res) => {
-  //       console.log(res);
-  //       this.works = res.data.BasicData;
-  //     });
-  //   },
-  // },
-  // mounted() {
-  //   this.getALlworks();
-  // },
 };
 </script>
 

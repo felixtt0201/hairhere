@@ -22,3 +22,15 @@
   display: block;
   margin: 0 auto;
 }
+
+.custom-list {
+  letter-spacing: 4px;
+  p:first-child {
+    padding-right: 40px;
+    color: #1d3d4a;
+    font-weight: bold;
+  }
+  p {
+    color: #7d7265;
+  }
+}
