@@ -47,31 +47,55 @@ export default {
     };
   },
   methods: {
-    // 取得店家登入名稱
-    getStoreName() {
-      const getId = JSON.parse(localStorage.getItem('storeId'));
-      getAllStoreInfo().then((res) => {
-        res.data.forEach((item) => {
-          if (item.Id === getId) {
-            this.storeName = item.Name;
-            this.isLogin = true;
-          }
+    setName() {
+      const storeInfo = JSON.parse(localStorage.getItem('storeDetails'));
+      const designerInfo = JSON.parse(localStorage.getItem('desginderDetails'));
+      if (storeInfo !== null) {
+        getAllStoreInfo().then((res) => {
+          res.data.forEach((item) => {
+            if (item.Id === storeInfo.Id) {
+              this.storeName = item.Name;
+              this.isLogin = true;
+            }
+          });
         });
-      });
+      } else if (designerInfo !== null) {
+        getDesignerListSelect(designerInfo.StoreId).then((res) => {
+          const designersInfo = res.data;
+          designersInfo.forEach((item) => {
+            if (item.Id === designerInfo.Id) {
+              this.designerName = item.Name;
+              this.isLogin = true;
+            }
+          });
+        });
+      }
     },
+    // 取得店家登入名稱
+    // getStoreName() {
+    //   const getId = JSON.parse(localStorage.getItem('storeId'));
+    //   getAllStoreInfo().then((res) => {
+    //     res.data.forEach((item) => {
+    //       if (item.Id === getId) {
+    //         this.storeName = item.Name;
+    //         this.isLogin = true;
+    //       }
+    //     });
+    //   });
+    // },
 
     // 取得設計師登入名稱
-    getDesignerName() {
-      const loginInfo = JSON.parse(localStorage.getItem('desginderDetails'));
-      getDesignerListSelect(loginInfo.StoreId).then((res) => {
-        const designersInfo = res.data;
-        designersInfo.forEach((item) => {
-          if (item.Id === loginInfo.Id) {
-            this.designerName = item.Name;
-          }
-        });
-      });
-    },
+    // getDesignerName() {
+    //   const loginInfo = JSON.parse(localStorage.getItem('desginderDetails'));
+    //   getDesignerListSelect(loginInfo.StoreId).then((res) => {
+    //     const designersInfo = res.data;
+    //     designersInfo.forEach((item) => {
+    //       if (item.Id === loginInfo.Id) {
+    //         this.designerName = item.Name;
+    //       }
+    //     });
+    //   });
+    // },
     logout() {
       this.$swal({
         position: 'center',
@@ -85,8 +109,9 @@ export default {
     },
   },
   created() {
-    this.getDesignerName();
-    this.getStoreName();
+    // this.getDesignerName();
+    // this.getStoreName();
+    this.setName();
   },
 };
 </script>

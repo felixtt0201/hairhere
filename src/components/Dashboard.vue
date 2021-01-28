@@ -31,9 +31,10 @@ export default {
     };
   },
   created() {
+    // eslint-disable-next-line eqeqeq
     this.token = document.cookie.replace(
       // eslint-disable-next-line no-useless-escape
-      /(?:(?:^|.*;\s*)userToken\s*\=\s*([^;]*).*$)|^.*$/,
+      /(?:(?:^|.*;\s*)desingerToken\s*\=\s*([^;]*).*$)|^.*$/,
       '$1',
     );
     console.log(localStorage.getItem('desginderDetails'));

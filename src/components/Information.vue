@@ -1,11 +1,12 @@
 <template>
   <div id="information" class="container-fluid">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-      <h1 class="h3 mb-0 text-gray-800">店家資訊管理</h1>
+      <h1 class="h3 mb-0 text-gray-800" v-if="isWho">店家資訊管理</h1>
+      <h1 class="h3 mb-0 text-gray-800" v-else>個人資訊管理</h1>
     </div>
     <div class="card text-center border-0 mb-4">
       <div class="card-header">
-        <ul class="nav nav-tabs card-header-tabs">
+        <ul class="nav nav-tabs card-header-tabs" v-if="isWho">
           <li class="nav-item">
             <router-link
               class="nav-link informationhover"
@@ -30,7 +31,27 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      isWho: true,
+    };
+  },
+  methods: {
+    getInfo() {
+      const storeInfo = JSON.parse(localStorage.getItem('storeDetails'));
+      const designerInfo = JSON.parse(localStorage.getItem('desginderDetails'));
+      if (storeInfo !== null) {
+        this.isWho = true;
+      } else if (designerInfo !== null) {
+        this.isWho = false;
+      }
+    },
+  },
+  created() {
+    this.getInfo();
+  },
+};
 </script>
 
 <style lang="scss">

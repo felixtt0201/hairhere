@@ -669,7 +669,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scopeded>
+<style lang="scss" scoped>
 .myinput {
   position: absolute;
   font-size: 50px;

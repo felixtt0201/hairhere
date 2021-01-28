@@ -32,7 +32,7 @@
     <li class="nav-item" v-else>
       <router-link
         class="nav-link font-weight-bold sidebarhover"
-        :to="{ name: 'StoreInformation' }"
+        :to="{ name: 'Designerinfoedit' }"
       >
         <i class="fas fa-store-alt mr-2"></i>
         <span>個人資訊</span></router-link
@@ -50,7 +50,7 @@
     <li class="nav-item" v-else>
       <router-link
         class="nav-link font-weight-bold sidebarhover"
-        :to="{ name: 'StoreInformation' }"
+        :to="{ name: 'Designerinfoedit' }"
       >
         <i class="fas fa-store-alt mr-2"></i>
         <span>個人作品</span></router-link
@@ -137,9 +137,11 @@ export default {
       });
     },
     getInfo() {
-      const loginInfo = JSON.parse(localStorage.getItem('desginderDetails'));
-      console.log(loginInfo);
-      if (loginInfo.identity === 'designer') {
+      const storeInfo = JSON.parse(localStorage.getItem('storeDetails'));
+      const designerInfo = JSON.parse(localStorage.getItem('desginderDetails'));
+      if (storeInfo !== null) {
+        this.isWho = true;
+      } else if (designerInfo !== null) {
         this.isWho = false;
       }
     },
@@ -148,7 +150,6 @@ export default {
     sidebarseffect();
     this.getInfo();
   },
-  created() {},
 };
 </script>
 

@@ -161,12 +161,17 @@ export default {
           password: this.store.password,
         }),
       ).then((res) => {
+        console.log(res);
         if (res.data.status) {
-          const mytoken = res.data.token;
-          const myId = res.data.Id;
-          localStorage.setItem('myToken', mytoken);
+          const storeToken = res.data.token;
+          document.cookie = `storeToken=${storeToken};path=/`;
+          const storeDetails = JSON.stringify({
+            Id: res.data.Id,
+            identity: res.data.identity,
+          });
+          localStorage.setItem('storeDetails', storeDetails);
+          localStorage.setItem('myToken', storeToken);
           localStorage.setItem('status', true);
-          localStorage.setItem('storeId', myId);
           this.$router.push('/Dashboard');
           this.successMessage();
         } else {
