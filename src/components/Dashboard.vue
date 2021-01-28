@@ -25,6 +25,19 @@ export default {
     Sidebar,
     Footer,
   },
+  data() {
+    return {
+      token: '',
+    };
+  },
+  created() {
+    this.token = document.cookie.replace(
+      // eslint-disable-next-line no-useless-escape
+      /(?:(?:^|.*;\s*)userToken\s*\=\s*([^;]*).*$)|^.*$/,
+      '$1',
+    );
+    console.log(localStorage.getItem('desginderDetails'));
+  },
 };
 </script>
 
