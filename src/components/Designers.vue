@@ -152,10 +152,27 @@
                         v-model="addNewInfo.Color"
                       />
                       <datalist id="colors">
-                        <option></option>
-                        <option></option>
+                        <option>#FFC312</option>
+                        <option>#C4E538</option>
+                        <option>#12CBC4</option>
+                        <option>#FDA7DF</option>
+                        <option>#ED4C67</option>
+                        <option>#F79F1F</option>
+                        <option>#A3CB38</option>
+                        <option>#1289A7</option>
+                        <option>#D980FA</option>
+                        <option>#B53471</option>
+                        <option>#EE5A24</option>
+                        <option>#009432</option>
+                        <option>#0652DD</option>
+                        <option>#9980FA</option>
+                        <option>#833471</option>
+                        <option>#EA2027</option>
+                        <option>#006266</option>
+                        <option>#1B1464</option>
+                        <option>#5758BB</option>
+                        <option>#6F1E51</option>
                       </datalist>
-                      {{ addNewInfo.Color }}
                     </div>
                   </div>
                   <div class="form-group">
@@ -322,10 +339,27 @@
                         list="colors"
                       />
                       <datalist id="colors">
-                        <option></option>
-                        <option></option>
+                        <option>#FFC312</option>
+                        <option>#C4E538</option>
+                        <option>#12CBC4</option>
+                        <option>#FDA7DF</option>
+                        <option>#ED4C67</option>
+                        <option>#F79F1F</option>
+                        <option>#A3CB38</option>
+                        <option>#1289A7</option>
+                        <option>#D980FA</option>
+                        <option>#B53471</option>
+                        <option>#EE5A24</option>
+                        <option>#009432</option>
+                        <option>#0652DD</option>
+                        <option>#9980FA</option>
+                        <option>#833471</option>
+                        <option>#EA2027</option>
+                        <option>#006266</option>
+                        <option>#1B1464</option>
+                        <option>#5758BB</option>
+                        <option>#6F1E51</option>
                       </datalist>
-                      {{ tempInfo.Color }}
                     </div>
                   </div>
                   <div class="form-group">
@@ -463,7 +497,6 @@ export default {
     // 取的全部設計師
     getInfoHandler(page) {
       getAllDesigner(page, 8).then((res) => {
-        console.log(res);
         if (res.data.status) {
           this.tempDesginersInfo = res.data.BasicData;
           this.pages = Math.ceil(res.data.Count / res.data.Limit);
@@ -479,7 +512,6 @@ export default {
       this.isNew = false;
       this.tempInfo = {};
       getDesignerInfoBack(id).then((res) => {
-        console.log(res);
         this.tempInfo = res.data;
       });
     },
@@ -497,9 +529,15 @@ export default {
       });
       const smsg = '新增';
       postDesinger(data).then((res) => {
-        console.log(res);
-        if (res.data.status === true) {
+        if (res.data.status) {
           this.successed(smsg);
+        } else if (res.data.message === '帳號重複') {
+          this.$swal({
+            position: 'center',
+            icon: 'error',
+            title: `${smsg}失敗`,
+            text: '帳號重複',
+          });
         } else {
           this.unsuccessed(smsg);
         }
