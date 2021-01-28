@@ -1,7 +1,6 @@
 /* eslint-disable func-names */
 <template>
-  <div>
-    <FullCalendar :options="calendarOptions" />
+  <div id="calendar" class="container-fluid">
     <loading
       :opacity="1"
       color="#7e735d"
@@ -10,6 +9,31 @@
       :active.sync="isLoading"
       :is-full-page="fullPage"
     ></loading>
+
+    <div class="row justify-content-end mb-4">
+      <div class="input-group col-4">
+        <select class="custom-select" v-model="selectId">
+          <option disabled value="">選擇設計師</option>
+          <option
+            v-for="Designer in totalDesignerInfo"
+            :key="Designer.Id"
+            :value="Designer.Id"
+            >{{ Designer.Name }}</option
+          >
+        </select>
+        <div class="input-group-append">
+          <button
+            class="btn btn-outline-secondary"
+            type="button"
+            @click="searchInfoHandler(selectId)"
+          >
+            搜尋
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <FullCalendar :options="calendarOptions" />
     <form @submit.prevent="postOrderHandler">
       <div
         class="modal fade"
@@ -236,12 +260,14 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import {
-  getAllDesigner,
+  // getAllDesigner,
   getStoreProductList,
   postOrder,
   getOrder,
   getOrderDetail,
   patchOrderDetailStatus,
+  getOrderListbyDesinger,
+  getDesignerListSelect,
 } from '@/js/AppServices';
 import $ from 'jquery';
 
@@ -303,6 +329,8 @@ export default {
       editInfo: [],
       // 設計師ID
       dId: '',
+      // 搜尋的設計師ID
+      selectId: '',
 
       // OrderInfo
       OrderInfo: [],
@@ -322,13 +350,45 @@ export default {
   },
 
   methods: {
-    // getDesignerInfo
-    getDesignerHandler() {
-      getAllDesigner().then((res) => {
+    // 搜尋訂單
+    searchInfoHandler(selectId) {
+      getOrderListbyDesinger(selectId).then((res) => {
+        console.log('sear', res);
         if (res.data.status) {
-          this.totalDesignerInfo = res.data.BasicData;
+          this.calendarOptions.events = [];
+          this.OrderInfo = res.data.BasicData;
+          this.OrderInfo.forEach((item) => {
+            const OrderDetails = {
+              title: item.CustomerName,
+              start: item.OrderTime,
+              end: item.EndTime,
+              OrderID: item.Id,
+              backgroundColor: item.Color,
+              borderColor: item.Color,
+            };
+            this.calendarOptions.events.push(OrderDetails);
+          });
+        } else {
+          this.$swal({
+            title: '查無此設計師的預約',
+            position: 'center',
+            icon: 'error',
+          });
         }
       });
+    },
+
+    // getDesignerInfo
+    getDesignerHandler() {
+      getDesignerListSelect(2).then((res) => {
+        this.totalDesignerInfo = res.data;
+      });
+      // getAllDesigner().then((res) => {
+      //   console.log(res);
+      //   if (res.data.status) {
+      //     this.totalDesignerInfo = res.data.BasicData;
+      //   }
+      // });
     },
     // getServicesInfo
     getServicesHandler() {
@@ -344,7 +404,7 @@ export default {
       await this.getDesignerHandler();
       await this.getServicesHandler();
       await getOrder().then((res) => {
-        console.log(res);
+        console.log('total', res);
         if (res.data.status) {
           this.isLoading = false;
           this.OrderInfo = res.data.BasicData;
@@ -371,7 +431,7 @@ export default {
       // });
     },
 
-    // postorder
+    // postorder新增訂單
     postOrderHandler() {
       // 將資訊post到Order
       const data = this.$qs.stringify({
@@ -446,7 +506,6 @@ export default {
       this.tempOrderInfo = {};
       this.selectOrderId = e.event.extendedProps.OrderID;
       getOrderDetail(this.selectOrderId).then((res) => {
-        console.log(res);
         if (res.data.status) {
           this.tempOrderInfo = res.data.BasicData;
         }

@@ -322,7 +322,7 @@ export default {
       getStoreTotalInfo().then((res) => {
         if (res.data.status) {
           this.newdata = res.data;
-          console.log(this.newdata);
+          // console.log(this.newdata);
           this.basicInfo = res.data.BasicData;
           this.businessTime = res.data.Business;
           // eslint-disable-next-line no-multi-assign

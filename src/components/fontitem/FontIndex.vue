@@ -260,7 +260,7 @@ export default {
         this.basicData = res.data.BasicData;
         this.business = res.data.Business;
         this.services = res.data.ServicesPublic;
-        console.log(this.services);
+        // console.log(this.services);
         this.dayof = this.business.RestDayOfWeek.toString();
       });
     },
