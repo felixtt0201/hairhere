@@ -10,12 +10,31 @@
           <div class="card o-hidden border-0 shadow-lg my-5">
             <div class="card-body p-0">
               <!-- Nested Row within Card Body -->
-              <div class="row">
+              <!-- shopLogin -->
+              <ul>
+                <li>
+                  <a
+                    href="#"
+                    :class="{ active: link === 'shop' }"
+                    @click="link = 'shop'"
+                    >shop</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    :class="{ active: link === 'desinger' }"
+                    @click="link = 'desinger'"
+                    >desinger</a
+                  >
+                </li>
+              </ul>
+              <div class="row" v-if="link === 'shop'">
                 <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
                 <div class="col-lg-6">
                   <div class="p-5">
                     <div class="text-center">
-                      <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                      <h1 class="h4 text-gray-900 mb-4">Welcome Back! Store</h1>
                     </div>
                     <form class="user" @submit.prevent="loginHandler">
                       <div class="form-group">
@@ -72,6 +91,71 @@
                   </div>
                 </div>
               </div>
+              <!-- desingerLogin -->
+              <div class="row" v-else-if="link === 'desinger'">
+                <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                <div class="col-lg-6">
+                  <div class="p-5">
+                    <div class="text-center">
+                      <h1 class="h4 text-gray-900 mb-4">
+                        Welcome Back! Desinger
+                      </h1>
+                    </div>
+                    <form class="user" @submit.prevent="desingerLogin">
+                      <div class="form-group">
+                        <input
+                          type="email"
+                          class="form-control form-control-user"
+                          id="exampleInputEmail"
+                          aria-describedby="emailHelp"
+                          placeholder="Enter Email Address..."
+                          v-model="desinger.email"
+                          required
+                        />
+                      </div>
+                      <div class="form-group">
+                        <input
+                          type="password"
+                          class="form-control form-control-user"
+                          id="exampleInputPassword"
+                          placeholder="Password"
+                          v-model="desinger.password"
+                          required
+                        />
+                      </div>
+                      <div class="form-group">
+                        <div class="custom-control custom-checkbox small">
+                          <input
+                            type="checkbox"
+                            class="custom-control-input"
+                            id="customCheck"
+                          />
+                          <label class="custom-control-label" for="customCheck"
+                            >Remember Me</label
+                          >
+                        </div>
+                      </div>
+                      <button
+                        class="btn btn-primary btn-user btn-block"
+                        type="submit"
+                      >
+                        Login
+                      </button>
+                      <hr />
+                    </form>
+                    <div class="text-center">
+                      <!-- <a class="small" href="forgot-password.html"
+                        >Forgot Password?</a
+                      > -->
+                    </div>
+                    <div class="text-center">
+                      <router-link class="small" :to="{ name: 'Register' }"
+                        >Create an Account!</router-link
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -81,7 +165,7 @@
 </template>
 
 <script>
-import { postStoreLogin } from '@/js/AppServices';
+import { postStoreLogin, postDesingerLogin } from '@/js/AppServices';
 
 export default {
   data() {
@@ -90,6 +174,11 @@ export default {
         email: '',
         password: '',
       },
+      desinger: {
+        email: '',
+        password: '',
+      },
+      link: 'shop', // 用來判斷切換登入口
     };
   },
   methods: {
@@ -111,6 +200,30 @@ export default {
           this.successMessage();
         } else {
           this.unsuccessMessage();
+        }
+      });
+    },
+    // 設計師登入
+    desingerLogin() {
+      postDesingerLogin(
+        this.$qs.stringify({
+          email: this.desinger.email,
+          password: this.desinger.password,
+        }),
+      ).then((res) => {
+        console.log(res);
+        if (res.data.status) {
+          const desingerToken = res.data.token;
+          document.cookie = `desingerToken=${desingerToken};path=/`;
+          const desginderDetails = JSON.stringify({
+            Id: res.data.Id,
+            StoreId: res.data.StoreId,
+            identity: res.data.identity,
+          });
+          localStorage.setItem('desginderDetails', desginderDetails);
+          this.$router.push('/Dashboard');
+        } else {
+          alert('帳號或密碼錯誤');
         }
       });
     },

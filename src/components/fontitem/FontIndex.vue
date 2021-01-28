@@ -170,6 +170,7 @@
       <swiper class="swiper" :options="swiperOption">
         <swiper-slide v-for="work in works" :key="work.Id">
           <router-link :to="`/DesignerSingleWork/${work.Id}`">
+            LInkto
             <img :src="`${work.Photo1}`" alt=""
           /></router-link>
         </swiper-slide>
@@ -185,9 +186,9 @@
           style="width:150px;height:150px"
         >
           <router-link :to="`/designerSingle/${designer.Id}`">
+            LInkto
             <img :src="`${designer.PicturePath}`" alt="" />
-            /></router-link
-          >
+          </router-link>
         </swiper-slide>
         <!-- <div class="swiper-pagination" slot="pagination"></div> -->
         <!-- <div class="swiper-button-prev" slot="button-prev"></div> -->

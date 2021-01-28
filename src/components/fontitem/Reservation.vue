@@ -102,11 +102,15 @@
           <!-- 選擇日期後篩選出空閑時間 -->
         </template>
         <ul class="d-flex justify-content-between">
-          <li v-for="freetime in freeTimeList" :key="freetime">
+          <li
+            v-for="(freetime, index) in freeTimeList"
+            :key="freetime"
+            :class="isActive == index ? 'active' : ''"
+          >
             <button
               type="button"
               class="btn border time-btn"
-              @click="selectTime(freetime)"
+              @click="selectTime(freetime, index)"
             >
               {{ freetime.replace('T', ' ').replace(':00:00', ':00') }}
             </button>
@@ -186,6 +190,7 @@ export default {
       orderId: '', // post後回傳訂單Id
       freeTimeList: [], // 回傳空閑時間
       freetime: '',
+      isActive: -1,
     };
   },
   computed: {
@@ -229,9 +234,10 @@ export default {
         // console.log(this.freeTimeList);
       });
     },
-    selectTime(selecTime) {
+    selectTime(selecTime, index) {
       this.orderTime = selecTime;
       console.log(this.orderTime);
+      this.isActive = index; // 用來裝上點選效果
     },
     getProductHandler() {
       getStoreProductList().then((res) => {
@@ -327,7 +333,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 input:checked ~ td {
   background-color: gray !important;
   opacity: 0.8;
@@ -335,12 +341,12 @@ input:checked ~ td {
 .time-btn {
   border: 1px solid gainsboro !important;
   font-weight: bold;
-  &:focus {
-    border: 3px solid #dee2e6 !important;
-    outline: 0;
-    box-shadow: inset 2px 2px 2px 0px grey;
-    background-color: #e9ecef;
-    color: #1d3d4a;
-  }
+}
+.active {
+  border: 3px solid #dee2e6 !important;
+  outline: 0;
+  box-shadow: inset 2px 2px 2px 0px grey;
+  background-color: #e9ecef;
+  color: #1d3d4a;
 }
 </style>
