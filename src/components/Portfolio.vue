@@ -10,7 +10,7 @@
     ></loading>
     <div class="row flex-column">
       <div class="col-sm-12 col-md-10">
-        <h1 class="h3 mb-0 text-gray-800">作品集管理</h1>
+        <h3 class="mb-0 text-gray-800">作品集管理</h3>
       </div>
       <div class="col-sm-12 col-md-2 mt-4">
         <div id="dataTable_filter" class="dataTables_filter">

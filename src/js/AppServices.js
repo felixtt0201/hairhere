@@ -47,19 +47,21 @@ const deleteStoreProduct = (pId) =>
 const getAllDesigner = (page, limit) =>
   // eslint-disable-next-line implicit-arrow-linebreak
   storeApi.get(`/GET/DesignerList?storeId=2&Index=${page}&limit=${limit}`);
-
 // get單一設計師資料
 const getDesigner = (dId) => storeApi.get(`/GET/Designer?id=${dId}`);
+
 // get 單一設計師資料(後台)
 const getDesignerInfoBack = (dId) =>
   // eslint-disable-next-line implicit-arrow-linebreak
   storeApi.get(`/GET/Designer/Detail?id=${dId}`);
 
+// get 設計師清單（下拉選單）
+const getDesignerListSelect = (storeId) =>
+  // eslint-disable-next-line implicit-arrow-linebreak
+  storeApi.get(`GET/DesignerList/Drop?storeId=${storeId}`);
+
 // post新增設計師
 const postDesinger = (data) => storeApi.post('/POST/Designer?storeid=2', data);
-
-// delete設計師
-// const deleteDesigner = (dId) => storeApi.delete(`/DELETE/Designer?id=${dId}`);
 
 // patch修改設計師狀態(在職/離職)
 const patchDesignerStatus = (data, dId) =>
@@ -88,6 +90,10 @@ const getOrderDetail = (oId) => storeApi.get(`/GET/Order?id=${oId}`);
 const patchOrderDetailStatus = (oId, data) =>
   // eslint-disable-next-line implicit-arrow-linebreak
   storeApi.patch(`PATCH/Order?id=${oId}`, data);
+// get搜尋訂單（by設計師Id）
+const getOrderListbyDesinger = (dId) =>
+  // eslint-disable-next-line implicit-arrow-linebreak
+  storeApi.get(`/GET/OrderList?designerId=${dId}`);
 
 /** 作品 bycin */
 // post新增作品
@@ -138,6 +144,7 @@ export {
   deleteStoreProduct,
   getAllDesigner,
   getDesigner,
+  getDesignerListSelect,
   getDesignerInfoBack,
   postDesinger,
   patchDesignerPhoto,
@@ -146,6 +153,7 @@ export {
   postOrder,
   getOrder,
   getOrderDetail,
+  getOrderListbyDesinger,
   patchOrderDetailStatus,
   postPortfolio,
   getBillList,
