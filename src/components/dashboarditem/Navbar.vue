@@ -20,6 +20,7 @@
     <ul class="navbar-nav ml-auto">
       <li class="mr-4">
         <span>{{ storeName }}</span>
+        <span>{{ designerName }}</span>
       </li>
       <li>
         <router-link :to="{ name: 'login' }">
@@ -35,16 +36,18 @@
 </template>
 
 <script>
-import { getAllStoreInfo } from '@/js/AppServices';
+import { getAllStoreInfo, getDesignerListSelect } from '@/js/AppServices';
 
 export default {
   data() {
     return {
+      designerName: '',
       storeName: '',
       isLogin: false,
     };
   },
   methods: {
+    // 取得店家登入名稱
     getStoreName() {
       const getId = JSON.parse(localStorage.getItem('storeId'));
       getAllStoreInfo().then((res) => {
@@ -52,6 +55,19 @@ export default {
           if (item.Id === getId) {
             this.storeName = item.Name;
             this.isLogin = true;
+          }
+        });
+      });
+    },
+
+    // 取得設計師登入名稱
+    getDesignerName() {
+      const loginInfo = JSON.parse(localStorage.getItem('desginderDetails'));
+      getDesignerListSelect(loginInfo.StoreId).then((res) => {
+        const designersInfo = res.data;
+        designersInfo.forEach((item) => {
+          if (item.Id === loginInfo.Id) {
+            this.designerName = item.Name;
           }
         });
       });
@@ -69,6 +85,7 @@ export default {
     },
   },
   created() {
+    this.getDesignerName();
     this.getStoreName();
   },
 };

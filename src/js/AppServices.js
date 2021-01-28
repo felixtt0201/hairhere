@@ -46,7 +46,6 @@ const deleteStoreProduct = (pId) =>
 
 // post設計師登入
 const postDesingerLogin = (data) => storeApi.post('/POST/Login/Designer', data);
-
 // get全部設計師
 const getAllDesigner = (page, limit) =>
   // eslint-disable-next-line implicit-arrow-linebreak

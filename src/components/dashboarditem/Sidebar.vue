@@ -20,7 +20,7 @@
       內容
     </div>
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
+    <li class="nav-item" v-if="isWho">
       <router-link
         class="nav-link font-weight-bold sidebarhover"
         :to="{ name: 'StoreInformation' }"
@@ -29,7 +29,16 @@
         <span>店家資訊管理</span></router-link
       >
     </li>
-    <li class="nav-item ">
+    <li class="nav-item" v-else>
+      <router-link
+        class="nav-link font-weight-bold sidebarhover"
+        :to="{ name: 'StoreInformation' }"
+      >
+        <i class="fas fa-store-alt mr-2"></i>
+        <span>個人資訊</span></router-link
+      >
+    </li>
+    <li class="nav-item" v-if="isWho">
       <router-link
         class="nav-link font-weight-bold sidebarhover"
         :to="{ name: 'Designers' }"
@@ -38,8 +47,17 @@
         <span>設計師管理</span></router-link
       >
     </li>
+    <li class="nav-item" v-else>
+      <router-link
+        class="nav-link font-weight-bold sidebarhover"
+        :to="{ name: 'StoreInformation' }"
+      >
+        <i class="fas fa-store-alt mr-2"></i>
+        <span>個人作品</span></router-link
+      >
+    </li>
 
-    <li class="nav-item">
+    <li class="nav-item" v-if="isWho">
       <router-link
         class="nav-link font-weight-bold sidebarhover"
         :to="{ name: 'Portfolio' }"
@@ -100,6 +118,11 @@
 import sidebarseffect from '@/js/sidebarseffect';
 
 export default {
+  data() {
+    return {
+      isWho: true,
+    };
+  },
   methods: {
     logout() {
       this.$swal({
@@ -109,13 +132,23 @@ export default {
         // showConfirmButton: false,
         timer: 1500,
       }).then(() => {
+        document.cookie = 'desingerToken=; expires=; path=/';
         localStorage.clear();
       });
+    },
+    getInfo() {
+      const loginInfo = JSON.parse(localStorage.getItem('desginderDetails'));
+      console.log(loginInfo);
+      if (loginInfo.identity === 'designer') {
+        this.isWho = false;
+      }
     },
   },
   mounted() {
     sidebarseffect();
+    this.getInfo();
   },
+  created() {},
 };
 </script>
 
