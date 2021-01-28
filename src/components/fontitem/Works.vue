@@ -103,57 +103,16 @@
           v-for="work in searchInputText"
           :key="work.Id"
         >
-          <h2>{{ work.Name }}{{ work.Category }}</h2>
-          <img :src="work.Photo1" alt="" class="img-size" />
-          <div class="imgbackground">
-            <p>{{ work.Name }}</p>
-            <p>{{ work.Category }}</p>
-            <router-link
-              :to="`/designerSingle/${work.Id}`"
-              class="btn btn-primary"
-              >立即預約</router-link
-            >
-          </div>
+          <router-link :to="`/designerSingle/${work.Id}`" class="itemimg">
+            <h2 class="item-tittle">{{ work.Name }}</h2>
+            <img :src="work.Photo1" alt="" />
+            <!-- <div class="imgbackground">
+              <p>{{ work.Name }}</p>
+              <p>{{ work.Category }}</p>
+            </div> -->
+          </router-link>
         </div>
       </div>
-      <!-- <div class="row img-center">
-        <div class="col-md-3">
-          <img
-            src="https://images.unsplash.com/photo-1605980766335-d3a41c7332a1?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTZ8fGhhaXJ8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-            alt=""
-            class="img-size"
-          />
-          <div class="works-btn"></div>
-          <button type="button" class="img-btn">立即預約</button>
-        </div>
-        <div class="col-md-3">
-          <img
-            src="https://images.unsplash.com/photo-1605980766335-d3a41c7332a1?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTZ8fGhhaXJ8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-            alt=""
-            class="img-size"
-          />
-          <div class="works-btn"></div>
-          <button type="button" class="img-btn">立即預約</button>
-        </div>
-        <div class="col-md-3">
-          <img
-            src="https://images.unsplash.com/photo-1605980766335-d3a41c7332a1?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTZ8fGhhaXJ8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-            alt=""
-            class="img-size"
-          />
-          <div class="works-btn"></div>
-          <button type="button" class="img-btn">立即預約</button>
-        </div>
-        <div class="col-md-3">
-          <img
-            src="https://images.unsplash.com/photo-1605980766335-d3a41c7332a1?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTZ8fGhhaXJ8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-            alt=""
-            class="img-size"
-          />
-          <div class="works-btn"></div>
-          <button type="button" class="img-btn">立即預約</button>
-        </div>
-      </div> -->
       <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
           <li class="page-item" :class="{ disabled: (i = 1) }">

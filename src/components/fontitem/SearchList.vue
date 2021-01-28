@@ -23,18 +23,32 @@
               required
           /></label>
           <hr />
-          <button type="submit" class="btn">送出</button>
+          <button
+            type="submit"
+            class="btn"
+            data-toggle="modal"
+            data-target="#exampleModal"
+          >
+            送出
+          </button>
         </form>
       </div>
     </div>
+    <!-- mymodal -->
+    <!-- Button trigger modal -->
 
-    <!--Modal-->
-
-    <div class="modal fade" id="orderDetailInfo" tabindex="-1">
-      <div class="modal-dialog modal-lg">
+    <!-- Modal -->
+    <div
+      class="modal fade border"
+      id="orderDetailInfo"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog Larger shadow" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="orderDetailInfo">訂單明細</h5>
             <button
               type="button"
               class="close"
@@ -43,62 +57,43 @@
             >
               <span aria-hidden="true">&times;</span>
             </button>
+            <h2 class="modal-title" id="orderDetailInfo">
+              預約訂單明細
+            </h2>
           </div>
-          <div class="modal-body text-gray-900">
-            <div
-              class="form-group border-bottom border-dark table-responsive-md"
-            >
-              <h5>細項：</h5>
-              <table class="table table-borderless">
-                <tbody class="text-gray-800">
-                  <tr>
-                    <th scope="row">日期：</th>
-                    <td>{{ showDate }} {{ showTime }}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">設計師：</th>
-                    <td>
-                      {{ orderInfo[0].DesignerName }}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div
-              class="form-group border-bottom border-dark table-responsive-md"
-            >
-              <h5 class="">服務項目：</h5>
-              <table class="table table-hover ">
-                <thead>
-                  <tr class=" table-borderless text-gray-900">
-                    <th scope="col">#</th>
-                    <th scope="col">項目</th>
-                    <th scope="col">金額</th>
-                  </tr>
-                </thead>
-                <tbody class="text-gray-800">
-                  <tr v-for="(obj, index) in orderInfo[0].Detail" :key="obj.Id">
-                    <th scope="row">{{ index + 1 }}</th>
-                    <td>{{ obj.ProductName }}</td>
-                    <td>{{ obj.UnitPrice }} +</td>
-                  </tr>
-                </tbody>
-              </table>
-              <p class="text-right text-gray-900">
-                消費金額：NT.{{ orderInfo[0].Amount }} +
-              </p>
-            </div>
-            <div class="modal-footer">
-              <div class="row justify-content-end">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-dismiss="modal"
-                >
-                  確定
-                </button>
-              </div>
-            </div>
+          <div class="info modal-body p-5 text-center">
+            <h4>預約設計師</h4>
+            <p class="mb-4">{{ orderInfo[0].DesignerName }}</p>
+            <h4>預約時間</h4>
+            <p class="mb-4">
+              {{ showTime.replace('T', ' ').replace(':00:00', ':00') }}
+            </p>
+            <ul class="p-0 mb-4">
+              <h4>預約項目</h4>
+              <li
+                v-for="(obj, index) in orderInfo[0].Detail"
+                :key="obj.Id"
+                class="d-flex justify-content-center"
+              >
+                <p class="pr-3">{{ index + 1 }}.</p>
+                <p class="pr-3">{{ obj.ProductName }}</p>
+                <p class="pr-3">${{ obj.UnitPrice }} +</p>
+              </li>
+            </ul>
+            <hr />
+            <ul class="d-flex justify-content-between mt-4">
+              <li class="d-flex">
+                <p class="mr-3">預估金額</p>
+                <p>NT.{{ orderInfo[0].Amount }} +</p>
+              </li>
+              <li class="d-flex">
+                <p class="mr-3">預估時間</p>
+                <p>{{ orderInfo[0].ServiceMinutes }}分鐘</p>
+              </li>
+            </ul>
+            <p class="text-sm-center">
+              *若需取消或更改訂單請撥打電話(07)12312345，由店家協助您處理。
+            </p>
           </div>
         </div>
       </div>
@@ -120,7 +115,6 @@ export default {
           OrderTime: '',
         },
       ],
-      showDate: '',
       showTime: '',
     };
   },
@@ -135,10 +129,7 @@ export default {
         if (res.data.status) {
           console.log(res.data.BasicData);
           this.orderInfo = res.data.BasicData;
-          // eslint-disable-next-line prefer-destructuring
-          this.showDate = res.data.BasicData[0].OrderTime.split('T')[0];
-          // eslint-disable-next-line prefer-destructuring
-          this.showTime = res.data.BasicData[0].OrderTime.split('T')[1];
+          this.showTime = this.orderInfo[0].OrderTime;
           $('#orderDetailInfo').modal('show');
           this.name = '';
           this.phone = '';
@@ -159,6 +150,21 @@ export default {
 </script>
 
 <style>
-@media screen {
+.modal-header {
+  text-align: center !important;
+  display: block;
+}
+.text-sm-center {
+  font-size: 14px;
+}
+.info {
+  padding-bottom: 0 !important;
+}
+.close {
+  margin-left: auto;
+  margin-right: 10px;
+}
+.modal-header {
+  background-color: #e9cfc4;
 }
 </style>
