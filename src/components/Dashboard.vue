@@ -31,10 +31,16 @@ export default {
     };
   },
   created() {
+<<<<<<< HEAD
     // eslint-disable-next-line eqeqeq
     this.token = document.cookie.replace(
       // eslint-disable-next-line no-useless-escape
       /(?:(?:^|.*;\s*)desingerToken\s*\=\s*([^;]*).*$)|^.*$/,
+=======
+    this.token = document.cookie.replace(
+      // eslint-disable-next-line no-useless-escape
+      /(?:(?:^|.*;\s*)userToken\s*\=\s*([^;]*).*$)|^.*$/,
+>>>>>>> e889d381bdb3416cf8ff65aeb35b826d2d5cf53a
       '$1',
     );
     console.log(localStorage.getItem('desginderDetails'));
