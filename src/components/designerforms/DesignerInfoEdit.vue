@@ -1,5 +1,13 @@
 <template>
   <div class="container-fluid text-left">
+    <loading
+      :opacity="1"
+      color="#7e735d"
+      loader="bars"
+      background-color="#fff"
+      :active.sync="isLoading"
+      :is-full-page="fullPage"
+    ></loading>
     <div class="row justify-content-center">
       <div class="col-md-8">
         <div class="form-row">
@@ -198,7 +206,7 @@ export default {
   data() {
     return {
       // Loading遮罩
-      isLoading: false,
+      isLoading: true,
       fullPage: true,
 
       // 存放Api接回來的設計師資料
@@ -227,6 +235,7 @@ export default {
       getDesignerInfoBack(this.dId).then((res) => {
         console.log('singleDes', res.data);
         this.designerInfo = res.data;
+        this.isLoading = false;
       });
     },
 

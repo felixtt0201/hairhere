@@ -23,18 +23,6 @@
     </div>
     <div class="row">
       <div class="col-md-6">
-        <p class="text-gray-900 font-weight-bold">請選擇設計師：</p>
-        <select class="custom-select" v-model="dId">
-          <option disabled value="">選擇設計師</option>
-          <option
-            v-for="designer in designInfo"
-            :key="designer.Id"
-            :value="designer.Id"
-            >{{ designer.Name }}</option
-          >
-        </select>
-      </div>
-      <div class="col-md-6">
         <label for="customer" class="text-gray-900 font-weight-bold"
           >請輸入顧客姓名：</label
         >
@@ -62,8 +50,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="info in totalCheckInfo" :key="info.Id">
-            <th scope="row">1</th>
+          <tr v-for="(info, index) in totalCheckInfo" :key="info.Id">
+            <th scope="row">{{ index + 1 }}</th>
             <td>
               {{ info.DesignerName }}
             </td>
@@ -190,12 +178,7 @@
 </template>
 
 <script>
-import {
-  postCheckInfo,
-  // getAllDesigner,
-  getSingleBill,
-  getDesignerListSelect,
-} from '@/js/AppServices';
+import { postCheckInfo, getSingleBill } from '@/js/DesignerServices';
 import $ from 'jquery';
 
 export default {
@@ -230,13 +213,8 @@ export default {
     getSingInfo(cId) {
       getSingleBill(cId).then((res) => {
         this.singleCheckInfo = res.data.BasicData;
+        console.log('single', this.singleCheckInfo);
         $('#checkoutMoadel').modal('show');
-      });
-    },
-
-    getDesignerInfo() {
-      getDesignerListSelect(2).then((res) => {
-        this.designInfo = res.data;
       });
     },
 
@@ -270,10 +248,7 @@ export default {
     },
   },
 
-  created() {
-    // this.getCheckInfo();
-    this.getDesignerInfo();
-  },
+  created() {},
 };
 </script>
 

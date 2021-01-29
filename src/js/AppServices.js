@@ -5,7 +5,13 @@ const storeApi = axios.create({
   withCredentials: false,
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded',
-    Authorization: `Bearer ${localStorage.getItem('myToken')}`,
+    // Authorization: `Bearer ${localStorage.getItem('myToken')}`,
+
+    Authorization: `Bearer ${document.cookie.replace(
+      // eslint-disable-next-line no-useless-escape
+      /(?:(?:^|.*;\s*)storeToken\s*\=\s*([^;]*).*$)|^.*$/,
+      '$1',
+    )}`,
   },
 });
 

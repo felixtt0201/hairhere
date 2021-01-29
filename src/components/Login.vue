@@ -170,7 +170,6 @@ export default {
             identity: res.data.identity,
           });
           localStorage.setItem('storeDetails', storeDetails);
-          localStorage.setItem('myToken', storeToken);
           localStorage.setItem('status', true);
           this.$router.push('/Dashboard');
           this.successMessage();

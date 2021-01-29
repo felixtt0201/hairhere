@@ -27,16 +27,16 @@ export default {
   },
   data() {
     return {
-      token: '',
+      // token: '',
     };
   },
   created() {
     // eslint-disable-next-line eqeqeq
-    this.token = document.cookie.replace(
-      // eslint-disable-next-line no-useless-escape
-      /(?:(?:^|.*;\s*)desingerToken\s*\=\s*([^;]*).*$)|^.*$/,
-    );
-    console.log(localStorage.getItem('desginderDetails'));
+    // this.token = document.cookie.replace(
+    //   // eslint-disable-next-line no-useless-escape
+    //   /(?:(?:^|.*;\s*)desingerToken\s*\=\s*([^;]*).*$)|^.*$/,
+    // );
+    // console.log(localStorage.getItem('desginderDetails'));
   },
 };
 </script>

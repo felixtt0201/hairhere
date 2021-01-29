@@ -131,6 +131,30 @@ const routes = [
           import('../components/designerforms/DesignerWorks.vue'),
       },
       {
+        path: 'designercheckout',
+        name: 'Designercheckout',
+        meta: { requiresAuth: true },
+        component: () =>
+          // eslint-disable-next-line implicit-arrow-linebreak
+          import('../components/designerforms/DesignerCheckout.vue'),
+      },
+      {
+        path: 'designerreservation',
+        name: 'DesignerReservation',
+        meta: { requiresAuth: true },
+        component: () =>
+          // eslint-disable-next-line implicit-arrow-linebreak
+          import('../components/designerforms/DesignerReservation.vue'),
+      },
+      {
+        path: 'designerhistoricalorders',
+        name: 'Designerhistoricalorders',
+        meta: { requiresAuth: true },
+        component: () =>
+          // eslint-disable-next-line implicit-arrow-linebreak
+          import('../components/designerforms/DesignerHistoricalOrders.vue'),
+      },
+      {
         path: 'portfolio', // 作品集
         name: 'Portfolio',
         meta: { requiresAuth: true },
