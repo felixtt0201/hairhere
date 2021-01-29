@@ -29,55 +29,74 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-md-10">
-          <div class="row">
-            <div class="col-md-12 p40 d-flex">
-              <!-- Carsouel -->
-              <!-- Main slider -->
-              <template class="d-flex">
-                <splide :options="primaryOptions" ref="primary">
-                  <splide-slide
-                    v-for="(slide, index) in slides"
-                    :key="index"
-                    class="carsouelImg border"
-                    :style="{ backgroundImage: `url(${slide})` }"
-                  >
-                    <img :style="{ backgroundImage: `url(${slide})` }" />
-                  </splide-slide>
-                </splide>
-              </template>
+          <div class="row d-flex">
+            <!-- Carsouel -->
+            <div class="col-md-9">
               <template>
-                <div></div>
-              </template>
-              <div class="ao">
-                <div>
-                  <h4>{{ workDetail.Name }}</h4>
-                  <p class="mb-5 border-left">
-                    {{ workDetail.Summary }}
-                  </p>
-                  <ul class="d-flex justify-content-center p-0 mb-4 border">
-                    <li
-                      class="designer-tag"
-                      v-for="tag in workDetail.Category"
-                      :key="tag"
-                    >
-                      {{ tag }}
-                    </li>
-                  </ul>
-                </div>
-                <!-- Thumbnail slider -->
-                <splide :options="secondaryOptions" ref="secondary">
-                  <splide-slide
-                    v-for="(slide, index) in slides"
-                    :key="index"
-                    :style="{ backgroundImage: `url(${slide})` }"
-                    class="carsouelImg"
+                <div class="thumb-example">
+                  <!-- swiper1 -->
+                  <swiper
+                    class="swiper gallery-top"
+                    :options="swiperOptionTop"
+                    ref="swiperTop"
                   >
-                    <img :style="{ backgroundImage: `url(${slide})` }" />
-                  </splide-slide>
-                </splide>
-              </div>
+                    <swiper-slide
+                      class="slide-1"
+                      :class="{
+                        'background-image': `url(${workDetail.Photo1Path})`,
+                      }"
+                    ></swiper-slide>
+                    <swiper-slide
+                      class="slide-2"
+                      :style="{
+                        backgroundImage: `url(${workDetail.Photo2Path})`,
+                      }"
+                    ></swiper-slide>
+                    <swiper-slide
+                      class="slide-3"
+                      :style="{
+                        backgroundImage: `url(${workDetail.Photo3Path})`,
+                      }"
+                    ></swiper-slide>
+                    <div
+                      class="swiper-button-next swiper-button-white"
+                      slot="button-next"
+                    ></div>
+                    <div
+                      class="swiper-button-prev swiper-button-white"
+                      slot="button-prev"
+                    ></div>
+                  </swiper>
+                  <!-- swiper2 Thumbs -->
+                  <swiper
+                    class="swiper gallery-thumbs"
+                    :options="swiperOptionThumbs"
+                    ref="swiperThumbs"
+                  >
+                    <swiper-slide
+                      class="slide-1"
+                      :style="{
+                        backgroundImage: `url(${workDetail.Photo1Path})`,
+                      }"
+                    ></swiper-slide>
+                    <swiper-slide
+                      class="slide-2"
+                      :style="{
+                        backgroundImage: `url(${workDetail.Photo2Path})`,
+                      }"
+                    ></swiper-slide>
+                    <swiper-slide
+                      class="slide-3"
+                      :style="{
+                        backgroundImage: `url(${workDetail.Photo2Path})`,
+                      }"
+                    >
+                    </swiper-slide>
+                  </swiper>
+                </div>
+              </template>
             </div>
-            <!-- <div class="col-md-4">
+            <div class="col-md-3">
               <h4 class="mb-4">{{ workDetail.Name }}</h4>
               <p class="mb-5 border-left">
                 {{ workDetail.Summary }}
@@ -87,8 +106,7 @@
                   {{ tag }}
                 </li>
               </ul>
-            </div> -->
-            <div class="col-md-12 p40"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -98,47 +116,41 @@
 
 <script>
 import { getSingleWork, getDesigner } from '@/js/FontAppServices';
-
-import '@splidejs/splide/dist/css/themes/splide-default.min.css';
+import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
+import 'swiper/css/swiper.css';
 
 export default {
+  components: {
+    Swiper,
+    SwiperSlide,
+  },
   data() {
     return {
+      // carsouel-----
+      swiperOptionTop: {
+        loop: true,
+        loopedSlides: 3, // looped slides should be the same
+        spaceBetween: 10,
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+      },
+      swiperOptionThumbs: {
+        loop: true,
+        loopedSlides: 3, // looped slides should be the same
+        spaceBetween: 10,
+        centeredSlides: true,
+        slidesPerView: 'auto',
+        touchRatio: 0.2,
+        slideToClickedSlide: true,
+      },
+      // carsouel-----
       workId: '', // params接到的id
       workDetail: '', // get到的作品詳細資料
       // designerId: '',
       designerDetail: '', // get到的設計師詳細資料
       category: [], // get分類
-      // slide
-      slides: [
-        { backgroundImage: '' },
-        { backgroundImage: '' },
-        { backgroundImage: '' },
-      ],
-      primaryOptions: {
-        type: 'loop',
-        perPage: 1,
-        perMove: 1,
-        gap: '1rem',
-        pagination: false,
-        arrows: false,
-        fixedWidth: 300,
-        fixedHeight: 300,
-      },
-      secondaryOptions: {
-        type: 'slide',
-        rewind: true,
-        fixedWidth: 150,
-        fixedHeight: 150,
-        gap: '2rem',
-        pagination: false,
-        cover: true,
-        focus: 'center',
-        arrows: false,
-        isNavigation: true,
-        interval: 3000,
-        autoplay: true,
-      },
     };
   },
   methods: {
@@ -146,11 +158,9 @@ export default {
       getSingleWork(this.workId).then((res) => {
         console.log(res);
         this.workDetail = res.data.BasicData;
+        console.log(this.workDetail);
         this.category = this.workDetail.Category;
         const designerId = this.workDetail.DesignerId;
-        // this.slides[0].src = this.workDetail.Photo1Path;
-        // this.slides[1].src = this.workDetail.Photo2Path;
-        // this.slides[2].src = this.workDetail.Photo3Path;
         this.slides = this.workDetail.PathArray;
         console.log(this.slides);
         getDesigner(designerId).then((response) => {
@@ -165,71 +175,53 @@ export default {
     this.getInfoHandler();
   },
   mounted() {
-    // Set the sync target.
-    this.$refs.primary.sync(this.$refs.secondary.splide);
+    this.$nextTick(() => {
+      const swiperTop = this.$refs.swiperTop.$swiper;
+      const swiperThumbs = this.$refs.swiperThumbs.$swiper;
+      swiperTop.controller.control = swiperThumbs;
+      swiperThumbs.controller.control = swiperTop;
+    });
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.ao {
-  display: flex;
-  flex-direction: column;
+.thumb-example {
+  height: 480px;
+  width: 600px;
+  background-color: black;
 }
-.splide__slide img {
-  /* width: 200px; */
-  height: 200px;
-}
+.swiper {
+  .swiper-slide {
+    background-size: cover;
+    background-position: center;
+    &.slide-1 {
+      background-image: url('/images/example/1.jpg');
+    }
+    &.slide-2 {
+      background-image: url('/images/example/2.jpg');
+    }
+    &.slide-3 {
+      background-image: url('/images/example/4.jpg');
+    }
+  }
 
-.thumbnails {
-  margin: 0 -5px;
-  width: calc(100% + 10px);
-}
-
-.agile__nav-button {
-  background: transparent;
-  border: none;
-  color: #ccc;
-  cursor: pointer;
-  font-size: 24px;
-  transition-duration: 0.3s;
-}
-.thumbnails .agile__nav-button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-}
-.thumbnails .agile__nav-button--prev {
-  left: -45px;
-}
-.thumbnails .agile__nav-button--next {
-  right: -45px;
-}
-.agile__nav-button:hover {
-  color: #888;
-}
-.agile__dot {
-  margin: 0 10px;
-}
-#splide01 {
-  max-width: 50%;
-}
-#splide01-track {
-  width: 70%;
-}
-#splide02-track {
-  /* width: 500px; */
-  display: flex;
-  justify-content: space-between;
-  /* align-items: center; */
-}
-#splide02 {
-  margin-left: auto;
-}
-
-.carsouelImg {
-  background-position: center center;
-  background-repeat: no-repeat;
-  /* background-size: cover; */
+  &.gallery-top {
+    height: 80%;
+    width: 100%;
+  }
+  &.gallery-thumbs {
+    height: 20%;
+    box-sizing: border-box;
+    padding: 5 0;
+  }
+  &.gallery-thumbs .swiper-slide {
+    width: 25%;
+    height: 100%;
+    opacity: 0.4;
+  }
+  &.gallery-thumbs .swiper-slide-active {
+    opacity: 1;
+  }
 }
 </style>

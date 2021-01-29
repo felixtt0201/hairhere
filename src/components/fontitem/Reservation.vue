@@ -25,10 +25,7 @@
           <div class="row">
             <div
               class="col-md-6 photo-size"
-              :style="{
-                'background-image':
-                  'url(' + require('@/assets/img/photo2.svg') + ')',
-              }"
+              :style="{ backgroundImage: `url(${designer.PicturePath})` }"
             ></div>
             <div
               class="col-md-6 d-flex flex-column justify-content-around align-items-center"
@@ -220,7 +217,7 @@ export default {
     //
     getDesignerHandler() {
       getDesigner(this.listId).then((res) => {
-        // console.log(res);
+        console.log(res);
         this.designer = res.data;
         this.OrderDate = res.data.OrderDate;
         this.isLoading = false;
@@ -256,26 +253,6 @@ export default {
     //     }
     //   });
     // },
-
-    // 預約頁面
-    // submitOrder() {
-    //   const data1 = this.$qs.stringify({
-    //     OrderTime: this.orderTime,
-    //     StoreRemark: '',
-    //     DesignerId: this.listId,
-    //     CustomerName: this.name,
-    //     CustomerPhone: this.tel,
-    //     CustomerIntroducer: this.text,
-    //     CustomerRemark: this.remarks,
-    //     OrderDetails: this.checklist,
-    //   });
-    //   postOrder(data1).then((res) => {
-    //     if (res.data) {
-    //       this.orderId = res.data.orderId;
-    //       this.$router.push(`/confirm/${this.orderId}`);
-    //     }
-    //   });
-    // },
     addList() {
       const data2 = JSON.stringify({
         OrderTime: this.orderTime,
@@ -283,6 +260,7 @@ export default {
         DesignerId: this.listId,
         DesignerName: this.designer.Name,
         DesignerSummary: this.designer.Details,
+        DesignerPicturePath: this.designer.PicturePath,
         CustomerName: this.name,
         CustomerPhone: this.tel,
         CustomerIntroducer: this.text,
@@ -291,7 +269,6 @@ export default {
         Amount: this.TotalMoney.moneytotal,
         ServiceMinutes: this.TotalMoney.timetotal,
       });
-      // eslint-disable-next-line eqeqeq
       if (this.checklist.length === 0 || this.orderTime === '') {
         this.$swal({
           position: 'center',
@@ -314,6 +291,7 @@ export default {
         this.listId = getorder.DesignerId;
         this.designer.Name = getorder.DesignerName;
         this.designer.Details = getorder.DesignerSummary;
+        this.designer.PicturePath = getorder.DesignerPicturePath;
         this.name = getorder.CustomerName;
         this.tel = getorder.CustomerPhone;
         this.text = getorder.CustomerIntroducer;

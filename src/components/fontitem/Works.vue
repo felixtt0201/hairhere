@@ -80,14 +80,15 @@
             v-model="list"
           />燙髮</label
         >
+        <div></div>
         <label for="work"
           ><input
             type="text"
             class="searchInput"
-            placeholder="搜尋作品名稱"
+            placeholder="輸入搜尋作品名稱"
             v-model.trim="searchInput"
         /></label>
-        <button type="button" class="btn w-100" @click="searchItem">
+        <button type="button" class="search-btn w-100" @click="searchItem">
           <i class="fas fa-search mr-3"></i>搜尋
         </button>
       </div>
@@ -192,14 +193,14 @@ export default {
           this.worksarray = res.data.BasicData;
         });
       } else {
-        getpages(page, 6).then((res) => {
+        getpages(page, 9).then((res) => {
           console.log(res);
           this.worksarray = res.data.BasicData;
         });
       }
     },
     getHandlerInfo() {
-      getpages(this.index, 6).then((res) => {
+      getpages(this.index, 9).then((res) => {
         console.log(res);
         this.pages = Math.ceil(res.data.Count / res.data.Limit);
         this.worksarray = res.data.BasicData;
@@ -208,9 +209,9 @@ export default {
     },
     searchItem() {
       const searchItemArray = this.list.toString();
-      searchworks(searchItemArray, this.index, 6).then((res) => {
+      searchworks(searchItemArray, this.index, 9).then((res) => {
         console.log(res);
-        this.pages = Math.ceil(res.data.Count / 3);
+        this.pages = Math.ceil(res.data.Count / this.Limit);
         this.worksarray = res.data.BasicData;
         this.status = false;
       });

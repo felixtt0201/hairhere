@@ -53,7 +53,9 @@ const getAllDesignerPage = (index, limit) =>
   storeApi.get(`/GET/DesignerList?storeId=2&Index=${index}&Limit=${limit}`);
 
 // get單一設計師資料
-const getDesigner = (dId) => storeApi.get(`/GET/Designer?id=${dId}`);
+const getDesigner = (dId, page, limit) =>
+  // eslint-disable-next-line implicit-arrow-linebreak
+  storeApi.get(`/GET/Designer?id=${dId}&Index=${page}&Limit=${limit}`);
 
 // post新增設計師
 const postDesinger = (data) => storeApi.post('/POST/Designer?storeid=2', data);

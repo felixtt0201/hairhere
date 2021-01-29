@@ -7,18 +7,57 @@
   padding: 30px;
   margin-top: 30px;
   label {
-    width: 33%;
+    width: 25%;
+    margin-bottom: 0;
+    padding: 4px;
+    // color: #1d3d4a;
+    // letter-spacing: 1px;
+    // font-size: 20px;
   }
   input {
     width: 20%;
+  }
+  input[type='checkbox'] {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    border: 1px solid #999;
+    background-color: #fff;
+    line-height: 16px;
+    border-radius: 2px;
+    color: #fff;
+    text-align: center;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+  }
+  input[type='checkbox']:checked {
+    color: rgb(20, 24, 73);
+  }
+  input[type='checkbox']:after {
+    content: '✔';
   }
 }
 .works-text-line {
   color: #1d3d4a;
 }
+.search-btn {
+  background-color: #fff;
+  border: 2px solid gainsboro;
+  border-radius: 5px;
+  padding: 5px;
+  &:hover {
+    background-color: #d6997a;
+    opacity: 0.7;
+    color: white;
+    transition: 0.3s;
+  }
+}
 // hover test
 .size {
-  border: 2px solid red !important;
+  // border: 2px solid red !important;
   width: 300px;
   height: 300px;
   position: relative;
@@ -63,8 +102,8 @@
 .searchInput {
   width: 100% !important;
   border: 1px solid grey;
-  opacity: 0.5;
-  border-radius: 10px;
+  opacity: 0.7;
+  border-radius: 5px;
 }
 .img-center {
   display: flex;
