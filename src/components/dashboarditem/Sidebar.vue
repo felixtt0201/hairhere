@@ -50,7 +50,7 @@
     <li class="nav-item" v-else>
       <router-link
         class="nav-link font-weight-bold sidebarhover"
-        :to="{ name: 'Designerinfoedit' }"
+        :to="{ name: 'Designerworks' }"
       >
         <i class="fas fa-store-alt mr-2"></i>
         <span>個人作品</span></router-link
