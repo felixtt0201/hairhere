@@ -31,10 +31,10 @@ export default {
     };
   },
   created() {
+    // eslint-disable-next-line eqeqeq
     this.token = document.cookie.replace(
       // eslint-disable-next-line no-useless-escape
-      /(?:(?:^|.*;\s*)userToken\s*\=\s*([^;]*).*$)|^.*$/,
-      '$1',
+      /(?:(?:^|.*;\s*)desingerToken\s*\=\s*([^;]*).*$)|^.*$/,
     );
     console.log(localStorage.getItem('desginderDetails'));
   },

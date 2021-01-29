@@ -112,15 +112,23 @@ const routes = [
             meta: { requiresAuth: true },
             component: () => import('../components/forms/ServiceInfo.vue'),
           },
-          {
-            path: 'designerinfoedit',
-            name: 'Designerinfoedit',
-            meta: { requiresAuth: true },
-            component: () =>
-              // eslint-disable-next-line implicit-arrow-linebreak
-              import('../components/designerforms/DesignerInfoEdit.vue'),
-          },
         ],
+      },
+      {
+        path: 'designerinfoedit',
+        name: 'Designerinfoedit',
+        meta: { requiresAuth: true },
+        component: () =>
+          // eslint-disable-next-line implicit-arrow-linebreak
+          import('../components/designerforms/DesignerInfoEdit.vue'),
+      },
+      {
+        path: 'designerworks',
+        name: 'Designerworks',
+        meta: { requiresAuth: true },
+        component: () =>
+          // eslint-disable-next-line implicit-arrow-linebreak
+          import('../components/designerforms/DesignerWorks.vue'),
       },
       {
         path: 'portfolio', // 作品集

@@ -8,27 +8,9 @@
       :active.sync="isLoading"
       :is-full-page="fullPage"
     ></loading>
-    <h3 class="mb-0 text-gray-800">作品集管理</h3>
-    <div class="row justify-content-end mb-4">
-      <div class="input-group col-4">
-        <select class="custom-select" v-model="dId">
-          <option disabled value="">選擇設計師</option>
-          <option
-            v-for="designer in designerInfo"
-            :key="designer.Id"
-            :value="designer.Id"
-            >{{ designer.Name }}</option
-          >
-        </select>
-        <div class="input-group-append">
-          <button
-            class="btn btn-outline-secondary"
-            type="button"
-            @click="searchWorksHandler(dId)"
-          >
-            搜尋
-          </button>
-        </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-10">
+        <h3 class="mb-0 text-gray-800">個人作品集</h3>
       </div>
     </div>
     <!-- 作品資訊 -->
@@ -79,7 +61,6 @@
         class="btn btn-primary btn-lg btn-icon-split"
         data-toggle="modal"
         data-target="#staticBackdrop"
-        @click="openModal(true)"
       >
         <span class="icon text-white-50">
           <i class="fas fa-plus"></i>
@@ -142,6 +123,7 @@
                 class="close"
                 data-dismiss="modal"
                 aria-label="Close"
+                @click="openModal(true)"
               >
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -156,7 +138,8 @@
                     id="Photo1"
                     class="form-control"
                     name="Photo1"
-                    ref="file1"
+                    ref="files"
+                    @change="uploadPhoto"
                   />
                   <img
                     img="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=828346ed697837ce808cae68d3ddc3cf&auto=format&fit=crop&w=1350&q=80"
@@ -215,8 +198,8 @@
               <div class="row">
                 <div class="col-6">
                   <div id="dataTable_filter" class="dataTables_filter">
-                    <label>設計師姓名：{{ dName }}</label>
-                    <select
+                    <label>設計師姓名：{{ designerInfo.Name }}</label>
+                    <!-- <select
                       class="form-control"
                       v-model="formProduct.DesignerId"
                       @change="showDesignerName(formProduct.DesignerId)"
@@ -230,7 +213,7 @@
                         :value="designer.Id"
                         >{{ designer.Name }}</option
                       >
-                    </select>
+                    </select> -->
                   </div>
                 </div>
                 <div class="col-6">
@@ -367,12 +350,11 @@ import {
   patchWork,
   deleteWork,
   getDesignerWorks,
-  getDesignerListSelect,
+  getDesignerInfoBack,
   postPhoto,
-} from '@/js/AppServices';
+} from '@/js/DesignerServices';
 
 export default {
-  name: 'porfolio',
   data() {
     return {
       // Loading遮罩
@@ -400,10 +382,19 @@ export default {
     };
   },
   methods: {
-    // 新版本上傳圖片
+    // 分頁
+    getPageHandler(page) {
+      getDesignerWorks(this.dId, 6, page).then((res) => {
+        console.log('all', res);
+        this.comebackinfo = res.data.BasicData;
+        this.pages = Math.ceil(res.data.Count / res.data.Limit);
+        this.index = res.data.Index;
+      });
+    },
+
     // 上傳圖片
     uploadPhoto() {
-      const photo = this.$refs.files.files[0]; // refs要對應上面input的ref
+      const photo = this.$refs.files.files[0];
       const formData = new FormData();
       formData.append('file-to-upload', photo);
       postPhoto(formData).then((res) => {
@@ -414,57 +405,20 @@ export default {
       });
     },
 
-    // 分頁
-    getPageHandler(dId, page) {
-      getDesignerWorks(dId, 6, page).then((res) => {
-        console.log('all', res);
-        this.comebackinfo = res.data.BasicData;
-        this.pages = Math.ceil(res.data.Count / res.data.Limit);
-        this.index = res.data.Index;
-      });
-      // getpages(page, 6).then((res) => {
-      //   this.comebackinfo = res.data.BasicData;
-      //   this.pages = Math.ceil(res.data.Count / res.data.Limit);
-      //   this.index = res.data.Index;
-      //   // console.log(this.index);
-      //   // console.log(this.comebackinfo);
-      //   // console.log('pages', this.pages, typeof this.pages);
-      // });
-    },
-    searchWorksHandler(id) {
-      getDesignerWorks(id, 6).then((res) => {
-        if (res.data.status) {
-          this.comebackinfo = res.data.BasicData;
-          this.pages = Math.ceil(res.data.Count / res.data.Limit);
-          this.index = res.data.Index;
-        } else {
-          this.$swal({
-            position: 'center',
-            icon: 'error',
-            title: '搜索失敗',
-            text: '此設計師無作品',
-          });
-          this.getPageHandler();
-        }
-      });
-    },
-    showDesignerName(id) {
-      this.designerInfo.forEach((i) => {
-        // eslint-disable-next-line
-        if (i.Id == id) {
-          this.dName = i.Name;
-        }
-      });
-    },
     // 取得設計師資訊
     getDesignersInfo() {
-      getDesignerListSelect(2).then((res) => {
+      getDesignerInfoBack(this.dId).then((res) => {
         this.designerInfo = res.data;
       });
     },
+
     // 取得作品資訊
     getWorkInfoHandler() {
-      getDesignerWorks(0, 6, 1).then((res) => {
+      const localStorageInfo = JSON.parse(
+        localStorage.getItem('desginderDetails'),
+      );
+      this.dId = localStorageInfo.Id;
+      getDesignerWorks(this.dId, 6, 1).then((res) => {
         if (res.data.status) {
           this.comebackinfo = res.data.BasicData;
           this.pages = Math.ceil(res.data.Count / res.data.Limit);
@@ -476,11 +430,9 @@ export default {
     openModal(isNew, product) {
       $('#staticBackdrop').modal('show');
       if (isNew) {
-        console.log('new');
         this.formProduct = {};
         this.isNew = true;
       } else {
-        console.log('old');
         this.formProduct = { ...product };
         this.dName = this.formProduct.DesignerName;
         this.formProduct.Category = this.formProduct.Category.split(',');
@@ -569,7 +521,6 @@ export default {
   created() {
     this.getWorkInfoHandler();
     this.getDesignersInfo();
-    // this.getPageHandler();
     this.formProduct = new FormData();
     this.formProduct.Category = [];
   },

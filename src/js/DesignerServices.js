@@ -138,6 +138,9 @@ const patchBillStatus = (billId, data) =>
 // 查詢帳單
 const postCheckInfo = (data) => storeApi.post('POST/Bill/Search', data);
 
+/** 上傳照片 */
+const postPhoto = (data) => storeApi.post('/POST/Photo', data);
+
 // eslint-disable-next-line object-curly-newline
 export {
   postStoreLogin,
@@ -173,4 +176,5 @@ export {
   deleteWork,
   getDesignerWorks,
   postDesingerLogin,
+  postPhoto,
 };
