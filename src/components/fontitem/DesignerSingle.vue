@@ -6,10 +6,7 @@
         <div class="row">
           <div
             class="col-md-6 photo-size"
-            :style="{
-              'background-image':
-                'url(' + require('@/assets/img/photo2.svg') + ')',
-            }"
+            :style="{ backgroundImage: `url(${designer.PicturePath})` }"
           ></div>
           <div
             class="col-md-6 d-flex flex-column justify-content-around align-items-center"
@@ -25,7 +22,6 @@
           </div>
         </div>
       </div>
-      <!-- <div class="col-md-1 border"></div> -->
     </div>
     <h4 class="title-line w-100 text-center mb-4 text-main">設計作品</h4>
     <div class="row img-center">
@@ -34,44 +30,49 @@
         v-for="designerWork in designerWorks"
         :key="designerWork.Id"
       >
-        <img :src="`${designerWork.Photo1}`" alt="" class="img-size" />
-        <div class="works-btn"></div>
-        <router-link
-          :to="`/DesignerSingleWork/${designerWork.Id}`"
-          class="img-btn"
-          >See More</router-link
+        <router-link :to="`/DesignerSingleWork/${designerWork.Id}`">
+          <img
+            :src="`${designerWork.Photo1}`"
+            alt=""
+            class="designerWork-img"
+          />
+          <div class="btn designerWork-btn">see</div></router-link
         >
-        {{ designerWork.Id }}
       </div>
-      <!-- <div class="col-md-3">
-        <img
-          src="https://images.unsplash.com/photo-1605980766335-d3a41c7332a1?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTZ8fGhhaXJ8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-          alt=""
-          class="img-size"
-        />
-        <div class="works-btn"></div>
-        <button type="button" class="img-btn">立即預約</button>
-      </div>
-      <div class="col-md-3">
-        <img
-          src="https://images.unsplash.com/photo-1605980766335-d3a41c7332a1?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTZ8fGhhaXJ8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-          alt=""
-          class="img-size"
-        />
-        <div class="works-btn"></div>
-        <button type="button" class="img-btn">立即預約</button>
-      </div>
-      <div class="col-md-3">
-        <img
-          src="https://images.unsplash.com/photo-1605980766335-d3a41c7332a1?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTZ8fGhhaXJ8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-          alt=""
-          class="img-size"
-        />
-        <div class="works-btn"></div>
-        <button type="button" class="img-btn">立即預約</button>
-      </div> -->
     </div>
     <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" :class="{ disabled: index == 1 }">
+          <a
+            class="page-link path"
+            href="#"
+            aria-label="Previous"
+            @click.prevent="getInfoHandler(index - 1)"
+            ><i class="fas fa-chevron-left"></i>
+          </a>
+        </li>
+        <!-- pageLi -->
+        <li
+          class="page-item"
+          v-for="page in pages"
+          :key="page"
+          @click="getInfoHandler(page)"
+        >
+          <a class="page-link" href="#">{{ page }}</a>
+        </li>
+        <!-- pageLi -->
+        <li class="page-item" :class="{ disabled: index == pages }">
+          <a
+            class="page-link path"
+            href="#"
+            aria-label="Next"
+            @click="getInfoHandler(index + 1)"
+            ><i class="fas fa-chevron-right"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!-- <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center">
         <li class="page-item">
           <a class="page-link path" href="#" aria-label="Previous"
@@ -90,7 +91,7 @@
           </a>
         </li>
       </ul>
-    </nav>
+    </nav> -->
   </div>
 </template>
 
@@ -103,22 +104,28 @@ export default {
       designerId: '',
       designer: '',
       designerWorks: [],
+      pages: [],
+      index: '',
     };
   },
   methods: {
-    getInfoHandler() {
-      getDesigner(this.designerId).then((res) => {
+    getInfoHandler(page = 1, limit = 6) {
+      getDesigner(this.designerId, page, limit).then((res) => {
         console.log(res);
         this.designer = res.data;
-        console.log(this.designer);
+        this.index = res.data.Portfolios.Index;
         this.designerWorks = this.designer.Portfolios.BasicData;
-        console.log(this.designerWorks);
+        this.pages = Math.ceil(
+          res.data.Portfolios.Count / res.data.Portfolios.Limit,
+        );
+        console.log(this.index);
+        // console.log(this.designerWorks);
       });
     },
   },
   created() {
     this.designerId = this.$route.params.id;
-    console.log(this.designerId);
+    // console.log(this.designerId);
     this.getInfoHandler();
   },
 };

@@ -137,7 +137,7 @@
 </template>
 
 <script>
-import { postStoreLogin, postDesingerLogin } from '@/js/AppServices';
+import { postStoreLogin } from '@/js/AppServices';
 
 export default {
   data() {
@@ -179,30 +179,30 @@ export default {
       });
     },
     // 設計師登入
-    desingerLogin() {
-      postDesingerLogin(
-        this.$qs.stringify({
-          email: this.desinger.email,
-          password: this.desinger.password,
-        }),
-      ).then((res) => {
-        if (res.data.status) {
-          const desingerToken = res.data.token;
-          document.cookie = `desingerToken=${desingerToken};path=/`;
-          const desginderDetails = JSON.stringify({
-            Id: res.data.Id,
-            StoreId: res.data.StoreId,
-            identity: res.data.identity,
-          });
-          localStorage.setItem('desginderDetails', desginderDetails);
-          localStorage.setItem('status', true);
-          this.$router.push('/Dashboard');
-          this.successMessage();
-        } else {
-          this.unsuccessMessage();
-        }
-      });
-    },
+    // desingerLogin() {
+    //   postDesingerLogin(
+    //     this.$qs.stringify({
+    //       email: this.desinger.email,
+    //       password: this.desinger.password,
+    //     }),
+    //   ).then((res) => {
+    //     if (res.data.status) {
+    //       const desingerToken = res.data.token;
+    //       document.cookie = `desingerToken=${desingerToken};path=/`;
+    //       const desginderDetails = JSON.stringify({
+    //         Id: res.data.Id,
+    //         StoreId: res.data.StoreId,
+    //         identity: res.data.identity,
+    //       });
+    //       localStorage.setItem('desginderDetails', desginderDetails);
+    //       localStorage.setItem('status', true);
+    //       this.$router.push('/Dashboard');
+    //       this.successMessage();
+    //     } else {
+    //       this.unsuccessMessage();
+    //     }
+    //   });
+    // },
     // 設計師登入
 
     // 提示-輸入帳密有誤

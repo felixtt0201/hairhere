@@ -120,7 +120,7 @@ const getAllworkss = () => storeApi.get('/GET/PortfolioList');
 // patch作品
 const patchWork = (workId, data) =>
   // eslint-disable-next-line implicit-arrow-linebreak
-  storeApi.patch(`/PATCH/Portfolio?id=${workId}`, data);
+  storeApi.put(`/PUT/Portfolio?id=${workId}`, data);
 
 // delete作品
 const deleteWork = (workId) => storeApi.delete(`DELETE/Portfolio?id=${workId}`);
@@ -129,7 +129,7 @@ const deleteWork = (workId) => storeApi.delete(`DELETE/Portfolio?id=${workId}`);
 const getDesignerWorks = (dId, pages, index) =>
   // eslint-disable-next-line implicit-arrow-linebreak
   storeApi.get(
-    `/GET/PortfolioList?designerId=${dId}&limit=${pages}&index=${index}`,
+    `/GET/PortfolioList?storeId=2&designerId=${dId}&limit=${pages}&index=${index}`,
   );
 
 /** 帳單 */

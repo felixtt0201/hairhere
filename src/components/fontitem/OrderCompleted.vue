@@ -16,8 +16,7 @@
             <div
               class="col-md-6 photo-size"
               :style="{
-                'background-image':
-                  'url(' + require('@/assets/img/photo2.svg') + ')',
+                backgroundImage: `url(${orderDetails.DesignerPicturePath})`,
               }"
             ></div>
             <div

@@ -15,20 +15,17 @@
       <div
         class="row mb-4 mt-4"
         v-for="designer in designers"
-        :key="designer.id"
+        :key="designer.Izsd"
       >
         <div
           class="col-md-4 photo-size"
-          :style="{
-            'background-image':
-              'url(' + require('@/assets/img/photo2.svg') + ')',
-          }"
+          :style="{ backgroundImage: `url(${designer.PicturePath})` }"
         ></div>
         <div
           class="col-md-4 d-flex flex-column justify-content-around align-items-center"
         >
           <h4>{{ designer.Name }}</h4>
-          <p class="w-50 border-left">設計專業專業剪燙染護頭皮養護精緻編髮</p>
+          <p class="w-50 border-left">{{ designer.Skill }}</p>
           <!-- routerlink連結至預約頁面 -->
           <router-link
             :to="`/reservationF/${designer.Id}`"
@@ -39,11 +36,9 @@
         </div>
         <div
           class="col-md-4 photo-size btn-viewmore"
-          :style="{
-            'background-image':
-              'url(' + require('@/assets/img/photo1.png') + ')',
-          }"
+          :style="{ backgroundImage: `url(${designer.Portfolio.Photo1})` }"
         >
+          <!-- :style="{ backgroundImage: `url(${designer.Portfolio.Photo1})` }" -->
           <!-- routerlink連結至設計師個人 -->
           <router-link
             :to="`/designerSingle/${designer.Id}`"
@@ -97,30 +92,27 @@ import { getAllDesignerPage } from '@/js/FontAppServices';
 import loadingitem from '../dashboarditem/loadingitem.vue';
 
 export default {
+  components: {
+    loadingitem,
+  },
   data() {
     return {
-      // Loading遮罩
-      isLoading: true,
+      isLoading: true, // Loading遮罩
       fullPage: true,
-
       designers: [],
       pages: [],
       index: '',
     };
   },
-  components: {
-    loadingitem,
-  },
   methods: {
-    getInfoHandler(page) {
-      getAllDesignerPage(page, 3).then((res) => {
+    getInfoHandler(page = 1, limit = 6) {
+      getAllDesignerPage(page, limit).then((res) => {
         console.log(res);
+        this.index = res.data.Index;
         this.designers = res.data.BasicData;
         this.pages = Math.ceil(res.data.Count / res.data.Limit);
-        this.index = res.data.Index;
-        console.log(this.index);
-        console.log(this.designers);
         console.log('pages', this.pages, typeof this.pages);
+        console.log(this.index);
         this.isLoading = false;
       });
     },
