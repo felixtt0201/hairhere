@@ -77,9 +77,7 @@
         <div class="col-md-6">
           <label for="businesstime" class="font-weight-bold">營業時間：</label>
           <p v-if="editstatus" class="text-muted text-gray-800">
-            {{ openTime }}
-            ~
-            {{ closeTime }}
+            上午{{ businessTime.StoreOpen }} ~ 下午{{ businessTime.StoreClose }}
           </p>
           <div v-else>
             開始
@@ -313,8 +311,8 @@ export default {
       // 休假日
       DayOf: [],
       setDayof: '',
-      closeTime: '',
-      openTime: '',
+      closeTime: 0,
+      openTime: 0,
       loginStoreId: null,
     };
   },
@@ -324,20 +322,17 @@ export default {
       if (this.loginStoreId !== null) {
         getStoreTotalInfo(this.loginStoreId).then((res) => {
           if (res.data.status) {
+            console.log(res);
             this.newdata = res.data;
             this.businessTime = res.data.Business;
             this.basicInfo = res.data.BasicData;
-            this.openTime = this.businessTime.BusinessHoursOpen.replace(
-              'T',
-              ' ',
-            ).replace(':00:00', ':00');
-            this.closeTime = this.businessTime.BusinessHoursClose.replace(
-              'T',
-              ' ',
-            ).replace(':00:00', ':00');
+            if (res.data.Business.RestDayOfWeek !== null) {
+              this.DayOf = this.newdata.Business.RestDayOfWeek;
+              this.setDayof = this.newdata.Business.RestDayOfWeek?.toString();
+            } else {
+              this.DayOf = [];
+            }
             // eslint-disable-next-line no-multi-assign
-            this.setDayof = this.newdata.Business.RestDayOfWeek?.toString();
-            this.DayOf = this.newdata.Business.RestDayOfWeek;
             this.isLoading = false;
           }
         });
@@ -364,8 +359,7 @@ export default {
         RestDayOfWeek: this.DayOf.toString(),
       });
       putStoreInfo(data).then((res) => {
-        console.log(res);
-        if (res.data.status === true) {
+        if (res.data.status) {
           this.getInfoHandler();
           this.successedMessage();
           this.newdata = {};

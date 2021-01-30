@@ -69,7 +69,7 @@
             class="page-link path"
             href="#"
             aria-label="Previous"
-            @click.prevent="getInfoHandler(index - 1)"
+            @click.prevent="getPageHandler(index - 1)"
             ><i class="fas fa-chevron-left"></i>
           </a>
         </li>
@@ -78,7 +78,7 @@
           class="page-item"
           v-for="page in pages"
           :key="page"
-          @click="getInfoHandler(page)"
+          @click="getPageHandler(page)"
         >
           <a class="page-link" href="#">{{ page }}</a>
         </li>
@@ -88,7 +88,7 @@
             class="page-link path"
             href="#"
             aria-label="Next"
-            @click="getInfoHandler(index + 1)"
+            @click="getPageHandler(index + 1)"
             ><i class="fas fa-chevron-right"></i>
           </a>
         </li>
@@ -496,14 +496,30 @@ export default {
     };
   },
   methods: {
-    // 取的全部設計師
-    getInfoHandler(page) {
+    // 分頁
+    getPageHandler(page) {
       getAllDesigner(this.loginStoreId, page, 8).then((res) => {
         console.log(res);
         if (res.data.status) {
-          this.tempDesginersInfo = res.data.BasicData;
+          this.tempDesginersInfo = res.data.TotalData;
           this.pages = Math.ceil(res.data.Count / res.data.Limit);
           this.index = res.data.Index;
+          this.isLoading = false;
+        } else {
+          this.isLoading = false;
+        }
+      });
+    },
+    // 取的全部設計師
+    getInfoHandler() {
+      getAllDesigner(this.loginStoreId, 1, 8).then((res) => {
+        console.log(res);
+        if (res.data.status) {
+          this.tempDesginersInfo = res.data.TotalData;
+          this.pages = Math.ceil(res.data.Count / res.data.Limit);
+          this.index = res.data.Index;
+          this.isLoading = false;
+        } else {
           this.isLoading = false;
         }
       });
@@ -532,7 +548,6 @@ export default {
       const smsg = '新增';
       postDesinger(this.loginStoreId, data).then((res) => {
         if (res.data.status) {
-          console.log(res);
           this.successed(smsg);
         } else if (res.data.message === '帳號重複') {
           this.$swal({
@@ -553,7 +568,7 @@ export default {
         Id: this.tempInfo.Id,
         Picture: this.tempInfo.Picture,
         Birthday: '',
-        StoreId: 2,
+        StoreId: this.loginStoreId,
         Name: this.tempInfo.Name,
         Phone: this.tempInfo.Phone,
         Email: this.tempInfo.Email,
