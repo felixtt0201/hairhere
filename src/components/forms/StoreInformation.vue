@@ -290,7 +290,7 @@ export default {
   data() {
     return {
       // Loading遮罩
-      isLoading: false,
+      isLoading: true,
       fullPage: true,
 
       // 存放Api接回來的店家資料
@@ -321,27 +321,27 @@ export default {
   methods: {
     // 取得店家資料
     getInfoHandler() {
-      this.isLoading = true;
-
-      getStoreTotalInfo(this.loginStoreId).then((res) => {
-        if (res.data.status) {
-          this.newdata = res.data;
-          this.businessTime = res.data.Business;
-          this.basicInfo = res.data.BasicData;
-          this.openTime = this.businessTime.BusinessHoursOpen.replace(
-            'T',
-            ' ',
-          ).replace(':00:00', ':00');
-          this.closeTime = this.businessTime.BusinessHoursClose.replace(
-            'T',
-            ' ',
-          ).replace(':00:00', ':00');
-          // eslint-disable-next-line no-multi-assign
-          this.setDayof = this.newdata.Business.RestDayOfWeek?.toString();
-          this.DayOf = this.newdata.Business.RestDayOfWeek;
-          this.isLoading = false;
-        }
-      });
+      if (this.loginStoreId !== null) {
+        getStoreTotalInfo(this.loginStoreId).then((res) => {
+          if (res.data.status) {
+            this.newdata = res.data;
+            this.businessTime = res.data.Business;
+            this.basicInfo = res.data.BasicData;
+            this.openTime = this.businessTime.BusinessHoursOpen.replace(
+              'T',
+              ' ',
+            ).replace(':00:00', ':00');
+            this.closeTime = this.businessTime.BusinessHoursClose.replace(
+              'T',
+              ' ',
+            ).replace(':00:00', ':00');
+            // eslint-disable-next-line no-multi-assign
+            this.setDayof = this.newdata.Business.RestDayOfWeek?.toString();
+            this.DayOf = this.newdata.Business.RestDayOfWeek;
+            this.isLoading = false;
+          }
+        });
+      }
     },
 
     //  修改店家資料

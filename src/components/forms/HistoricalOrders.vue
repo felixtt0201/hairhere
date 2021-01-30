@@ -220,6 +220,9 @@ export default {
       amount: '',
       bDay: '',
       date: '',
+
+      // 登入的店家ＩＤ
+      loginStoreId: null,
     };
   },
   computed: {
@@ -251,7 +254,7 @@ export default {
     },
 
     getDesignerInfo() {
-      getDesignerListSelect(2).then((res) => {
+      getDesignerListSelect(this.loginStoreId).then((res) => {
         this.designInfo = res.data;
       });
     },
@@ -287,7 +290,9 @@ export default {
   },
 
   created() {
-    // this.getCheckInfo();
+    this.loginStoreId = JSON.parse(localStorage.getItem('storeDetails')).Id;
+  },
+  mounted() {
     this.getDesignerInfo();
   },
 };

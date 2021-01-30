@@ -348,6 +348,8 @@ export default {
       // loadingStatus
       isLoading: true,
       fullPage: true,
+
+      storeId: null,
     };
   },
   methods: {
@@ -380,14 +382,14 @@ export default {
 
     // getDesignerInfo
     getDesignerHandler() {
-      getDesignerListSelect(2).then((res) => {
+      getDesignerListSelect(this.storeId).then((res) => {
         this.totalDesignerInfo = res.data;
       });
     },
 
     // getServicesInfo
     getServicesHandler() {
-      getStoreProductList().then((res) => {
+      getStoreProductList(this.storeId).then((res) => {
         if (res.data.status) {
           this.totalServicesInfo = res.data.OrderDetails;
         }
@@ -538,8 +540,10 @@ export default {
     },
   },
   created() {
-    // this.getDesignerHandler();
-    // this.getServicesHandler();
+    const designerInfo = JSON.parse(localStorage.getItem('desginderDetails'));
+    this.storeId = designerInfo.StoreId;
+  },
+  mounted() {
     this.gettotalOrderHandler();
   },
 };

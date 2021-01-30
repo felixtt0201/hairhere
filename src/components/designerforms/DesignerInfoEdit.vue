@@ -33,7 +33,7 @@
                     id="designerphoto"
                     class="form-control btn myinput"
                     ref="files"
-                    @change="uploadPhotoHandler(designerInfo.Id)"
+                    @change="uploadPhotoHandler"
                   />
                 </div>
               </div>
@@ -185,7 +185,7 @@
         <button
           type="submit"
           class="btn btn-primary"
-          @click="putSingleInfoHander(designerInfo.Id)"
+          @click="putSingleInfoHander"
           v-else
         >
           確認
@@ -216,10 +216,10 @@ export default {
       editstatus: true,
 
       // 設計師Id
-      dId: '',
+      dId: null,
 
       // 店家Id
-      storeId: '',
+      storeId: null,
 
       // 上傳檔案
       donewithUpload: false,
@@ -229,9 +229,6 @@ export default {
   methods: {
     // 取的設計師資料
     getInfo() {
-      const designerInfo = JSON.parse(localStorage.getItem('desginderDetails'));
-      this.dId = designerInfo.Id;
-      this.storeId = designerInfo.StoreId;
       getDesignerInfoBack(this.dId).then((res) => {
         console.log('singleDes', res.data);
         this.designerInfo = res.data;
@@ -240,7 +237,7 @@ export default {
     },
 
     // 編輯設計師資料
-    putSingleInfoHander(Id) {
+    putSingleInfoHander() {
       const data = this.$qs.stringify({
         Id: this.designerInfo.Id,
         Picture: this.designerInfo.Picture,
@@ -264,21 +261,20 @@ export default {
         WorkStatus: 1,
         Color: this.designerInfo.Color,
       });
-      putDesigner(data, Id).then((res) => {
+      putDesigner(data, this.dId).then((res) => {
         if (res.data.status === true) {
           this.successedMessage();
         }
-        console.log('put', res.data);
       });
     },
 
     // 上傳照片
-    uploadPhotoHandler(dId) {
+    uploadPhotoHandler() {
       this.donewithUpload = true;
       const designerPhoto = this.$refs.files.files[0];
       const formData = new FormData();
       formData.append('file-to-upload', designerPhoto);
-      patchDesignerPhoto(dId, formData).then((res) => {
+      patchDesignerPhoto(this.dId, formData).then((res) => {
         console.log('pic', res);
         this.donewithUpload = false;
         this.getInfo();
@@ -313,6 +309,11 @@ export default {
     cancel() {
       this.editstatus = true;
     },
+  },
+  created() {
+    const designerInfo = JSON.parse(localStorage.getItem('desginderDetails'));
+    this.dId = designerInfo.Id;
+    this.storeId = designerInfo.StoreId;
   },
   mounted() {
     this.getInfo();

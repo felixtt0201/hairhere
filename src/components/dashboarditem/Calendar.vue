@@ -346,6 +346,9 @@ export default {
       // loadingStatus
       isLoading: true,
       fullPage: true,
+
+      // 登入店家ID
+      loginStoreId: null,
     };
   },
 
@@ -380,7 +383,7 @@ export default {
 
     // getDesignerInfo
     getDesignerHandler() {
-      getDesignerListSelect(2).then((res) => {
+      getDesignerListSelect(this.loginStoreId).then((res) => {
         this.totalDesignerInfo = res.data;
       });
       // getAllDesigner().then((res) => {
@@ -392,7 +395,7 @@ export default {
     },
     // getServicesInfo
     getServicesHandler() {
-      getStoreProductList().then((res) => {
+      getStoreProductList(this.loginStoreId).then((res) => {
         if (res.data.status) {
           this.totalServicesInfo = res.data.OrderDetails;
         }
@@ -552,8 +555,9 @@ export default {
     },
   },
   created() {
-    // this.getDesignerHandler();
-    // this.getServicesHandler();
+    this.loginStoreId = JSON.parse(localStorage.getItem('storeDetails')).Id;
+  },
+  mounted() {
     this.gettotalOrderHandler();
   },
 };

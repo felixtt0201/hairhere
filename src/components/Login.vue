@@ -226,10 +226,6 @@ export default {
       });
     },
   },
-  mounted() {
-    console.log('stoe', this.storeDetails);
-    console.log('dese', this.desginderDetails);
-  },
 };
 </script>
 <style lang="scss">

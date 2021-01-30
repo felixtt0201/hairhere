@@ -414,7 +414,8 @@
 <script>
 import {
   getStoreProductList,
-  getAllDesigner,
+  // getAllDesigner,
+  getDesignerListSelect,
   getBillList,
   postBill,
   getSingleBill,
@@ -456,6 +457,9 @@ export default {
       date: '',
       // 客人生日
       bDay: '',
+
+      dId: null,
+      storeId: null,
     };
   },
   computed: {
@@ -472,15 +476,15 @@ export default {
 
   methods: {
     getServicesInfo() {
-      getStoreProductList().then((res) => {
+      getStoreProductList(this.storeId).then((res) => {
         if (res.data.status === true) {
           this.servicesInfo = res.data.OrderDetails;
         }
       });
     },
     getDesignersInfo() {
-      getAllDesigner().then((res) => {
-        this.designerInfo = res.data.BasicData;
+      getDesignerListSelect(this.storeId).then((res) => {
+        this.designerInfo = res.data;
       });
     },
     // 取得全部帳單
@@ -639,6 +643,11 @@ export default {
     },
   },
   created() {
+    const designerInfo = JSON.parse(localStorage.getItem('desginderDetails'));
+    this.dId = designerInfo.Id;
+    this.storeId = designerInfo.StoreId;
+  },
+  mounted() {
     this.getAllBillList();
   },
 };

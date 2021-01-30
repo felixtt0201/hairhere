@@ -490,7 +490,7 @@ export default {
       isNew: false,
       donewithUpload: false,
       pages: [],
-      index: 0,
+      index: 1,
 
       loginStoreId: null,
     };
@@ -498,7 +498,7 @@ export default {
   methods: {
     // 取的全部設計師
     getInfoHandler(page) {
-      getAllDesigner(this.loginStoreId, page, 20).then((res) => {
+      getAllDesigner(this.loginStoreId, page, 8).then((res) => {
         console.log(res);
         if (res.data.status) {
           this.tempDesginersInfo = res.data.BasicData;

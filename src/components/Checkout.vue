@@ -460,6 +460,9 @@ export default {
       date: '',
       // 客人生日
       bDay: '',
+
+      // 登入的店家ＩＤ
+      loginStoreId: null,
     };
   },
   computed: {
@@ -476,14 +479,14 @@ export default {
 
   methods: {
     getServicesInfo() {
-      getStoreProductList().then((res) => {
+      getStoreProductList(this.loginStoreId).then((res) => {
         if (res.data.status === true) {
           this.servicesInfo = res.data.OrderDetails;
         }
       });
     },
     getDesignersInfo() {
-      getDesignerListSelect(2).then((res) => {
+      getDesignerListSelect(this.loginStoreId).then((res) => {
         this.designerInfo = res.data;
       });
     },
@@ -643,6 +646,9 @@ export default {
     },
   },
   created() {
+    this.loginStoreId = JSON.parse(localStorage.getItem('storeDetails')).Id;
+  },
+  mounted() {
     this.getAllBillList();
   },
 };
