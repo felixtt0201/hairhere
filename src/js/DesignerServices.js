@@ -31,7 +31,9 @@ const getAllStoreInfo = () => storeApi.get('/GET/StoreList');
 
 /** 產品 */
 // get全部產品
-const getStoreProductList = () => storeApi.get('/GET/ProductList?storeId=2');
+const getStoreProductList = (storeId) =>
+  // eslint-disable-next-line implicit-arrow-linebreak
+  storeApi.get(`/GET/ProductList?storeId=${storeId}`);
 
 // post新增產品
 const posteStoreProduct = (data) => storeApi.post('/POST/Product', data);

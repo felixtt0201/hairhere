@@ -54,6 +54,7 @@
         <thead class="thead-dark">
           <tr>
             <th scope="col">#</th>
+            <th scope="col">日期</th>
             <th scope="col">設計師</th>
             <th scope="col">客人姓名</th>
             <th scope="col">消費金額</th>
@@ -64,6 +65,9 @@
         <tbody>
           <tr v-for="info in totalCheckInfo" :key="info.Id">
             <th scope="row">1</th>
+            <td>
+              {{ info.OrderTime.replace('T', ' ').replace('00:00:00', ' ') }}
+            </td>
             <td>
               {{ info.DesignerName }}
             </td>
@@ -120,7 +124,9 @@
                 <tbody class="text-gray-800">
                   <tr>
                     <th scope="row">日期：</th>
-                    <td>{{ singleCheckInfo.OrderTime }}</td>
+                    <td>
+                      {{ date }}
+                    </td>
                   </tr>
                   <tr>
                     <th scope="row">設計師：</th>
@@ -132,7 +138,7 @@
                   </tr>
                   <tr>
                     <th scope="row">生日：</th>
-                    <td>{{ singleCheckInfo.CustomerBirthday }}</td>
+                    <td>{{ bDay }}</td>
                   </tr>
                   <tr>
                     <th scope="row">電話：</th>
@@ -212,6 +218,8 @@ export default {
       customerName: '',
       billStatus: '',
       amount: '',
+      bDay: '',
+      date: '',
     };
   },
   computed: {
@@ -230,6 +238,14 @@ export default {
     getSingInfo(cId) {
       getSingleBill(cId).then((res) => {
         this.singleCheckInfo = res.data.BasicData;
+        this.date = this.singleCheckInfo.OrderTime.replace('T', ' ').replace(
+          '00:00:00',
+          ' ',
+        );
+        this.bDay = this.singleCheckInfo.CustomerBirthday.replace(
+          'T',
+          ' ',
+        ).replace('00:00:00', ' ');
         $('#checkoutMoadel').modal('show');
       });
     },

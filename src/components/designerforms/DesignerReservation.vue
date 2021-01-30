@@ -227,6 +227,7 @@
                       取消
                     </button>
                     <button
+                      type="button"
                       class="btn btn-danger"
                       style="min-width:140px"
                       v-else
@@ -349,12 +350,10 @@ export default {
       fullPage: true,
     };
   },
-
   methods: {
     // 搜尋訂單
     searchInfoHandler(selectId) {
       getOrderListbyDesinger(selectId).then((res) => {
-        console.log('sear', res);
         if (res.data.status) {
           this.calendarOptions.events = [];
           this.OrderInfo = res.data.BasicData;
@@ -384,13 +383,8 @@ export default {
       getDesignerListSelect(2).then((res) => {
         this.totalDesignerInfo = res.data;
       });
-      // getAllDesigner().then((res) => {
-      //   console.log(res);
-      //   if (res.data.status) {
-      //     this.totalDesignerInfo = res.data.BasicData;
-      //   }
-      // });
     },
+
     // getServicesInfo
     getServicesHandler() {
       getStoreProductList().then((res) => {
@@ -405,7 +399,6 @@ export default {
       await this.getDesignerHandler();
       await this.getServicesHandler();
       await getOrder().then((res) => {
-        console.log('total', res);
         if (res.data.status) {
           this.isLoading = false;
           this.OrderInfo = res.data.BasicData;
@@ -422,14 +415,6 @@ export default {
           });
         }
       });
-      // await this.OrderInfo.forEach((item) => {
-      //   const showOrderDetails = {
-      //     title: item.CustomerName,
-      //     start: item.OrderTime,
-      //     OrderID: item.Id,
-      //   };
-      //   this.calendarOptions.events.push(showOrderDetails);
-      // });
     },
 
     // postorder新增訂單

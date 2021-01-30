@@ -146,13 +146,14 @@ export default {
         Price: '',
         ServiceMinutes: '',
       },
+      loginStoreId: null,
     };
   },
   methods: {
     // 取得產品資訊
     getInfoHandler() {
       this.isLoading = true;
-      getStoreProductList().then((res) => {
+      getStoreProductList(this.loginStoreId).then((res) => {
         if (res.data.status) {
           this.servicesdata = res.data.BasicData;
           this.isLoading = false;
@@ -264,6 +265,9 @@ export default {
     },
   },
   created() {
+    this.loginStoreId = JSON.parse(localStorage.getItem('storeDetails')).Id;
+  },
+  mounted() {
     this.getInfoHandler();
   },
 };

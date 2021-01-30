@@ -301,7 +301,9 @@
                   <tbody class="text-gray-800">
                     <tr>
                       <th scope="row">日期：</th>
-                      <td>{{ editInfo.OrderTime }}</td>
+                      <td>
+                        {{ date }}
+                      </td>
                     </tr>
                     <tr>
                       <th scope="row">設計師：</th>
@@ -318,7 +320,7 @@
                     <tr>
                       <th scope="row">生日：</th>
                       <td>
-                        {{ editInfo.CustomerBirthday }}
+                        {{ bDay }}
                       </td>
                     </tr>
                     <tr>
@@ -414,7 +416,8 @@
 <script>
 import {
   getStoreProductList,
-  getAllDesigner,
+  // getAllDesigner,
+  getDesignerListSelect,
   getBillList,
   postBill,
   getSingleBill,
@@ -452,6 +455,11 @@ export default {
       billListInfo: [],
       editInfo: {},
       isNew: true,
+
+      // 當天日期
+      date: '',
+      // 客人生日
+      bDay: '',
     };
   },
   computed: {
@@ -475,8 +483,8 @@ export default {
       });
     },
     getDesignersInfo() {
-      getAllDesigner().then((res) => {
-        this.designerInfo = res.data.BasicData;
+      getDesignerListSelect(2).then((res) => {
+        this.designerInfo = res.data;
       });
     },
     // 取得全部帳單
@@ -498,6 +506,14 @@ export default {
         if (res.data.status) {
           $('#checkoutMoadel').modal('show');
           this.editInfo = res.data.BasicData;
+          this.bDay = this.editInfo.CustomerBirthday.replace('T', ' ').replace(
+            '00:00:00',
+            ' ',
+          );
+          this.date = this.editInfo.OrderTime.replace('T', ' ').replace(
+            '00:00:00',
+            ' ',
+          );
         }
       });
     },

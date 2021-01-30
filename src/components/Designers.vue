@@ -491,17 +491,19 @@ export default {
       donewithUpload: false,
       pages: [],
       index: 0,
+
+      loginStoreId: null,
     };
   },
   methods: {
     // 取的全部設計師
     getInfoHandler(page) {
-      getAllDesigner(page, 8).then((res) => {
+      getAllDesigner(this.loginStoreId, page, 20).then((res) => {
+        console.log(res);
         if (res.data.status) {
           this.tempDesginersInfo = res.data.BasicData;
           this.pages = Math.ceil(res.data.Count / res.data.Limit);
           this.index = res.data.Index;
-
           this.isLoading = false;
         }
       });
@@ -528,8 +530,9 @@ export default {
         Color: this.addNewInfo.Color,
       });
       const smsg = '新增';
-      postDesinger(data).then((res) => {
+      postDesinger(this.loginStoreId, data).then((res) => {
         if (res.data.status) {
+          console.log(res);
           this.successed(smsg);
         } else if (res.data.message === '帳號重複') {
           this.$swal({
@@ -664,6 +667,9 @@ export default {
     },
   },
   created() {
+    this.loginStoreId = JSON.parse(localStorage.getItem('storeDetails')).Id;
+  },
+  mounted() {
     this.getInfoHandler();
   },
 };

@@ -23,7 +23,7 @@ const postStoreLogin = (data) => storeApi.post('/POST/Login/Store', data);
 const postStoreRegister = (data) => storeApi.post('/POST/Store', data);
 
 // get店家全部資料
-const getStoreTotalInfo = () => storeApi.get('/GET/Store?id=2');
+const getStoreTotalInfo = (storeId) => storeApi.get(`/GET/Store?id=${storeId}`);
 
 // put修改店家資料
 const putStoreInfo = (data) => storeApi.put('/PUT/Store', data);
@@ -33,7 +33,9 @@ const getAllStoreInfo = () => storeApi.get('/GET/StoreList');
 
 /** 產品 */
 // get全部產品
-const getStoreProductList = () => storeApi.get('/GET/ProductList?storeId=2');
+const getStoreProductList = (storeId) =>
+  // eslint-disable-next-line implicit-arrow-linebreak
+  storeApi.get(`/GET/ProductList?storeId=${storeId}`);
 
 // post新增產品
 const posteStoreProduct = (data) => storeApi.post('/POST/Product', data);
@@ -53,9 +55,11 @@ const deleteStoreProduct = (pId) =>
 // post設計師登入
 const postDesingerLogin = (data) => storeApi.post('/POST/Login/Designer', data);
 // get全部設計師
-const getAllDesigner = (page, limit) =>
+const getAllDesigner = (storeId, page, limit) =>
   // eslint-disable-next-line implicit-arrow-linebreak
-  storeApi.get(`/GET/DesignerList?storeId=2&Index=${page}&limit=${limit}`);
+  storeApi.get(
+    `/GET/DesignerList?storeId=${storeId}&Index=${page}&limit=${limit}`,
+  );
 // get單一設計師資料
 const getDesigner = (dId) => storeApi.get(`/GET/Designer?id=${dId}`);
 
@@ -70,7 +74,9 @@ const getDesignerListSelect = (storeId) =>
   storeApi.get(`GET/DesignerList/Drop?storeId=${storeId}`);
 
 // post新增設計師
-const postDesinger = (data) => storeApi.post('/POST/Designer?storeid=2', data);
+const postDesinger = (storeId, data) =>
+  // eslint-disable-next-line implicit-arrow-linebreak
+  storeApi.post(`/POST/Designer?storeid=${storeId}`, data);
 
 // patch修改設計師狀態(在職/離職)
 const patchDesignerStatus = (data, dId) =>

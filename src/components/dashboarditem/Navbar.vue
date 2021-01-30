@@ -104,6 +104,8 @@ export default {
         // showConfirmButton: false,
         timer: 1500,
       }).then(() => {
+        document.cookie = 'desingerToken=; expires=; path=/';
+        document.cookie = 'storeToken=; expires=; path=/';
         localStorage.clear();
       });
     },

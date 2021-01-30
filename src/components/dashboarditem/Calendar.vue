@@ -225,6 +225,7 @@
                       取消
                     </button>
                     <button
+                      type="button"
                       class="btn btn-danger"
                       style="min-width:140px"
                       v-else

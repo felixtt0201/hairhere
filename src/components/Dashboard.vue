@@ -41,6 +41,6 @@ export default {
 };
 </script>
 
-<style lang="scss" scopeded>
+<style lang="scss" scoped>
 @import './src/assets/scss/sb-admin-2.scss';
 </style>

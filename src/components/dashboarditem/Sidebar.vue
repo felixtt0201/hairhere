@@ -165,7 +165,6 @@ export default {
         timer: 1500,
       }).then(() => {
         document.cookie = 'desingerToken=; expires=; path=/';
-        localStorage.clear();
         document.cookie = 'storeToken=; expires=; path=/';
         localStorage.clear();
       });

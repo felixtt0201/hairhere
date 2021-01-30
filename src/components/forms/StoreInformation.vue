@@ -77,8 +77,9 @@
         <div class="col-md-6">
           <label for="businesstime" class="font-weight-bold">營業時間：</label>
           <p v-if="editstatus" class="text-muted text-gray-800">
-            {{ businessTime.BusinessHoursOpen }} ~
-            {{ businessTime.BusinessHoursClose }}
+            {{ openTime }}
+            ~
+            {{ closeTime }}
           </p>
           <div v-else>
             開始
@@ -302,7 +303,7 @@ export default {
           BusinessHoursClose: '',
         },
       },
-      storeInfo: {},
+      // storeInfo: {},
       basicInfo: {},
       businessTime: {},
 
@@ -312,19 +313,29 @@ export default {
       // 休假日
       DayOf: [],
       setDayof: '',
+      closeTime: '',
+      openTime: '',
+      loginStoreId: null,
     };
   },
-
   methods: {
     // 取得店家資料
     getInfoHandler() {
       this.isLoading = true;
-      getStoreTotalInfo().then((res) => {
+
+      getStoreTotalInfo(this.loginStoreId).then((res) => {
         if (res.data.status) {
           this.newdata = res.data;
-          // console.log(this.newdata);
-          this.basicInfo = res.data.BasicData;
           this.businessTime = res.data.Business;
+          this.basicInfo = res.data.BasicData;
+          this.openTime = this.businessTime.BusinessHoursOpen.replace(
+            'T',
+            ' ',
+          ).replace(':00:00', ':00');
+          this.closeTime = this.businessTime.BusinessHoursClose.replace(
+            'T',
+            ' ',
+          ).replace(':00:00', ':00');
           // eslint-disable-next-line no-multi-assign
           this.setDayof = this.newdata.Business.RestDayOfWeek?.toString();
           this.DayOf = this.newdata.Business.RestDayOfWeek;
@@ -390,6 +401,9 @@ export default {
     edit() {
       this.editstatus = !this.editstatus;
     },
+  },
+  created() {
+    this.loginStoreId = JSON.parse(localStorage.getItem('storeDetails')).Id;
   },
   mounted() {
     this.getInfoHandler();

@@ -161,7 +161,6 @@ export default {
           password: this.store.password,
         }),
       ).then((res) => {
-        console.log(res);
         if (res.data.status) {
           const storeToken = res.data.token;
           document.cookie = `storeToken=${storeToken};path=/`;
@@ -172,6 +171,7 @@ export default {
           localStorage.setItem('storeDetails', storeDetails);
           localStorage.setItem('status', true);
           this.$router.push('/Dashboard');
+
           this.successMessage();
         } else {
           this.unsuccessMessage();
@@ -225,6 +225,10 @@ export default {
         timer: 1500,
       });
     },
+  },
+  mounted() {
+    console.log('stoe', this.storeDetails);
+    console.log('dese', this.desginderDetails);
   },
 };
 </script>

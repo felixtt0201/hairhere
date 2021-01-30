@@ -108,7 +108,7 @@
                 <tbody class="text-gray-800">
                   <tr>
                     <th scope="row">日期：</th>
-                    <td>{{ singleCheckInfo.OrderTime }}</td>
+                    <td>{{ date }}</td>
                   </tr>
                   <tr>
                     <th scope="row">設計師：</th>
@@ -120,7 +120,7 @@
                   </tr>
                   <tr>
                     <th scope="row">生日：</th>
-                    <td>{{ singleCheckInfo.CustomerBirthday }}</td>
+                    <td>{{ bDay }}</td>
                   </tr>
                   <tr>
                     <th scope="row">電話：</th>
@@ -195,9 +195,14 @@ export default {
       customerName: '',
       billStatus: '',
       amount: '',
+      bDay: '',
+      date: '',
     };
   },
   computed: {
+    // test() {
+    //   return this.$store.state.conut;
+    // },
     caltotalPrice() {
       let total = 0;
       // eslint-disable-next-line arrow-body-style
@@ -213,7 +218,14 @@ export default {
     getSingInfo(cId) {
       getSingleBill(cId).then((res) => {
         this.singleCheckInfo = res.data.BasicData;
-        console.log('single', this.singleCheckInfo);
+        this.date = this.singleCheckInfo.OrderTime.replace('T', ' ').replace(
+          '00:00:00',
+          ' ',
+        );
+        this.bDay = this.singleCheckInfo.CustomerBirthday.replace(
+          'T',
+          ' ',
+        ).replace('00:00:00', ' ');
         $('#checkoutMoadel').modal('show');
       });
     },
@@ -231,7 +243,6 @@ export default {
         DesignerId: this.dId,
       });
       postCheckInfo(data).then((res) => {
-        console.log(res.data);
         if (res.data.status) {
           this.totalCheckInfo = res.data.BasicData;
           this.customerName = '';
@@ -247,8 +258,6 @@ export default {
       });
     },
   },
-
-  created() {},
 };
 </script>
 
