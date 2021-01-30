@@ -480,7 +480,7 @@ export default {
   methods: {
     getServicesInfo() {
       getStoreProductList(this.loginStoreId).then((res) => {
-        if (res.data.status === true) {
+        if (res.data.status) {
           this.servicesInfo = res.data.OrderDetails;
         }
       });
@@ -490,17 +490,20 @@ export default {
         this.designerInfo = res.data;
       });
     },
+
     // 取得全部帳單
-    async getAllBillList() {
-      await this.getServicesInfo();
-      await this.getDesignersInfo();
+    getAllBillList() {
+      this.getServicesInfo();
+      this.getDesignersInfo();
       getBillList().then((res) => {
         if (res.data.status) {
-          this.isLoading = false;
           this.billListInfo = res.data.BasicData;
+          this.isLoading = false;
         }
+        this.isLoading = false;
       });
     },
+
     // 取得單一帳單
     getSingleInfo(id) {
       this.isNew = false;

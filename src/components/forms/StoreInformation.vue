@@ -322,7 +322,6 @@ export default {
       if (this.loginStoreId !== null) {
         getStoreTotalInfo(this.loginStoreId).then((res) => {
           if (res.data.status) {
-            console.log(res);
             this.newdata = res.data;
             this.businessTime = res.data.Business;
             this.basicInfo = res.data.BasicData;
@@ -332,7 +331,6 @@ export default {
             } else {
               this.DayOf = [];
             }
-            // eslint-disable-next-line no-multi-assign
             this.isLoading = false;
           }
         });

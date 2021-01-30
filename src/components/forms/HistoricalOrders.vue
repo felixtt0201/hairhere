@@ -198,7 +198,6 @@
 <script>
 import {
   postCheckInfo,
-  // getAllDesigner,
   getSingleBill,
   getDesignerListSelect,
 } from '@/js/AppServices';

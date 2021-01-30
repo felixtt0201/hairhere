@@ -414,7 +414,6 @@
 <script>
 import {
   getStoreProductList,
-  // getAllDesigner,
   getDesignerListSelect,
   getBillList,
   postBill,

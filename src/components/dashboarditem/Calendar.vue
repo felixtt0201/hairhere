@@ -423,6 +423,7 @@ export default {
             this.calendarOptions.events.push(showOrderDetails);
           });
         }
+        this.isLoading = false;
       });
       // await this.OrderInfo.forEach((item) => {
       //   const showOrderDetails = {
