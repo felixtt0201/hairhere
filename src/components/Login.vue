@@ -137,7 +137,7 @@
 </template>
 
 <script>
-import { postStoreLogin, postDesingerLogin } from '@/js/AppServices';
+import { postStoreLogin } from '@/js/AppServices';
 
 export default {
   data() {
