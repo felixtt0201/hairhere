@@ -415,12 +415,27 @@ export default {
     uploadPhoto() {
       const formData = new FormData();
       const photos = this.$refs.files.files; // refs要對應上面input的ref
-      photos.forEach((i) => {
-        formData.append('', i);
-      });
+      // photos.forEach((i) => {
+      //   formData.append('', i);
+      // });
+      // eslint-disable-next-line no-plusplus
+      for (let index = 0; index < photos.length; index++) {
+        const element = photos[index];
+        formData.append(index, element);
+      }
+      console.log(photos[0]);
+      console.log(photos[1]);
+      console.log(photos[2]);
+      // // eslint-disable-next-line no-restricted-syntax
+      // for (const value of formData.values()) {
+      //   // eslint-disable-next-line no-console
+      //   console.log(value);
+      // }
+
       // console.log(formData);
       // const vm = this;
       postPhoto(formData).then((res) => {
+        console.log(formData);
         if (res.data.status) {
           console.log(res);
           this.photosView = res.data.PhotoPathList;
