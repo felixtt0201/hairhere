@@ -82,7 +82,7 @@ const getFreetime = (designerId, selectTime) =>
 
 /** 作品 */
 // get全部作品
-const getworkss = () => storeApi.get('/GET/PortfolioList');
+const getworkss = () => storeApi.get('/GET/PortfolioList?storeId=2');
 
 // get單一作品
 const getSingleWork = (workid) =>
@@ -92,12 +92,14 @@ const getSingleWork = (workid) =>
 // get分頁
 const getpages = (page, showWorks) =>
   // eslint-disable-next-line implicit-arrow-linebreak
-  storeApi.get(`/GET/PortfolioList?Index=${page}&Limit=${showWorks}`);
+  storeApi.get(`/GET/PortfolioList?storeId=2&Index=${page}&Limit=${showWorks}`);
 
 // get查詢作品關鍵字
-const searchworks = (data, page, show) =>
+const searchworks = (item, searchname) =>
   // eslint-disable-next-line implicit-arrow-linebreak
-  storeApi.get(`/GET/PortfolioList?index=${page}&limit=${show}&search=${data}`);
+  storeApi.get(
+    `/GET/PortfolioList/Search?category=${item}&name=${searchname}&storeId=2`,
+  );
 
 // post查詢訂單
 const postOrderInfo = (data) => storeApi.post('POST/Order/Search', data);

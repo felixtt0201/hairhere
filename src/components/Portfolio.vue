@@ -418,6 +418,7 @@ export default {
       photos.forEach((i) => {
         formData.append('', i);
       });
+      // console.log(formData);
       // const vm = this;
       postPhoto(formData).then((res) => {
         if (res.data.status) {

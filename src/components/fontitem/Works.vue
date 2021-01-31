@@ -81,13 +81,19 @@
           />燙髮</label
         >
         <div></div>
-        <label for="work"
-          ><input
+        <div class="d-flex border">
+          <!-- <label for="work"></label> -->
+          <input
             type="text"
-            class="searchInput"
+            class="searchInput m-0"
             placeholder="輸入搜尋作品名稱"
             v-model.trim="searchInput"
-        /></label>
+          />
+          <button type="button" class="search-btn w-100" @click="searchbtn">
+            <i class="fas fa-search mr-3"></i>關鍵
+          </button>
+        </div>
+
         <button type="button" class="search-btn w-100" @click="searchItem">
           <i class="fas fa-search mr-3"></i>搜尋
         </button>
@@ -99,11 +105,7 @@
       </h3>
       <div class="row img-center">
         <!-- 測試關鍵字搜索 -->
-        <div
-          class="col-md-3 size"
-          v-for="work in searchInputText"
-          :key="work.Id"
-        >
+        <div class="col-md-3 size" v-for="work in worksarray" :key="work.Id">
           <router-link :to="`/designerSingle/${work.Id}`" class="itemimg">
             <h2 class="item-tittle">{{ work.Name }}</h2>
             <img :src="work.Photo1" alt="" />
@@ -165,18 +167,14 @@ export default {
       status: true, // 執行分頁方法時判斷是否已進行篩選
     };
   },
-  computed: {
-    // 關鍵字搜索
-    searchInputText() {
-      if (this.searchInput) {
-        return this.worksarray.filter(
-          (item) => item.Name.indexOf(this.searchInput) !== -1, // 有找到值
-        );
-      }
-      return this.worksarray;
-    },
-  },
   methods: {
+    searchbtn() {
+      searchworks('', this.searchInput).then((res) => {
+        console.log(res);
+        this.worksarray = res.data.BasicData;
+        console.log('關鍵字', this.worksarray);
+      });
+    },
     // 渲染作品集＆切換分頁
     // changePage(page, show) {
     //   getpages(page, show).then((res) => {
@@ -207,12 +205,22 @@ export default {
         this.isLoading = false;
       });
     },
+    // searchItem() {
+    //   const searchItemArray = this.list.toString();
+    //   searchworks(searchItemArray, this.index, 9).then((res) => {
+    //     console.log(res);
+    //     this.pages = Math.ceil(res.data.Count / this.Limit);
+    //     this.worksarray = res.data.BasicData;
+    //     this.status = false;
+    //   });
+    // },
     searchItem() {
       const searchItemArray = this.list.toString();
-      searchworks(searchItemArray, this.index, 9).then((res) => {
+      searchworks(searchItemArray, '').then((res) => {
         console.log(res);
         this.pages = Math.ceil(res.data.Count / this.Limit);
         this.worksarray = res.data.BasicData;
+        console.log('分類', this.worksarray);
         this.status = false;
       });
     },

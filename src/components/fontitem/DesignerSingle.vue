@@ -30,14 +30,19 @@
         v-for="designerWork in designerWorks"
         :key="designerWork.Id"
       >
-        <router-link :to="`/DesignerSingleWork/${designerWork.Id}`">
+        <router-link
+          :to="`/DesignerSingleWork/${designerWork.Id}`"
+          class="itemimg"
+        >
+          <h2 class="item-tittle">{{ designerWork.Name }}</h2>
+          <div class="seemore"></div>
           <img
             :src="`${designerWork.Photo1}`"
             alt=""
             class="designerWork-img"
           />
-          <div class="btn designerWork-btn">see</div></router-link
-        >
+          <!-- <div class="btn designerWork-btn">see</div> -->
+        </router-link>
       </div>
     </div>
     <nav aria-label="Page navigation example">
@@ -72,26 +77,6 @@
         </li>
       </ul>
     </nav>
-    <!-- <nav aria-label="Page navigation example">
-      <ul class="pagination justify-content-center">
-        <li class="page-item">
-          <a class="page-link path" href="#" aria-label="Previous"
-            ><i class="fas fa-chevron-left"></i>
-          </a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">4</a></li>
-        <li class="page-item"><a class="page-link" href="#">5</a></li>
-        <li class="page-item"><a class="page-link" href="#">6</a></li>
-        <li class="page-item">
-          <a class="page-link path" href="#" aria-label="Next"
-            ><i class="fas fa-chevron-right"></i>
-          </a>
-        </li>
-      </ul>
-    </nav> -->
   </div>
 </template>
 
@@ -131,4 +116,62 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss">
+.seemore {
+  position: absolute;
+  display: inline-block;
+  overflow: hidden;
+  right: 20px;
+  bottom: 20px;
+  width: 66px;
+  height: 66px;
+  opacity: 0;
+  transition: all 0.5s;
+  z-index: 2;
+  &::before {
+    position: absolute;
+    content: 'more';
+    right: 0px;
+    bottom: 7px;
+    color: #7d7265;
+    font-size: 18px;
+    line-height: 28px;
+    z-index: 1;
+  }
+  &::after {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 33px;
+    right: -33px;
+    bottom: 0;
+    background: #ffffff;
+    transform: skewX(-45deg);
+  }
+}
+// .itemimg:hover {
+//   .seemore {
+//     &::before {
+//       content: 'more+';
+//       position: absolute;
+//       bottom: 0;
+//       left: 30px;
+//       font-size: 18px;
+//       opacity: 1;
+//       color: #7d7265;
+//       z-index: 50;
+//     }
+//     position: absolute;
+//     opacity: 0;
+//     bottom: 0;
+//     right: 0;
+//     opacity: 1;
+//     z-index: 2;
+//     width: 0px;
+//     height: 0px;
+//     border-style: solid;
+//     border-width: 70px 70px 0px 70px;
+//     border-color: transparent #f8f3ef transparent transparent;
+//   }
+// }
+</style>
