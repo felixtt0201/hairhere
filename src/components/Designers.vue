@@ -693,9 +693,14 @@ export default {
 <style lang="scss" scoped>
 .myinput {
   position: absolute;
-  font-size: 50px;
+  // font-size: 50px;
+  width: 100%;
+  height: 100% !important;
   opacity: 0;
   right: 0;
   top: 0;
+}
+.file {
+  position: relative;
 }
 </style>

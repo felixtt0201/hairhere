@@ -58,14 +58,14 @@
                         backgroundImage: `url(${workDetail.Photo3Path})`,
                       }"
                     ></swiper-slide>
-                    <div
+                    <!-- <div
                       class="swiper-button-next swiper-button-white"
                       slot="button-next"
                     ></div>
                     <div
                       class="swiper-button-prev swiper-button-white"
                       slot="button-prev"
-                    ></div>
+                    ></div> -->
                   </swiper>
                   <!-- swiper2 Thumbs -->
                   <swiper
@@ -92,6 +92,14 @@
                       }"
                     >
                     </swiper-slide>
+                    <!-- <div
+                      class="swiper-button-next swiper-button-white"
+                      slot="button-next"
+                    ></div>
+                    <div
+                      class="swiper-button-prev swiper-button-white"
+                      slot="button-prev"
+                    ></div> -->
                   </swiper>
                 </div>
               </template>
@@ -131,10 +139,10 @@ export default {
         loop: true,
         loopedSlides: 3, // looped slides should be the same
         spaceBetween: 10,
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        },
+        // navigation: {
+        //   nextEl: '.swiper-button-next',
+        //   prevEl: '.swiper-button-prev',
+        // },
       },
       swiperOptionThumbs: {
         loop: true,
@@ -189,7 +197,7 @@ export default {
 .thumb-example {
   height: 480px;
   width: 600px;
-  background-color: black;
+  background-color: white;
 }
 .swiper {
   .swiper-slide {
@@ -218,7 +226,7 @@ export default {
   &.gallery-thumbs .swiper-slide {
     width: 25%;
     height: 100%;
-    opacity: 0.4;
+    opacity: 0.8;
   }
   &.gallery-thumbs .swiper-slide-active {
     opacity: 1;

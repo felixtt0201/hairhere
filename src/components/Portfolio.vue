@@ -149,25 +149,52 @@
             <div class="modal-body">
               <div class="row">
                 <div class="col-md-4">
-                  <h2>作品照片1</h2>
-                  <label for="Photo1">或上傳圖片</label>
+                  <h2>作品照片</h2>
+                  <div class="file btn btn-lg btn-primary mb-3">
+                    點選上傳多張圖片
+                    <input
+                      type="file"
+                      class="form-control btn myinput"
+                      ref="files"
+                      multiple
+                      @change="uploadPhoto"
+                    />
+                  </div>
+                  <br />
+                  <span class="text-danger">*格式限制JPG/PNG,至多三張</span>
+                  <!-- <label for="Photo1">或上傳圖片</label>
                   <input
                     type="file"
                     id="Photo1"
-                    class="form-control"
+                    class="form-control btn myinput"
                     name="Photo1"
                     ref="files"
                     multiple
                     @change="uploadPhoto"
-                  />
+                  /> -->
                   <!-- 多張img test -->
                   <!-- <button @click="uploadPhoto">addtest</button> -->
-                  <img
-                    img="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=828346ed697837ce808cae68d3ddc3cf&auto=format&fit=crop&w=1350&q=80"
-                    class="img-fluid"
-                    alt=""
-                  />
                 </div>
+                <img
+                  img="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=828346ed697837ce808cae68d3ddc3cf&auto=format&fit=crop&w=1350&q=80"
+                  class="img-fluid"
+                  alt=""
+                  :src="view"
+                  v-for="(view, index) in photosView"
+                  :key="index"
+                />
+                <!-- <img
+                  img="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?ixid=MXwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60"
+                  class="img-fluid"
+                  alt=""
+                  :src="formProduct.Photo2"
+                /> -->
+                <!-- <img
+                  img="https://images.unsplash.com/photo-1611492987558-c3a61d73693e?ixid=MXwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60"
+                  class="img-fluid"
+                  alt=""
+                  :src="formProduct.Photo3"
+                /> -->
               </div>
               <div class="row">
                 <div class="col mb-4">
@@ -380,6 +407,7 @@ export default {
       pages: [],
       index: 0,
       categoryCheckbox: [], // 先裝勾選的分類
+      photosView: [],
     };
   },
   methods: {
@@ -387,19 +415,39 @@ export default {
     uploadPhoto() {
       const formData = new FormData();
       const photos = this.$refs.files.files; // refs要對應上面input的ref
-      photos.forEach((i) => {
-        formData.append('', i);
-      });
+      // photos.forEach((i) => {
+      //   formData.append('', i);
+      // });
+      // eslint-disable-next-line no-plusplus
+      for (let index = 0; index < photos.length; index++) {
+        const element = photos[index];
+        formData.append(index, element);
+      }
+      console.log(photos[0]);
+      console.log(photos[1]);
+      console.log(photos[2]);
+      // // eslint-disable-next-line no-restricted-syntax
+      // for (const value of formData.values()) {
+      //   // eslint-disable-next-line no-console
+      //   console.log(value);
+      // }
 
+      // console.log(formData);
+      // const vm = this;
       postPhoto(formData).then((res) => {
+        console.log(formData);
         if (res.data.status) {
           console.log(res);
+          this.photosView = res.data.PhotoPathList;
           // eslint-disable-next-line prefer-destructuring
           this.formProduct.Photo1 = res.data.PhotoPathList[0];
           // eslint-disable-next-line prefer-destructuring
           this.formProduct.Photo2 = res.data.PhotoPathList[1];
           // eslint-disable-next-line prefer-destructuring
           this.formProduct.Photo3 = res.data.PhotoPathList[2];
+          // vm.$set(vm.formProduct, 'Photo1', res.data.PhotoPathList[0]);
+          // vm.$set(vm.formProduct, 'Photo2', res.data.PhotoPathList[1]);
+          // vm.$set(vm.formProduct, 'Photo3', res.data.PhotoPathList[2]);
         } else {
           console.log('error');
         }
@@ -471,6 +519,7 @@ export default {
       if (isNew) {
         console.log('new');
         this.formProduct = {};
+        this.categoryCheckbox = [];
         this.isNew = true;
       } else {
         console.log('old');
@@ -559,7 +608,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 input,
 textarea,
 select {
@@ -579,5 +628,16 @@ select {
   border: 1px solid #d1d3e2;
   padding: 3px;
   border-radius: 10px !important;
+}
+.file {
+  position: relative;
+}
+.myinput {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100% !important;
+  right: 0;
+  top: 0;
 }
 </style>

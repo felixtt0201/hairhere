@@ -81,13 +81,19 @@
           />燙髮</label
         >
         <div></div>
-        <label for="work"
-          ><input
+        <div class="d-flex border">
+          <!-- <label for="work"></label> -->
+          <input
             type="text"
-            class="searchInput"
+            class="searchInput m-0"
             placeholder="輸入搜尋作品名稱"
             v-model.trim="searchInput"
-        /></label>
+          />
+          <!-- <button type="button" class="search-btn w-100" @click="searchbtn">
+            <i class="fas fa-search mr-3"></i>關鍵
+          </button> -->
+        </div>
+
         <button type="button" class="search-btn w-100" @click="searchItem">
           <i class="fas fa-search mr-3"></i>搜尋
         </button>
@@ -99,11 +105,7 @@
       </h3>
       <div class="row img-center">
         <!-- 測試關鍵字搜索 -->
-        <div
-          class="col-md-3 size"
-          v-for="work in searchInputText"
-          :key="work.Id"
-        >
+        <div class="col-md-3 size" v-for="work in worksarray" :key="work.Id">
           <router-link :to="`/designerSingle/${work.Id}`" class="itemimg">
             <h2 class="item-tittle">{{ work.Name }}</h2>
             <img :src="work.Photo1" alt="" />
@@ -116,8 +118,12 @@
       </div>
       <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
-          <li class="page-item" :class="{ disabled: (i = 1) }">
-            <a class="page-link path" href="#" aria-label="Previous"
+          <li class="page-item" :class="{ disabled: index === 1 }">
+            <a
+              class="page-link path"
+              href="#"
+              aria-label="Previous"
+              @click="changePage(index - 1)"
               ><i class="fas fa-chevron-left"></i>
             </a>
           </li>
@@ -129,8 +135,12 @@
           >
             <a class="page-link" href="#">{{ page }}</a>
           </li>
-          <li class="page-item">
-            <a class="page-link path" href="#" aria-label="Next"
+          <li class="page-item" :class="{ disabled: index === pages }">
+            <a
+              class="page-link path"
+              href="#"
+              aria-label="Next"
+              @click="changePage(index + 1)"
               ><i class="fas fa-chevron-right"></i>
             </a>
           </li>
@@ -141,7 +151,7 @@
 </template>
 
 <script>
-import { getpages, searchworks } from '@/js/FontAppServices';
+import { getworkss, searchworks } from '@/js/FontAppServices';
 import loadingitem from '../dashboarditem/loadingitem.vue';
 
 export default {
@@ -151,69 +161,43 @@ export default {
       // Loading遮罩
       isLoading: true,
       fullPage: true,
-
       worksarray: [], // 回傳資料位置
       list: [], // checkbox勾選倒入
       searchInput: '', // 關鍵字搜索輸入
-      pages: '',
-      paginationhas_pre: '',
-      paginationhas_next: '',
+      pages: '', // 總頁數
       // get全部作品回傳資料
-      count: '',
-      index: 1,
-      limit: 4,
+      index: '', // 拿來裝目前分頁讓，讓上面可以做比對
       status: true, // 執行分頁方法時判斷是否已進行篩選
     };
   },
-  computed: {
-    // 關鍵字搜索
-    searchInputText() {
-      if (this.searchInput) {
-        return this.worksarray.filter(
-          (item) => item.Name.indexOf(this.searchInput) !== -1, // 有找到值
-        );
-      }
-      return this.worksarray;
-    },
-  },
   methods: {
-    // 渲染作品集＆切換分頁
-    // changePage(page, show) {
-    //   getpages(page, show).then((res) => {
-    //     console.log(res, page);
-    //     this.worksarray = res.data.BasicData;
-    //     console.log(this.worksarray);
-    //   });
-    // },
     changePage(page) {
       if (this.status === false) {
-        console.log('change');
-        searchworks(this.list.toString(), page, 6).then((res) => {
-          console.log(res);
-          this.worksarray = res.data.BasicData;
-        });
+        this.searchItem(page);
       } else {
-        getpages(page, 9).then((res) => {
-          console.log(res);
-          this.worksarray = res.data.BasicData;
-        });
+        this.getHandlerInfo(page);
       }
     },
-    getHandlerInfo() {
-      getpages(this.index, 9).then((res) => {
+    getHandlerInfo(page = 1) {
+      getworkss(page).then((res) => {
         console.log(res);
         this.pages = Math.ceil(res.data.Count / res.data.Limit);
         this.worksarray = res.data.BasicData;
+        this.status = true;
         this.isLoading = false;
+        this.index = res.data.Index;
       });
     },
-    searchItem() {
+    searchItem(page = 1) {
+      console.log(page);
       const searchItemArray = this.list.toString();
-      searchworks(searchItemArray, this.index, 9).then((res) => {
+      searchworks(searchItemArray, this.searchInput, page).then((res) => {
         console.log(res);
-        this.pages = Math.ceil(res.data.Count / this.Limit);
+        this.pages = Math.ceil(res.data.Count / res.data.Limit);
         this.worksarray = res.data.BasicData;
+        console.log('分類', this.worksarray, this.pages, page);
         this.status = false;
+        this.index = res.data.Index;
       });
     },
   },

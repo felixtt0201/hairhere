@@ -169,14 +169,17 @@
       <h4 class="title-line w-100 text-center mb-4 text-main">作品集</h4>
       <swiper class="swiper" :options="swiperOption">
         <swiper-slide v-for="work in works" :key="work.Id">
-          <router-link :to="`/DesignerSingleWork/${work.Id}`">
-            LInkto
+          <router-link
+            :to="`/DesignerSingleWork/${work.Id}`"
+            class="swiper-item"
+          >
+            <h2 class="swiper-item-tittle">立即預約</h2>
             <img :src="`${work.Photo1}`" alt=""
           /></router-link>
         </swiper-slide>
         <!-- <div class="swiper-pagination" slot="pagination"></div> -->
-        <!-- <div class="swiper-button-prev" slot="button-prev"></div> -->
-        <!-- <div class="swiper-button-next" slot="button-next"></div> -->
+        <div class="swiper-button-prev" slot="button-prev"></div>
+        <div class="swiper-button-next" slot="button-next"></div>
       </swiper>
       <h4 class="title-line w-100 text-center mb-4 text-main">設計師</h4>
       <swiper class="swiper mb-5" :options="swiperOption">
@@ -185,14 +188,17 @@
           :key="designer.Id"
           style="width:150px;height:150px"
         >
-          <router-link :to="`/designerSingle/${designer.Id}`">
-            LInkto
+          <router-link
+            :to="`/designerSingle/${designer.Id}`"
+            class="swiper-item"
+          >
+            <h2 class="swiper-item-tittle">立即預約</h2>
             <img :src="`${designer.PicturePath}`" alt="" />
           </router-link>
         </swiper-slide>
         <!-- <div class="swiper-pagination" slot="pagination"></div> -->
-        <!-- <div class="swiper-button-prev" slot="button-prev"></div> -->
-        <!-- <div class="swiper-button-next" slot="button-next"></div> -->
+        <div class="swiper-button-prev" slot="button-prev"></div>
+        <div class="swiper-button-next" slot="button-next"></div>
       </swiper>
     </div>
   </div>
@@ -224,7 +230,7 @@ export default {
         loop: true,
         // loopFillGroupWithBlank: true,
         autoplay: {
-          delay: 2000,
+          delay: 3000,
           disableOnInteraction: false,
         },
         pagination: {
@@ -274,6 +280,7 @@ export default {
       getAllDesigner().then((res) => {
         this.designers = res.data.BasicData;
         this.isLoading = false;
+        console.log(res);
       });
     },
   },
@@ -285,49 +292,64 @@ export default {
 };
 </script>
 
-<style lang="scss">
-// .splide__arrow--next {
-//   right: -25px !important;
-//   background: transparent;
-// }
-// .splide__arrow--prev {
-//   left: -40px !important;
-//   background: transparent;
-// }
-// .background-img {
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   position: relative;
-// }
-// .ap {
-//   position: absolute;
-//   background-color: pink;
-//   // display: inline;
-//   width: 100%;
-//   height: 85%;
-//   opacity: 0;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   text-decoration: none !important;
-//   bottom: -80px;
-//   &:hover {
-//     width: 85%;
-//     background-color: rgb(237, 224, 221);
-//     bottom: 0;
-//     transition: 0.5s;
-//     opacity: 0.8;
-//   }
-//   p {
-//     text-align: center;
-//     text-decoration: none !important;
-//     font-size: 20px;
-//     padding: 10px;
-//     color: #1d3d4a;
-//     font-weight: bolder;
-//     background-color: white;
-//     border-radius: 50px 50px 50px 0;
-//   }
-// }
+<style lang="scss" scoped>
+.swiper-button-next,
+.swiper-button-prev {
+  color: #7d7265;
+  right: 0;
+  opacity: 0.8;
+}
+.swiper-item {
+  display: block;
+  background: #000000;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  img {
+    position: relative;
+    transition: all 0.5s;
+    z-index: 1;
+    will-change: transform;
+    width: 100%;
+    height: 100%;
+    vertical-align: middle;
+    border-style: none;
+  }
+  &:hover {
+    ::after {
+      opacity: 1;
+      // transform: translate(5%, 5%);
+      transition: all 1s;
+    }
+    img {
+      opacity: 0.7;
+      transform: scale(1.05);
+    }
+    .swiper-item-tittle {
+      opacity: 1;
+    }
+  }
+}
+.swiper-item-tittle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s;
+  opacity: 0;
+  z-index: 2;
+  &::after {
+    position: absolute;
+    content: '';
+    right: 0;
+    left: 0;
+    top: 30px;
+    border: 2px solid #d6997a;
+    transition: all 0.5s;
+    opacity: 0;
+    z-index: 2;
+  }
+}
 </style>
