@@ -13,6 +13,9 @@ const storeApi = axios.create({
   },
 });
 
+/** 登入 */
+const postDesingerLogin = (data) => storeApi.post('/POST/Login/Designer', data);
+
 /** 產品 */
 // get全部產品*
 const getStoreProductList = (storeId) =>
@@ -67,16 +70,16 @@ const postPortfolio = (data) => storeApi.post('/POST/Portfolio', data);
 // patch作品*
 const patchWork = (workId, data) =>
   // eslint-disable-next-line implicit-arrow-linebreak
-  storeApi.patch(`/PATCH/Portfolio?id=${workId}`, data);
+  storeApi.put(`/PUT/Portfolio?id=${workId}`, data);
 
 // delete作品*
 const deleteWork = (workId) => storeApi.delete(`DELETE/Portfolio?id=${workId}`);
 
 // get單一設計師全部作品*
-const getDesignerWorks = (dId, pages, index) =>
+const getDesignerWorks = (storeId, dId, pages, index) =>
   // eslint-disable-next-line implicit-arrow-linebreak
   storeApi.get(
-    `/GET/PortfolioList?designerId=${dId}&limit=${pages}&index=${index}`,
+    `/GET/PortfolioList?storeId=${storeId}&designerId=${dId}&limit=${pages}&index=${index}`,
   );
 
 /** 帳單 */
@@ -102,6 +105,7 @@ const postPhoto = (data) => storeApi.post('/POST/Photo', data);
 
 // eslint-disable-next-line object-curly-newline
 export {
+  postDesingerLogin,
   getStoreProductList,
   getDesignerListSelect,
   getDesignerInfoBack,

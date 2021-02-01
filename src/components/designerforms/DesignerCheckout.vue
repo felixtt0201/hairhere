@@ -494,6 +494,8 @@ export default {
         if (res.data.status) {
           this.isLoading = false;
           this.billListInfo = res.data.BasicData;
+        } else {
+          this.isLoading = false;
         }
       });
     },

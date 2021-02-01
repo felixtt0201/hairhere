@@ -8,11 +8,7 @@
       :active.sync="isLoading"
       :is-full-page="fullPage"
     ></loading>
-    <div class="row">
-      <div class="col-sm-12 col-md-10">
-        <h3 class="mb-0 text-gray-800">個人作品集</h3>
-      </div>
-    </div>
+    <h3 class="mb-0 text-gray-800">作品集管理</h3>
     <!-- 作品資訊 -->
     <div class="row row-cols-1 row-cols-md-3 mt-4">
       <div class="col mb-4" v-for="product in comebackinfo" :key="product.Id">
@@ -61,6 +57,7 @@
         class="btn btn-primary btn-lg btn-icon-split"
         data-toggle="modal"
         data-target="#staticBackdrop"
+        @click="openModal(true)"
       >
         <span class="icon text-white-50">
           <i class="fas fa-plus"></i>
@@ -123,7 +120,6 @@
                 class="close"
                 data-dismiss="modal"
                 aria-label="Close"
-                @click="openModal(true)"
               >
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -131,55 +127,52 @@
             <div class="modal-body">
               <div class="row">
                 <div class="col-md-4">
-                  <h2>作品照片1</h2>
-                  <label for="Photo1">或上傳圖片</label>
+                  <h2>作品照片</h2>
+                  <div class="file btn btn-lg btn-primary mb-3">
+                    點選上傳多張圖片
+                    <input
+                      type="file"
+                      class="form-control btn myinput"
+                      ref="files"
+                      multiple
+                      @change="uploadPhoto"
+                    />
+                  </div>
+                  <br />
+                  <span class="text-danger">*格式限制JPG/PNG,至多三張</span>
+                  <!-- <label for="Photo1">或上傳圖片</label>
                   <input
                     type="file"
                     id="Photo1"
-                    class="form-control"
+                    class="form-control btn myinput"
                     name="Photo1"
                     ref="files"
+                    multiple
                     @change="uploadPhoto"
-                  />
-                  <img
-                    img="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=828346ed697837ce808cae68d3ddc3cf&auto=format&fit=crop&w=1350&q=80"
-                    class="img-fluid"
-                    alt=""
-                  />
+                  /> -->
+                  <!-- 多張img test -->
+                  <!-- <button @click="uploadPhoto">addtest</button> -->
                 </div>
-                <div class="col-md-4">
-                  <h2>作品照片2</h2>
-                  <label for="Photo2">上傳照片</label>
-                  <input
-                    type="file"
-                    id="Photo2"
-                    class="form-control"
-                    name="Photo2"
-                    ref="file2"
-                  />
-                  <img
-                    img="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=828346ed697837ce808cae68d3ddc3cf&auto=format&fit=crop&w=1350&q=80"
-                    class="img-fluid"
-                    alt=""
-                  />
-                </div>
-                <div class="col-md-4">
-                  <h2>作品照片3</h2>
-                  <label for="Photo3">上傳照片</label>
-                  <input
-                    type="file"
-                    id="Photo3"
-                    class="form-control"
-                    name="Photo3"
-                    ref="file3"
-                  />
-                  <img
-                    img="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=828346ed697837ce808cae68d3ddc3cf&auto=format&fit=crop&w=1350&q=80"
-                    class="img-fluid"
-                    alt=""
-                  />
-                  <p style="color:red;">照片限制：PNG,JPG</p>
-                </div>
+                <img
+                  img="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=828346ed697837ce808cae68d3ddc3cf&auto=format&fit=crop&w=1350&q=80"
+                  class="img-fluid"
+                  alt=""
+                  :src="view"
+                  v-for="(view, index) in photosView"
+                  :key="index"
+                />
+                <!-- <img
+                  img="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?ixid=MXwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60"
+                  class="img-fluid"
+                  alt=""
+                  :src="formProduct.Photo2"
+                /> -->
+                <!-- <img
+                  img="https://images.unsplash.com/photo-1611492987558-c3a61d73693e?ixid=MXwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60"
+                  class="img-fluid"
+                  alt=""
+                  :src="formProduct.Photo3"
+                /> -->
               </div>
               <div class="row">
                 <div class="col mb-4">
@@ -198,7 +191,7 @@
               <div class="row">
                 <div class="col-6">
                   <div id="dataTable_filter" class="dataTables_filter">
-                    <label>設計師姓名：{{ designerInfo.Name }}</label>
+                    <label>設計師姓名：{{ dName }}</label>
                     <!-- <select
                       class="form-control"
                       v-model="formProduct.DesignerId"
@@ -224,7 +217,9 @@
                       class="custom-control-input"
                       id="male"
                       value="男"
-                      v-model="formProduct.Category"
+                      name="Category"
+                      ref="cat"
+                      v-model="categoryCheckbox"
                     />
                     <label class="custom-control-label" for="male">男生</label>
                   </div>
@@ -234,7 +229,9 @@
                       class="custom-control-input"
                       id="female"
                       value="女"
-                      v-model="formProduct.Category"
+                      name="Category"
+                      ref="cat"
+                      v-model="categoryCheckbox"
                     />
                     <label class="custom-control-label" for="female"
                       >女生</label
@@ -246,7 +243,9 @@
                       class="custom-control-input"
                       id="longhair"
                       value="長髮"
-                      v-model="formProduct.Category"
+                      name="Category"
+                      ref="cat"
+                      v-model="categoryCheckbox"
                     />
                     <label class="custom-control-label" for="longhair"
                       >長髮</label
@@ -258,7 +257,9 @@
                       class="custom-control-input"
                       id="shorthair"
                       value="短髮"
-                      v-model="formProduct.Category"
+                      name="Category"
+                      ref="cat"
+                      v-model="categoryCheckbox"
                     />
                     <label class="custom-control-label" for="shorthair"
                       >短髮</label
@@ -270,7 +271,9 @@
                       class="custom-control-input"
                       id="dyehair"
                       value="染髮"
-                      v-model="formProduct.Category"
+                      name="Category"
+                      ref="cat"
+                      v-model="categoryCheckbox"
                     />
                     <label class="custom-control-label" for="dyehair"
                       >染髮</label
@@ -282,8 +285,9 @@
                       class="custom-control-input chkbox"
                       id="permhair"
                       value="燙髮"
-                      v-model="formProduct.Category"
                       name="Category"
+                      ref="cat"
+                      v-model="categoryCheckbox"
                     />
                     <label class="custom-control-label" for="permhair"
                       >燙髮</label
@@ -295,8 +299,9 @@
                       class="custom-control-input chkbox"
                       id="specialpermhair"
                       value="設計染"
-                      v-model="formProduct.Category"
                       name="Category"
+                      ref="cat"
+                      v-model="categoryCheckbox"
                     />
                     <label class="custom-control-label" for="specialpermhair"
                       >特殊/設計染</label
@@ -350,11 +355,12 @@ import {
   patchWork,
   deleteWork,
   getDesignerWorks,
-  getDesignerInfoBack,
   postPhoto,
+  getDesignerListSelect,
 } from '@/js/DesignerServices';
 
 export default {
+  name: 'porfolio',
   data() {
     return {
       // Loading遮罩
@@ -365,103 +371,124 @@ export default {
       fileUploading: false,
       comebackinfo: [], // get作品資訊
       formProduct: {
-        // 作品欄位
-        // Category: [],
-        // DesignerId: '',
-        // Name: '',
-        // Photo1: '',
-        // Photo2: '',
-        // Photo3: '',
-        // Summary: '',
+        Category: '', // 作品欄位
+        DesignerId: '', // 設計師id
+        Name: '', // 作品名稱
+        Summary: '', // 作品介紹
+        Photo1: '',
+        Photo2: '',
+        Photo3: '',
       },
       dName: '', // 顯示設計師名字
       isNew: true, // 判斷新增or編輯狀態
-      dId: 0, // 設計師Id
+
       pages: [],
       index: 0,
+      categoryCheckbox: [], // 先裝勾選的分類
+      photosView: [],
+
+      dId: 0, // 設計師Id
+      storeId: null, // 店家Id
     };
   },
   methods: {
-    // 分頁
-    getPageHandler(page) {
-      getDesignerWorks(this.dId, 6, page).then((res) => {
-        console.log('all', res);
-        this.comebackinfo = res.data.BasicData;
-        this.pages = Math.ceil(res.data.Count / res.data.Limit);
-        this.index = res.data.Index;
-      });
-    },
-
     // 上傳圖片
     uploadPhoto() {
-      const photo = this.$refs.files.files[0];
       const formData = new FormData();
-      formData.append('file-to-upload', photo);
+      const photos = this.$refs.files.files; // refs要對應上面input的ref
+      // photos.forEach((i) => {
+      //   formData.append('', i);
+      // });
+      // eslint-disable-next-line no-plusplus
+      for (let index = 0; index < photos.length; index++) {
+        const element = photos[index];
+        formData.append(index, element);
+      }
+      console.log(photos[0]);
+      console.log(photos[1]);
+      console.log(photos[2]);
+      // // eslint-disable-next-line no-restricted-syntax
+      // for (const value of formData.values()) {
+      //   // eslint-disable-next-line no-console
+      //   console.log(value);
+      // }
+
+      // console.log(formData);
+      // const vm = this;
       postPhoto(formData).then((res) => {
+        console.log(formData);
         if (res.data.status) {
-          console.log(res.data.fileName);
+          console.log(res);
+          this.photosView = res.data.PhotoPathList;
+          // eslint-disable-next-line prefer-destructuring
+          this.formProduct.Photo1 = res.data.PhotoPathList[0];
+          // eslint-disable-next-line prefer-destructuring
+          this.formProduct.Photo2 = res.data.PhotoPathList[1];
+          // eslint-disable-next-line prefer-destructuring
+          this.formProduct.Photo3 = res.data.PhotoPathList[2];
+          // vm.$set(vm.formProduct, 'Photo1', res.data.PhotoPathList[0]);
+          // vm.$set(vm.formProduct, 'Photo2', res.data.PhotoPathList[1]);
+          // vm.$set(vm.formProduct, 'Photo3', res.data.PhotoPathList[2]);
+        } else {
+          console.log('error');
         }
-        // console.log(res);
       });
     },
 
-    // 取得設計師資訊
-    getDesignersInfo() {
-      getDesignerInfoBack(this.dId).then((res) => {
-        this.designerInfo = res.data;
-      });
-    },
-
-    // 取得作品資訊
-    getWorkInfoHandler() {
-      const localStorageInfo = JSON.parse(
-        localStorage.getItem('desginderDetails'),
-      );
-      this.dId = localStorageInfo.Id;
-      getDesignerWorks(this.dId, 6, 1).then((res) => {
+    // 分頁
+    getPageHandler(page = 1) {
+      getDesignerWorks(this.storeId, this.dId, 6, page).then((res) => {
         if (res.data.status) {
           this.comebackinfo = res.data.BasicData;
           this.pages = Math.ceil(res.data.Count / res.data.Limit);
           this.index = res.data.Index;
           this.isLoading = false;
+        } else {
+          this.isLoading = false;
         }
       });
     },
+
+    // 取得設計師名字
+    getDesignerName() {
+      getDesignerListSelect(this.storeId).then((res) => {
+        res.data.forEach((i) => {
+          if (i.Id === this.dId) {
+            this.dName = i.Name;
+          }
+        });
+      });
+    },
+
+    // 共用modal，判斷新增or編輯
     openModal(isNew, product) {
       $('#staticBackdrop').modal('show');
+      console.log();
       if (isNew) {
+        console.log('new');
         this.formProduct = {};
+        this.formProduct.DesignerId = this.dId;
+        this.getDesignerName();
+        this.categoryCheckbox = [];
         this.isNew = true;
       } else {
+        console.log('old');
         this.formProduct = { ...product };
         this.dName = this.formProduct.DesignerName;
-        this.formProduct.Category = this.formProduct.Category.split(',');
+        this.categoryCheckbox = this.formProduct.Category.split(',');
         this.isNew = false;
       }
     },
-
     // 新增作品
     postInfoHandler() {
       if (this.isNew) {
+        const categoryString = this.categoryCheckbox.toString();
+        this.formProduct.Category = categoryString;
         this.fileUploading = true;
-        const Photo1 = this.$refs.file1.files[0];
-        const Photo2 = this.$refs.file2.files[0];
-        const Photo3 = this.$refs.file3.files[0];
-        this.formProduct.append('Photo1', Photo1);
-        this.formProduct.append('Photo2', Photo2);
-        this.formProduct.append('Photo3', Photo3);
-        this.formProduct.append('DesignerId', this.formProduct.DesignerId);
-        this.formProduct.append('Name', this.formProduct.Name);
-        this.formProduct.append('Summary', this.formProduct.Summary);
-        this.formProduct.append(
-          'Category',
-          this.formProduct.Category.toString(),
-        ); // 新增作品
-        postPortfolio(this.formProduct).then((res) => {
-          console.log(res);
+        postPortfolio(this.$qs.stringify(this.formProduct)).then((res) => {
           if (res.data.status) {
-            this.getWorkInfoHandler();
-            $('#staticBackdrop').modal('hide');
+            this.getPageHandler();
+            this.fileUploading = false;
             this.$swal({
               title: '新增成功',
               position: 'center',
@@ -469,19 +496,24 @@ export default {
               showConfirmButton: false,
               timer: 1500,
             });
+            $('#staticBackdrop').modal('hide');
           }
         });
       } else {
-        // 編輯作品:名稱 描述 分類
+        // 編輯作品：全部
         const data = this.$qs.stringify({
+          Id: this.formProduct.Id,
+          DesignerId: this.formProduct.DesignerId,
           Name: this.formProduct.Name,
           Summary: this.formProduct.Summary,
-          Category: this.formProduct.Category,
+          Category: this.categoryCheckbox.toString(),
+          Photo1: this.formProduct.Photo1,
+          Photo2: this.formProduct.Photo2,
+          Photo3: this.formProduct.Photo3,
         });
         patchWork(this.formProduct.Id, data).then((res) => {
-          console.log(res);
           if (res.data.status) {
-            this.getWorkInfoHandler();
+            this.getPageHandler();
             $('#staticBackdrop').modal('hide');
             this.$swal({
               icon: 'success',
@@ -512,22 +544,25 @@ export default {
             icon: 'success',
             position: 'center',
           }).then(() => {
-            this.getWorkInfoHandler();
+            this.getPageHandler();
           });
         }
       });
     },
   },
   created() {
-    this.getWorkInfoHandler();
-    this.getDesignersInfo();
-    this.formProduct = new FormData();
-    this.formProduct.Category = [];
+    const designerInfo = JSON.parse(localStorage.getItem('desginderDetails'));
+    this.dId = designerInfo.Id;
+    this.storeId = designerInfo.StoreId;
+  },
+  mounted() {
+    this.getPageHandler();
+    this.getDesignerName();
   },
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 input,
 textarea,
 select {
@@ -547,5 +582,16 @@ select {
   border: 1px solid #d1d3e2;
   padding: 3px;
   border-radius: 10px !important;
+}
+.file {
+  position: relative;
+}
+.myinput {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100% !important;
+  right: 0;
+  top: 0;
 }
 </style>

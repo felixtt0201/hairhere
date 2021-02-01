@@ -497,8 +497,8 @@ export default {
   },
   methods: {
     // 分頁
-    getPageHandler(page) {
-      getAllDesigner(this.loginStoreId, page, 8).then((res) => {
+    getPageHandler(page = 1) {
+      getAllDesigner(this.loginStoreId, page, 3).then((res) => {
         console.log(res);
         if (res.data.status) {
           this.tempDesginersInfo = res.data.TotalData;
@@ -547,6 +547,7 @@ export default {
       });
       const smsg = '新增';
       postDesinger(this.loginStoreId, data).then((res) => {
+        console.log(res);
         if (res.data.status) {
           this.successed(smsg);
         } else if (res.data.message === '帳號重複') {
@@ -638,7 +639,7 @@ export default {
         WorkStatus: '0',
       });
       patchDesignerStatus(data, dId).then(() => {
-        this.getInfoHandler();
+        this.getPageHandler();
         // console.log(res);
       });
     },
@@ -661,7 +662,7 @@ export default {
         icon: 'error',
         title: `${msg}失敗`,
       }).then(() => {
-        this.getInfoHandler();
+        this.getPageHandler();
       });
     },
     // 提示-成功
@@ -672,7 +673,7 @@ export default {
         title: `${msg}成功`,
         timer: 1500,
       }).then(() => {
-        this.getInfoHandler();
+        this.getPageHandler();
         this.addNewInfo = {};
         $('#designerModal').modal('hide');
       });
@@ -685,7 +686,7 @@ export default {
     this.loginStoreId = JSON.parse(localStorage.getItem('storeDetails')).Id;
   },
   mounted() {
-    this.getInfoHandler();
+    this.getPageHandler();
   },
 };
 </script>

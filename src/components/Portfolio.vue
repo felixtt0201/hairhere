@@ -408,6 +408,8 @@ export default {
       index: 0,
       categoryCheckbox: [], // 先裝勾選的分類
       photosView: [],
+
+      loginStoreId: null,
     };
   },
   methods: {
@@ -453,23 +455,20 @@ export default {
         }
       });
     },
+
     // 分頁
     getPageHandler(dId, page) {
-      getDesignerWorks(dId, 1, page).then((res) => {
-        console.log('all', res);
-        this.comebackinfo = res.data.BasicData;
-        console.log(this.comebackinfo);
-        this.pages = Math.ceil(res.data.Count / res.data.Limit);
-        this.index = res.data.Index;
+      getDesignerWorks(this.loginStoreId, dId, 6, page).then((res) => {
+        console.log(res);
+        if (res.data.status) {
+          this.comebackinfo = res.data.BasicData;
+          this.pages = Math.ceil(res.data.Count / res.data.Limit);
+          this.index = res.data.Index;
+          this.isLoading = false;
+        } else {
+          this.isLoading = false;
+        }
       });
-      // getpages(page, 6).then((res) => {
-      //   this.comebackinfo = res.data.BasicData;
-      //   this.pages = Math.ceil(res.data.Count / res.data.Limit);
-      //   this.index = res.data.Index;
-      //   // console.log(this.index);
-      //   // console.log(this.comebackinfo);
-      //   // console.log('pages', this.pages, typeof this.pages);
-      // });
     },
     searchWorksHandler(id) {
       getDesignerWorks(id, 6).then((res) => {
@@ -498,21 +497,11 @@ export default {
     },
     // 取得設計師資訊
     getDesignersInfo() {
-      getDesignerListSelect(2).then((res) => {
+      getDesignerListSelect(this.loginStoreId).then((res) => {
         this.designerInfo = res.data;
       });
     },
-    // 取得作品資訊
-    getWorkInfoHandler() {
-      getDesignerWorks().then((res) => {
-        if (res.data.status) {
-          this.comebackinfo = res.data.BasicData;
-          this.pages = Math.ceil(res.data.Count / res.data.Limit);
-          this.index = res.data.Index;
-          this.isLoading = false;
-        }
-      });
-    },
+
     // 共用modal，判斷新增or編輯
     openModal(isNew, product) {
       $('#staticBackdrop').modal('show');
@@ -521,6 +510,7 @@ export default {
         this.formProduct = {};
         this.categoryCheckbox = [];
         this.isNew = true;
+        this.dName = '';
       } else {
         console.log('old');
         this.formProduct = { ...product };
@@ -537,7 +527,7 @@ export default {
         this.fileUploading = true;
         postPortfolio(this.$qs.stringify(this.formProduct)).then((res) => {
           if (res.data.status) {
-            this.getWorkInfoHandler();
+            this.getPageHandler();
             $('#staticBackdrop').modal('hide');
             this.$swal({
               title: '新增成功',
@@ -563,7 +553,7 @@ export default {
         patchWork(this.formProduct.Id, data).then((res) => {
           console.log(res);
           if (res.data.status) {
-            this.getWorkInfoHandler();
+            this.getPageHandler();
             $('#staticBackdrop').modal('hide');
             this.$swal({
               icon: 'success',
@@ -594,16 +584,18 @@ export default {
             icon: 'success',
             position: 'center',
           }).then(() => {
-            this.getWorkInfoHandler();
+            this.getPageHandler();
           });
         }
       });
     },
   },
   created() {
-    this.getWorkInfoHandler();
+    this.loginStoreId = JSON.parse(localStorage.getItem('storeDetails')).Id;
+  },
+  mounted() {
     this.getDesignersInfo();
-    // this.getPageHandler();
+    this.getPageHandler();
   },
 };
 </script>
