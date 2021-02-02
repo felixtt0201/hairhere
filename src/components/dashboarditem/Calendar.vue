@@ -506,12 +506,14 @@ export default {
 
     // 點選有存儲過的資訊打開內容
     getSelectInfo(e) {
+      this.isLoading = true;
       this.editStatus = false;
       this.tempOrderInfo = {};
       this.selectOrderId = e.event.extendedProps.OrderID;
       getOrderDetail(this.selectOrderId).then((res) => {
         if (res.data.status) {
           this.tempOrderInfo = res.data.BasicData;
+          this.isLoading = false;
         }
       });
       $('#reservationModal').modal('show');

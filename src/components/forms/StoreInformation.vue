@@ -85,7 +85,6 @@
               type="time"
               class="form-control"
               id="businesstime"
-              placeholder="請輸入時間 ex:9:00"
               required
               v-model="businessTime.BusinessHoursOpen"
             />
@@ -94,7 +93,6 @@
               type="time"
               class="form-control"
               id="businesstime"
-              placeholder="請輸入時間 ex:18:00"
               required
               v-model="businessTime.BusinessHoursClose"
             />

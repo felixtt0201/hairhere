@@ -471,7 +471,7 @@ export default {
       });
     },
     searchWorksHandler(id) {
-      getDesignerWorks(id, 6).then((res) => {
+      getDesignerWorks(this.loginStoreId, id, 6).then((res) => {
         if (res.data.status) {
           this.comebackinfo = res.data.BasicData;
           this.pages = Math.ceil(res.data.Count / res.data.Limit);
