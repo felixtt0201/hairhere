@@ -4,9 +4,11 @@
 .designer-tag {
   background-color: #d6997a;
   padding: 0 15px;
-  margin-right: 20px;
   color: $text-accent;
-  border-radius: 2px;
+  border-radius: 10px;
+  text-align: center;
+  margin-bottom: 10px;
+  box-shadow: 1px 1px 1px #ecf0fb;
 }
 .designerWork-img {
   width: 200px;
@@ -15,4 +17,19 @@
 .designerWork-btn {
   width: 100px;
   border: 1px solid black;
+}
+.personInfo {
+  box-shadow: inset 1px 2px 3px grey;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.w-80 {
+  width: 90%;
+}
+.desingerInfo {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
 }

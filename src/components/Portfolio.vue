@@ -386,7 +386,6 @@ export default {
       categoryCheckbox: [], // 先裝勾選的分類
       photosView: [], // 接回圖片網址
       loginStoreId: null,
-      a: '',
     };
   },
   methods: {
@@ -519,6 +518,7 @@ export default {
         const categoryString = this.categoryCheckbox.toString();
         this.formProduct.Category = categoryString;
         this.fileUploading = true;
+        this.photosView = '';
         postPortfolio(this.$qs.stringify(this.formProduct)).then((res) => {
           if (res.data.status) {
             this.getPageHandler();

@@ -169,7 +169,7 @@
       <h4 class="title-line w-100 text-center mb-4 text-main">作品集</h4>
       <swiper
         class="swiper"
-        :options="swiperOption"
+        :options="swiperOptionTop"
         style="height:300px;width:90%"
       >
         <swiper-slide v-for="work in works" :key="work.Id">
@@ -185,10 +185,10 @@
         <div class="swiper-button-prev" slot="button-prev"></div>
         <div class="swiper-button-next" slot="button-next"></div>
       </swiper>
-      <h4 class="title-line w-100 text-center mb-4 text-main">設計師</h4>
+      <h4 class="title-line w-100 text-center mb-4 mt-5 text-main">設計師</h4>
       <swiper
         class="swiper mb-5"
-        :options="swiperOption"
+        :options="swiperOptionBot"
         style="height:300px;width:90%"
       >
         <swiper-slide
@@ -231,15 +231,36 @@ export default {
   },
   data() {
     return {
-      swiperOption: {
+      swiperOptionTop: {
         slidesPerView: 4,
-        spaceBetween: 50,
+        spaceBetween: 30,
+        // effect: 'fade',
         // centeredSlides: true,
         // slidesPerGroup: 6,
         loop: true,
         // loopFillGroupWithBlank: true,
         autoplay: {
           delay: 3000,
+          disableOnInteraction: false,
+        },
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+      },
+      swiperOptionBot: {
+        slidesPerView: 4,
+        spaceBetween: 30,
+        // centeredSlides: true,
+        // slidesPerGroup: 6,
+        loop: true,
+        // loopFillGroupWithBlank: true,
+        autoplay: {
+          delay: 5000,
           disableOnInteraction: false,
         },
         pagination: {
@@ -297,6 +318,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.swiper-slide {
+  background: #000000;
+}
 .swiper-button-next,
 .swiper-button-prev {
   color: #7d7265;
@@ -309,7 +333,12 @@ export default {
   overflow: hidden;
   transition: all 0.3s ease-in-out;
   img {
-    position: relative;
+    // position: relative;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
     transition: all 0.5s;
     z-index: 1;
     will-change: transform;
@@ -321,12 +350,14 @@ export default {
   &:hover {
     ::after {
       opacity: 1;
-      // transform: translate(5%, 5%);
+      transform: translate(10%, 10%);
       transition: all 1s;
     }
     img {
-      opacity: 0.7;
+      opacity: 0.8;
       transform: scale(1.05);
+      width: 100%;
+      height: 100%;
     }
     .swiper-item-tittle {
       opacity: 1;
