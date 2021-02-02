@@ -132,7 +132,7 @@
             <label for="tel">手機號碼</label
             ><input type="tel" id="tel" v-model="tel" required />
             <label for="text">介紹人</label
-            ><input type="text" id="text" v-model="text" required />
+            ><input type="text" id="text" v-model="text" />
             <label for="remarks">備註事項</label>
             <textarea
               id="remarks"
