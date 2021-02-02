@@ -32,9 +32,7 @@
             >
               <h4>本次預約設計師</h4>
               <h5>{{ designer.Name }}</h5>
-              <p class="border-left">
-                {{ designer.Details }}
-              </p>
+              <p class="border-left" v-html="designer.Details"></p>
             </div>
           </div>
         </div>

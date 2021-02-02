@@ -106,7 +106,10 @@
       <div class="row img-center">
         <!-- 測試關鍵字搜索 -->
         <div class="col-md-3 size" v-for="work in worksarray" :key="work.Id">
-          <router-link :to="`/designerSingle/${work.Id}`" class="itemimg">
+          <router-link
+            :to="`/designerSingle/${work.DesignerId}`"
+            class="itemimg"
+          >
             <h2 class="item-tittle">{{ work.Name }}</h2>
             <img :src="work.Photo1" alt="" />
             <!-- <div class="imgbackground">

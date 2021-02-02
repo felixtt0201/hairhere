@@ -12,7 +12,7 @@
             class="col-md-6 d-flex flex-column justify-content-around align-items-center"
           >
             <h4>{{ designer.Name }}</h4>
-            <p class="w-50 border-left">{{ designer.Details }}</p>
+            <p class="w-50 border-left" v-html="designer.Details"></p>
             <router-link
               :to="`/reservationF/${designerId}`"
               class="btn rounded-0 designer-btn"

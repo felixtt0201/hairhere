@@ -220,7 +220,6 @@
                       rows="4"
                       v-model="addNewInfo.dDetails"
                     ></textarea>
-                    {{ detailError }}
                   </div>
                 </div>
               </div>

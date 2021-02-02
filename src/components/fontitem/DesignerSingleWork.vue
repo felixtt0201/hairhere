@@ -12,7 +12,7 @@
             class="col-md-6 d-flex flex-column justify-content-around align-items-center"
           >
             <h4>{{ designerDetail.Name }}</h4>
-            <p class="w-50 border-left">{{ designerDetail.Details }}</p>
+            <p class="w-50 border-left" v-html="designerDetail.Details"></p>
             <router-link
               :to="`/reservationF/${workDetail.DesignerId}`"
               class="btn rounded-0 designer-btn"
@@ -106,8 +106,8 @@
             </div>
             <div class="col-md-3">
               <h4 class="mb-4">{{ workDetail.Name }}</h4>
-              <p class="mb-5 border-left">
-                {{ workDetail.Summary }}
+              <p class="mb-5 border-left" v-html="workDetail.Summary">
+                <!-- {{ workDetail.Summary }} -->
               </p>
               <ul class="d-flex justify-content-center p-0 mb-4">
                 <li class="designer-tag" v-for="tag in category" :key="tag">
