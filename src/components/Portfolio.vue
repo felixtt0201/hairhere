@@ -385,9 +385,8 @@ export default {
       pages: [],
       categoryCheckbox: [], // 先裝勾選的分類
       photosView: [], // 接回圖片網址
-      photosView: [],
-
       loginStoreId: null,
+      a: '',
     };
   },
   methods: {
@@ -507,6 +506,8 @@ export default {
       } else {
         console.log('old');
         this.formProduct = { ...product };
+        console.log(this.formProduct);
+        this.photosView = '';
         this.desingerName = this.formProduct.DesignerName;
         this.categoryCheckbox = this.formProduct.Category.split(',');
         this.isNew = false;
