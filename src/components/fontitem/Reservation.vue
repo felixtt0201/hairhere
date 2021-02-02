@@ -64,8 +64,16 @@
                   product.ProductName
                 }}</label>
               </td>
-              <td>＄{{ product.UnitPrice }}＋</td>
-              <td>{{ product.ServiceMinutes }} 分鐘</td>
+              <td>
+                <label class="w-100" :for="`${product.Id}`"
+                  >＄{{ product.UnitPrice }}＋</label
+                >
+              </td>
+              <td>
+                <label class="w-100" :for="`${product.Id}`">
+                  {{ product.ServiceMinutes }} 分鐘</label
+                >
+              </td>
             </tr>
           </tbody>
         </table>
@@ -231,7 +239,7 @@ export default {
     },
     getProductHandler() {
       getStoreProductList().then((res) => {
-        // console.log(res);
+        console.log(res);
         this.products = res.data.OrderDetails;
         this.isLoading = false;
       });

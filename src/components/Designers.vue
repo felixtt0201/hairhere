@@ -60,41 +60,6 @@
         <span class="text">新增設計師</span>
       </button>
     </div>
-
-    <!-- 分頁 -->
-    <nav aria-label="Page navigation example">
-      <ul class="pagination justify-content-center">
-        <li class="page-item" :class="{ disabled: index == 1 }">
-          <a
-            class="page-link path"
-            href="#"
-            aria-label="Previous"
-            @click.prevent="getPageHandler(index - 1)"
-            ><i class="fas fa-chevron-left"></i>
-          </a>
-        </li>
-        <!-- pageLi -->
-        <li
-          class="page-item"
-          v-for="page in pages"
-          :key="page"
-          @click="getPageHandler(page)"
-        >
-          <a class="page-link" href="#">{{ page }}</a>
-        </li>
-        <!-- pageLi -->
-        <li class="page-item" :class="{ disabled: index == pages }">
-          <a
-            class="page-link path"
-            href="#"
-            aria-label="Next"
-            @click="getPageHandler(index + 1)"
-            ><i class="fas fa-chevron-right"></i>
-          </a>
-        </li>
-      </ul>
-    </nav>
-    <!-- 分頁 -->
     <!--Modal-->
     <!---新增設計師-->
     <div
@@ -233,16 +198,29 @@
                   <div class="form-row"></div>
                   <hr />
                   <div class="form-group">
-                    <p for="description">我的專長/特色</p>
+                    <p for="description">自我介紹(20字以內)</p>
+                    <textarea
+                      type="text"
+                      class="form-control"
+                      id="description"
+                      placeholder="Summary"
+                      cols="30"
+                      rows="4"
+                      v-model="addNewInfo.dSummary"
+                    ></textarea>
+                  </div>
+                  <div class="form-group">
+                    <p for="description">我的專長/特色(120字以內)</p>
                     <textarea
                       type="text"
                       class="form-control"
                       id="description"
                       placeholder="請輸入我的專長/特色"
                       cols="30"
-                      rows="5"
+                      rows="4"
                       v-model="addNewInfo.dDetails"
                     ></textarea>
+                    {{ detailError }}
                   </div>
                 </div>
               </div>
@@ -266,6 +244,7 @@
     </div>
 
     <!--編輯設計師-->
+
     <div
       class="modal fade text-gray-900"
       id="designerModal"
@@ -417,7 +396,19 @@
                   <div class="form-row"></div>
                   <hr />
                   <div class="form-group">
-                    <p for="description">我的專長/特色</p>
+                    <div class="form-group">
+                      <p for="description">自我介紹(20字以內)</p>
+                      <textarea
+                        type="text"
+                        class="form-control"
+                        id="summary"
+                        placeholder="Summary"
+                        cols="30"
+                        rows="4"
+                        v-model="tempInfo.Summary"
+                      ></textarea>
+                    </div>
+                    <p for="description">我的專長/特色(120字以內)</p>
                     <textarea
                       type="text"
                       class="form-control"
@@ -483,6 +474,7 @@ export default {
         dPassword: '',
         dDetails: '',
         Color: '',
+        dSummary: '',
       },
 
       // 修改單一設計師資料
@@ -496,28 +488,12 @@ export default {
     };
   },
   methods: {
-    // 分頁
-    getPageHandler(page = 1) {
-      getAllDesigner(this.loginStoreId, page, 3).then((res) => {
-        console.log(res);
-        if (res.data.status) {
-          this.tempDesginersInfo = res.data.TotalData;
-          this.pages = Math.ceil(res.data.Count / res.data.Limit);
-          this.index = res.data.Index;
-          this.isLoading = false;
-        } else {
-          this.isLoading = false;
-        }
-      });
-    },
-    // 取的全部設計師
+    // 取得全部設計師
     getInfoHandler() {
-      getAllDesigner(this.loginStoreId, 1, 8).then((res) => {
-        console.log(res);
+      getAllDesigner(this.loginStoreId).then((res) => {
+        console.log('all', res);
         if (res.data.status) {
           this.tempDesginersInfo = res.data.TotalData;
-          this.pages = Math.ceil(res.data.Count / res.data.Limit);
-          this.index = res.data.Index;
           this.isLoading = false;
         } else {
           this.isLoading = false;
@@ -530,41 +506,63 @@ export default {
       this.isNew = false;
       this.tempInfo = {};
       getDesignerInfoBack(id).then((res) => {
-        this.tempInfo = res.data;
+        console.log('single', res);
+        if (res.data.status) {
+          console.log('single', res);
+          this.tempInfo = res.data;
+          this.isLoading = false;
+        }
       });
     },
     // 新增設計師
     postInfoHandler() {
+      const smsg = '新增';
       const data = this.$qs.stringify({
         Email: this.addNewInfo.dEmail,
         Password: this.addNewInfo.dPassword,
         Name: this.addNewInfo.dName,
         Phone: this.addNewInfo.dPhone,
         Instagram: this.addNewInfo.dInstagram,
-        Details: this.addNewInfo.Details,
+        Details: this.addNewInfo.dDetails,
         Line: this.addNewInfo.dLine,
         Color: this.addNewInfo.Color,
+        Summary: this.addNewInfo.dSummary,
       });
-      const smsg = '新增';
-      postDesinger(this.loginStoreId, data).then((res) => {
-        console.log(res);
-        if (res.data.status) {
-          this.successed(smsg);
-        } else if (res.data.message === '帳號重複') {
-          this.$swal({
-            position: 'center',
-            icon: 'error',
-            title: `${smsg}失敗`,
-            text: '帳號重複',
-          });
-        } else {
-          this.unsuccessed(smsg);
-        }
-      });
+      if (this.addNewInfo.dDetails.trim().length > 120) {
+        this.$swal({
+          position: 'center',
+          icon: 'error',
+          title: `${smsg}失敗`,
+          text: '輸入字數超過120個字',
+        });
+      } else if (this.addNewInfo.dSummary.trim().length > 20) {
+        this.$swal({
+          position: 'center',
+          icon: 'error',
+          title: `${smsg}失敗`,
+          text: '輸入字數超過20個字',
+        });
+      } else {
+        postDesinger(this.loginStoreId, data).then((res) => {
+          if (res.data.status) {
+            this.successed(smsg);
+          } else if (res.data.message === '帳號重複') {
+            this.$swal({
+              position: 'center',
+              icon: 'error',
+              title: `${smsg}失敗`,
+              text: '帳號重複',
+            });
+          } else {
+            this.unsuccessed(smsg);
+          }
+        });
+      }
     },
 
     // 編輯單一設計師
     putSingleInfoHander(dId) {
+      const psmg = '更新';
       const data = this.$qs.stringify({
         Id: this.tempInfo.Id,
         Picture: this.tempInfo.Picture,
@@ -576,7 +574,7 @@ export default {
         Password: this.tempInfo.Password,
         OldPassword: this.tempInfo.OldPassword,
         PasswordSalt: this.tempInfo.PasswordSalt,
-        Summary: '',
+        Summary: this.tempInfo.Summary,
         Instagram: this.tempInfo.Instagram,
         Facebook: '',
         Twitter: '',
@@ -588,13 +586,28 @@ export default {
         WorkStatus: 1,
         Color: this.tempInfo.Color,
       });
-      putDesigner(data, dId).then((res) => {
-        if (res.data.status === true) {
-          const psmg = '更新';
-          this.successed(psmg);
-        }
-        console.log('put', res.data);
-      });
+      if (this.tempInfo.Summary.trim().length > 20) {
+        this.$swal({
+          position: 'center',
+          icon: 'error',
+          title: `${psmg}失敗`,
+          text: '輸入字數超過20個字',
+        });
+      } else if (this.tempInfo.Details.trim().length > 120) {
+        this.$swal({
+          position: 'center',
+          icon: 'error',
+          title: `${psmg}失敗`,
+          text: '輸入字數超過120個字',
+        });
+      } else {
+        putDesigner(data, dId).then((res) => {
+          if (res.data.status) {
+            this.successed(psmg);
+          }
+          console.log('put', res);
+        });
+      }
     },
 
     // 上傳照片
@@ -639,7 +652,7 @@ export default {
         WorkStatus: '0',
       });
       patchDesignerStatus(data, dId).then(() => {
-        this.getPageHandler();
+        this.getInfoHandler();
         // console.log(res);
       });
     },
@@ -650,6 +663,7 @@ export default {
         this.tempInfo = {};
         this.isNew = true;
       } else {
+        this.isLoading = true;
         this.getSingleInfoHandler(id);
       }
       $('#designerModal').modal('show');
@@ -662,7 +676,7 @@ export default {
         icon: 'error',
         title: `${msg}失敗`,
       }).then(() => {
-        this.getPageHandler();
+        this.getInfoHandler();
       });
     },
     // 提示-成功
@@ -673,7 +687,7 @@ export default {
         title: `${msg}成功`,
         timer: 1500,
       }).then(() => {
-        this.getPageHandler();
+        this.getInfoHandler();
         this.addNewInfo = {};
         $('#designerModal').modal('hide');
       });
@@ -686,7 +700,7 @@ export default {
     this.loginStoreId = JSON.parse(localStorage.getItem('storeDetails')).Id;
   },
   mounted() {
-    this.getPageHandler();
+    this.getInfoHandler();
   },
 };
 </script>
