@@ -198,7 +198,19 @@
                   <div class="form-row"></div>
                   <hr />
                   <div class="form-group">
-                    <p for="description">我的專長/特色</p>
+                    <p for="description">自我介紹(20字以內)</p>
+                    <textarea
+                      type="text"
+                      class="form-control"
+                      id="description"
+                      placeholder="Summary"
+                      cols="30"
+                      rows="4"
+                      v-model="addNewInfo.dSummary"
+                    ></textarea>
+                  </div>
+                  <div class="form-group">
+                    <p for="description">我的專長/特色(120字以內)</p>
                     <textarea
                       type="text"
                       class="form-control"
@@ -209,18 +221,6 @@
                       v-model="addNewInfo.dDetails"
                     ></textarea>
                     {{ detailError }}
-                  </div>
-                  <div class="form-group">
-                    <p for="description">我的描述(summary)</p>
-                    <textarea
-                      type="text"
-                      class="form-control"
-                      id="description"
-                      placeholder="Summary"
-                      cols="30"
-                      rows="4"
-                      v-model="addNewInfo.dSummary"
-                    ></textarea>
                   </div>
                 </div>
               </div>
@@ -396,7 +396,19 @@
                   <div class="form-row"></div>
                   <hr />
                   <div class="form-group">
-                    <p for="description">我的專長/特色</p>
+                    <div class="form-group">
+                      <p for="description">自我介紹(20字以內)</p>
+                      <textarea
+                        type="text"
+                        class="form-control"
+                        id="summary"
+                        placeholder="Summary"
+                        cols="30"
+                        rows="4"
+                        v-model="tempInfo.Summary"
+                      ></textarea>
+                    </div>
+                    <p for="description">我的專長/特色(120字以內)</p>
                     <textarea
                       type="text"
                       class="form-control"
@@ -405,18 +417,6 @@
                       cols="30"
                       rows="5"
                       v-model="tempInfo.Details"
-                    ></textarea>
-                  </div>
-                  <div class="form-group">
-                    <p for="description">我的描述(summary)</p>
-                    <textarea
-                      type="text"
-                      class="form-control"
-                      id="summary"
-                      placeholder="Summary"
-                      cols="30"
-                      rows="4"
-                      v-model="tempInfo.Summary"
                     ></textarea>
                   </div>
                 </div>
@@ -528,19 +528,19 @@ export default {
         Color: this.addNewInfo.Color,
         Summary: this.addNewInfo.dSummary,
       });
-      if (this.addNewInfo.dDetails.trim().length > 70) {
+      if (this.addNewInfo.dDetails.trim().length > 120) {
         this.$swal({
           position: 'center',
           icon: 'error',
           title: `${smsg}失敗`,
-          text: '輸入字數超過70個字',
+          text: '輸入字數超過120個字',
         });
-      } else if (this.addNewInfo.dSummary.trim().length > 70) {
+      } else if (this.addNewInfo.dSummary.trim().length > 20) {
         this.$swal({
           position: 'center',
           icon: 'error',
           title: `${smsg}失敗`,
-          text: '輸入字數超過70個字',
+          text: '輸入字數超過20個字',
         });
       } else {
         postDesinger(this.loginStoreId, data).then((res) => {
@@ -586,19 +586,19 @@ export default {
         WorkStatus: 1,
         Color: this.tempInfo.Color,
       });
-      if (this.tempInfo.Summary.trim().length > 70) {
+      if (this.tempInfo.Summary.trim().length > 20) {
         this.$swal({
           position: 'center',
           icon: 'error',
           title: `${psmg}失敗`,
-          text: '帳號重複',
+          text: '輸入字數超過20個字',
         });
-      } else if (this.tempInfo.Details.trim().length > 70) {
+      } else if (this.tempInfo.Details.trim().length > 120) {
         this.$swal({
           position: 'center',
           icon: 'error',
           title: `${psmg}失敗`,
-          text: '帳號重複',
+          text: '輸入字數超過120個字',
         });
       } else {
         putDesigner(data, dId).then((res) => {

@@ -131,6 +131,7 @@ export default {
         if (res.data) {
           this.orderId = res.data.orderId;
           this.$router.push(`/orderCompleted/${this.orderId}`);
+          sessionStorage.removeItem('list');
         }
       });
     },

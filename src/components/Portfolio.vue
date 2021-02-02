@@ -1,13 +1,13 @@
 <template>
   <div id="portfolio" class="container-fluid">
-    <loading
+    <!-- <loading
       :opacity="1"
       color="#7e735d"
       loader="bars"
       background-color="#fff"
       :active.sync="isLoading"
       :is-full-page="fullPage"
-    ></loading>
+    ></loading> -->
     <h3 class="mb-0 text-gray-800">作品集管理</h3>
     <div class="row justify-content-end mb-4">
       <div class="input-group col-4">
@@ -386,7 +386,6 @@ export default {
       categoryCheckbox: [], // 先裝勾選的分類
       photosView: [], // 接回圖片網址
       loginStoreId: null,
-      a: '',
     };
   },
   methods: {
@@ -394,29 +393,32 @@ export default {
     uploadPhoto() {
       const formData = new FormData();
       const photos = this.$refs.files.files; // refs要對應上面input的ref
-      // eslint-disable-next-line no-plusplus
-      for (let index = 0; index < photos.length; index++) {
-        const element = photos[index];
-        formData.append(index, element);
-      }
-      postPhoto(formData).then((res) => {
-        console.log(formData);
-        if (res.data.status) {
-          console.log(res);
-          this.photosView = res.data.PhotoPathList;
-          // eslint-disable-next-line prefer-destructuring
-          this.formProduct.Photo1 = res.data.photoList[0];
-          // eslint-disable-next-line prefer-destructuring
-          this.formProduct.Photo2 = res.data.photoList[1];
-          // eslint-disable-next-line prefer-destructuring
-          this.formProduct.Photo3 = res.data.photoList[2];
-          // vm.$set(vm.formProduct, 'Photo1', res.data.PhotoPathList[0]);
-          // vm.$set(vm.formProduct, 'Photo2', res.data.PhotoPathList[1]);
-          // vm.$set(vm.formProduct, 'Photo3', res.data.PhotoPathList[2]);
-        } else {
-          console.log('error');
+
+      if (photos.length > 0) {
+        // eslint-disable-next-line no-plusplus
+        for (let index = 0; index < photos.length; index++) {
+          const element = photos[index];
+          formData.append(index, element);
         }
-      });
+        postPhoto(formData).then((res) => {
+          console.log(formData);
+          if (res.data.status) {
+            console.log(res);
+            this.photosView = res.data.PhotoPathList;
+            // eslint-disable-next-line prefer-destructuring
+            this.formProduct.Photo1 = res.data.photoList[0];
+            // eslint-disable-next-line prefer-destructuring
+            this.formProduct.Photo2 = res.data.photoList[1];
+            // eslint-disable-next-line prefer-destructuring
+            this.formProduct.Photo3 = res.data.photoList[2];
+            // vm.$set(vm.formProduct, 'Photo1', res.data.PhotoPathList[0]);
+            // vm.$set(vm.formProduct, 'Photo2', res.data.PhotoPathList[1]);
+            // vm.$set(vm.formProduct, 'Photo3', res.data.PhotoPathList[2]);
+          } else {
+            console.log('error');
+          }
+        });
+      }
     },
 
     // 分頁
@@ -477,6 +479,7 @@ export default {
     // 取得設計師資訊
     getDesignersInfo() {
       getDesignerListSelect(this.loginStoreId).then((res) => {
+        console.log(res);
         this.designerInfo = res.data;
       });
     },
@@ -502,7 +505,7 @@ export default {
         this.isNew = true;
         this.$refs.files.value = ''; // 將files欄位清空
         console.log(this.$refs.files.value);
-        this.dName = '';
+        this.desingerName = '';
       } else {
         console.log('old');
         this.formProduct = { ...product };
