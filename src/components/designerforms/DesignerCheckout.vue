@@ -425,7 +425,7 @@ import $ from 'jquery';
 export default {
   data() {
     return {
-      isLoading: true,
+      isLoading: false,
       fullPage: true,
       servicesInfo: [],
       designerInfo: [],
@@ -476,9 +476,7 @@ export default {
   methods: {
     getServicesInfo() {
       getStoreProductList(this.storeId).then((res) => {
-        if (res.data.status === true) {
-          this.servicesInfo = res.data.OrderDetails;
-        }
+        this.servicesInfo = res.data.OrderDetails;
       });
     },
     getDesignersInfo() {
@@ -488,6 +486,7 @@ export default {
     },
     // 取得全部帳單
     async getAllBillList() {
+      this.isLoading = true;
       await this.getServicesInfo();
       await this.getDesignersInfo();
       getBillList().then((res) => {
@@ -619,6 +618,7 @@ export default {
         this.editInfo = {};
         this.isNew = true;
       } else {
+        this.isNew = false;
         this.getSingleInfo(id);
       }
       $('#designerModal').modal('show');

@@ -396,7 +396,7 @@
                   <hr />
                   <div class="form-group">
                     <div class="form-group">
-                      <p for="description">我的專長/特色(20字以內)</p>
+                      <p for="description">我的專長/特色：(20字以內)</p>
                       <textarea
                         type="text"
                         class="form-control"
@@ -407,7 +407,7 @@
                         v-model="tempInfo.Summary"
                       ></textarea>
                     </div>
-                    <p for="description">自我介紹(120字以內)</p>
+                    <p for="description">自我介紹：(120字以內)</p>
                     <textarea
                       type="text"
                       class="form-control"
@@ -493,6 +493,7 @@ export default {
       getAllDesigner(this.loginStoreId).then((res) => {
         if (res.data.status) {
           this.tempDesginersInfo = res.data.TotalData;
+          console.log(this.tempDesginersInfo);
           this.isLoading = false;
         } else {
           this.isLoading = false;
@@ -503,7 +504,7 @@ export default {
     // 取得單一設計師
     getSingleInfoHandler(id) {
       this.isLoading = true;
-      this.tempInfo = {};
+      // this.tempInfo = {};
       getDesignerInfoBack(id).then((res) => {
         if (res.data.status) {
           console.log('single', res);
@@ -661,7 +662,7 @@ export default {
         this.tempInfo = {};
         this.isNew = true;
       } else {
-        this.isLoading = true;
+        this.isNew = false;
         this.getSingleInfoHandler(id);
       }
       $('#designerModal').modal('show');

@@ -346,7 +346,7 @@ export default {
       selectOrderId: '',
 
       // loadingStatus
-      isLoading: true,
+      isLoading: false,
       fullPage: true,
 
       storeId: null,
@@ -398,11 +398,11 @@ export default {
 
     // getOrderInfo
     async gettotalOrderHandler() {
+      this.isLoading = true;
       await this.getDesignerHandler();
       await this.getServicesHandler();
       await getOrder().then((res) => {
         if (res.data.status) {
-          this.isLoading = false;
           this.OrderInfo = res.data.BasicData;
           this.OrderInfo.forEach((item) => {
             const showOrderDetails = {
@@ -415,6 +415,7 @@ export default {
             };
             this.calendarOptions.events.push(showOrderDetails);
           });
+          this.isLoading = false;
         }
       });
     },
@@ -490,12 +491,14 @@ export default {
 
     // 點選有存儲過的資訊打開內容
     getSelectInfo(e) {
+      this.isLoading = true;
       this.editStatus = false;
       this.tempOrderInfo = {};
       this.selectOrderId = e.event.extendedProps.OrderID;
       getOrderDetail(this.selectOrderId).then((res) => {
         if (res.data.status) {
           this.tempOrderInfo = res.data.BasicData;
+          this.isLoading = false;
         }
       });
       $('#reservationModal').modal('show');

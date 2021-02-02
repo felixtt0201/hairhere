@@ -286,7 +286,7 @@ export default {
   data() {
     return {
       // Loading遮罩
-      isLoading: true,
+      isLoading: false,
       fullPage: true,
 
       // 存放Api接回來的店家資料
@@ -317,6 +317,7 @@ export default {
   methods: {
     // 取得店家資料
     getInfoHandler() {
+      this.isLoading = true;
       if (this.loginStoreId !== null) {
         getStoreTotalInfo(this.loginStoreId).then((res) => {
           if (res.data.status) {
@@ -332,6 +333,9 @@ export default {
             this.isLoading = false;
           }
         });
+      } else {
+        this.newdata = {};
+        this.isLoading = false;
       }
     },
 

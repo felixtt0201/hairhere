@@ -344,7 +344,7 @@ export default {
       selectOrderId: '',
 
       // loadingStatus
-      isLoading: true,
+      isLoading: false,
       fullPage: true,
 
       // 登入店家ID
@@ -404,6 +404,7 @@ export default {
 
     // getOrderInfo
     async gettotalOrderHandler() {
+      this.isLoading = true;
       await this.getDesignerHandler();
       await this.getServicesHandler();
       await getOrder().then((res) => {

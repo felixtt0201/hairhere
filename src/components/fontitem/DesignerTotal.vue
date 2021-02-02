@@ -25,7 +25,10 @@
           class="col-md-4 d-flex flex-column justify-content-around align-items-center p-3"
         >
           <h4>{{ designer.Name }}</h4>
-          <p class="w-50 border-left" v-html="designer.Summary"></p>
+          <p
+            class="w-50 border-left"
+            v-html="designer.Summary.replace(/(?:\r\n|\r|\n)/g, '<br />')"
+          ></p>
           <!-- routerlink連結至預約頁面 -->
           <router-link
             :to="`/reservationF/${designer.Id}`"

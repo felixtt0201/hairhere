@@ -1,13 +1,13 @@
 <template>
   <div id="portfolio" class="container-fluid">
-    <!-- <loading
+    <loading
       :opacity="1"
       color="#7e735d"
       loader="bars"
       background-color="#fff"
       :active.sync="isLoading"
       :is-full-page="fullPage"
-    ></loading> -->
+    ></loading>
     <h3 class="mb-0 text-gray-800">作品集管理</h3>
     <!-- 作品資訊 -->
     <div class="row row-cols-1 row-cols-md-3 mt-4">
@@ -22,9 +22,11 @@
             <h5 class="card-title text-center text-gray-900">
               設計師：{{ product.DesignerName }}
             </h5>
-            <p class="card-text text-gray-800">
-              作品描述：{{ product.Summary }}
-            </p>
+            作品描述：
+            <p
+              class="card-text text-gray-800"
+              v-html="product.Summary.replace(/(?:\r\n|\r|\n)/g, '<br />')"
+            ></p>
           </div>
           <div class="container mb-4">
             <div class="row justify-content-around">
@@ -318,15 +320,15 @@ import {
   getDesignerWorks,
   getDesignerListSelect,
   postPhoto,
-} from '@/js/AppServices';
-import { getworkss } from '@/js/FontAppServices';
+} from '@/js/DesignerServices';
+// import { getworkss } from '@/js/FontAppServices';
 
 export default {
   name: 'porfolio',
   data() {
     return {
       // Loading遮罩
-      isLoading: true,
+      isLoading: false,
       fullPage: true,
 
       designerInfo: [], // get設計師資訊
@@ -389,34 +391,10 @@ export default {
     changePage(page) {
       this.getPageHandler(page);
     },
+    // 取的作品資訊(分頁)
     getPageHandler(page = 1) {
-      getworkss(page).then((res) => {
-        console.log(res);
-        this.pages = Math.ceil(res.data.Count / res.data.Limit);
-        this.comebackinfo = res.data.BasicData;
-        this.status = true;
-        this.isLoading = false;
-        this.index = res.data.Index;
-        console.log('全', this.comebackinfo, '總', this.pages, '目前', page);
-      });
-    },
-
-    // 取得設計師資訊
-    getDesignersInfo() {
-      getDesignerListSelect(this.storeId).then((res) => {
-        console.log(res);
-        this.designerInfo = res.data;
-        res.data.forEach((i) => {
-          if (i.Id === this.loginId) {
-            this.desingerName = i.Name;
-          }
-        });
-      });
-    },
-
-    // 取得作品資訊
-    getWorkInfoHandler() {
-      getDesignerWorks(this.loginId).then((res) => {
+      this.isLoading = true;
+      getDesignerWorks(this.storeId, this.loginId, page).then((res) => {
         console.log(res);
         if (res.data.status) {
           this.comebackinfo = res.data.BasicData;
@@ -426,6 +404,19 @@ export default {
         }
       });
     },
+
+    // 取得設計師資訊
+    getDesignersInfo() {
+      getDesignerListSelect(this.storeId).then((res) => {
+        this.designerInfo = res.data;
+        res.data.forEach((i) => {
+          if (i.Id === this.loginId) {
+            this.desingerName = i.Name;
+          }
+        });
+      });
+    },
+
     // 共用modal，判斷新增or編輯
     openModal(isNew, product) {
       $('#staticBackdrop').modal('show');
@@ -451,6 +442,7 @@ export default {
       if (this.isNew) {
         const categoryString = this.categoryCheckbox.toString();
         this.formProduct.Category = categoryString;
+        this.formProduct.DesignerId = this.loginId;
         this.fileUploading = true;
         postPortfolio(this.$qs.stringify(this.formProduct)).then((res) => {
           if (res.data.status) {
@@ -463,6 +455,7 @@ export default {
               showConfirmButton: false,
               timer: 1500,
             });
+            this.fileUploading = false;
           }
         });
       } else {
@@ -522,8 +515,8 @@ export default {
     this.storeId = JSON.parse(localStorage.getItem('desginderDetails')).StoreId;
   },
   mounted() {
-    this.getDesignersInfo();
     this.getPageHandler();
+    this.getDesignersInfo();
   },
 };
 </script>

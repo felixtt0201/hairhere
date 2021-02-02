@@ -32,7 +32,7 @@
             >
               <h4>本次預約設計師</h4>
               <h5>{{ designer.Name }}</h5>
-              <p class="border-left" v-html="designer.Details"></p>
+              <p class="border-left" v-html="reDetails"></p>
             </div>
           </div>
         </div>
@@ -167,7 +167,7 @@ export default {
   data() {
     return {
       // Loading遮罩
-      isLoading: true,
+      isLoading: false,
       fullPage: true,
 
       //
@@ -187,6 +187,7 @@ export default {
       freeTimeList: [], // 回傳空閑時間
       freetime: '',
       isActive: -1,
+      reDetails: '',
     };
   },
   computed: {
@@ -215,10 +216,12 @@ export default {
     },
     //
     getDesignerHandler() {
+      this.isLoading = true;
       getDesigner(this.listId).then((res) => {
         console.log(res);
         this.designer = res.data;
         this.OrderDate = res.data.OrderDate;
+        this.reDetails = res.data.Details.replace(/(?:\r\n|\r|\n)/g, '<br />');
         this.isLoading = false;
       });
     },
@@ -239,7 +242,6 @@ export default {
       getStoreProductList().then((res) => {
         console.log(res);
         this.products = res.data.OrderDetails;
-        this.isLoading = false;
       });
     },
     // selectsingle(id) {
