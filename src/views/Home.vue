@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <Top></Top>
+    <Top class="down"></Top>
     <FontHeader></FontHeader>
     <transition name="page" mode="out-in">
       <router-view :key="$route.path"></router-view>
@@ -13,6 +13,7 @@
 import FontHeader from '@/components/fontitem/FontHeader.vue';
 import FontFooter from '@/components/fontitem/FontFooter.vue';
 import Top from '@/components/fontitem/Top.vue';
+import $ from 'jquery';
 
 export default {
   name: 'Home',
@@ -20,6 +21,17 @@ export default {
     FontHeader,
     FontFooter,
     Top,
+  },
+  mounted() {
+    $(window).scroll(() => {
+      $('.down').hide();
+      // eslint-disable-next-line no-unused-vars
+      const last = $(window).height();
+      // eslint-disable-next-line no-undef
+      if ($(window).scrollTop() >= last) {
+        $('.down').show();
+      }
+    });
   },
 };
 </script>

@@ -169,7 +169,7 @@
       <h4 class="title-line w-100 text-center mb-4 text-main">作品集</h4>
       <swiper
         class="swiper"
-        :options="swiperOption"
+        :options="swiperOptionTop"
         style="height:300px;width:90%"
       >
         <swiper-slide v-for="work in works" :key="work.Id">
@@ -185,10 +185,10 @@
         <div class="swiper-button-prev" slot="button-prev"></div>
         <div class="swiper-button-next" slot="button-next"></div>
       </swiper>
-      <h4 class="title-line w-100 text-center mb-4 text-main">設計師</h4>
+      <h4 class="title-line w-100 text-center mb-4 mt-5 text-main">設計師</h4>
       <swiper
         class="swiper mb-5"
-        :options="swiperOption"
+        :options="swiperOptionBot"
         style="height:300px;width:90%"
       >
         <swiper-slide
@@ -220,6 +220,7 @@ import {
   getworkss,
   getAllDesigner,
 } from '@/js/FontAppServices';
+// import $ from 'jquery';
 import loadingitem from '../dashboarditem/loadingitem.vue';
 
 export default {
@@ -230,9 +231,10 @@ export default {
   },
   data() {
     return {
-      swiperOption: {
+      swiperOptionTop: {
         slidesPerView: 4,
-        spaceBetween: 50,
+        spaceBetween: 30,
+        // effect: 'fade',
         // centeredSlides: true,
         // slidesPerGroup: 6,
         loop: true,
@@ -250,17 +252,31 @@ export default {
           prevEl: '.swiper-button-prev',
         },
       },
+      swiperOptionBot: {
+        slidesPerView: 4,
+        spaceBetween: 30,
+        // centeredSlides: true,
+        // slidesPerGroup: 6,
+        loop: true,
+        // loopFillGroupWithBlank: true,
+        autoplay: {
+          delay: 5000,
+          disableOnInteraction: false,
+        },
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+      },
       // Loading遮罩
       isLoading: true,
       fullPage: true,
 
-      basicData: {
-        // address: '',
-        // details: '',
-        // facebook: '',
-        // phone: '',
-        // summary: '',
-      },
+      basicData: {},
       dayof: '',
       business: {}, // 店家營業時間
       services: [], // 店家服務項目
@@ -271,10 +287,11 @@ export default {
   methods: {
     getInfoHandler() {
       getStoreTotalInfo().then((res) => {
+        console.log(res);
         this.basicData = res.data.BasicData;
         this.business = res.data.Business;
         this.services = res.data.ServicesPublic;
-        // console.log(this.services);
+        console.log(this.services);
         this.dayof = this.business.RestDayOfWeek.toString();
       });
     },
@@ -301,6 +318,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.swiper-slide {
+  background: #000000;
+}
 .swiper-button-next,
 .swiper-button-prev {
   color: #7d7265;
@@ -313,7 +333,12 @@ export default {
   overflow: hidden;
   transition: all 0.3s ease-in-out;
   img {
-    position: relative;
+    // position: relative;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
     transition: all 0.5s;
     z-index: 1;
     will-change: transform;
@@ -325,12 +350,14 @@ export default {
   &:hover {
     ::after {
       opacity: 1;
-      // transform: translate(5%, 5%);
+      transform: translate(10%, 10%);
       transition: all 1s;
     }
     img {
-      opacity: 0.7;
+      opacity: 0.8;
       transform: scale(1.05);
+      width: 100%;
+      height: 100%;
     }
     .swiper-item-tittle {
       opacity: 1;

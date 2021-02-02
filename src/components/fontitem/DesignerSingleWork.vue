@@ -1,18 +1,15 @@
 <template>
   <div class="container text-main" id="designerSingleWork">
     <div class="row justify-content-center">
-      <!-- <div class="col-md-1 border"></div> -->
-      <div class="col-md-8 mb-4">
-        <div class="row">
+      <div class="col-md-8 mb-4 desingerInfo">
+        <div class="row w-80">
           <div
             class="col-md-6 photo-size"
             :style="{ backgroundImage: `url(${designerDetail.PicturePath})` }"
           ></div>
-          <div
-            class="col-md-6 d-flex flex-column justify-content-around align-items-center"
-          >
+          <div class="col-md-6 p-4 personInfo">
             <h4>{{ designerDetail.Name }}</h4>
-            <p class="w-50 border-left" v-html="designerDetail.Details"></p>
+            <p class="border-left" v-html="designerDetail.Details"></p>
             <router-link
               :to="`/reservationF/${workDetail.DesignerId}`"
               class="btn rounded-0 designer-btn"
@@ -22,14 +19,12 @@
           </div>
         </div>
       </div>
-      <!-- <div class="col-md-1 border"></div> -->
     </div>
     <h4 class="title-line w-100 text-center mb-4 text-main">設計作品</h4>
-    <!-- workDetails -->
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-md-10">
-          <div class="row d-flex">
+          <div class="row d-flex align-items-md-center mb-4">
             <!-- Carsouel -->
             <div class="col-md-9">
               <template>
@@ -42,8 +37,8 @@
                   >
                     <swiper-slide
                       class="slide-1"
-                      :class="{
-                        'background-image': `url(${workDetail.Photo1Path})`,
+                      :style="{
+                        backgroundImage: `url(${workDetail.Photo1Path})`,
                       }"
                     ></swiper-slide>
                     <swiper-slide
@@ -88,7 +83,7 @@
                     <swiper-slide
                       class="slide-3"
                       :style="{
-                        backgroundImage: `url(${workDetail.Photo2Path})`,
+                        backgroundImage: `url(${workDetail.Photo3Path})`,
                       }"
                     >
                     </swiper-slide>
@@ -109,7 +104,7 @@
               <p class="mb-5 border-left" v-html="workDetail.Summary">
                 <!-- {{ workDetail.Summary }} -->
               </p>
-              <ul class="d-flex justify-content-center p-0 mb-4">
+              <ul class="">
                 <li class="designer-tag" v-for="tag in category" :key="tag">
                   {{ tag }}
                 </li>
@@ -211,6 +206,12 @@ export default {
     }
     &.slide-3 {
       background-image: url('/images/example/4.jpg');
+    }
+    &.slide-4 {
+      background-image: url('/images/example/5.jpg');
+    }
+    &.slide-5 {
+      background-image: url('/images/example/6.jpg');
     }
   }
 
