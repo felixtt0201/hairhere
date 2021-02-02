@@ -11,14 +11,17 @@
       <template slot="default"> <loadingitem></loadingitem></template
     ></loading>
     <div class="container text-main">
-      <div class="row">
+      <div class="row mt-3">
         <div class="col-md-6 step-center">
           <ul class="step">
             <li class="active-step">
-              1. 選擇服務項目<br />2. 選擇預約時間<br />3. 填寫顧客資訊
+              <p class="mb-0">1. 選擇服務項目</p>
+              <p class="mb-0">2. 選擇預約時間</p>
+              <p class="mb-0">3. 填寫顧客資訊</p>
+              <!-- 1.選擇服務項目<br />2. 選擇預約時間<br />3. 填寫顧客資訊 -->
             </li>
             <li>確認預約資訊</li>
-            <li>預約完成d(`･∀･)b</li>
+            <li>預約完成</li>
           </ul>
         </div>
         <div class="col-md-6">
@@ -27,9 +30,7 @@
               class="col-md-6 photo-size"
               :style="{ backgroundImage: `url(${designer.PicturePath})` }"
             ></div>
-            <div
-              class="col-md-6 d-flex flex-column justify-content-around align-items-center"
-            >
+            <div class="col-md-6 personInfo">
               <h4>本次預約設計師</h4>
               <h5>{{ designer.Name }}</h5>
               <p class="border-left">
@@ -42,7 +43,7 @@
     </div>
     <form @submit.prevent="addList">
       <div class="container bg-accent text-reservation pb-4 pt-5 mt-4">
-        <table class="table table-borderless text-reservation table-hover">
+        <table class="table table-borderless text-reservation table-hover pr-0">
           <thead class="table-borderless">
             <tr>
               <th scope="col"></th>
@@ -325,6 +326,9 @@ th:first-child {
 .table input {
   opacity: 0;
 }
+thead {
+  font-size: 22px !important;
+}
 .time-btn {
   border: 1px solid gainsboro !important;
   font-weight: bold;
@@ -339,6 +343,14 @@ th:first-child {
 .table-hover tbody tr:hover {
   color: #e0e0e0;
   background-color: rgba(224, 224, 224, 0.2);
-  // background: #e0e0e0;
+}
+tr {
+  input {
+    width: 200px;
+  }
+}
+td:hover,
+label:hover {
+  cursor: pointer;
 }
 </style>
