@@ -25,16 +25,11 @@ export default {
   mounted() {
     $(window).scroll(() => {
       $('.down').hide();
-      // 最後一頁scrollTop=body-window，50是預留空間
-      // eslint-disable-next-line no-undef
       // eslint-disable-next-line no-unused-vars
       const last = $(window).height();
-      console.log(last);
-      console.log('scr', $(window).scrollTop());
-      // console.log();
       // eslint-disable-next-line no-undef
       if ($(window).scrollTop() >= last) {
-        $('.down').show('slow');
+        $('.down').show();
       }
     });
   },

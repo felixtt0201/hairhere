@@ -522,6 +522,7 @@ export default {
         const categoryString = this.categoryCheckbox.toString();
         this.formProduct.Category = categoryString;
         this.fileUploading = true;
+        this.photosView = '';
         postPortfolio(this.$qs.stringify(this.formProduct)).then((res) => {
           if (res.data.status) {
             this.getPageHandler();

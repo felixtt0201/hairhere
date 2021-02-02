@@ -8,11 +8,9 @@
             class="col-md-6 photo-size"
             :style="{ backgroundImage: `url(${designer.PicturePath})` }"
           ></div>
-          <div
-            class="col-md-6 d-flex flex-column justify-content-around align-items-center"
-          >
+          <div class="col-md-6 p-4 personInfo">
             <h4>{{ designer.Name }}</h4>
-            <p class="w-50 border-left">{{ designer.Details }}</p>
+            <p class="border-left">{{ designer.Details }}</p>
             <router-link
               :to="`/reservationF/${designerId}`"
               class="btn rounded-0 designer-btn"
@@ -149,29 +147,4 @@ export default {
     transform: skewX(-45deg);
   }
 }
-// .itemimg:hover {
-//   .seemore {
-//     &::before {
-//       content: 'more+';
-//       position: absolute;
-//       bottom: 0;
-//       left: 30px;
-//       font-size: 18px;
-//       opacity: 1;
-//       color: #7d7265;
-//       z-index: 50;
-//     }
-//     position: absolute;
-//     opacity: 0;
-//     bottom: 0;
-//     right: 0;
-//     opacity: 1;
-//     z-index: 2;
-//     width: 0px;
-//     height: 0px;
-//     border-style: solid;
-//     border-width: 70px 70px 0px 70px;
-//     border-color: transparent #f8f3ef transparent transparent;
-//   }
-// }
 </style>
