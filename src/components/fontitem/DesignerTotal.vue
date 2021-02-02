@@ -18,11 +18,11 @@
         :key="designer.Izsd"
       >
         <div
-          class="col-md-4 photo-size"
+          class="col-md-4 photo-size border"
           :style="{ backgroundImage: `url(${designer.PicturePath})` }"
         ></div>
         <div
-          class="col-md-4 d-flex flex-column justify-content-around align-items-center"
+          class="col-md-4 d-flex flex-column justify-content-around align-items-center p-3"
         >
           <h4>{{ designer.Name }}</h4>
           <p class="w-50 border-left">{{ designer.Skill }}</p>
@@ -31,7 +31,7 @@
             :to="`/reservationF/${designer.Id}`"
             class="btn rounded-0 designer-btn"
           >
-            立即預約</router-link
+            <p>立即預約</p></router-link
           >
         </div>
         <div
@@ -52,7 +52,7 @@
 
       <!-- 分頁 -->
       <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
+        <ul class="pagination justify-content-center mt-3">
           <li class="page-item" :class="{ disabled: index == 1 }">
             <a
               class="page-link path"
@@ -123,4 +123,19 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.photo-size {
+  background-color: #e0e0e0;
+  opacity: 1;
+  &:hover {
+    transition: all 0.5s;
+    transform: scale(1.05);
+  }
+}
+.text-main {
+  .row {
+    width: 90%;
+    margin: 0 auto;
+  }
+}
+</style>

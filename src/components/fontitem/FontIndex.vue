@@ -167,7 +167,11 @@
     </div>
     <div class="container">
       <h4 class="title-line w-100 text-center mb-4 text-main">作品集</h4>
-      <swiper class="swiper" :options="swiperOption">
+      <swiper
+        class="swiper"
+        :options="swiperOption"
+        style="height:300px;width:90%"
+      >
         <swiper-slide v-for="work in works" :key="work.Id">
           <router-link
             :to="`/DesignerSingleWork/${work.Id}`"
@@ -182,11 +186,15 @@
         <div class="swiper-button-next" slot="button-next"></div>
       </swiper>
       <h4 class="title-line w-100 text-center mb-4 text-main">設計師</h4>
-      <swiper class="swiper mb-5" :options="swiperOption">
+      <swiper
+        class="swiper mb-5"
+        :options="swiperOption"
+        style="height:300px;width:90%"
+      >
         <swiper-slide
           v-for="designer in designers"
           :key="designer.Id"
-          style="width:150px;height:150px"
+          style="width:150px"
         >
           <router-link
             :to="`/designerSingle/${designer.Id}`"
@@ -224,7 +232,7 @@ export default {
     return {
       swiperOption: {
         slidesPerView: 4,
-        spaceBetween: 30,
+        spaceBetween: 50,
         // centeredSlides: true,
         // slidesPerGroup: 6,
         loop: true,

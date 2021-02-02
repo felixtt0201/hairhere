@@ -42,11 +42,11 @@
     </div>
     <form @submit.prevent="addList">
       <div class="container bg-accent text-reservation pb-4 pt-5 mt-4">
-        <table class="table table-borderless text-reservation">
+        <table class="table table-borderless text-reservation table-hover">
           <thead class="table-borderless">
             <tr>
               <th scope="col"></th>
-              <th scope="col" class="text-center">預約項目</th>
+              <th scope="col">預約項目</th>
               <th scope="col">預期金額</th>
               <th scope="col">預估時間</th>
             </tr>
@@ -60,7 +60,9 @@
                 :id="`${product.Id}`"
               />
               <td>
-                <label :for="`${product.Id}`">{{ product.ProductName }}</label>
+                <label class="w-100" :for="`${product.Id}`">{{
+                  product.ProductName
+                }}</label>
               </td>
               <td>＄{{ product.UnitPrice }}＋</td>
               <td>{{ product.ServiceMinutes }} 分鐘</td>
@@ -133,15 +135,6 @@
               class="mb-4"
               v-model="remarks"
             ></textarea>
-            <!-- <router-link
-            :to="`/confirm/${orderId}`"
-            class="btn-reservation btn"
-            @click="submitOrder"
-            >預約送出
-          </router-link> -->
-            <!-- <button type="button" class="btn-reservation" @click="submitOrder">
-            預約送出
-          </button> -->
             <button type="submit" class="btn-reservation">
               預約送出
             </button>
@@ -313,8 +306,16 @@ export default {
 
 <style lang="scss" scoped>
 input:checked ~ td {
-  background-color: gray !important;
-  opacity: 0.8;
+  background-color: #e5e5e5 !important;
+  // opacity: 0.8;
+  color: #1d3d4a;
+  background-color: rgba(224, 224, 224, 0.2);
+}
+th:first-child {
+  width: 1px;
+}
+.table input {
+  opacity: 0;
 }
 .time-btn {
   border: 1px solid gainsboro !important;
@@ -326,5 +327,10 @@ input:checked ~ td {
   box-shadow: inset 2px 2px 2px 0px grey;
   background-color: #e9ecef;
   color: #1d3d4a;
+}
+.table-hover tbody tr:hover {
+  color: #e0e0e0;
+  background-color: rgba(224, 224, 224, 0.2);
+  // background: #e0e0e0;
 }
 </style>

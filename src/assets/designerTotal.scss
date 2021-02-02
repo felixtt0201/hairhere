@@ -1,7 +1,8 @@
 .photo-size {
   background-position: center center;
   background-repeat: no-repeat;
-  height: 228px;
+  background-size: cover;
+  height: 300px;
 }
 .border-left {
   border-left: 1px solid $text-primary !important;
@@ -9,14 +10,16 @@
 }
 .designer-btn {
   width: 130px !important;
-  padding: 5px;
-  background-color: $text-primary;
+  height: 40px;
+  font-size: 18px !important;
   color: $text-accent !important;
-  padding: 0;
+  background-color: $text-primary;
+  letter-spacing: 0.4em;
+  font-weight: bold;
   &.a {
     background-color: #ffffff;
-    opacity: 0.8;
     color: $text-primary !important;
+    opacity: 0.8;
     &:hover {
       background-color: $bg-accent !important;
       opacity: 1 !important;
@@ -58,7 +61,7 @@
   justify-content: center !important;
   align-items: flex-end !important;
   .designer-btn {
-    opacity: 0.6;
+    // opacity: 0.6;
     background-color: $text-accent;
     color: $text-primary;
     &:hover {
