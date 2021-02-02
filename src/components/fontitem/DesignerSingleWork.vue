@@ -7,6 +7,8 @@
       background-color="#fff"
       :active.sync="isLoading"
       :is-full-page="fullPage"
+    >
+      <template slot="default"> <loadingitem></loadingitem></template
     ></loading>
     <div class="row justify-content-center">
       <div class="col-md-8 mb-4 desingerInfo">
@@ -129,11 +131,13 @@
 import { getSingleWork, getDesigner } from '@/js/FontAppServices';
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
 import 'swiper/css/swiper.css';
+import loadingitem from '../dashboarditem/loadingitem.vue';
 
 export default {
   components: {
     Swiper,
     SwiperSlide,
+    loadingitem,
   },
   data() {
     return {
@@ -171,6 +175,7 @@ export default {
   },
   methods: {
     getInfoHandler() {
+      this.isLoading = true;
       getSingleWork(this.workId).then((res) => {
         console.log(res);
         this.workDetail = res.data.BasicData;
@@ -191,6 +196,7 @@ export default {
           /(?:\r\n|\r|\n)/g,
           '<br />',
         );
+        this.isLoading = false;
       });
     },
   },

@@ -7,6 +7,8 @@
       background-color="#fff"
       :active.sync="isLoading"
       :is-full-page="fullPage"
+    >
+      <template slot="default"> <loadingitem></loadingitem></template
     ></loading>
     <div class="row justify-content-center">
       <!-- <div class="col-md-1 border"></div> -->
@@ -88,8 +90,12 @@
 
 <script>
 import { getDesigner } from '@/js/FontAppServices';
+import loadingitem from '../dashboarditem/loadingitem.vue';
 
 export default {
+  components: {
+    loadingitem,
+  },
   data() {
     return {
       designerId: '',
