@@ -220,6 +220,7 @@ import {
   getworkss,
   getAllDesigner,
 } from '@/js/FontAppServices';
+// import $ from 'jquery';
 import loadingitem from '../dashboarditem/loadingitem.vue';
 
 export default {
@@ -254,13 +255,7 @@ export default {
       isLoading: true,
       fullPage: true,
 
-      basicData: {
-        // address: '',
-        // details: '',
-        // facebook: '',
-        // phone: '',
-        // summary: '',
-      },
+      basicData: {},
       dayof: '',
       business: {}, // 店家營業時間
       services: [], // 店家服務項目
@@ -271,10 +266,11 @@ export default {
   methods: {
     getInfoHandler() {
       getStoreTotalInfo().then((res) => {
+        console.log(res);
         this.basicData = res.data.BasicData;
         this.business = res.data.Business;
         this.services = res.data.ServicesPublic;
-        // console.log(this.services);
+        console.log(this.services);
         this.dayof = this.business.RestDayOfWeek.toString();
       });
     },

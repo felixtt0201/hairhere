@@ -126,10 +126,12 @@ export default {
 <style lang="scss" scoped>
 .photo-size {
   background-color: #e0e0e0;
+  // background-attachment: fixed;
   opacity: 1;
   &:hover {
     transition: all 0.5s;
     transform: scale(1.05);
+    cursor: pointer;
   }
 }
 .text-main {
