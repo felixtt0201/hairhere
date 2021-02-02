@@ -9,7 +9,9 @@
       :active.sync="isLoading"
       :is-full-page="fullPage"
     ></loading>
-
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <h3 class="mb-0 text-gray-800">預約表</h3>
+    </div>
     <div class="row justify-content-end mb-4">
       <div class="input-group col-4">
         <select class="custom-select" v-model="selectId">
@@ -268,7 +270,7 @@ import {
   patchOrderDetailStatus,
   getOrderListbyDesinger,
   getDesignerListSelect,
-} from '@/js/AppServices';
+} from '@/js/DesignerServices';
 import $ from 'jquery';
 
 export default {
@@ -347,16 +349,13 @@ export default {
       isLoading: true,
       fullPage: true,
 
-      // 登入店家ID
-      loginStoreId: null,
+      storeId: null,
     };
   },
-
   methods: {
     // 搜尋訂單
     searchInfoHandler(selectId) {
       getOrderListbyDesinger(selectId).then((res) => {
-        console.log('sear', res);
         if (res.data.status) {
           this.calendarOptions.events = [];
           this.OrderInfo = res.data.BasicData;
@@ -383,19 +382,14 @@ export default {
 
     // getDesignerInfo
     getDesignerHandler() {
-      getDesignerListSelect(this.loginStoreId).then((res) => {
+      getDesignerListSelect(this.storeId).then((res) => {
         this.totalDesignerInfo = res.data;
       });
-      // getAllDesigner().then((res) => {
-      //   console.log(res);
-      //   if (res.data.status) {
-      //     this.totalDesignerInfo = res.data.BasicData;
-      //   }
-      // });
     },
+
     // getServicesInfo
     getServicesHandler() {
-      getStoreProductList(this.loginStoreId).then((res) => {
+      getStoreProductList(this.storeId).then((res) => {
         if (res.data.status) {
           this.totalServicesInfo = res.data.OrderDetails;
         }
@@ -407,7 +401,6 @@ export default {
       await this.getDesignerHandler();
       await this.getServicesHandler();
       await getOrder().then((res) => {
-        console.log('total', res);
         if (res.data.status) {
           this.isLoading = false;
           this.OrderInfo = res.data.BasicData;
@@ -423,16 +416,7 @@ export default {
             this.calendarOptions.events.push(showOrderDetails);
           });
         }
-        this.isLoading = false;
       });
-      // await this.OrderInfo.forEach((item) => {
-      //   const showOrderDetails = {
-      //     title: item.CustomerName,
-      //     start: item.OrderTime,
-      //     OrderID: item.Id,
-      //   };
-      //   this.calendarOptions.events.push(showOrderDetails);
-      // });
     },
 
     // postorder新增訂單
@@ -556,7 +540,8 @@ export default {
     },
   },
   created() {
-    this.loginStoreId = JSON.parse(localStorage.getItem('storeDetails')).Id;
+    const designerInfo = JSON.parse(localStorage.getItem('desginderDetails'));
+    this.storeId = designerInfo.StoreId;
   },
   mounted() {
     this.gettotalOrderHandler();

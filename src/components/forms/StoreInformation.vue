@@ -77,8 +77,7 @@
         <div class="col-md-6">
           <label for="businesstime" class="font-weight-bold">營業時間：</label>
           <p v-if="editstatus" class="text-muted text-gray-800">
-            {{ businessTime.BusinessHoursOpen }} ~
-            {{ businessTime.BusinessHoursClose }}
+            上午{{ businessTime.StoreOpen }} ~ 下午{{ businessTime.StoreClose }}
           </p>
           <div v-else>
             開始
@@ -289,7 +288,7 @@ export default {
   data() {
     return {
       // Loading遮罩
-      isLoading: false,
+      isLoading: true,
       fullPage: true,
 
       // 存放Api接回來的店家資料
@@ -302,7 +301,7 @@ export default {
           BusinessHoursClose: '',
         },
       },
-      storeInfo: {},
+      // storeInfo: {},
       basicInfo: {},
       businessTime: {},
 
@@ -312,25 +311,30 @@ export default {
       // 休假日
       DayOf: [],
       setDayof: '',
+      closeTime: 0,
+      openTime: 0,
+      loginStoreId: null,
     };
   },
-
   methods: {
     // 取得店家資料
     getInfoHandler() {
-      this.isLoading = true;
-      getStoreTotalInfo().then((res) => {
-        if (res.data.status) {
-          this.newdata = res.data;
-          // console.log(this.newdata);
-          this.basicInfo = res.data.BasicData;
-          this.businessTime = res.data.Business;
-          // eslint-disable-next-line no-multi-assign
-          this.setDayof = this.newdata.Business.RestDayOfWeek?.toString();
-          this.DayOf = this.newdata.Business.RestDayOfWeek;
-          this.isLoading = false;
-        }
-      });
+      if (this.loginStoreId !== null) {
+        getStoreTotalInfo(this.loginStoreId).then((res) => {
+          if (res.data.status) {
+            this.newdata = res.data;
+            this.businessTime = res.data.Business;
+            this.basicInfo = res.data.BasicData;
+            if (res.data.Business.RestDayOfWeek !== null) {
+              this.DayOf = this.newdata.Business.RestDayOfWeek;
+              this.setDayof = this.newdata.Business.RestDayOfWeek?.toString();
+            } else {
+              this.DayOf = [];
+            }
+            this.isLoading = false;
+          }
+        });
+      }
     },
 
     //  修改店家資料
@@ -353,8 +357,7 @@ export default {
         RestDayOfWeek: this.DayOf.toString(),
       });
       putStoreInfo(data).then((res) => {
-        console.log(res);
-        if (res.data.status === true) {
+        if (res.data.status) {
           this.getInfoHandler();
           this.successedMessage();
           this.newdata = {};
@@ -390,6 +393,9 @@ export default {
     edit() {
       this.editstatus = !this.editstatus;
     },
+  },
+  created() {
+    this.loginStoreId = JSON.parse(localStorage.getItem('storeDetails')).Id;
   },
   mounted() {
     this.getInfoHandler();

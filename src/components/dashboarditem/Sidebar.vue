@@ -20,79 +20,111 @@
       內容
     </div>
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item" v-if="isWho">
-      <router-link
-        class="nav-link font-weight-bold sidebarhover"
-        :to="{ name: 'StoreInformation' }"
-      >
-        <i class="fas fa-store-alt mr-2"></i>
-        <span>店家資訊管理</span></router-link
-      >
-    </li>
-    <li class="nav-item" v-else>
-      <router-link
-        class="nav-link font-weight-bold sidebarhover"
-        :to="{ name: 'Designerinfoedit' }"
-      >
-        <i class="fas fa-store-alt mr-2"></i>
-        <span>個人資訊</span></router-link
-      >
-    </li>
-    <li class="nav-item" v-if="isWho">
-      <router-link
-        class="nav-link font-weight-bold sidebarhover"
-        :to="{ name: 'Designers' }"
-      >
-        <i class="fas fa-users mr-2"></i>
-        <span>設計師管理</span></router-link
-      >
-    </li>
-    <li class="nav-item" v-else>
-      <router-link
-        class="nav-link font-weight-bold sidebarhover"
-        :to="{ name: 'Designerworks' }"
-      >
-        <i class="fas fa-store-alt mr-2"></i>
-        <span>個人作品</span></router-link
-      >
-    </li>
-
-    <li class="nav-item" v-if="isWho">
-      <router-link
-        class="nav-link font-weight-bold sidebarhover"
-        :to="{ name: 'Portfolio' }"
-      >
-        <i class="fas fa-box mr-2"></i>
-        <span>作品集管理</span></router-link
-      >
-    </li>
-    <li class="nav-item">
-      <router-link
-        class="nav-link font-weight-bold sidebarhover"
-        :to="{ name: 'Checkout' }"
-      >
-        <i class="fas fa-money-check mr-2"></i>
-        <span>結帳管理</span></router-link
-      >
-    </li>
-    <li class="nav-item">
-      <router-link
-        class="nav-link font-weight-bold sidebarhover"
-        :to="{ name: 'ReservationBack' }"
-      >
-        <i class="far fa-calendar-check mr-2"></i>
-        <span>預約表</span></router-link
-      >
-    </li>
-    <li class="nav-item">
-      <router-link
-        class="nav-link font-weight-bold sidebarhover"
-        :to="{ name: 'HistoricalOrders' }"
-      >
-        <i class="fas fa-money-check mr-2"></i>
-        <span>歷史帳單</span></router-link
-      >
-    </li>
+    <!-- 店家sideBar -->
+    <div v-if="isWho">
+      <li class="nav-item">
+        <router-link
+          class="nav-link font-weight-bold sidebarhover"
+          :to="{ name: 'StoreInformation' }"
+        >
+          <i class="fas fa-store-alt mr-2"></i>
+          <span>店家資訊管理</span></router-link
+        >
+      </li>
+      <li class="nav-item">
+        <router-link
+          class="nav-link font-weight-bold sidebarhover"
+          :to="{ name: 'Designers' }"
+        >
+          <i class="fas fa-users mr-2"></i>
+          <span>設計師管理</span></router-link
+        >
+      </li>
+      <li class="nav-item">
+        <router-link
+          class="nav-link font-weight-bold sidebarhover"
+          :to="{ name: 'Portfolio' }"
+        >
+          <i class="fas fa-box mr-2"></i>
+          <span>作品集管理</span></router-link
+        >
+      </li>
+      <li class="nav-item">
+        <router-link
+          class="nav-link font-weight-bold sidebarhover"
+          :to="{ name: 'Checkout' }"
+        >
+          <i class="fab fa-apple-pay mr-2"></i>
+          <span>結帳管理</span></router-link
+        >
+      </li>
+      <li class="nav-item">
+        <router-link
+          class="nav-link font-weight-bold sidebarhover"
+          :to="{ name: 'ReservationBack' }"
+        >
+          <i class="far fa-calendar-check mr-2"></i>
+          <span>預約表</span></router-link
+        >
+      </li>
+      <li class="nav-item">
+        <router-link
+          class="nav-link font-weight-bold sidebarhover"
+          :to="{ name: 'HistoricalOrders' }"
+        >
+          <i class="fas fa-money-check mr-2"></i>
+          <span>歷史帳單</span></router-link
+        >
+      </li>
+    </div>
+    <!-- 設計師sideBar -->
+    <div v-else>
+      <li class="nav-item">
+        <router-link
+          class="nav-link font-weight-bold sidebarhover"
+          :to="{ name: 'Designerinfoedit' }"
+        >
+          <i class="fas fa-store-alt mr-2"></i>
+          <span>個人資訊</span></router-link
+        >
+      </li>
+      <li class="nav-item">
+        <router-link
+          class="nav-link font-weight-bold sidebarhover"
+          :to="{ name: 'Designerworks' }"
+        >
+          <i class="fas fa-store-alt mr-2"></i>
+          <span>個人作品</span></router-link
+        >
+      </li>
+      <li class="nav-item">
+        <router-link
+          class="nav-link font-weight-bold sidebarhover"
+          :to="{ name: 'Designercheckout' }"
+        >
+          <i class="fab fa-apple-pay mr-2"></i>
+          <span>結帳管理</span></router-link
+        >
+      </li>
+      <li class="nav-item">
+        <router-link
+          class="nav-link font-weight-bold sidebarhover"
+          :to="{ name: 'DesignerReservation' }"
+        >
+          <i class="far fa-calendar-check mr-2"></i>
+          <span>預約表</span></router-link
+        >
+      </li>
+      <li class="nav-item">
+        <router-link
+          class="nav-link font-weight-bold sidebarhover"
+          :to="{ name: 'Designerhistoricalorders' }"
+        >
+          <i class="fas fa-money-check mr-2"></i>
+          <span>歷史帳單</span></router-link
+        >
+      </li>
+    </div>
     <li class="nav-item" @click="logout">
       <router-link
         class="nav-link font-weight-bold sidebarhover"
@@ -133,6 +165,7 @@ export default {
         timer: 1500,
       }).then(() => {
         document.cookie = 'desingerToken=; expires=; path=/';
+        document.cookie = 'storeToken=; expires=; path=/';
         localStorage.clear();
       });
     },

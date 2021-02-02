@@ -301,9 +301,7 @@
                   <tbody class="text-gray-800">
                     <tr>
                       <th scope="row">日期：</th>
-                      <td>
-                        {{ date }}
-                      </td>
+                      <td>{{ date }}</td>
                     </tr>
                     <tr>
                       <th scope="row">設計師：</th>
@@ -416,13 +414,12 @@
 <script>
 import {
   getStoreProductList,
-  // getAllDesigner,
   getDesignerListSelect,
   getBillList,
   postBill,
   getSingleBill,
   patchBillStatus,
-} from '@/js/AppServices';
+} from '@/js/DesignerServices';
 import $ from 'jquery';
 
 export default {
@@ -455,14 +452,13 @@ export default {
       billListInfo: [],
       editInfo: {},
       isNew: true,
-
       // 當天日期
       date: '',
       // 客人生日
       bDay: '',
 
-      // 登入的店家ＩＤ
-      loginStoreId: null,
+      dId: null,
+      storeId: null,
     };
   },
   computed: {
@@ -479,31 +475,30 @@ export default {
 
   methods: {
     getServicesInfo() {
-      getStoreProductList(this.loginStoreId).then((res) => {
-        if (res.data.status) {
+      getStoreProductList(this.storeId).then((res) => {
+        if (res.data.status === true) {
           this.servicesInfo = res.data.OrderDetails;
         }
       });
     },
     getDesignersInfo() {
-      getDesignerListSelect(this.loginStoreId).then((res) => {
+      getDesignerListSelect(this.storeId).then((res) => {
         this.designerInfo = res.data;
       });
     },
-
     // 取得全部帳單
-    getAllBillList() {
-      this.getServicesInfo();
-      this.getDesignersInfo();
+    async getAllBillList() {
+      await this.getServicesInfo();
+      await this.getDesignersInfo();
       getBillList().then((res) => {
         if (res.data.status) {
+          this.isLoading = false;
           this.billListInfo = res.data.BasicData;
+        } else {
           this.isLoading = false;
         }
-        this.isLoading = false;
       });
     },
-
     // 取得單一帳單
     getSingleInfo(id) {
       this.isNew = false;
@@ -649,7 +644,9 @@ export default {
     },
   },
   created() {
-    this.loginStoreId = JSON.parse(localStorage.getItem('storeDetails')).Id;
+    const designerInfo = JSON.parse(localStorage.getItem('desginderDetails'));
+    this.dId = designerInfo.Id;
+    this.storeId = designerInfo.StoreId;
   },
   mounted() {
     this.getAllBillList();

@@ -132,7 +132,7 @@ export default {
   data() {
     return {
       // Loading遮罩
-      isLoading: false,
+      isLoading: true,
       fullPage: true,
 
       servicesdata: {},
@@ -146,15 +146,18 @@ export default {
         Price: '',
         ServiceMinutes: '',
       },
+      loginStoreId: null,
     };
   },
   methods: {
     // 取得產品資訊
     getInfoHandler() {
-      this.isLoading = true;
-      getStoreProductList().then((res) => {
+      getStoreProductList(this.loginStoreId).then((res) => {
         if (res.data.status) {
           this.servicesdata = res.data.BasicData;
+          this.isLoading = false;
+        } else {
+          this.servicesdata = {};
           this.isLoading = false;
         }
       });
@@ -164,7 +167,7 @@ export default {
       const data = this.$qs.stringify({
         Name: this.newProduct.Name,
         UnitPrice: this.newProduct.Price,
-        StoreId: '2',
+        StoreId: this.loginStoreId,
         ServiceMinutes: this.newProduct.ServiceMinutes,
         Summary: '',
         ReferencePrice: 'true',
@@ -172,10 +175,11 @@ export default {
         PublicInformation: 'true',
       });
       posteStoreProduct(data).then((res) => {
-        if (res.data.errorMessage === '名稱重複' && res.status === 200) {
+        console.log('add', res);
+        if (res.data.message === '名稱重複' && res.status === 200) {
           this.unsuccessed();
           this.newProduct = {};
-        } else if (res.status === 200) {
+        } else if (res.data.status) {
           const msg = '新增';
           this.successed(msg);
           this.newProduct = {};
@@ -224,9 +228,10 @@ export default {
         cancelButtonText: '取消',
       }).then((result) => {
         if (result.isConfirmed) {
-          deleteStoreProduct(pId);
-          const msg = '刪除';
-          this.successed(msg);
+          deleteStoreProduct(pId).then(() => {
+            const msg = '刪除';
+            this.successed(msg);
+          });
         }
       });
     },
@@ -264,6 +269,9 @@ export default {
     },
   },
   created() {
+    this.loginStoreId = JSON.parse(localStorage.getItem('storeDetails')).Id;
+  },
+  mounted() {
     this.getInfoHandler();
   },
 };

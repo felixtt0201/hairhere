@@ -138,6 +138,7 @@
 
 <script>
 import { postStoreLogin } from '@/js/AppServices';
+import { postDesingerLogin } from '@/js/DesignerServices';
 
 export default {
   data() {
@@ -161,7 +162,6 @@ export default {
           password: this.store.password,
         }),
       ).then((res) => {
-        console.log(res);
         if (res.data.status) {
           const storeToken = res.data.token;
           document.cookie = `storeToken=${storeToken};path=/`;
@@ -170,7 +170,32 @@ export default {
             identity: res.data.identity,
           });
           localStorage.setItem('storeDetails', storeDetails);
-          localStorage.setItem('myToken', storeToken);
+          localStorage.setItem('status', true);
+          this.$router.push('/Dashboard');
+
+          this.successMessage();
+        } else {
+          this.unsuccessMessage();
+        }
+      });
+    },
+    // 設計師登入
+    desingerLogin() {
+      postDesingerLogin(
+        this.$qs.stringify({
+          email: this.desinger.email,
+          password: this.desinger.password,
+        }),
+      ).then((res) => {
+        if (res.data.status) {
+          const desingerToken = res.data.token;
+          document.cookie = `desingerToken=${desingerToken};path=/`;
+          const desginderDetails = JSON.stringify({
+            Id: res.data.Id,
+            StoreId: res.data.StoreId,
+            identity: res.data.identity,
+          });
+          localStorage.setItem('desginderDetails', desginderDetails);
           localStorage.setItem('status', true);
           this.$router.push('/Dashboard');
           this.successMessage();
@@ -179,31 +204,6 @@ export default {
         }
       });
     },
-    // 設計師登入
-    // desingerLogin() {
-    //   postDesingerLogin(
-    //     this.$qs.stringify({
-    //       email: this.desinger.email,
-    //       password: this.desinger.password,
-    //     }),
-    //   ).then((res) => {
-    //     if (res.data.status) {
-    //       const desingerToken = res.data.token;
-    //       document.cookie = `desingerToken=${desingerToken};path=/`;
-    //       const desginderDetails = JSON.stringify({
-    //         Id: res.data.Id,
-    //         StoreId: res.data.StoreId,
-    //         identity: res.data.identity,
-    //       });
-    //       localStorage.setItem('desginderDetails', desginderDetails);
-    //       localStorage.setItem('status', true);
-    //       this.$router.push('/Dashboard');
-    //       this.successMessage();
-    //     } else {
-    //       this.unsuccessMessage();
-    //     }
-    //   });
-    // },
     // 設計師登入
 
     // 提示-輸入帳密有誤

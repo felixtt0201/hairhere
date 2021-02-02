@@ -27,20 +27,20 @@ export default {
   },
   data() {
     return {
-      token: '',
+      // token: '',
     };
   },
   created() {
     // eslint-disable-next-line eqeqeq
-    this.token = document.cookie.replace(
-      // eslint-disable-next-line no-useless-escape
-      /(?:(?:^|.*;\s*)desingerToken\s*\=\s*([^;]*).*$)|^.*$/,
-    );
-    console.log(localStorage.getItem('desginderDetails'));
+    // this.token = document.cookie.replace(
+    //   // eslint-disable-next-line no-useless-escape
+    //   /(?:(?:^|.*;\s*)desingerToken\s*\=\s*([^;]*).*$)|^.*$/,
+    // );
+    // console.log(localStorage.getItem('desginderDetails'));
   },
 };
 </script>
 
-<style lang="scss" scopeded>
+<style lang="scss" scoped>
 @import './src/assets/scss/sb-admin-2.scss';
 </style>

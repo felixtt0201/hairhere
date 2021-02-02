@@ -385,6 +385,9 @@ export default {
       pages: [],
       categoryCheckbox: [], // 先裝勾選的分類
       photosView: [], // 接回圖片網址
+      photosView: [],
+
+      loginStoreId: null,
     };
   },
   methods: {
@@ -416,6 +419,7 @@ export default {
         }
       });
     },
+
     // 分頁
     changePage(page) {
       if (this.status === false) {
@@ -436,7 +440,7 @@ export default {
       });
     },
     searchWorksHandler(desingerId, page = 1) {
-      getDesignerWorks(desingerId, page).then((res) => {
+      getDesignerWorks(this.loginStoreId, desingerId, page).then((res) => {
         if (res.data.status) {
           this.pages = Math.ceil(res.data.Count / res.data.Limit);
           this.comebackinfo = res.data.BasicData;
@@ -473,13 +477,13 @@ export default {
     },
     // 取得設計師資訊
     getDesignersInfo() {
-      getDesignerListSelect(2).then((res) => {
+      getDesignerListSelect(this.loginStoreId).then((res) => {
         this.designerInfo = res.data;
       });
     },
     // 取得作品資訊
     getWorkInfoHandler() {
-      getDesignerWorks().then((res) => {
+      getDesignerWorks(this.loginStoreId).then((res) => {
         console.log(res);
         if (res.data.status) {
           this.comebackinfo = res.data.BasicData;
@@ -499,6 +503,7 @@ export default {
         this.isNew = true;
         this.$refs.files.value = ''; // 將files欄位清空
         console.log(this.$refs.files.value);
+        this.dName = '';
       } else {
         console.log('old');
         this.formProduct = { ...product };
@@ -515,7 +520,7 @@ export default {
         this.fileUploading = true;
         postPortfolio(this.$qs.stringify(this.formProduct)).then((res) => {
           if (res.data.status) {
-            this.getWorkInfoHandler();
+            this.getPageHandler();
             $('#staticBackdrop').modal('hide');
             this.$swal({
               title: '新增成功',
@@ -541,7 +546,7 @@ export default {
         patchWork(this.formProduct.Id, data).then((res) => {
           console.log(res);
           if (res.data.status) {
-            this.getWorkInfoHandler();
+            this.getPageHandler();
             $('#staticBackdrop').modal('hide');
             this.$swal({
               icon: 'success',
@@ -572,16 +577,18 @@ export default {
             icon: 'success',
             position: 'center',
           }).then(() => {
-            this.getWorkInfoHandler();
+            this.getPageHandler();
           });
         }
       });
     },
   },
   created() {
-    this.getWorkInfoHandler();
+    this.loginStoreId = JSON.parse(localStorage.getItem('storeDetails')).Id;
+  },
+  mounted() {
     this.getDesignersInfo();
-    // this.getPageHandler();
+    this.getPageHandler();
   },
 };
 </script>

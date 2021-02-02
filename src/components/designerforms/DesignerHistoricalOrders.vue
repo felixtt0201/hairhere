@@ -23,18 +23,6 @@
     </div>
     <div class="row">
       <div class="col-md-6">
-        <p class="text-gray-900 font-weight-bold">請選擇設計師：</p>
-        <select class="custom-select" v-model="dId">
-          <option disabled value="">選擇設計師</option>
-          <option
-            v-for="designer in designInfo"
-            :key="designer.Id"
-            :value="designer.Id"
-            >{{ designer.Name }}</option
-          >
-        </select>
-      </div>
-      <div class="col-md-6">
         <label for="customer" class="text-gray-900 font-weight-bold"
           >請輸入顧客姓名：</label
         >
@@ -54,7 +42,6 @@
         <thead class="thead-dark">
           <tr>
             <th scope="col">#</th>
-            <th scope="col">日期</th>
             <th scope="col">設計師</th>
             <th scope="col">客人姓名</th>
             <th scope="col">消費金額</th>
@@ -63,11 +50,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="info in totalCheckInfo" :key="info.Id">
-            <th scope="row">1</th>
-            <td>
-              {{ info.OrderTime.replace('T', ' ').replace('00:00:00', ' ') }}
-            </td>
+          <tr v-for="(info, index) in totalCheckInfo" :key="info.Id">
+            <th scope="row">{{ index + 1 }}</th>
             <td>
               {{ info.DesignerName }}
             </td>
@@ -124,9 +108,7 @@
                 <tbody class="text-gray-800">
                   <tr>
                     <th scope="row">日期：</th>
-                    <td>
-                      {{ date }}
-                    </td>
+                    <td>{{ date }}</td>
                   </tr>
                   <tr>
                     <th scope="row">設計師：</th>
@@ -196,11 +178,7 @@
 </template>
 
 <script>
-import {
-  postCheckInfo,
-  getSingleBill,
-  getDesignerListSelect,
-} from '@/js/AppServices';
+import { postCheckInfo, getSingleBill } from '@/js/DesignerServices';
 import $ from 'jquery';
 
 export default {
@@ -219,12 +197,12 @@ export default {
       amount: '',
       bDay: '',
       date: '',
-
-      // 登入的店家ＩＤ
-      loginStoreId: null,
     };
   },
   computed: {
+    // test() {
+    //   return this.$store.state.conut;
+    // },
     caltotalPrice() {
       let total = 0;
       // eslint-disable-next-line arrow-body-style
@@ -252,12 +230,6 @@ export default {
       });
     },
 
-    getDesignerInfo() {
-      getDesignerListSelect(this.loginStoreId).then((res) => {
-        this.designInfo = res.data;
-      });
-    },
-
     searchCheckInfo() {
       const data = this.$qs.stringify({
         OrderTimeStart: this.startTime,
@@ -271,7 +243,6 @@ export default {
         DesignerId: this.dId,
       });
       postCheckInfo(data).then((res) => {
-        console.log(res.data);
         if (res.data.status) {
           this.totalCheckInfo = res.data.BasicData;
           this.customerName = '';
@@ -286,13 +257,6 @@ export default {
         }
       });
     },
-  },
-
-  created() {
-    this.loginStoreId = JSON.parse(localStorage.getItem('storeDetails')).Id;
-  },
-  mounted() {
-    this.getDesignerInfo();
   },
 };
 </script>
