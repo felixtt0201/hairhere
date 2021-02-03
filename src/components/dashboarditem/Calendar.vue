@@ -572,10 +572,7 @@ export default {
     //   /(?:(?:^|.*;\s*)desingerToken\s*\=\s*([^;]*).*$)|^.*$/,
     //   '$1',
     // );
-
     this.loginStoreId = JSON.parse(localStorage.getItem('storeDetails')).Id;
-    console.log('stoken', this.stoken);
-    console.log('dtoken', this.dtoken);
   },
   mounted() {
     this.gettotalOrderHandler();

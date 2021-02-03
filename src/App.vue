@@ -1,8 +1,7 @@
 <template>
   <div id="app">
     <div>
-      <router-link to="/login">後台登入</router-link>
-      <router-link :to="{ name: 'DesignerSingle' }">DesignerSingle</router-link>
+      <!-- <router-link to="/login"> <i class="fas fa-cog"></i></router-link> -->
       <router-view v-if="isRouterAlive"></router-view>
     </div>
   </div>

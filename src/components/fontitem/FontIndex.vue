@@ -116,7 +116,7 @@
               <ul>
                 <li>聯絡電話 (07)-{{ basicData.Phone }}</li>
                 <li class="d-flex flex-column">
-                  <span>店家地址</span>高雄市苓雅區青年一路4巷21號
+                  <span>店家地址</span>{{ basicData.Address }}
                 </li>
                 <li>
                   營業時間
@@ -204,7 +204,6 @@
             <img :src="`${designer.PicturePath}`" alt="" />
           </router-link>
         </swiper-slide>
-        <!-- <div class="swiper-pagination" slot="pagination"></div> -->
         <div class="swiper-button-prev" slot="button-prev"></div>
         <div class="swiper-button-next" slot="button-next"></div>
       </swiper>
