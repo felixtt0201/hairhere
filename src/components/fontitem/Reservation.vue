@@ -129,9 +129,9 @@
           <h4 class="title-line text-center mb-4">顧客資訊</h4>
           <div class="form-reservation">
             <label for="name">預約姓名</label
-            ><input type="name" id="name" v-model="name" required />
+            ><input type="name" id="name" v-model.trim="name" required />
             <label for="tel">手機號碼</label
-            ><input type="tel" id="tel" v-model="tel" required />
+            ><input type="tel" id="tel" v-model.number="tel" required />
             <label for="text">介紹人</label
             ><input type="text" id="text" v-model="text" />
             <label for="remarks">備註事項</label>
@@ -170,11 +170,10 @@ export default {
       // Loading遮罩
       isLoading: false,
       fullPage: true,
-
-      //
-      time1: null, // 日曆1
+      // 日曆--
+      time1: null,
       showTimePanel: false,
-      //
+      // 日曆--
       designer: {}, // 單一設計師詳細
       products: [], // 遠端撈回的服務項目
       checklist: [], // 加入勾選項目的位置
