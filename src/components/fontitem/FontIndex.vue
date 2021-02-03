@@ -99,7 +99,7 @@
           <div class="row border-h70">
             <div class="col-md-3 index-infomation">
               <h4>About us</h4>
-              <p v-html="basicData.Summary"></p>
+              <p>{{ basicData.Summary }}</p>
             </div>
             <div class="col-md-2 index-infomation">
               <h4>服務項目</h4>
@@ -114,17 +114,19 @@
             <div class="col-md-4 index-infomation">
               <h4>店家資訊</h4>
               <ul>
-                <li>聯絡電話 (07)-{{ basicData.Phone }}</li>
+                <li>聯絡電話 （07）{{ basicData.Phone }}</li>
                 <li class="d-flex flex-column">
                   <span>店家地址</span>{{ basicData.Address }}
                 </li>
                 <li>
                   營業時間
                   <p>
-                    每週二至日 上午{{ business.StoreOpen }}~下午{{
+                    每週二至日 上午{{ business.StoreOpen }}～下午{{
                       business.StoreClose
                     }}
-                    <span class="d-block">(每週{{ dayof }}公休)</span>
+                    <span class="d-block"
+                      >（每週{{ dayof.replace(',', '、') }}公休）</span
+                    >
                   </p>
                 </li>
               </ul>
@@ -181,7 +183,6 @@
             <img :src="`${work.Photo1}`" alt=""
           /></router-link>
         </swiper-slide>
-        <!-- <div class="swiper-pagination" slot="pagination"></div> -->
         <div class="swiper-button-prev" slot="button-prev"></div>
         <div class="swiper-button-next" slot="button-next"></div>
       </swiper>
@@ -219,7 +220,6 @@ import {
   getworkss,
   getAllDesigner,
 } from '@/js/FontAppServices';
-// import $ from 'jquery';
 import loadingitem from '../dashboarditem/loadingitem.vue';
 
 export default {
@@ -231,8 +231,6 @@ export default {
   data() {
     return {
       swiperOptionTop: {
-        slidesPerView: 4,
-        spaceBetween: 30,
         // effect: 'fade',
         // centeredSlides: true,
         // slidesPerGroup: 6,
@@ -250,10 +248,26 @@ export default {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',
         },
+        breakpoints: {
+          1024: {
+            slidesPerView: 4,
+            spaceBetween: 40,
+          },
+          768: {
+            slidesPerView: 3,
+            spaceBetween: 30,
+          },
+          640: {
+            slidesPerView: 2,
+            spaceBetween: 20,
+          },
+          320: {
+            slidesPerView: 1,
+            spaceBetween: 10,
+          },
+        },
       },
       swiperOptionBot: {
-        slidesPerView: 4,
-        spaceBetween: 30,
         // centeredSlides: true,
         // slidesPerGroup: 6,
         loop: true,
@@ -269,6 +283,24 @@ export default {
         navigation: {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',
+        },
+        breakpoints: {
+          1024: {
+            slidesPerView: 4,
+            spaceBetween: 40,
+          },
+          768: {
+            slidesPerView: 3,
+            spaceBetween: 30,
+          },
+          640: {
+            slidesPerView: 2,
+            spaceBetween: 20,
+          },
+          320: {
+            slidesPerView: 1,
+            spaceBetween: 10,
+          },
         },
       },
       // Loading遮罩
@@ -286,12 +318,11 @@ export default {
   methods: {
     getInfoHandler() {
       getStoreTotalInfo().then((res) => {
-        console.log(res);
         this.basicData = res.data.BasicData;
         this.business = res.data.Business;
         this.services = res.data.ServicesPublic;
-        console.log(this.services);
         this.dayof = this.business.RestDayOfWeek.toString();
+        console.log(this.dayof.replace(',', '、'));
       });
     },
     getAllworks() {

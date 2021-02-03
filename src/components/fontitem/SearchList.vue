@@ -3,23 +3,23 @@
     <h4 class="title-line w-100 text-center mt-5 mb-5 works-text-line">
       查詢訂單
     </h4>
-    <div class="row rowpa">
-      <div class="col-md-6 aa"></div>
-      <div class="col-md-6 bb"></div>
+    <div class="row search-group">
+      <div class="col-md-6 search-content-left"></div>
+      <div class="col-md-6 search-content-right"></div>
       <div class="search-content">
         <form @submit.prevent="postInfoHandler">
           <label for="name"
             >姓名<input
               type="text"
               placeholder="請輸入姓名"
-              v-model="name"
+              v-model.trim="name"
               required
           /></label>
           <label for="tel"
             >電話<input
               type="tel"
               placeholder="請輸入電話號碼"
-              v-model="phone"
+              v-model.number="phone"
               required
           /></label>
           <hr />
@@ -34,10 +34,7 @@
         </form>
       </div>
     </div>
-    <!-- mymodal -->
-    <!-- Button trigger modal -->
-
-    <!-- Modal -->
+    <!-- modal -->
     <div
       class="modal fade border"
       id="orderDetailInfo"
@@ -64,10 +61,12 @@
           <div class="info modal-body p-5 text-center">
             <h4>預約設計師</h4>
             <p class="mb-4">{{ orderInfo[0].DesignerName }}</p>
+            <hr />
             <h4>預約時間</h4>
             <p class="mb-4">
               {{ showTime.replace('T', ' ').replace(':00:00', ':00') }}
             </p>
+            <hr />
             <ul class="p-0 mb-4">
               <h4>預約項目</h4>
               <li
@@ -92,7 +91,7 @@
               </li>
             </ul>
             <p class="text-sm-center">
-              *若需取消或更改訂單請撥打電話(07)12312345，由店家協助您處理。
+              *若需取消或更改訂單請撥打店家專線，由店家協助您處理。
             </p>
           </div>
         </div>
