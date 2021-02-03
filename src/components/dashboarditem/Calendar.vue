@@ -349,6 +349,9 @@ export default {
 
       // 登入店家ID
       loginStoreId: null,
+
+      stoken: '',
+      dtoken: '',
     };
   },
 
@@ -559,7 +562,20 @@ export default {
     },
   },
   created() {
+    // this.stoken = document.cookie.replace(
+    //   // eslint-disable-next-line no-useless-escape
+    //   /(?:(?:^|.*;\s*)storeToken\s*\=\s*([^;]*).*$)|^.*$/,
+    //   '$1',
+    // );
+    // this.dtoken = document.cookie.replace(
+    //   // eslint-disable-next-line no-useless-escape
+    //   /(?:(?:^|.*;\s*)desingerToken\s*\=\s*([^;]*).*$)|^.*$/,
+    //   '$1',
+    // );
+
     this.loginStoreId = JSON.parse(localStorage.getItem('storeDetails')).Id;
+    console.log('stoken', this.stoken);
+    console.log('dtoken', this.dtoken);
   },
   mounted() {
     this.gettotalOrderHandler();

@@ -27,16 +27,23 @@ export default {
   },
   data() {
     return {
-      // token: '',
+      stoken: '',
+      dtoken: '',
     };
   },
   created() {
-    // eslint-disable-next-line eqeqeq
-    // this.token = document.cookie.replace(
-    //   // eslint-disable-next-line no-useless-escape
-    //   /(?:(?:^|.*;\s*)desingerToken\s*\=\s*([^;]*).*$)|^.*$/,
-    // );
-    // console.log(localStorage.getItem('desginderDetails'));
+    this.stoken = document.cookie.replace(
+      // eslint-disable-next-line no-useless-escape
+      /(?:(?:^|.*;\s*)storeToken\s*\=\s*([^;]*).*$)|^.*$/,
+      '$1',
+    );
+    this.dtoken = document.cookie.replace(
+      // eslint-disable-next-line no-useless-escape
+      /(?:(?:^|.*;\s*)desingerToken\s*\=\s*([^;]*).*$)|^.*$/,
+      '$1',
+    );
+    console.log('stoken', this.stoken);
+    console.log('dtoken', this.dtoken);
   },
 };
 </script>
