@@ -240,7 +240,7 @@
         <p
           v-if="editstatus"
           class="text-muted text-gray-800"
-          v-html="basicInfo.Summary"
+          v-html="reSummary"
         ></p>
         <textarea
           v-else
@@ -256,7 +256,7 @@
         <p
           v-if="editstatus"
           class="text-muted text-gray-800"
-          v-html="basicInfo.Details"
+          v-html="reDetails"
         ></p>
         <textarea
           v-else
@@ -312,6 +312,8 @@ export default {
       closeTime: 0,
       openTime: 0,
       loginStoreId: null,
+      reSummary: '',
+      reDetails: '',
     };
   },
   methods: {
@@ -320,10 +322,19 @@ export default {
       this.isLoading = true;
       if (this.loginStoreId !== null) {
         getStoreTotalInfo(this.loginStoreId).then((res) => {
+          console.log(res);
           if (res.data.status) {
             this.newdata = res.data;
             this.businessTime = res.data.Business;
             this.basicInfo = res.data.BasicData;
+            this.reSummary = res.data.BasicData.Summary.replace(
+              /(?:\r\n|\r|\n)/g,
+              '<br />',
+            );
+            this.reDetails = res.data.BasicData.Details.replace(
+              /(?:\r\n|\r|\n)/g,
+              '<br />',
+            );
             if (res.data.Business.RestDayOfWeek !== null) {
               this.DayOf = this.newdata.Business.RestDayOfWeek;
               this.setDayof = this.newdata.Business.RestDayOfWeek?.toString();

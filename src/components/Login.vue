@@ -77,11 +77,11 @@
                         >Forgot Password?</a
                       > -->
                     </div>
-                    <div class="text-center">
+                    <!-- <div class="text-center">
                       <router-link class="small" :to="{ name: 'Register' }"
                         >Create an Account!</router-link
                       >
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>
@@ -256,4 +256,8 @@ export default {
 </script>
 <style lang="scss">
 @import 'src/assets/scss/sb-admin-2.scss';
+.myphoto {
+  width: 575px;
+  height: 420px;
+}
 </style>
