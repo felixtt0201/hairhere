@@ -37,8 +37,7 @@
       class="container bg-accent text-reservation pb-4 pt-5 mt-4 reservation-check"
     >
       <h4 class="mb-4 title-line w-75">預約資訊</h4>
-      <hr />
-      <div>
+      <div class="mb-4">
         <h5>預約時間</h5>
         <p>
           {{ orderTime.replace('T', ' ').replace(':00:00', ':00') }}
@@ -72,7 +71,7 @@
     <div class="container bg-reservation pt-4">
       <h4 class="title-line text-center">顧客資訊</h4>
       <div class="pt-3 custom-information">
-        <ul class="list-style w-50">
+        <ul class="list-style">
           <li class="d-flex">
             <p>預約姓名</p>
             <p>{{ orderDetails.CustomerName }}</p>

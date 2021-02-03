@@ -33,9 +33,7 @@
             <div class="col-md-6 personInfo">
               <h4>本次預約設計師</h4>
               <h5>{{ designer.Name }}</h5>
-              <p class="border-left">
-                {{ designer.Details }}
-              </p>
+              <p class="border-left" v-html="reDetails"></p>
             </div>
           </div>
         </div>
@@ -135,7 +133,7 @@
             <label for="tel">手機號碼</label
             ><input type="tel" id="tel" v-model="tel" required />
             <label for="text">介紹人</label
-            ><input type="text" id="text" v-model="text" required />
+            ><input type="text" id="text" v-model="text" />
             <label for="remarks">備註事項</label>
             <textarea
               id="remarks"
@@ -170,7 +168,7 @@ export default {
   data() {
     return {
       // Loading遮罩
-      isLoading: true,
+      isLoading: false,
       fullPage: true,
 
       //
@@ -190,6 +188,7 @@ export default {
       freeTimeList: [], // 回傳空閑時間
       freetime: '',
       isActive: -1,
+      reDetails: '',
     };
   },
   computed: {
@@ -218,10 +217,12 @@ export default {
     },
     //
     getDesignerHandler() {
+      this.isLoading = true;
       getDesigner(this.listId).then((res) => {
         console.log(res);
         this.designer = res.data;
         this.OrderDate = res.data.OrderDate;
+        this.reDetails = res.data.Details.replace(/(?:\r\n|\r|\n)/g, '<br />');
         this.isLoading = false;
       });
     },
@@ -242,7 +243,6 @@ export default {
       getStoreProductList().then((res) => {
         console.log(res);
         this.products = res.data.OrderDetails;
-        this.isLoading = false;
       });
     },
     // selectsingle(id) {

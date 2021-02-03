@@ -13,7 +13,9 @@
         <div class="form-row">
           <div class="col-md-12">
             <h2>個人照片</h2>
-            <img :src="designerInfo.PicturePath" alt="" v-if="editstatus" />
+            <div class="form-group" v-if="editstatus">
+              <img class="img-fluid" :src="designerInfo.PicturePath" alt="" />
+            </div>
             <div class="form-group" v-else>
               <img
                 img="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=828346ed697837ce808cae68d3ddc3cf&auto=format&fit=crop&w=1350&q=80"
@@ -151,7 +153,21 @@
         <hr />
         <div class="form-group">
           <p for="description" class="text-gray-800">我的專長/特色：</p>
-          <p v-if="editstatus">{{ designerInfo.Details }}</p>
+          <p v-if="editstatus" v-html="reSummary"></p>
+          <textarea
+            v-else
+            type="text"
+            class="form-control"
+            id="description"
+            placeholder="請輸入我的專長/特色"
+            cols="30"
+            rows="5"
+            v-model="designerInfo.Summary"
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <p for="description" class="text-gray-800">我的專長/特色：</p>
+          <p v-if="editstatus" v-html="reDetails"></p>
           <textarea
             v-else
             type="text"
@@ -211,6 +227,8 @@ export default {
 
       // 存放Api接回來的設計師資料
       designerInfo: {},
+      reSummary: '',
+      reDetails: '',
 
       // 編輯的開關
       editstatus: true,
@@ -232,6 +250,8 @@ export default {
       getDesignerInfoBack(this.dId).then((res) => {
         console.log('singleDes', res.data);
         this.designerInfo = res.data;
+        this.reSummary = res.data.Summary.replace(/(?:\r\n|\r|\n)/g, '<br />');
+        this.reDetails = res.data.Details.replace(/(?:\r\n|\r|\n)/g, '<br />');
         this.isLoading = false;
       });
     },
@@ -249,7 +269,7 @@ export default {
         Password: this.designerInfo.Password,
         OldPassword: this.designerInfo.OldPassword,
         PasswordSalt: this.designerInfo.PasswordSalt,
-        Summary: '',
+        Summary: this.designerInfo.Summary,
         Instagram: this.designerInfo.Instagram,
         Facebook: '',
         Twitter: '',
@@ -262,8 +282,9 @@ export default {
         Color: this.designerInfo.Color,
       });
       putDesigner(data, this.dId).then((res) => {
-        if (res.data.status === true) {
+        if (res.data.status) {
           this.successedMessage();
+          this.getInfo();
         }
       });
     },

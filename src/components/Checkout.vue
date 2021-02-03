@@ -428,7 +428,7 @@ import $ from 'jquery';
 export default {
   data() {
     return {
-      isLoading: true,
+      isLoading: false,
       fullPage: true,
       servicesInfo: [],
       designerInfo: [],
@@ -493,6 +493,7 @@ export default {
 
     // 取得全部帳單
     getAllBillList() {
+      this.isLoading = true;
       this.getServicesInfo();
       this.getDesignersInfo();
       getBillList().then((res) => {
@@ -506,7 +507,7 @@ export default {
 
     // 取得單一帳單
     getSingleInfo(id) {
-      this.isNew = false;
+      this.isNew = true;
       this.editInfo = {};
       getSingleBill(id).then((res) => {
         if (res.data.status) {
@@ -520,6 +521,7 @@ export default {
             '00:00:00',
             ' ',
           );
+          this.isNew = false;
         }
       });
     },
@@ -624,6 +626,7 @@ export default {
         this.editInfo = {};
         this.isNew = true;
       } else {
+        this.isNew = false;
         this.getSingleInfo(id);
       }
       $('#designerModal').modal('show');

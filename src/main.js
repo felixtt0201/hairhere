@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable import/no-unresolved */
 import Vue from 'vue';
 import VueSweetalert2 from 'vue-sweetalert2';
@@ -59,4 +60,9 @@ router.beforeEach((to, from, next) => {
   } else {
     next();
   }
+});
+
+// 轉頁後回到Top
+router.afterEach((to, from, next) => {
+  window.scrollTo(0, 0);
 });

@@ -11,31 +11,33 @@
             <div class="card-body p-0">
               <!-- Nested Row within Card Body -->
               <!-- shopLogin -->
-              <ul class="row d-flex justify-content-center">
-                <li>
-                  <a
-                    href="#"
-                    class="btn btn-primary"
-                    style="width:100px"
-                    :class="{ active: link === 'shop' }"
-                    @click="link = 'shop'"
-                    >店長</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    class="btn btn-primary"
-                    style="width:100px"
-                    :class="{ active: link === 'desinger' }"
-                    @click="link = 'desinger'"
-                    >設計師</a
-                  >
-                </li>
-              </ul>
+
               <div class="row" v-if="link === 'shop'">
                 <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
                 <div class="col-lg-6">
+                  <ul class="row justify-content-center p-0 mt-3">
+                    <li>
+                      <a
+                        href="#"
+                        class="text-dark"
+                        style="width:100px"
+                        :class="{ active: link === 'shop' }"
+                        @click="link = 'shop'"
+                        >店長</a
+                      >
+                    </li>
+                    /
+                    <li>
+                      <a
+                        href="#"
+                        class="text-dark"
+                        style="width:100px"
+                        :class="{ active: link === 'desinger' }"
+                        @click="link = 'desinger'"
+                        >設計師</a
+                      >
+                    </li>
+                  </ul>
                   <div class="p-5">
                     <div class="text-center">
                       <h1 class="h4 text-gray-900 mb-4">店長登入</h1>
@@ -89,6 +91,29 @@
                   class="col-lg-6 d-none d-lg-block bg-login-image-desinger"
                 ></div>
                 <div class="col-lg-6">
+                  <ul class="row justify-content-center p-0 mt-3">
+                    <li>
+                      <a
+                        href="#"
+                        class="text-dark"
+                        style="width:100px"
+                        :class="{ active: link === 'shop' }"
+                        @click="link = 'shop'"
+                        >店長</a
+                      >
+                    </li>
+                    /
+                    <li>
+                      <a
+                        href="#"
+                        class="text-dark"
+                        style="width:100px"
+                        :class="{ active: link === 'desinger' }"
+                        @click="link = 'desinger'"
+                        >設計師</a
+                      >
+                    </li>
+                  </ul>
                   <div class="p-5">
                     <div class="text-center">
                       <h1 class="h4 text-gray-900 mb-4">

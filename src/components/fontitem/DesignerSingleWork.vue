@@ -1,5 +1,15 @@
 <template>
   <div class="container text-main" id="designerSingleWork">
+    <loading
+      :opacity="1"
+      color="#7e735d"
+      loader="bars"
+      background-color="#fff"
+      :active.sync="isLoading"
+      :is-full-page="fullPage"
+    >
+      <template slot="default"> <loadingitem></loadingitem></template
+    ></loading>
     <div class="row justify-content-center">
       <div class="col-md-8 mb-4 desingerInfo">
         <div class="row w-80">
@@ -9,7 +19,7 @@
           ></div>
           <div class="col-md-6 p-4 personInfo">
             <h4>{{ designerDetail.Name }}</h4>
-            <p class="border-left">{{ designerDetail.Details }}</p>
+            <p class="border-left" v-html="reDesignerDetails"></p>
             <router-link
               :to="`/reservationF/${workDetail.DesignerId}`"
               class="btn rounded-0 designer-btn"
@@ -101,8 +111,8 @@
             </div>
             <div class="col-md-3">
               <h4 class="mb-4">{{ workDetail.Name }}</h4>
-              <p class="mb-5 border-left">
-                {{ workDetail.Summary }}
+              <p class="mb-5 border-left" v-html="reWorkSummary">
+                <!-- {{ workDetail.Summary }} -->
               </p>
               <ul class="">
                 <li class="designer-tag" v-for="tag in category" :key="tag">
@@ -121,14 +131,19 @@
 import { getSingleWork, getDesigner } from '@/js/FontAppServices';
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
 import 'swiper/css/swiper.css';
+import loadingitem from '../dashboarditem/loadingitem.vue';
 
 export default {
   components: {
     Swiper,
     SwiperSlide,
+    loadingitem,
   },
   data() {
     return {
+      // Loading效果
+      isLoading: false,
+      fullPage: true,
       // carsouel-----
       swiperOptionTop: {
         loop: true,
@@ -154,10 +169,13 @@ export default {
       // designerId: '',
       designerDetail: '', // get到的設計師詳細資料
       category: [], // get分類
+      reDesignerDetails: '',
+      reWorkSummary: '',
     };
   },
   methods: {
     getInfoHandler() {
+      this.isLoading = true;
       getSingleWork(this.workId).then((res) => {
         console.log(res);
         this.workDetail = res.data.BasicData;
@@ -169,7 +187,16 @@ export default {
         getDesigner(designerId).then((response) => {
           console.log(response);
           this.designerDetail = response.data;
+          this.reDesignerDetails = response.data.Details.replace(
+            /(?:\r\n|\r|\n)/g,
+            '<br />',
+          );
         });
+        this.reWorkSummary = res.data.BasicData.Summary.replace(
+          /(?:\r\n|\r|\n)/g,
+          '<br />',
+        );
+        this.isLoading = false;
       });
     },
   },

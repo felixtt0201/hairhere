@@ -220,7 +220,6 @@
                       rows="4"
                       v-model="addNewInfo.dDetails"
                     ></textarea>
-                    {{ detailError }}
                   </div>
                 </div>
               </div>
@@ -397,7 +396,7 @@
                   <hr />
                   <div class="form-group">
                     <div class="form-group">
-                      <p for="description">自我介紹(20字以內)</p>
+                      <p for="description">我的專長/特色：(20字以內)</p>
                       <textarea
                         type="text"
                         class="form-control"
@@ -408,7 +407,7 @@
                         v-model="tempInfo.Summary"
                       ></textarea>
                     </div>
-                    <p for="description">我的專長/特色(120字以內)</p>
+                    <p for="description">自我介紹：(120字以內)</p>
                     <textarea
                       type="text"
                       class="form-control"
@@ -458,7 +457,7 @@ export default {
   data() {
     return {
       // Loading遮罩
-      isLoading: true,
+      isLoading: false,
       fullPage: true,
 
       // 接全部的設計師資料
@@ -490,10 +489,11 @@ export default {
   methods: {
     // 取得全部設計師
     getInfoHandler() {
+      this.isLoading = true;
       getAllDesigner(this.loginStoreId).then((res) => {
-        console.log('all', res);
         if (res.data.status) {
           this.tempDesginersInfo = res.data.TotalData;
+          console.log(this.tempDesginersInfo);
           this.isLoading = false;
         } else {
           this.isLoading = false;
@@ -503,10 +503,9 @@ export default {
 
     // 取得單一設計師
     getSingleInfoHandler(id) {
-      this.isNew = false;
-      this.tempInfo = {};
+      this.isLoading = true;
+      // this.tempInfo = {};
       getDesignerInfoBack(id).then((res) => {
-        console.log('single', res);
         if (res.data.status) {
           console.log('single', res);
           this.tempInfo = res.data;
@@ -617,7 +616,7 @@ export default {
       const formData = new FormData();
       formData.append('file-to-upload', designerPhoto);
       patchDesignerPhoto(dId, formData).then((res) => {
-        console.log('pic', res);
+        console.log('pic', res.data.status);
         this.donewithUpload = false;
         this.getSingleInfoHandler(dId);
       });
@@ -663,7 +662,7 @@ export default {
         this.tempInfo = {};
         this.isNew = true;
       } else {
-        this.isLoading = true;
+        this.isNew = false;
         this.getSingleInfoHandler(id);
       }
       $('#designerModal').modal('show');

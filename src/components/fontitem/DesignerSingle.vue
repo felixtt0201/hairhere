@@ -1,5 +1,15 @@
 <template>
   <div class="container text-main">
+    <loading
+      :opacity="1"
+      color="#7e735d"
+      loader="bars"
+      background-color="#fff"
+      :active.sync="isLoading"
+      :is-full-page="fullPage"
+    >
+      <template slot="default"> <loadingitem></loadingitem></template
+    ></loading>
     <div class="row justify-content-center">
       <!-- <div class="col-md-1 border"></div> -->
       <div class="col-md-8 mb-4">
@@ -10,7 +20,7 @@
           ></div>
           <div class="col-md-6 p-4 personInfo">
             <h4>{{ designer.Name }}</h4>
-            <p class="border-left">{{ designer.Details }}</p>
+            <p class="border-left" v-html="detail"></p>
             <router-link
               :to="`/reservationF/${designerId}`"
               class="btn rounded-0 designer-btn"
@@ -80,8 +90,12 @@
 
 <script>
 import { getDesigner } from '@/js/FontAppServices';
+import loadingitem from '../dashboarditem/loadingitem.vue';
 
 export default {
+  components: {
+    loadingitem,
+  },
   data() {
     return {
       designerId: '',
@@ -89,10 +103,14 @@ export default {
       designerWorks: [],
       pages: [],
       index: '',
+      detail: '',
+      isLoading: false,
+      fullPage: true,
     };
   },
   methods: {
     getInfoHandler(page = 1, limit = 6) {
+      this.isLoading = true;
       getDesigner(this.designerId, page, limit).then((res) => {
         console.log(res);
         this.designer = res.data;
@@ -101,14 +119,17 @@ export default {
         this.pages = Math.ceil(
           res.data.Portfolios.Count / res.data.Portfolios.Limit,
         );
+        this.detail = res.data.Details.replace(/(?:\r\n|\r|\n)/g, '<br />');
+        this.isLoading = false;
         console.log(this.index);
-        // console.log(this.designerWorks);
       });
     },
   },
   created() {
     this.designerId = this.$route.params.id;
     // console.log(this.designerId);
+  },
+  mounted() {
     this.getInfoHandler();
   },
 };

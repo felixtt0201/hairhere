@@ -1,13 +1,13 @@
 <template>
   <div id="portfolio" class="container-fluid">
-    <!-- <loading
+    <loading
       :opacity="1"
       color="#7e735d"
       loader="bars"
       background-color="#fff"
       :active.sync="isLoading"
       :is-full-page="fullPage"
-    ></loading> -->
+    ></loading>
     <h3 class="mb-0 text-gray-800">作品集管理</h3>
     <div class="row justify-content-end mb-4">
       <div class="input-group col-4">
@@ -44,9 +44,11 @@
             <h5 class="card-title text-center text-gray-900">
               設計師：{{ product.DesignerName }}
             </h5>
-            <p class="card-text text-gray-800">
-              作品描述：{{ product.Summary }}
-            </p>
+            作品描述：
+            <p
+              class="card-text text-gray-800"
+              v-html="product.Summary.replace(/(?:\r\n|\r|\n)/g, '<br />')"
+            ></p>
           </div>
           <div class="container mb-4">
             <div class="row justify-content-around">
@@ -363,7 +365,7 @@ export default {
   data() {
     return {
       // Loading遮罩
-      isLoading: true,
+      isLoading: false,
       fullPage: true,
 
       designerInfo: [], // get設計師資訊
@@ -386,6 +388,7 @@ export default {
       categoryCheckbox: [], // 先裝勾選的分類
       photosView: [], // 接回圖片網址
       loginStoreId: null,
+      summay: '',
     };
   },
   methods: {
@@ -430,13 +433,13 @@ export default {
       }
     },
     getPageHandler(page = 1) {
+      this.isLoading = true;
       getworkss(page).then((res) => {
-        console.log(res);
         this.pages = Math.ceil(res.data.Count / res.data.Limit);
         this.comebackinfo = res.data.BasicData;
         this.status = true;
-        this.isLoading = false;
         this.index = res.data.Index;
+        this.isLoading = false;
         console.log('全', this.comebackinfo, '總', this.pages, '目前', page);
       });
     },
@@ -446,7 +449,6 @@ export default {
           this.pages = Math.ceil(res.data.Count / res.data.Limit);
           this.comebackinfo = res.data.BasicData;
           this.status = false;
-          this.isLoading = false;
           this.index = res.data.Index;
           this.desingerId = desingerId;
           console.log(
@@ -485,8 +487,9 @@ export default {
     },
     // 取得作品資訊
     getWorkInfoHandler() {
+      this.isLoading = true;
       getDesignerWorks(this.loginStoreId).then((res) => {
-        console.log(res);
+        console.log('total', res);
         if (res.data.status) {
           this.comebackinfo = res.data.BasicData;
           this.pages = Math.ceil(res.data.Count / res.data.Limit);
@@ -513,7 +516,6 @@ export default {
         this.photosView = '';
         this.desingerName = this.formProduct.DesignerName;
         this.categoryCheckbox = this.formProduct.Category.split(',');
-        this.isNew = false;
       }
     },
     // 新增作品
