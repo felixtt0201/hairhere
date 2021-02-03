@@ -8,7 +8,7 @@
               選擇服務項目
             </li>
             <li class="active-step">確認預約資訊</li>
-            <li>預約完成d(`･∀･)b</li>
+            <li>預約完成</li>
           </ul>
         </div>
         <div class="col-md-6">
@@ -25,9 +25,6 @@
             >
               <h4>本次預約設計師</h4>
               <h5>{{ orderDetails.DesignerName }}</h5>
-              <p class="border-left">
-                {{ orderDetails.DesignerSummary }}
-              </p>
             </div>
           </div>
         </div>
@@ -36,7 +33,7 @@
     <div
       class="container bg-accent text-reservation pb-4 pt-5 mt-4 reservation-check"
     >
-      <h4 class="mb-4 title-line w-75">預約資訊</h4>
+      <h4 class="mb-5 title-line w-75">預約資訊</h4>
       <div class="mb-4">
         <h5>預約時間</h5>
         <p>

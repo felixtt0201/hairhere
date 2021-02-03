@@ -2,26 +2,24 @@
   <div>
     <div class="container text-main">
       <div class="row">
-        <div class="col-md-6 step-center">
+        <div class="col-md-5 step-center">
           <ul class="step">
             <li class="active">
               選擇服務項目
             </li>
             <li class="active">確認預約資訊</li>
-            <li class="active-step">預約完成d(`･∀･)b</li>
+            <li class="active-step">預約完成</li>
           </ul>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-7">
           <div class="row">
             <div
               class="col-md-6 photo-size"
               :style="{
-                backgroundImage: `url(${orderDetails.DesignerPicturePath})`,
+                backgroundImage: `url(${orderDetails.DesignerPicture})`,
               }"
             ></div>
-            <div
-              class="col-md-6 d-flex flex-column justify-content-around align-items-center"
-            >
+            <div class="col-md-6 personInfo">
               <h4>本次預約設計師</h4>
               <h5>{{ orderDetails.DesignerName }}</h5>
               <p class="w-50 border-left">
@@ -33,7 +31,7 @@
       </div>
     </div>
     <div class="container text-reservation mb-5 mt-5 d-flex text-center">
-      <div class="col-md-6">
+      <div class="col-md-5">
         <h4 class="title-line text-center">預約資訊</h4>
         <div class="container">
           <div class="pt-4">
@@ -60,15 +58,15 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6 bg-accent p-4">
-        <div class="container p-5">
+      <div class="col-md-7 bg-accent">
+        <div class="container p-5 completed-container">
           <!-- <h4 class="mb-4 title-line">預約資訊</h4> -->
           <div class="pb-3">
-            <h5>預約時間</h5>
+            <h5 class="mb-3">預約時間</h5>
             <p>{{ orderTime.replace('T', ' ').replace(':00:00', ':00') }}</p>
           </div>
           <div class="pb-3">
-            <h5>預約項目</h5>
+            <h5 class="mb-3">預約項目</h5>
             <ul class="list-style p-0">
               <li
                 class="d-flex justify-content-between"
@@ -81,15 +79,13 @@
               </li>
             </ul>
           </div>
-          <h4 class="mb-4 title-line">項目結算</h4>
-          <div class="d-flex justify-content-around">
-            <div class="d-flex">
-              <h5 class="pr-5">預估總額</h5>
-              <p>＄{{ orderDetails.Amount }}</p>
-            </div>
-            <div class="d-flex">
-              <h5 class="pr-5">預估時間</h5>
-              <p>{{ orderDetails.ServiceMinutes }}分鐘</p>
+          <h4 class="mb-4 title-line completed-title">項目結算</h4>
+          <div class="item-total">
+            <div class="item-total-group w-100 border-0 mb-3">
+              <h5>預估總額</h5>
+              <span class="mr-5">＄{{ orderDetails.Amount }}</span>
+              <h5 class="mr-3">預估時間</h5>
+              <span>{{ orderDetails.ServiceMinutes }}分鐘</span>
             </div>
           </div>
         </div>
@@ -152,5 +148,11 @@ export default {
   p {
     color: white;
   }
+}
+.completed-title {
+  color: #cb9861 !important;
+}
+.completed-container {
+  letter-spacing: 0.4em;
 }
 </style>
