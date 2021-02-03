@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 <template>
   <div id="portfolio" class="container-fluid">
     <loading
@@ -130,7 +131,7 @@
               <div class="row">
                 <div class="col-md-4">
                   <h2>作品照片</h2>
-                  <input
+                  <!-- <input
                     type="file"
                     class="form-control mb-3"
                     ref="files"
@@ -139,7 +140,31 @@
                   />
                   <span class="text-danger"
                     >*格式限制JPG/PNG,一次多張,至多三張</span
-                  >
+                  > -->
+
+                  <!-- new uploadPhoto -->
+                  <span>選擇上傳照片</span>
+                  <div>
+                    <input
+                      type="file"
+                      class="form-control mb-3"
+                      name="image"
+                      ref="files"
+                      multiple
+                      @change="selectPhoto"
+                    />
+                    <button
+                      @click="uploadPhoto"
+                      type="button"
+                      class="btn btn-primary"
+                    >
+                      <i class="fas fa-cog fa-spin" v-if="fileUploading"></i>
+                      上傳照片
+                    </button>
+                  </div>
+                  <p class="text-danger">*格式限制JPG/PNG,一次多張,至多三張</p>
+
+                  <!-- end new uploadPhoto -->
                 </div>
                 <div class="img-view">
                   <h4 class="ml-3 mt-3" v-if="photosView != 0">圖片預覽</h4>
@@ -299,7 +324,7 @@
                 取消
               </button>
               <button type="submit" class="btn btn-primary">
-                確認 <i class="fas fa-cog fa-spin" v-if="fileUploading"></i>
+                確認
               </button>
             </div>
           </div>
@@ -352,23 +377,31 @@ export default {
       photosView: [], // 接回圖片網址
       loginId: null,
       storeId: null,
+      images: [],
     };
   },
   methods: {
-    // 上傳圖片
+    // 測試選擇圖片
+    selectPhoto() {
+      // eslint-disable-next-line no-plusplus
+      for (let i = 0; i < this.$refs.files.files.length; i++) {
+        this.images.push(this.$refs.files.files[i]);
+        console.log(this.images);
+      }
+    },
     uploadPhoto() {
+      this.fileUploading = true;
       const formData = new FormData();
-      const photos = this.$refs.files.files; // refs要對應上面input的ref
-
-      if (photos.length > 0) {
+      if (this.images.length > 0) {
         // eslint-disable-next-line no-plusplus
-        for (let index = 0; index < photos.length; index++) {
-          const element = photos[index];
-          formData.append(index, element);
+        for (let i = 0; i < this.images.length; i++) {
+          const file = this.images[i];
+          formData.append(`files[${i}]`, file);
         }
         postPhoto(formData).then((res) => {
           console.log(formData);
           if (res.data.status) {
+            this.images = [];
             console.log(res);
             this.photosView = res.data.PhotoPathList;
             // eslint-disable-next-line prefer-destructuring
@@ -377,15 +410,51 @@ export default {
             this.formProduct.Photo2 = res.data.photoList[1];
             // eslint-disable-next-line prefer-destructuring
             this.formProduct.Photo3 = res.data.photoList[2];
-            // vm.$set(vm.formProduct, 'Photo1', res.data.PhotoPathList[0]);
-            // vm.$set(vm.formProduct, 'Photo2', res.data.PhotoPathList[1]);
-            // vm.$set(vm.formProduct, 'Photo3', res.data.PhotoPathList[2]);
+            this.fileUploading = false;
           } else {
             console.log('error');
           }
         });
+      } else {
+        this.$swal({
+          title: '請選擇照片',
+          position: 'center',
+          icon: 'error',
+        });
       }
     },
+
+    // 上傳圖片
+    // uploadPhoto() {
+    //   const formData = new FormData();
+    //   const photos = this.$refs.files.files; // refs要對應上面input的ref
+
+    //   if (photos.length > 0) {
+    //     // eslint-disable-next-line no-plusplus
+    //     for (let index = 0; index < photos.length; index++) {
+    //       const element = photos[index];
+    //       formData.append(index, element);
+    //     }
+    //     postPhoto(formData).then((res) => {
+    //       console.log(formData);
+    //       if (res.data.status) {
+    //         console.log(res);
+    //         this.photosView = res.data.PhotoPathList;
+    //         // eslint-disable-next-line prefer-destructuring
+    //         this.formProduct.Photo1 = res.data.photoList[0];
+    //         // eslint-disable-next-line prefer-destructuring
+    //         this.formProduct.Photo2 = res.data.photoList[1];
+    //         // eslint-disable-next-line prefer-destructuring
+    //         this.formProduct.Photo3 = res.data.photoList[2];
+    //         // vm.$set(vm.formProduct, 'Photo1', res.data.PhotoPathList[0]);
+    //         // vm.$set(vm.formProduct, 'Photo2', res.data.PhotoPathList[1]);
+    //         // vm.$set(vm.formProduct, 'Photo3', res.data.PhotoPathList[2]);
+    //       } else {
+    //         console.log('error');
+    //       }
+    //     });
+    //   }
+    // },
 
     // 分頁
     changePage(page) {
@@ -426,7 +495,7 @@ export default {
         this.categoryCheckbox = [];
         this.isNew = true;
         this.$refs.files.value = ''; // 將files欄位清空
-        console.log(this.$refs.files.value);
+        this.fileUploading = false;
       } else {
         console.log('old');
         this.formProduct = { ...product };
@@ -435,6 +504,7 @@ export default {
         this.desingerName = this.formProduct.DesignerName;
         this.categoryCheckbox = this.formProduct.Category.split(',');
         this.isNew = false;
+        this.fileUploading = false;
       }
     },
     // 新增作品
@@ -443,7 +513,6 @@ export default {
         const categoryString = this.categoryCheckbox.toString();
         this.formProduct.Category = categoryString;
         this.formProduct.DesignerId = this.loginId;
-        this.fileUploading = true;
         postPortfolio(this.$qs.stringify(this.formProduct)).then((res) => {
           if (res.data.status) {
             this.getPageHandler();
