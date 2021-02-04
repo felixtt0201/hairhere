@@ -203,7 +203,7 @@
                       type="text"
                       class="form-control"
                       id="description"
-                      placeholder="Summary"
+                      placeholder="自我介紹.."
                       cols="30"
                       rows="4"
                       v-model="addNewInfo.dSummary"
@@ -215,7 +215,7 @@
                       type="text"
                       class="form-control"
                       id="description"
-                      placeholder="請輸入我的專長/特色"
+                      placeholder="請輸入我的專長/特色..."
                       cols="30"
                       rows="4"
                       v-model="addNewInfo.dDetails"
@@ -504,10 +504,10 @@ export default {
 
     // 取得單一設計師
     getSingleInfoHandler(id) {
-      this.isLoading = true;
       // this.tempInfo = {};
       getDesignerInfoBack(id).then((res) => {
         if (res.data.status) {
+          $('#designerModal').modal('show');
           this.tempInfo = res.data;
           this.isLoading = false;
         }
@@ -670,11 +670,11 @@ export default {
       if (isNew) {
         this.tempInfo = {};
         this.isNew = true;
+        $('#designerModal').modal('show');
       } else {
         this.isNew = false;
         this.getSingleInfoHandler(id);
       }
-      $('#designerModal').modal('show');
     },
 
     // 提示-失敗

@@ -233,7 +233,7 @@
                     >
                       取消此筆訂單
                     </button>
-
+                    <div></div>
                     <button
                       type="submit"
                       class="btn btn-primary"
@@ -241,12 +241,19 @@
                     >
                       確認
                     </button>
-                    <button class="btn btn-primary" data-dismiss="modal" v-else>
-                      返回
-                    </button>
-                    <button type="button" @click="reciveEmit">
-                      結帳
-                    </button>
+                    <div v-else>
+                      <button class="btn btn-primary" data-dismiss="modal">
+                        返回
+                      </button>
+                      <button
+                        class="btn btn-info"
+                        type="button"
+                        data-dismiss="modal"
+                        @click="reciveEmit"
+                      >
+                        結帳
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -526,7 +533,7 @@ export default {
         cancelButtonText: '取消',
       }).then((result) => {
         if (result.isConfirmed) {
-          $('#reservationModal').modal('hide');
+          $('#reservationModal').modal('dispose');
           this.$swal({
             icon: 'success',
             title: '成功取消預約',

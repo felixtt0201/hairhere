@@ -14,9 +14,7 @@
       <button
         type="button"
         class="btn btn-primary btn-lg btn-icon-split"
-        data-toggle="modal"
-        data-target="#checkoutMoadel"
-        @click="openModalHandler(true)"
+        @click="openModalHandler(true, 0)"
       >
         <span class="icon text-white-50">
           <i class="fas fa-plus"></i>
@@ -77,17 +75,16 @@
     <form @submit.prevent="postBillHandler">
       <!--新帳單--->
       <div
-        class="modal fade"
+        class="modal"
         id="checkoutMoadel"
         tabindex="-1"
-        v-if="isNew"
         data-backdrop="static"
         data-keyboard="false"
       >
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="checkoutMoadel">帳單</h5>
+              <h5 class="modal-title">帳單</h5>
               <button type="button" class="close" @click="closeModal">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -102,7 +99,7 @@
                     <tr>
                       <th scope="row">日期：</th>
                       <td>
-                        <input type="date" required :value="checkInfo.date" />
+                        <input type="date" required v-model="checkInfo.date" />
                       </td>
                     </tr>
                     <tr>
@@ -256,19 +253,12 @@
                 <button
                   type="button"
                   class="btn btn-secondary"
-                  data-dismiss="modal"
+                  @click="closeModal"
                 >
                   取消
                 </button>
               </div>
               <div class="col text-right">
-                <!-- <button
-                  type="button"
-                  class="btn btn-primary mr-2"
-                  @click="edit"
-                >
-                  修改
-                </button> -->
                 <button type="submit" class="btn btn-success">
                   確定
                 </button>
@@ -279,12 +269,12 @@
       </div>
 
       <!--舊帳單--->
-      <div class="modal fade" id="checkoutMoadel" tabindex="-1" v-else>
+      <div class="modal fade" id="editModal" tabindex="-1">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="checkoutMoadel">結帳</h5>
-              <button type="button" class="close" @click="closeModal">
+              <h5 class="modal-title">結帳</h5>
+              <button type="button" class="close" @click="closeEditModal">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
@@ -377,7 +367,7 @@
                 <button
                   type="button"
                   class="btn btn-secondary"
-                  data-dismiss="modal"
+                  @click="closeEditModal"
                 >
                   取消
                 </button>
@@ -493,8 +483,10 @@ export default {
     // 取得全部帳單
     getAllBillList() {
       this.isLoading = true;
-      this.getServicesInfo();
-      this.getDesignersInfo();
+      this.addServicesInfo = [];
+      this.checkInfo = {};
+      // this.getServicesInfo();
+      // this.getDesignersInfo();
       getBillList(this.stoken).then((res) => {
         if (res.data.status) {
           this.billListInfo = res.data.BasicData;
@@ -506,21 +498,17 @@ export default {
 
     // 取得單一帳單
     getSingleInfo(id) {
-      this.isNew = false;
-      this.editInfo = {};
+      // this.isNew = false;
+      // this.editInfo = {};
       getSingleBill(id, this.stoken).then((res) => {
         if (res.data.status) {
-          $('#checkoutMoadel').modal('show');
           this.editInfo = res.data.BasicData;
-          this.bDay = this.editInfo.CustomerBirthday.replace('T', ' ').replace(
-            '00:00:00',
-            ' ',
-          );
-          this.date = this.editInfo.OrderTime.replace('T', ' ').replace(
-            '00:00:00',
-            ' ',
-          );
-          this.isNew = false;
+          // this.isNew = false;
+          // eslint-disable-next-line prefer-destructuring
+          this.bDay = this.editInfo.CustomerBirthday?.split('T')[0];
+          // eslint-disable-next-line prefer-destructuring
+          this.date = this.editInfo.OrderTime?.split('T')[0];
+          $('#editModal').modal('show');
         }
       });
     },
@@ -621,16 +609,12 @@ export default {
       });
     },
 
-    openModalHandler(isNew, id) {
-      if (isNew) {
-        this.editInfo = {};
-        this.checkInfo = {};
-        this.isNew = true;
+    openModalHandler(params, id) {
+      if (params === true) {
+        this.getServicesInfo();
+        this.getDesignersInfo();
         $('#checkoutMoadel').modal('show');
       } else {
-        this.date = '';
-        this.bDay = '';
-        this.isNew = false;
         this.getSingleInfo(id);
       }
     },
@@ -648,15 +632,19 @@ export default {
         timer: 1500,
       }).then(() => {
         $('#checkoutMoadel').modal('hide');
-        this.addServicesInfo = [];
-        this.checkInfo = {};
         this.getAllBillList();
       });
     },
     closeModal() {
       $('#checkoutMoadel').modal('hide');
-      this.addServicesInfo = [];
-      this.checkInfo = {};
+      // this.addServicesInfo = [];
+      // this.checkInfo = {};
+      this.getAllBillList();
+    },
+    closeEditModal() {
+      $('#editModal').modal('hide');
+      // this.addServicesInfo = [];
+      // this.checkInfo = {};
       this.getAllBillList();
     },
   },
@@ -672,9 +660,9 @@ export default {
     if (localStorage.getItem('selectOrderId')) {
       getOrderDetail(this.$route.params.id).then((res) => {
         localStorage.removeItem('selectOrderId');
-        console.log(res);
+        // console.log(res);
         if (res.data.status) {
-          $('#checkoutMoadel').modal('show');
+          this.getServicesInfo();
           this.getDesignersInfo();
           // eslint-disable-next-line prefer-destructuring
           this.checkInfo.date = res.data.BasicData.OrderTime.split('T')[0];
@@ -683,6 +671,7 @@ export default {
           this.checkInfo.cTel = res.data.BasicData.CustomerPhone;
           this.checkInfo.cIntroducer = res.data.BasicData.CustomerIntroducer;
           this.addServicesInfo = res.data.BasicData.Detail;
+          $('#checkoutMoadel').modal('show');
         }
       });
     } else {
@@ -702,5 +691,9 @@ export default {
     margin: 0;
     padding: 10px;
   }
+}
+
+.modal {
+  overflow-y: auto !important;
 }
 </style>
