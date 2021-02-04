@@ -110,7 +110,7 @@
                   type="checkbox"
                   class="custom-control-input"
                   id="monday"
-                  value="一"
+                  value="1"
                   v-model="DayOf"
                 />
                 <label class="custom-control-label" for="monday">星期一</label>
@@ -120,7 +120,7 @@
                   type="checkbox"
                   class="custom-control-input"
                   id="tuesday"
-                  value="二"
+                  value="2"
                   v-model="DayOf"
                 />
                 <label class="custom-control-label" for="tuesday">星期二</label>
@@ -130,7 +130,7 @@
                   type="checkbox"
                   class="custom-control-input"
                   id="wednesday"
-                  value="三"
+                  value="3"
                   v-model="DayOf"
                 />
                 <label class="custom-control-label" for="wednesday"
@@ -144,7 +144,7 @@
                   type="checkbox"
                   class="custom-control-input"
                   id="thursday"
-                  value="四"
+                  value="4"
                   v-model="DayOf"
                 />
                 <label class="custom-control-label" for="thursday"
@@ -156,7 +156,7 @@
                   type="checkbox"
                   class="custom-control-input"
                   id="friday"
-                  value="五"
+                  value="5"
                   v-model="DayOf"
                 />
                 <label class="custom-control-label" for="friday">星期五</label>
@@ -166,7 +166,7 @@
                   type="checkbox"
                   class="custom-control-input chkbox"
                   id="saturday"
-                  value="六"
+                  value="6"
                   v-model="DayOf"
                 />
                 <label class="custom-control-label" for="saturday"
@@ -178,7 +178,7 @@
                   type="checkbox"
                   class="custom-control-input chkbox"
                   id="sunday"
-                  value="日"
+                  value="0"
                   v-model="DayOf"
                 />
                 <label class="custom-control-label" for="sunday">星期日</label>
@@ -287,7 +287,7 @@ export default {
   data() {
     return {
       // Loading遮罩
-      isLoading: false,
+      isLoading: true,
       fullPage: true,
 
       // 存放Api接回來的店家資料
@@ -322,7 +322,6 @@ export default {
   methods: {
     // 取得店家資料
     getInfoHandler() {
-      this.isLoading = true;
       if (this.loginStoreId !== null) {
         getStoreTotalInfo(this.loginStoreId).then((res) => {
           if (res.data.status) {
@@ -370,7 +369,7 @@ export default {
         Phone: this.newdata.BasicData.Phone,
         Summary: this.newdata.BasicData.Summary,
         Details: this.newdata.BasicData.Details,
-        RestDayOfWeek: this.DayOf.toString(),
+        RestDayOfWeek: this.DayOf.sort((a, b) => a - b).toString(),
       });
 
       putStoreInfo(data, this.stoken).then((res) => {
@@ -425,4 +424,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scopeded></style>
+<style lang="scss" scoped></style>

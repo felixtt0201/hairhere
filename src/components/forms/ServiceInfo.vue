@@ -132,7 +132,7 @@ export default {
   data() {
     return {
       // Loading遮罩
-      isLoading: false,
+      isLoading: true,
       fullPage: true,
 
       servicesdata: {},
@@ -153,7 +153,6 @@ export default {
   methods: {
     // 取得產品資訊
     getInfoHandler() {
-      this.isLoading = true;
       getStoreProductList(this.loginStoreId).then((res) => {
         if (res.data.status) {
           this.servicesdata = res.data.BasicData;

@@ -165,7 +165,7 @@ const routes = [
         component: () => import('../components/Portfolio.vue'),
       },
       {
-        path: 'checkout', // 結帳管理
+        path: 'checkout/:id', // 結帳管理
         name: 'Checkout',
         meta: { requiresAuth: true },
         component: () => import('../components/Checkout.vue'),

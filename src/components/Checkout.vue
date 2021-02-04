@@ -76,17 +76,19 @@
     <!--Modal--->
     <form @submit.prevent="postBillHandler">
       <!--新帳單--->
-      <div class="modal fade" id="checkoutMoadel" tabindex="-1" v-if="isNew">
+      <div
+        class="modal fade"
+        id="checkoutMoadel"
+        tabindex="-1"
+        v-if="isNew"
+        data-backdrop="static"
+        data-keyboard="false"
+      >
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="checkoutMoadel">帳單</h5>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
+              <button type="button" class="close" @click="closeModal">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
@@ -100,7 +102,7 @@
                     <tr>
                       <th scope="row">日期：</th>
                       <td>
-                        <input type="date" v-model="checkInfo.date" required />
+                        <input type="date" required :value="checkInfo.date" />
                       </td>
                     </tr>
                     <tr>
@@ -141,7 +143,6 @@
                           type="date"
                           v-model="checkInfo.cBDay"
                           placeholder="請輸入客人生日"
-                          required
                         />
                       </td>
                     </tr>
@@ -283,12 +284,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="checkoutMoadel">結帳</h5>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
+              <button type="button" class="close" @click="closeModal">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
@@ -422,14 +418,16 @@ import {
   postBill,
   getSingleBill,
   patchBillStatus,
+  getOrderDetail,
 } from '@/js/AppServices';
 import $ from 'jquery';
 
 export default {
   data() {
     return {
-      isLoading: true,
+      isLoading: false,
       fullPage: true,
+
       servicesInfo: [],
       designerInfo: [],
       status: true,
@@ -494,6 +492,7 @@ export default {
 
     // 取得全部帳單
     getAllBillList() {
+      this.isLoading = true;
       this.getServicesInfo();
       this.getDesignersInfo();
       getBillList(this.stoken).then((res) => {
@@ -507,7 +506,7 @@ export default {
 
     // 取得單一帳單
     getSingleInfo(id) {
-      this.isNew = true;
+      this.isNew = false;
       this.editInfo = {};
       getSingleBill(id, this.stoken).then((res) => {
         if (res.data.status) {
@@ -569,6 +568,7 @@ export default {
       if (this.addServicesInfo.length > 0) {
         postBill(data, this.stoken).then((res) => {
           if (res.data.status) {
+            console.log('check', res);
             this.successedMessage();
           } else {
             this.$swal({
@@ -624,12 +624,15 @@ export default {
     openModalHandler(isNew, id) {
       if (isNew) {
         this.editInfo = {};
+        this.checkInfo = {};
         this.isNew = true;
+        $('#checkoutMoadel').modal('show');
       } else {
+        this.date = '';
+        this.bDay = '';
         this.isNew = false;
         this.getSingleInfo(id);
       }
-      $('#designerModal').modal('show');
     },
 
     edit() {
@@ -650,6 +653,12 @@ export default {
         this.getAllBillList();
       });
     },
+    closeModal() {
+      $('#checkoutMoadel').modal('hide');
+      this.addServicesInfo = [];
+      this.checkInfo = {};
+      this.getAllBillList();
+    },
   },
   created() {
     this.stoken = document.cookie.replace(
@@ -660,12 +669,30 @@ export default {
     this.loginStoreId = JSON.parse(localStorage.getItem('storeDetails')).Id;
   },
   mounted() {
-    this.getAllBillList();
+    if (localStorage.getItem('selectOrderId')) {
+      getOrderDetail(this.$route.params.id).then((res) => {
+        localStorage.removeItem('selectOrderId');
+        console.log(res);
+        if (res.data.status) {
+          $('#checkoutMoadel').modal('show');
+          this.getDesignersInfo();
+          // eslint-disable-next-line prefer-destructuring
+          this.checkInfo.date = res.data.BasicData.OrderTime.split('T')[0];
+          this.checkInfo.cName = res.data.BasicData.CustomerName;
+          this.checkInfo.designerId = res.data.BasicData.DesignerId;
+          this.checkInfo.cTel = res.data.BasicData.CustomerPhone;
+          this.checkInfo.cIntroducer = res.data.BasicData.CustomerIntroducer;
+          this.addServicesInfo = res.data.BasicData.Detail;
+        }
+      });
+    } else {
+      this.getAllBillList();
+    }
   },
 };
 </script>
 
-<style lang="scss" scopeded>
+<style lang="scss" scoped>
 .table {
   th,
   td,

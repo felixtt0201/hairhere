@@ -459,7 +459,7 @@ export default {
   data() {
     return {
       // Loading遮罩
-      isLoading: false,
+      isLoading: true,
       fullPage: true,
 
       // 接全部的設計師資料
@@ -492,7 +492,6 @@ export default {
   methods: {
     // 取得全部設計師
     getInfoHandler() {
-      this.isLoading = true;
       getAllDesigner(this.loginStoreId).then((res) => {
         if (res.data.status) {
           this.tempDesginersInfo = res.data.TotalData;
@@ -615,9 +614,21 @@ export default {
       const designerPhoto = this.$refs.files.files[0];
       const formData = new FormData();
       formData.append('file-to-upload', designerPhoto);
-      patchDesignerPhoto(dId, formData, this.stoken).then(() => {
-        this.donewithUpload = false;
-        this.getSingleInfoHandler(dId);
+      patchDesignerPhoto(dId, formData, this.stoken).then((res) => {
+        if (res.data.status) {
+          this.$swal({
+            title: '照片新增成功',
+            position: 'center',
+            icon: 'success',
+          }).then(() => {
+            this.isLoading = false;
+            this.donewithUpload = false;
+          });
+          this.getSingleInfoHandler(dId);
+        }
+        console.log(res);
+        // this.tempInfo.PicturePath = '';
+        // this.tempInfo.PicturePath = `https://salon.rocket-coding.com/UpFiles/Images/${res.data.Picture}`;
       });
     },
 

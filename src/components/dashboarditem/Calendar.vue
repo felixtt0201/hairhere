@@ -244,6 +244,9 @@
                     <button class="btn btn-primary" data-dismiss="modal" v-else>
                       返回
                     </button>
+                    <button type="button" @click="reciveEmit">
+                      結帳
+                    </button>
                   </div>
                 </div>
               </div>
@@ -401,11 +404,9 @@ export default {
 
     // getOrderInfo
     gettotalOrderHandler() {
-      this.isLoading = false;
       this.getDesignerHandler();
       this.getServicesHandler();
       getOrder(this.stoken).then((res) => {
-        console.log('total', res);
         if (res.data.status) {
           this.OrderInfo = res.data.BasicData;
           this.OrderInfo.forEach((item) => {
@@ -496,17 +497,21 @@ export default {
 
     // 點選有存儲過的資訊打開內容
     getSelectInfo(e) {
-      this.isLoading = true;
       this.editStatus = false;
       this.tempOrderInfo = {};
       this.selectOrderId = e.event.extendedProps.OrderID;
       getOrderDetail(this.selectOrderId).then((res) => {
         if (res.data.status) {
+          $('#reservationModal').modal('show');
           this.tempOrderInfo = res.data.BasicData;
-          this.isLoading = false;
         }
       });
-      $('#reservationModal').modal('show');
+    },
+
+    reciveEmit() {
+      $('#reservationModal').modal('hide');
+      localStorage.setItem('selectOrderId', this.selectOrderId);
+      this.$router.push(`/Dashboard/checkout/${this.selectOrderId}`);
     },
 
     // 刪除資訊
