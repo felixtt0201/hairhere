@@ -42,6 +42,7 @@ export default {
       /(?:(?:^|.*;\s*)desingerToken\s*\=\s*([^;]*).*$)|^.*$/,
       '$1',
     );
+    console.log('dash', document.cookie);
   },
 };
 </script>

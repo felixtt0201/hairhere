@@ -388,7 +388,7 @@ export default {
   data() {
     return {
       // Loading遮罩
-      isLoading: false,
+      isLoading: true,
       fullPage: true,
 
       designerInfo: [], // get設計師資訊
@@ -413,6 +413,7 @@ export default {
       loginStoreId: null,
       summay: '',
       images: [],
+      stoken: '',
     };
   },
   methods: {
@@ -421,7 +422,6 @@ export default {
       // eslint-disable-next-line no-plusplus
       for (let i = 0; i < this.$refs.files.files.length; i++) {
         this.images.push(this.$refs.files.files[i]);
-        console.log(this.images);
       }
     },
     uploadPhoto() {
@@ -433,11 +433,9 @@ export default {
           const file = this.images[i];
           formData.append(`files[${i}]`, file);
         }
-        postPhoto(formData).then((res) => {
-          console.log(formData);
+        postPhoto(formData, this.stoken).then((res) => {
           if (res.data.status) {
             this.images = [];
-            console.log(res);
             this.photosView = res.data.PhotoPathList;
             // eslint-disable-next-line prefer-destructuring
             this.formProduct.Photo1 = res.data.photoList[0];
@@ -446,8 +444,6 @@ export default {
             // eslint-disable-next-line prefer-destructuring
             this.formProduct.Photo3 = res.data.photoList[2];
             this.fileUploading = false;
-          } else {
-            console.log('error');
           }
         });
       } else {
@@ -455,6 +451,8 @@ export default {
           title: '請選擇照片',
           position: 'center',
           icon: 'error',
+        }).then(() => {
+          this.fileUploading = false;
         });
       }
     },
@@ -500,14 +498,13 @@ export default {
       }
     },
     getPageHandler(page = 1) {
-      this.isLoading = true;
       getworkss(page).then((res) => {
         this.pages = Math.ceil(res.data.Count / res.data.Limit);
         this.comebackinfo = res.data.BasicData;
         this.status = true;
         this.index = res.data.Index;
-        this.isLoading = false;
         console.log('全', this.comebackinfo, '總', this.pages, '目前', page);
+        this.isLoading = false;
       });
     },
     searchWorksHandler(desingerId, page = 1) {
@@ -548,19 +545,18 @@ export default {
     // 取得設計師資訊
     getDesignersInfo() {
       getDesignerListSelect(this.loginStoreId).then((res) => {
-        console.log(res);
         this.designerInfo = res.data;
       });
     },
     // 取得作品資訊
     getWorkInfoHandler() {
-      this.isLoading = true;
       getDesignerWorks(this.loginStoreId).then((res) => {
-        console.log('total', res);
         if (res.data.status) {
           this.comebackinfo = res.data.BasicData;
           this.pages = Math.ceil(res.data.Count / res.data.Limit);
           this.index = res.data.Index;
+          this.isLoading = false;
+        } else {
           this.isLoading = false;
         }
       });
@@ -578,6 +574,7 @@ export default {
         this.desingerName = '';
         this.fileUploading = false;
       } else {
+        this.isNew = false;
         console.log('old');
         this.formProduct = { ...product };
         console.log(this.formProduct);
@@ -594,21 +591,25 @@ export default {
         this.formProduct.Category = categoryString;
         this.fileUploading = true;
         this.photosView = '';
-        postPortfolio(this.$qs.stringify(this.formProduct)).then((res) => {
-          if (res.data.status) {
-            this.getPageHandler();
-            $('#staticBackdrop').modal('hide');
-            this.$swal({
-              title: '新增成功',
-              position: 'center',
-              icon: 'success',
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          }
-        });
+        postPortfolio(this.$qs.stringify(this.formProduct), this.stoken).then(
+          (res) => {
+            if (res.data.status) {
+              $('#staticBackdrop').modal('hide');
+              this.$swal({
+                title: '新增成功',
+                position: 'center',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1500,
+              }).then(() => {
+                this.getPageHandler();
+              });
+            }
+          },
+        );
       } else {
         // 編輯作品：全部
+        this.isNew = false;
         const data = this.$qs.stringify({
           Id: this.formProduct.Id,
           DesignerId: this.formProduct.DesignerId,
@@ -619,15 +620,15 @@ export default {
           Photo2: this.formProduct.Photo2,
           Photo3: this.formProduct.Photo3,
         });
-        patchWork(this.formProduct.Id, data).then((res) => {
-          console.log(res);
+        patchWork(this.formProduct.Id, data, this.stoken).then((res) => {
           if (res.data.status) {
-            this.getPageHandler();
             $('#staticBackdrop').modal('hide');
             this.$swal({
               icon: 'success',
               title: '更改成功',
               timer: 1500,
+            }).then(() => {
+              this.getPageHandler();
             });
           }
         });
@@ -647,7 +648,7 @@ export default {
         cancelButtonText: '取消',
       }).then((result) => {
         if (result.isConfirmed) {
-          deleteWork(workId);
+          deleteWork(workId, this.stoken);
           this.$swal({
             title: '刪除成功',
             icon: 'success',
@@ -660,6 +661,11 @@ export default {
     },
   },
   created() {
+    this.stoken = document.cookie.replace(
+      // eslint-disable-next-line no-useless-escape
+      /(?:(?:^|.*;\s*)storeToken\s*\=\s*([^;]*).*$)|^.*$/,
+      '$1',
+    );
     this.loginStoreId = JSON.parse(localStorage.getItem('storeDetails')).Id;
   },
   mounted() {

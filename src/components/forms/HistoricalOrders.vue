@@ -222,6 +222,7 @@ export default {
 
       // 登入的店家ＩＤ
       loginStoreId: null,
+      stoken: '',
     };
   },
   computed: {
@@ -238,7 +239,7 @@ export default {
   methods: {
     // 查詢單一帳單
     getSingInfo(cId) {
-      getSingleBill(cId).then((res) => {
+      getSingleBill(cId, this.stoken).then((res) => {
         this.singleCheckInfo = res.data.BasicData;
         this.date = this.singleCheckInfo.OrderTime.replace('T', ' ').replace(
           '00:00:00',
@@ -270,7 +271,7 @@ export default {
         CustomerBirthdayEnd: '',
         DesignerId: this.dId,
       });
-      postCheckInfo(data).then((res) => {
+      postCheckInfo(data, this.stoken).then((res) => {
         console.log(res.data);
         if (res.data.status) {
           this.totalCheckInfo = res.data.BasicData;
@@ -289,6 +290,11 @@ export default {
   },
 
   created() {
+    this.stoken = document.cookie.replace(
+      // eslint-disable-next-line no-useless-escape
+      /(?:(?:^|.*;\s*)storeToken\s*\=\s*([^;]*).*$)|^.*$/,
+      '$1',
+    );
     this.loginStoreId = JSON.parse(localStorage.getItem('storeDetails')).Id;
   },
   mounted() {

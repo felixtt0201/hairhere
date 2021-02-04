@@ -281,6 +281,7 @@
 
 <script>
 import { getStoreTotalInfo, putStoreInfo } from '@/js/AppServices';
+// putStoreInfo
 
 export default {
   data() {
@@ -314,6 +315,8 @@ export default {
       loginStoreId: null,
       reSummary: '',
       reDetails: '',
+
+      stoken: '',
     };
   },
   methods: {
@@ -322,7 +325,6 @@ export default {
       this.isLoading = true;
       if (this.loginStoreId !== null) {
         getStoreTotalInfo(this.loginStoreId).then((res) => {
-          console.log(res);
           if (res.data.status) {
             this.newdata = res.data;
             this.businessTime = res.data.Business;
@@ -335,6 +337,7 @@ export default {
               /(?:\r\n|\r|\n)/g,
               '<br />',
             );
+
             if (res.data.Business.RestDayOfWeek !== null) {
               this.DayOf = this.newdata.Business.RestDayOfWeek;
               this.setDayof = this.newdata.Business.RestDayOfWeek?.toString();
@@ -369,7 +372,8 @@ export default {
         Details: this.newdata.BasicData.Details,
         RestDayOfWeek: this.DayOf.toString(),
       });
-      putStoreInfo(data).then((res) => {
+
+      putStoreInfo(data, this.stoken).then((res) => {
         if (res.data.status) {
           this.getInfoHandler();
           this.successedMessage();
@@ -408,6 +412,11 @@ export default {
     },
   },
   created() {
+    this.stoken = document.cookie.replace(
+      // eslint-disable-next-line no-useless-escape
+      /(?:(?:^|.*;\s*)storeToken\s*\=\s*([^;]*).*$)|^.*$/,
+      '$1',
+    );
     this.loginStoreId = JSON.parse(localStorage.getItem('storeDetails')).Id;
   },
   mounted() {

@@ -428,7 +428,7 @@ import $ from 'jquery';
 export default {
   data() {
     return {
-      isLoading: false,
+      isLoading: true,
       fullPage: true,
       servicesInfo: [],
       designerInfo: [],
@@ -463,6 +463,7 @@ export default {
 
       // 登入的店家ＩＤ
       loginStoreId: null,
+      stoken: '',
     };
   },
   computed: {
@@ -493,10 +494,9 @@ export default {
 
     // 取得全部帳單
     getAllBillList() {
-      this.isLoading = true;
       this.getServicesInfo();
       this.getDesignersInfo();
-      getBillList().then((res) => {
+      getBillList(this.stoken).then((res) => {
         if (res.data.status) {
           this.billListInfo = res.data.BasicData;
           this.isLoading = false;
@@ -509,7 +509,7 @@ export default {
     getSingleInfo(id) {
       this.isNew = true;
       this.editInfo = {};
-      getSingleBill(id).then((res) => {
+      getSingleBill(id, this.stoken).then((res) => {
         if (res.data.status) {
           $('#checkoutMoadel').modal('show');
           this.editInfo = res.data.BasicData;
@@ -567,7 +567,7 @@ export default {
         BillDetails: this.addServicesInfo,
       });
       if (this.addServicesInfo.length > 0) {
-        postBill(data).then((res) => {
+        postBill(data, this.stoken).then((res) => {
           if (res.data.status) {
             this.successedMessage();
           } else {
@@ -616,7 +616,7 @@ export default {
         BillStatus: '0',
         StoreRemark: '"asdas"',
       });
-      patchBillStatus(billId, data).then(() => {
+      patchBillStatus(billId, data, this.stoken).then(() => {
         this.getAllBillList();
       });
     },
@@ -652,6 +652,11 @@ export default {
     },
   },
   created() {
+    this.stoken = document.cookie.replace(
+      // eslint-disable-next-line no-useless-escape
+      /(?:(?:^|.*;\s*)storeToken\s*\=\s*([^;]*).*$)|^.*$/,
+      '$1',
+    );
     this.loginStoreId = JSON.parse(localStorage.getItem('storeDetails')).Id;
   },
   mounted() {

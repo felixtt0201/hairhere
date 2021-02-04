@@ -147,6 +147,7 @@ export default {
         ServiceMinutes: '',
       },
       loginStoreId: null,
+      stoken: '',
     };
   },
   methods: {
@@ -175,8 +176,7 @@ export default {
         Remark: '',
         PublicInformation: 'true',
       });
-      posteStoreProduct(data).then((res) => {
-        console.log('add', res);
+      posteStoreProduct(data, this.stoken).then((res) => {
         if (res.data.message === '名稱重複' && res.status === 200) {
           this.unsuccessed();
           this.newProduct = {};
@@ -209,7 +209,7 @@ export default {
         Remark: '',
         PublicInformation: 'true',
       });
-      putStoreProductList(data, pId).then((res) => {
+      putStoreProductList(data, pId, this.stoken).then((res) => {
         if (res.status === 200) {
           const msg = '修改';
           this.successed(msg);
@@ -229,7 +229,7 @@ export default {
         cancelButtonText: '取消',
       }).then((result) => {
         if (result.isConfirmed) {
-          deleteStoreProduct(pId).then(() => {
+          deleteStoreProduct(pId, this.stoken).then(() => {
             const msg = '刪除';
             this.successed(msg);
           });
@@ -270,6 +270,11 @@ export default {
     },
   },
   created() {
+    this.stoken = document.cookie.replace(
+      // eslint-disable-next-line no-useless-escape
+      /(?:(?:^|.*;\s*)storeToken\s*\=\s*([^;]*).*$)|^.*$/,
+      '$1',
+    );
     this.loginStoreId = JSON.parse(localStorage.getItem('storeDetails')).Id;
   },
   mounted() {

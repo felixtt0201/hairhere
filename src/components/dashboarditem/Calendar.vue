@@ -302,8 +302,8 @@ export default {
 
         // 時間區間
         slotDuration: '1:00', // 區間30分鐘
-        slotMinTime: '10:00', // 開始
-        slotMaxTime: '19:00', // 結束
+        slotMinTime: '09:00', // 開始
+        slotMaxTime: '18:00', // 結束
         expandRows: true, // 適應有時間的高度(不然會是原本高度)
         events: [{}],
       },
@@ -344,7 +344,7 @@ export default {
       selectOrderId: '',
 
       // loadingStatus
-      isLoading: false,
+      isLoading: true,
       fullPage: true,
 
       // 登入店家ID
@@ -354,11 +354,10 @@ export default {
       dtoken: '',
     };
   },
-
   methods: {
     // 搜尋訂單
     searchInfoHandler(selectId) {
-      getOrderListbyDesinger(selectId).then((res) => {
+      getOrderListbyDesinger(selectId, this.stoken).then((res) => {
         console.log('sear', res);
         if (res.data.status) {
           this.calendarOptions.events = [];
@@ -389,13 +388,8 @@ export default {
       getDesignerListSelect(this.loginStoreId).then((res) => {
         this.totalDesignerInfo = res.data;
       });
-      // getAllDesigner().then((res) => {
-      //   console.log(res);
-      //   if (res.data.status) {
-      //     this.totalDesignerInfo = res.data.BasicData;
-      //   }
-      // });
     },
+
     // getServicesInfo
     getServicesHandler() {
       getStoreProductList(this.loginStoreId).then((res) => {
@@ -406,14 +400,13 @@ export default {
     },
 
     // getOrderInfo
-    async gettotalOrderHandler() {
-      this.isLoading = true;
-      await this.getDesignerHandler();
-      await this.getServicesHandler();
-      await getOrder().then((res) => {
+    gettotalOrderHandler() {
+      this.isLoading = false;
+      this.getDesignerHandler();
+      this.getServicesHandler();
+      getOrder(this.stoken).then((res) => {
         console.log('total', res);
         if (res.data.status) {
-          this.isLoading = false;
           this.OrderInfo = res.data.BasicData;
           this.OrderInfo.forEach((item) => {
             const showOrderDetails = {
@@ -425,18 +418,11 @@ export default {
               borderColor: item.Color,
             };
             this.calendarOptions.events.push(showOrderDetails);
+            this.isLoading = false;
           });
         }
         this.isLoading = false;
       });
-      // await this.OrderInfo.forEach((item) => {
-      //   const showOrderDetails = {
-      //     title: item.CustomerName,
-      //     start: item.OrderTime,
-      //     OrderID: item.Id,
-      //   };
-      //   this.calendarOptions.events.push(showOrderDetails);
-      // });
     },
 
     // postorder新增訂單
@@ -454,7 +440,7 @@ export default {
         OrderDetails: this.editInfo,
       });
       if (this.editInfo.length > 0) {
-        postOrder(data).then((res) => {
+        postOrder(data, this.stoken).then((res) => {
           if (res.data.status === true) {
             this.calendarOptions.events = [];
             this.editInfo = [];
@@ -536,14 +522,13 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           $('#reservationModal').modal('hide');
-          this.$swal(
-            {
-              icon: 'success',
-              title: '成功取消預約',
-              timer: 1500,
-            },
-            this.deleteInfo(),
-          );
+          this.$swal({
+            icon: 'success',
+            title: '成功取消預約',
+            timer: 1500,
+          }).then(() => {
+            this.deleteInfo();
+          });
         }
       });
     },
@@ -552,9 +537,13 @@ export default {
         OrderStatus: '0',
         Remark: '修改成功',
       });
-      patchOrderDetailStatus(this.selectOrderId, data).then((res) => {
-        console.log(res);
-      });
+      patchOrderDetailStatus(this.selectOrderId, data, this.stoken).then(
+        (res) => {
+          if (res.data.status) {
+            console.log(res);
+          }
+        },
+      );
     },
 
     cancelMouseEvnetHandler() {
@@ -562,16 +551,11 @@ export default {
     },
   },
   created() {
-    // this.stoken = document.cookie.replace(
-    //   // eslint-disable-next-line no-useless-escape
-    //   /(?:(?:^|.*;\s*)storeToken\s*\=\s*([^;]*).*$)|^.*$/,
-    //   '$1',
-    // );
-    // this.dtoken = document.cookie.replace(
-    //   // eslint-disable-next-line no-useless-escape
-    //   /(?:(?:^|.*;\s*)desingerToken\s*\=\s*([^;]*).*$)|^.*$/,
-    //   '$1',
-    // );
+    this.stoken = document.cookie.replace(
+      // eslint-disable-next-line no-useless-escape
+      /(?:(?:^|.*;\s*)storeToken\s*\=\s*([^;]*).*$)|^.*$/,
+      '$1',
+    );
     this.loginStoreId = JSON.parse(localStorage.getItem('storeDetails')).Id;
   },
   mounted() {

@@ -96,7 +96,7 @@
                 <div class="col-sm-8">
                   <div class="form-row">
                     <div class="form-group col-md-6">
-                      <label for="name">姓名</label>
+                      <label for="name">姓名：</label>
                       <input
                         type="text"
                         class="form-control"
@@ -107,7 +107,7 @@
                       />
                     </div>
                     <div class="form-group col-md-6">
-                      <label for="name">選擇設計師代表色</label>
+                      <label for="name">選擇設計師代表色：</label>
                       <input
                         type="color"
                         class="form-control"
@@ -141,7 +141,7 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="phone">電話/手機</label>
+                    <label for="phone">電話/手機：</label>
                     <input
                       type="text"
                       class="form-control"
@@ -152,7 +152,7 @@
                     />
                   </div>
                   <div class="form-group">
-                    <label for="instagram">Instagram</label>
+                    <label for="instagram">Instagram：</label>
                     <input
                       type="text"
                       class="form-control"
@@ -162,7 +162,7 @@
                     />
                   </div>
                   <div class="form-group">
-                    <label for="lineId">LineID</label>
+                    <label for="lineId">LineID：</label>
                     <input
                       type="text"
                       class="form-control"
@@ -173,7 +173,7 @@
                   </div>
                   <div class="form-row">
                     <div class="form-group col-md-6">
-                      <label for="account">帳號(請輸入E-mail)</label>
+                      <label for="account">帳號(請輸入E-mail)：</label>
                       <input
                         type="email"
                         class="form-control"
@@ -184,7 +184,7 @@
                       />
                     </div>
                     <div class="form-group col-md-6">
-                      <label for="password">密碼</label>
+                      <label for="password">密碼：</label>
                       <input
                         type="password"
                         class="form-control"
@@ -198,7 +198,7 @@
                   <div class="form-row"></div>
                   <hr />
                   <div class="form-group">
-                    <p for="description">自我介紹(20字以內)</p>
+                    <p for="description">自我介紹(20字以內)：</p>
                     <textarea
                       type="text"
                       class="form-control"
@@ -210,7 +210,7 @@
                     ></textarea>
                   </div>
                   <div class="form-group">
-                    <p for="description">我的專長/特色(120字以內)</p>
+                    <p for="description">我的專長/特色(120字以內)：</p>
                     <textarea
                       type="text"
                       class="form-control"
@@ -297,7 +297,7 @@
                 <div class="col-sm-8">
                   <div class="form-row">
                     <div class="form-group col-md-6">
-                      <label for="name">姓名</label>
+                      <label for="name">姓名：</label>
                       <input
                         type="text"
                         class="form-control"
@@ -307,7 +307,7 @@
                       />
                     </div>
                     <div class="form-group col-md-6">
-                      <label for="name">選擇設計師代表色</label>
+                      <label for="name">選擇設計師代表色：</label>
                       <input
                         type="color"
                         class="form-control"
@@ -341,7 +341,7 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="phone">電話/手機</label>
+                    <label for="phone">電話/手機：</label>
                     <input
                       type="text"
                       class="form-control"
@@ -351,7 +351,7 @@
                     />
                   </div>
                   <div class="form-group">
-                    <label for="instagram">Instagram</label>
+                    <label for="instagram">Instagram：</label>
                     <input
                       type="text"
                       class="form-control"
@@ -361,7 +361,7 @@
                     />
                   </div>
                   <div class="form-group">
-                    <label for="lineId">LineID</label>
+                    <label for="lineId">LineID：</label>
                     <input
                       type="text"
                       class="form-control"
@@ -372,7 +372,7 @@
                   </div>
                   <div class="form-row">
                     <div class="form-group col-md-6">
-                      <label for="account">帳號(請輸入E-mail)</label>
+                      <label for="account">帳號(請輸入E-mail)：</label>
                       <input
                         type="email"
                         class="form-control"
@@ -382,7 +382,7 @@
                       />
                     </div>
                     <div class="form-group col-md-6">
-                      <label for="password">密碼</label>
+                      <label for="password">密碼：</label>
                       <input
                         type="password"
                         class="form-control"
@@ -405,6 +405,7 @@
                         cols="30"
                         rows="4"
                         v-model="tempInfo.Summary"
+                        required
                       ></textarea>
                     </div>
                     <p for="description">自我介紹：(120字以內)</p>
@@ -416,6 +417,7 @@
                       cols="30"
                       rows="5"
                       v-model="tempInfo.Details"
+                      required
                     ></textarea>
                   </div>
                 </div>
@@ -484,6 +486,7 @@ export default {
       index: 1,
 
       loginStoreId: null,
+      stoken: '',
     };
   },
   methods: {
@@ -493,7 +496,6 @@ export default {
       getAllDesigner(this.loginStoreId).then((res) => {
         if (res.data.status) {
           this.tempDesginersInfo = res.data.TotalData;
-          console.log(this.tempDesginersInfo);
           this.isLoading = false;
         } else {
           this.isLoading = false;
@@ -507,7 +509,6 @@ export default {
       // this.tempInfo = {};
       getDesignerInfoBack(id).then((res) => {
         if (res.data.status) {
-          console.log('single', res);
           this.tempInfo = res.data;
           this.isLoading = false;
         }
@@ -542,7 +543,7 @@ export default {
           text: '輸入字數超過20個字',
         });
       } else {
-        postDesinger(this.loginStoreId, data).then((res) => {
+        postDesinger(this.loginStoreId, data, this.stoken).then((res) => {
           if (res.data.status) {
             this.successed(smsg);
           } else if (res.data.message === '帳號重複') {
@@ -600,11 +601,10 @@ export default {
           text: '輸入字數超過120個字',
         });
       } else {
-        putDesigner(data, dId).then((res) => {
+        putDesigner(data, dId, this.stoken).then((res) => {
           if (res.data.status) {
             this.successed(psmg);
           }
-          console.log('put', res);
         });
       }
     },
@@ -615,8 +615,7 @@ export default {
       const designerPhoto = this.$refs.files.files[0];
       const formData = new FormData();
       formData.append('file-to-upload', designerPhoto);
-      patchDesignerPhoto(dId, formData).then((res) => {
-        console.log('pic', res.data.status);
+      patchDesignerPhoto(dId, formData, this.stoken).then(() => {
         this.donewithUpload = false;
         this.getSingleInfoHandler(dId);
       });
@@ -650,9 +649,8 @@ export default {
       const data = this.$qs.stringify({
         WorkStatus: '0',
       });
-      patchDesignerStatus(data, dId).then(() => {
+      patchDesignerStatus(data, dId, this.stoken).then(() => {
         this.getInfoHandler();
-        // console.log(res);
       });
     },
 
@@ -696,6 +694,11 @@ export default {
     },
   },
   created() {
+    this.stoken = document.cookie.replace(
+      // eslint-disable-next-line no-useless-escape
+      /(?:(?:^|.*;\s*)storeToken\s*\=\s*([^;]*).*$)|^.*$/,
+      '$1',
+    );
     this.loginStoreId = JSON.parse(localStorage.getItem('storeDetails')).Id;
   },
   mounted() {
