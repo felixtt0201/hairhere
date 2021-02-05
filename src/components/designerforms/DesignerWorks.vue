@@ -386,7 +386,6 @@ export default {
       // eslint-disable-next-line no-plusplus
       for (let i = 0; i < this.$refs.files.files.length; i++) {
         this.images.push(this.$refs.files.files[i]);
-        console.log(this.images);
       }
     },
     uploadPhoto() {
@@ -399,10 +398,8 @@ export default {
           formData.append(`files[${i}]`, file);
         }
         postPhoto(formData).then((res) => {
-          console.log(formData);
           if (res.data.status) {
             this.images = [];
-            console.log(res);
             this.photosView = res.data.PhotoPathList;
             // eslint-disable-next-line prefer-destructuring
             this.formProduct.Photo1 = res.data.photoList[0];
@@ -411,8 +408,6 @@ export default {
             // eslint-disable-next-line prefer-destructuring
             this.formProduct.Photo3 = res.data.photoList[2];
             this.fileUploading = false;
-          } else {
-            console.log('error');
           }
         });
       } else {
@@ -436,9 +431,7 @@ export default {
     //       formData.append(index, element);
     //     }
     //     postPhoto(formData).then((res) => {
-    //       console.log(formData);
     //       if (res.data.status) {
-    //         console.log(res);
     //         this.photosView = res.data.PhotoPathList;
     //         // eslint-disable-next-line prefer-destructuring
     //         this.formProduct.Photo1 = res.data.photoList[0];
@@ -449,8 +442,6 @@ export default {
     //         // vm.$set(vm.formProduct, 'Photo1', res.data.PhotoPathList[0]);
     //         // vm.$set(vm.formProduct, 'Photo2', res.data.PhotoPathList[1]);
     //         // vm.$set(vm.formProduct, 'Photo3', res.data.PhotoPathList[2]);
-    //       } else {
-    //         console.log('error');
     //       }
     //     });
     //   }
@@ -464,7 +455,6 @@ export default {
     getPageHandler(page = 1) {
       this.isLoading = true;
       getDesignerWorks(this.storeId, this.loginId, page).then((res) => {
-        console.log(res);
         if (res.data.status) {
           this.comebackinfo = res.data.BasicData;
           this.pages = Math.ceil(res.data.Count / res.data.Limit);
@@ -490,16 +480,13 @@ export default {
     openModal(isNew, product) {
       $('#staticBackdrop').modal('show');
       if (isNew) {
-        console.log('new');
         this.formProduct = {};
         this.categoryCheckbox = [];
         this.isNew = true;
         this.$refs.files.value = ''; // 將files欄位清空
         this.fileUploading = false;
       } else {
-        console.log('old');
         this.formProduct = { ...product };
-        console.log(this.formProduct);
         this.photosView = '';
         this.desingerName = this.formProduct.DesignerName;
         this.categoryCheckbox = this.formProduct.Category.split(',');
@@ -540,7 +527,6 @@ export default {
           Photo3: this.formProduct.Photo3,
         });
         patchWork(this.formProduct.Id, data).then((res) => {
-          console.log(res);
           if (res.data.status) {
             this.getPageHandler();
             $('#staticBackdrop').modal('hide');

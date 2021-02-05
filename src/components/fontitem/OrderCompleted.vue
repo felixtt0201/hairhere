@@ -60,7 +60,6 @@
       </div>
       <div class="col-md-7 bg-accent">
         <div class="container p-5 completed-container">
-          <!-- <h4 class="mb-4 title-line">預約資訊</h4> -->
           <div class="pb-3">
             <h5 class="mb-3">預約時間</h5>
             <p>{{ orderTime.replace('T', ' ').replace(':00:00', ':00') }}</p>
@@ -130,7 +129,6 @@ export default {
     left: 0;
     height: 2px;
     top: 10px;
-    // background-color: $text-primary;
   }
   &:after {
     content: '';
@@ -139,7 +137,6 @@ export default {
     left: 70%;
     height: 2px;
     top: 10px;
-    // background-color: $text-primary;s
   }
 }
 .bg-accent {

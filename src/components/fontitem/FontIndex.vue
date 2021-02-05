@@ -233,11 +233,7 @@ export default {
   data() {
     return {
       swiperOptionTop: {
-        // effect: 'fade',
-        // centeredSlides: true,
-        // slidesPerGroup: 6,
         loop: true,
-        // loopFillGroupWithBlank: true,
         autoplay: {
           delay: 3000,
           disableOnInteraction: false,
@@ -270,10 +266,7 @@ export default {
         },
       },
       swiperOptionBot: {
-        // centeredSlides: true,
-        // slidesPerGroup: 6,
         loop: true,
-        // loopFillGroupWithBlank: true,
         autoplay: {
           delay: 5000,
           disableOnInteraction: false,

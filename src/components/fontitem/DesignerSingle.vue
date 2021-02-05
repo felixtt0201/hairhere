@@ -11,7 +11,6 @@
       <template slot="default"> <loadingitem></loadingitem></template
     ></loading>
     <div class="row justify-content-center">
-      <!-- <div class="col-md-1 border"></div> -->
       <div class="col-md-8 mb-4">
         <div class="row">
           <div
@@ -49,7 +48,6 @@
             alt=""
             class="designerWork-img"
           />
-          <!-- <div class="btn designerWork-btn">see</div> -->
         </router-link>
       </div>
     </div>
@@ -64,7 +62,6 @@
             ><i class="fas fa-chevron-left"></i>
           </a>
         </li>
-        <!-- pageLi -->
         <li
           class="page-item"
           v-for="page in pages"
@@ -73,7 +70,6 @@
         >
           <a class="page-link" href="#">{{ page }}</a>
         </li>
-        <!-- pageLi -->
         <li class="page-item" :class="{ disabled: index == pages }">
           <a
             class="page-link path"
@@ -112,7 +108,6 @@ export default {
     getInfoHandler(page = 1, limit = 6) {
       this.isLoading = true;
       getDesigner(this.designerId, page, limit).then((res) => {
-        console.log(res);
         this.designer = res.data;
         this.index = res.data.Portfolios.Index;
         this.designerWorks = this.designer.Portfolios.BasicData;
@@ -121,13 +116,11 @@ export default {
         );
         this.detail = res.data.Details.replace(/(?:\r\n|\r|\n)/g, '<br />');
         this.isLoading = false;
-        console.log(this.index);
       });
     },
   },
   created() {
     this.designerId = this.$route.params.id;
-    // console.log(this.designerId);
   },
   mounted() {
     this.getInfoHandler();
