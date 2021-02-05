@@ -64,5 +64,7 @@ router.beforeEach((to, from, next) => {
 
 // 轉頁後回到Top
 router.afterEach((to, from, next) => {
-  window.scrollTo(0, 0);
+  setTimeout(() => {
+    window.scrollTo(0, 0);
+  }, 1000);
 });
