@@ -194,11 +194,7 @@ const routes = [
 
 const router = new VueRouter({
   // mode: 'history',
-<<<<<<< HEAD
-  base: process.env.BASE_URL,
-=======
   // base: process.env.BASE_URL,
->>>>>>> f505558f098f5f5230b2c8e8f0967142678513be
   routes,
 });
 
