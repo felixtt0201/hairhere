@@ -19,7 +19,7 @@
             >電話<input
               type="tel"
               placeholder="請輸入電話號碼"
-              v-model.number="phone"
+              v-model="phone"
               required
           /></label>
           <hr />
