@@ -13,6 +13,7 @@
       <div class="input-group col-4">
         <select class="custom-select" v-model="desingerId">
           <option disabled value="">選擇設計師</option>
+          <option value="0">全部設計師</option>
           <option
             v-for="designer in designerInfo"
             :key="designer.Id"
@@ -213,7 +214,6 @@
                         :value="designer.Id"
                         >{{ designer.Name }}</option
                       >
-                      <option value="0">全部設計師</option>
                     </select>
                   </div>
                 </div>
