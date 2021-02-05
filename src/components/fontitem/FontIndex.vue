@@ -98,11 +98,11 @@
         <div class="col-md-10 text-main">
           <div class="row border-h70">
             <div class="col-md-3 index-infomation">
-              <h4>About us</h4>
+              <h4 class="font-weight-bold">About us</h4>
               <p>{{ basicData.Summary }}</p>
             </div>
             <div class="col-md-2 index-infomation">
-              <h4>服務項目</h4>
+              <h4 class="font-weight-bold">服務項目</h4>
               <ul>
                 <li>專業剪燙染護</li>
                 <li>頭皮養護</li>
@@ -112,7 +112,7 @@
               </ul>
             </div>
             <div class="col-md-4 index-infomation">
-              <h4>店家資訊</h4>
+              <h4 class="font-weight-bold">店家資訊</h4>
               <ul>
                 <li>聯絡電話 （07）{{ basicData.Phone }}</li>
                 <li class="d-flex flex-column">
@@ -125,14 +125,14 @@
                       business.StoreClose
                     }}
                     <span class="d-block"
-                      >（每週{{ dayof.replace(',', '、') }}公休）</span
+                      >（每週{{ dayof.replace(/(,|,|,)/g, '、') }}公休）</span
                     >
                   </p>
                 </li>
               </ul>
             </div>
             <div class="col-md-3 index-infomation">
-              <h4>Follow us</h4>
+              <h4 class="font-weight-bold">Follow us</h4>
               <ul>
                 <li>
                   <a :href="basicData.Facebook" class="follow-icon">

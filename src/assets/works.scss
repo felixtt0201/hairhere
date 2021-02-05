@@ -59,21 +59,19 @@
   &:hover {
     background-color: #d6997a;
     opacity: 0.7;
-    transition: 0.3s;
+    transition: all 0.3s;
     i {
       color: white;
+      transition: all 0.3s;
     }
   }
 }
 
 // hover test
 .size {
-  // border: 2px solid red !important;
   width: 300px;
-  // height: 300px;
   position: relative;
   padding: 10px;
-  margin: 15px;
 }
 .img-size {
   position: absolute;

@@ -28,7 +28,7 @@
             ><input
               type="checkbox"
               id="c1"
-              value="男"
+              value="男生"
               v-model="list"
             />男生</label
           >
@@ -36,7 +36,7 @@
             ><input
               type="checkbox"
               id="c2"
-              value="女"
+              value="女生"
               v-model="list"
             />女生</label
           >
@@ -95,7 +95,7 @@
       </div>
     </div>
     <div class="container">
-      <h3 class="title-line w-100 text-center mt-5 mb-5 works-text-line">
+      <h3 class="title-line w-100 text-center mt-5 mb-4 works-text-line">
         作品集
       </h3>
       <div class="row img-center">
