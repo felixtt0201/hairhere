@@ -33,9 +33,6 @@
             <i class="fab fa-facebook-square mr-2"></i>
             <p class="mb-0">{{ storeName }} Hair Salon</p></a
           >
-          <router-link class="ml-5" to="/login"
-            ><i class="fas fa-cog"></i
-          ></router-link>
         </div>
       </div>
     </footer>

@@ -65,14 +65,6 @@ const routes = [
     ],
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import('../views/About.vue'),
-  },
-  {
     path: '/Login',
     name: 'login',
     component: () => import('../components/Login.vue'),
@@ -175,12 +167,6 @@ const routes = [
         name: 'ReservationBack',
         meta: { requiresAuth: true },
         component: () => import('../components/forms/ReservationBack.vue'),
-      },
-      {
-        path: 'vaction',
-        name: 'Vaction',
-        meta: { requiresAuth: true },
-        component: () => import('../components/forms/Vaction.vue'),
       },
       {
         path: 'historicalOrders',

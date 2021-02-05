@@ -125,7 +125,9 @@
                       business.StoreClose
                     }}
                     <span class="d-block"
-                      >（每週{{ dayof.replace(/(,|,|,)/g, '、') }}公休）</span
+                      >（每週{{
+                        dayof.replace(/(,|,|,)/g, '、').replace('6', '六')
+                      }}公休）</span
                     >
                   </p>
                 </li>
