@@ -355,19 +355,16 @@ export default {
   background: #000000;
   overflow: hidden;
   transition: all 0.3s ease-in-out;
+  width: auto;
+  height: 100%;
   img {
-    // position: relative;
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
+    display: block;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
     transition: all 0.5s;
     z-index: 1;
     will-change: transform;
-    width: 100%;
-    height: 100%;
-    vertical-align: middle;
     border-style: none;
   }
   &:hover {
