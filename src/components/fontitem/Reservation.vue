@@ -18,7 +18,6 @@
               <p class="mb-0">1. 選擇服務項目</p>
               <p class="mb-0">2. 選擇預約時間</p>
               <p class="mb-0">3. 填寫顧客資訊</p>
-              <!-- 1.選擇服務項目<br />2. 選擇預約時間<br />3. 填寫顧客資訊 -->
             </li>
             <li>確認預約資訊</li>
             <li>預約完成</li>
@@ -104,7 +103,6 @@
             >
             </date-picker>
           </div>
-          <!-- 選擇日期後篩選出空閑時間 -->
         </template>
         <ul class="d-flex justify-content-between">
           <li
@@ -122,7 +120,6 @@
           </li>
         </ul>
       </div>
-      <!-- 顧客資訊 -->
       <div class="container bg-reservation ">
         <div class="information pt-3">
           <h4 class="title-line text-center mb-4">顧客資訊</h4>
@@ -157,7 +154,6 @@ import 'vue2-datepicker/index.css';
 import {
   getDesigner,
   getStoreProductList,
-  // postOrder,
   getFreetime,
 } from '@/js/FontAppServices';
 import loadingitem from '../dashboarditem/loadingitem.vue';
@@ -172,7 +168,7 @@ export default {
       // 日曆--
       time1: null,
       showTimePanel: false,
-      // 日曆--
+
       designer: {}, // 單一設計師詳細
       products: [], // 遠端撈回的服務項目
       checklist: [], // 加入勾選項目的位置
@@ -211,7 +207,6 @@ export default {
       this.showTimePanel = false;
     },
     notBeforeToday(date) {
-      console.log(date);
       return (
         date < new Date(new Date().setHours(0, 0, 0, 0)) || date.getDay() === 6
       );
@@ -219,43 +214,26 @@ export default {
     getDesignerHandler() {
       this.isLoading = true;
       getDesigner(this.listId).then((res) => {
-        console.log(res);
         this.designer = res.data;
         this.OrderDate = res.data.OrderDate;
         this.reDetails = res.data.Details.replace(/(?:\r\n|\r|\n)/g, '<br />');
         this.isLoading = false;
       });
     },
-    // 測試點選時間回傳值
     selectDate() {
       getFreetime(this.listId, this.time1).then((res) => {
-        // if(this.time1)
-        console.log(res);
         this.freeTimeList = res.data.FreeTimeList;
-        // console.log(this.freeTimeList);
       });
     },
     selectTime(selecTime, index) {
       this.orderTime = selecTime;
-      console.log(this.orderTime);
       this.isActive = index; // 用來裝上點選效果
     },
     getProductHandler() {
       getStoreProductList().then((res) => {
-        console.log(res);
         this.products = res.data.OrderDetails;
       });
     },
-    // selectsingle(id) {
-    //   this.products.forEach((item) => {
-    //     if (item.Id === id) {
-    //       this.checklist.push(item);
-    //       console.log(this.checklist);
-    //     } else {
-    //       console.log('false');
-    //     }
-    //   });
-    // },
     addList() {
       const data2 = JSON.stringify({
         OrderTime: this.orderTime,
@@ -306,7 +284,7 @@ export default {
     },
   },
   created() {
-    this.listId = this.$route.params.listId; // 抓取參數
+    this.listId = this.$route.params.listId;
     this.getDesignerHandler();
     this.getProductHandler();
     this.patchList();

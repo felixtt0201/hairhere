@@ -29,7 +29,6 @@
             class="w-50 border-left"
             v-html="designer.Summary.replace(/(?:\r\n|\r|\n)/g, '<br />')"
           ></p>
-          <!-- routerlink連結至預約頁面 -->
           <router-link
             :to="`/reservationF/${designer.Id}`"
             class="btn rounded-0 designer-btn"
@@ -41,8 +40,6 @@
           class="col-md-4 photo-size btn-viewmore"
           :style="{ backgroundImage: `url(${designer.Portfolio.Photo1})` }"
         >
-          <!-- :style="{ backgroundImage: `url(${designer.Portfolio.Photo1})` }" -->
-          <!-- routerlink連結至設計師個人 -->
           <router-link
             :to="`/designerSingle/${designer.Id}`"
             class="btn designer-btn a rounded-0 mb-4"
@@ -52,8 +49,6 @@
           </router-link>
         </div>
       </div>
-
-      <!-- 分頁 -->
       <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center mt-3">
           <li class="page-item" :class="{ disabled: index == 1 }">
@@ -65,7 +60,6 @@
               ><i class="fas fa-chevron-left"></i>
             </a>
           </li>
-          <!-- pageLi -->
           <li
             class="page-item"
             v-for="page in pages"
@@ -74,7 +68,6 @@
           >
             <a class="page-link" href="#">{{ page }}</a>
           </li>
-          <!-- pageLi -->
           <li class="page-item" :class="{ disabled: index == pages }">
             <a
               class="page-link path"
@@ -110,12 +103,9 @@ export default {
   methods: {
     getInfoHandler(page = 1, limit = 6) {
       getAllDesignerPage(page, limit).then((res) => {
-        console.log(res);
         this.index = res.data.Index;
         this.designers = res.data.BasicData;
         this.pages = Math.ceil(res.data.Count / res.data.Limit);
-        console.log('pages', this.pages, typeof this.pages);
-        console.log(this.index);
         this.isLoading = false;
       });
     },
@@ -129,7 +119,6 @@ export default {
 <style lang="scss" scoped>
 .photo-size {
   background-color: #e0e0e0;
-  // background-attachment: fixed;
   opacity: 1;
   &:hover {
     transition: all 0.5s;

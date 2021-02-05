@@ -142,7 +142,6 @@
 
 <script>
 import { getworkss, searchworks } from '@/js/FontAppServices';
-// import $ from 'jquery';
 import loadingitem from '../dashboarditem/loadingitem.vue';
 
 export default {
@@ -162,7 +161,6 @@ export default {
     };
   },
   watch: {
-    // 如果 `question` 发生改变，这个函数就会运行
     list() {
       this.searchItem();
     },

@@ -126,7 +126,6 @@ export default {
       });
       postOrderInfo(data).then((res) => {
         if (res.data.status) {
-          console.log(res.data.BasicData);
           this.orderInfo = res.data.BasicData;
           this.showTime = this.orderInfo[0].OrderTime;
           $('#orderDetailInfo').modal('show');

@@ -279,7 +279,6 @@ export default {
 
     // 開啟Modal 並把api的訊息存到data中的dateClickEvent
     openModal(e) {
-      // console.log('openModel', e.dayEl.className);
       this.reservationInfo = {};
       if (e.dayEl.classList.contains('fc-BeforeDay')) {
         alert('過去日期不能預約');
@@ -323,14 +322,12 @@ export default {
       this.reservationInfo = Object.assign({}, e.evnet);
       this.reservationInfo.cName = e.event.title;
       this.reservationInfo.cTel = e.event.extendedProps.tel;
-      // console.log(e.event.extendedProps);
       $('#reservationModal').modal('show');
     },
 
     // 編輯預約資訊
     updateInfo() {
       const selectedInfo = this.eventClickEvent;
-      console.log(selectedInfo);
       selectedInfo.refetchEvents({
         title: this.reservationInfo.cName,
         start: this.dateClickEvent.dateStr,

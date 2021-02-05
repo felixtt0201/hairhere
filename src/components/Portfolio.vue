@@ -31,7 +31,6 @@
         </div>
       </div>
     </div>
-    <!-- 作品資訊 -->
     <div class="row row-cols-1 row-cols-md-3 mt-4">
       <div class="col mb-4" v-for="product in comebackinfo" :key="product.Id">
         <div class="card h-100 border-0 shadow-sm">
@@ -89,7 +88,6 @@
         <span class="text">新增作品</span>
       </button>
     </div>
-    <!---分頁-->
     <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center">
         <li class="page-item" :class="{ disabled: index == 1 }">
@@ -101,7 +99,6 @@
             ><i class="fas fa-chevron-left"></i>
           </a>
         </li>
-        <!-- pageLi -->
         <li
           class="page-item"
           v-for="page in pages"
@@ -110,7 +107,6 @@
         >
           <a class="page-link" href="#">{{ page }}</a>
         </li>
-        <!-- pageLi -->
         <li class="page-item" :class="{ disabled: index == pages }">
           <a
             class="page-link path myPagination"
@@ -152,17 +148,6 @@
               <div class="row">
                 <div class="col-md-4">
                   <h2>作品照片</h2>
-                  <!-- <input
-                    type="file"
-                    class="form-control mb-3"
-                    ref="files"
-                    multiple
-                    @change="uploadPhoto"
-                  />
-                  <span class="text-danger"
-                    >*格式限制JPG/PNG,一次多張,至多三張</span
-                  > -->
-                  <!-- new uploadPhoto -->
                   <span>選擇上傳照片</span>
                   <div>
                     <input
@@ -183,8 +168,6 @@
                     </button>
                   </div>
                   <p class="text-danger">*格式限制JPG/PNG,一次多張,至多三張</p>
-
-                  <!-- end new uploadPhoto -->
                 </div>
                 <div class="img-view">
                   <h4 class="ml-3 mt-3" v-if="photosView != 0">圖片預覽</h4>
@@ -368,8 +351,6 @@
         </div>
       </div>
     </form>
-
-    <!--Modal-->
   </div>
 </template>
 
@@ -419,7 +400,6 @@ export default {
     };
   },
   methods: {
-    // 測試選擇圖片
     selectPhoto() {
       // eslint-disable-next-line no-plusplus
       for (let i = 0; i < this.$refs.files.files.length; i++) {

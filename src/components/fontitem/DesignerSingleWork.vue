@@ -35,7 +35,6 @@
       <div class="row justify-content-center">
         <div class="col-md-10">
           <div class="row d-flex align-items-md-center mb-4">
-            <!-- Carsouel -->
             <div class="col-md-9">
               <template>
                 <div class="thumb-example">
@@ -63,14 +62,6 @@
                         backgroundImage: `url(${workDetail.Photo3Path})`,
                       }"
                     ></swiper-slide>
-                    <!-- <div
-                      class="swiper-button-next swiper-button-white"
-                      slot="button-next"
-                    ></div>
-                    <div
-                      class="swiper-button-prev swiper-button-white"
-                      slot="button-prev"
-                    ></div> -->
                   </swiper>
                   <!-- swiper2 Thumbs -->
                   <swiper
@@ -97,14 +88,6 @@
                       }"
                     >
                     </swiper-slide>
-                    <!-- <div
-                      class="swiper-button-next swiper-button-white"
-                      slot="button-next"
-                    ></div>
-                    <div
-                      class="swiper-button-prev swiper-button-white"
-                      slot="button-prev"
-                    ></div> -->
                   </swiper>
                 </div>
               </template>
@@ -112,7 +95,6 @@
             <div class="col-md-3">
               <h4 class="mb-4">{{ workDetail.Name }}</h4>
               <p class="mb-5 border-left" v-html="reWorkSummary">
-                <!-- {{ workDetail.Summary }} -->
               </p>
               <ul class="">
                 <li class="designer-tag" v-for="tag in category" :key="tag">
@@ -149,10 +131,6 @@ export default {
         loop: true,
         loopedSlides: 3, // looped slides should be the same
         spaceBetween: 10,
-        // navigation: {
-        //   nextEl: '.swiper-button-next',
-        //   prevEl: '.swiper-button-prev',
-        // },
       },
       swiperOptionThumbs: {
         loop: true,
@@ -166,7 +144,6 @@ export default {
       // carsouel-----
       workId: '', // params接到的id
       workDetail: '', // get到的作品詳細資料
-      // designerId: '',
       designerDetail: '', // get到的設計師詳細資料
       category: [], // get分類
       reDesignerDetails: '',

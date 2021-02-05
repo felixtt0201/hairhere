@@ -118,7 +118,6 @@ export default {
     getInfoHandler() {
       const getorder = JSON.parse(sessionStorage.getItem('list'));
       this.orderDetails = getorder;
-      console.log(this.orderDetails);
       this.orderTime = this.orderDetails.OrderTime;
       this.designerId = this.orderDetails.DesignerId;
     },
@@ -126,7 +125,6 @@ export default {
     submitOrder() {
       const data = this.$qs.stringify(this.orderDetails);
       postOrder(data).then((res) => {
-        console.log(res);
         if (res.data) {
           this.orderId = res.data.orderId;
           this.$router.push(`/orderCompleted/${this.orderId}`);
@@ -137,7 +135,6 @@ export default {
     // 回上一步修改資料
     BackToList() {
       this.$router.push(`/reservationF/${this.designerId}`);
-      // console.log(this.designerId);
     },
   },
   created() {
