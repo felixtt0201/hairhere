@@ -13,12 +13,15 @@
     </div>
     <ul class="row row-cols-1 row-cols-md-4">
       <li class="col mb-4" v-for="item in tempDesginersInfo" :key="item.Id">
-        <div class="card h-100 border-0 shadow-sm photobody">
-          <img
-            :src="item.PicturePath"
-            class="card-img-top photoinside"
-            alt=""
-          />
+        <div class="card h-100 border-0 shadow-sm">
+          <div class="photobody">
+            <img
+              :src="item.PicturePath"
+              class="card-img-top photoinside"
+              alt=""
+            />
+          </div>
+
           <div class="card-body">
             <h5 class="card-title text-center">{{ item.Name }}</h5>
           </div>
@@ -733,5 +736,33 @@ export default {
 }
 .file {
   position: relative;
+}
+.photobody {
+  position: relative;
+  display: block;
+  background: #000000;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+
+  width: auto;
+  height: 100%;
+  // width: 150px;
+  // height: 200px;
+  // position: relative;
+  // overflow: hidden
+}
+.photoinside {
+  display: block;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  // position: relative;
+  transition: all 0.5s;
+  z-index: 1;
+  will-change: transform;
+  // width: 100%;
+  // height: auto;
+  // vertical-align: middle;
+  border-style: none;
 }
 </style>

@@ -4,14 +4,14 @@
     id="accordionSidebar"
   >
     <!-- Sidebar - Brand -->
-    <a
+    <router-link
       class="sidebar-brand d-flex align-items-center justify-content-center"
-      href="#"
+      :to="{ name: 'Dashboard' }"
     >
       <div class="sidebar-brand-icon rotate-n-15">
         <i class="fas fa-cut"></i>
       </div>
-    </a>
+    </router-link>
     <!-- Divider -->
     <hr class="sidebar-divider" />
 

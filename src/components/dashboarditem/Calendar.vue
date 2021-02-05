@@ -14,6 +14,7 @@
       <div class="input-group col-4">
         <select class="custom-select" v-model="selectId">
           <option disabled value="">選擇設計師</option>
+          <option value="0">全部</option>
           <option
             v-for="Designer in totalDesignerInfo"
             :key="Designer.Id"
