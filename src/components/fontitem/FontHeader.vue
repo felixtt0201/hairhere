@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container mb-3">
     <nav class="navbar navbar-expand-md navbar-light nav-h">
       <a class="navbar-brand" href="#">
         <h1
@@ -72,10 +72,4 @@
 export default {};
 </script>
 
-<style scoped>
-/* .yourDivClass {
-  background: url('/../../assets/logo.png"') no-repeat center center / cover;
-
-  z-index: 9999999;
-} */
-</style>
+<style></style>

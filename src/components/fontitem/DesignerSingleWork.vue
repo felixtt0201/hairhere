@@ -12,7 +12,7 @@
     ></loading>
     <div class="row justify-content-center">
       <div class="col-md-8 mb-4 desingerInfo">
-        <div class="row w-80">
+        <div class="row w-90">
           <div
             class="col-md-6 photo-size"
             :style="{ backgroundImage: `url(${designerDetail.PicturePath})` }"
