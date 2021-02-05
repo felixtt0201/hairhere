@@ -641,7 +641,7 @@ export default {
             icon: 'success',
             position: 'center',
           }).then(() => {
-            // this.getPageHandler();
+            this.getPageHandler();
           });
         }
       });
