@@ -415,7 +415,7 @@ import $ from 'jquery';
 export default {
   data() {
     return {
-      isLoading: false,
+      isLoading: true,
       fullPage: true,
 
       servicesInfo: [],
@@ -482,7 +482,7 @@ export default {
 
     // 取得全部帳單
     getAllBillList() {
-      this.isLoading = true;
+      // this.isLoading = true;
       this.addServicesInfo = [];
       this.checkInfo = {};
       // this.getServicesInfo();
@@ -556,7 +556,6 @@ export default {
       if (this.addServicesInfo.length > 0) {
         postBill(data, this.stoken).then((res) => {
           if (res.data.status) {
-            console.log('check', res);
             this.successedMessage();
           } else {
             this.$swal({
@@ -586,15 +585,12 @@ export default {
         cancelButtonText: '取消',
       }).then((result) => {
         if (result.isConfirmed) {
-          $('#checkoutMoadel').modal('hide');
-          this.$swal(
-            {
-              icon: 'success',
-              title: '成功取消此筆帳單',
-              timer: 1500,
-            },
-            this.patchStatusHandler(billId),
-          );
+          this.patchStatusHandler(billId);
+          $('#editModal').modal('hide');
+          this.$swal({
+            icon: 'success',
+            title: '成功取消此筆帳單',
+          });
         }
       });
     },
@@ -658,9 +654,9 @@ export default {
   },
   mounted() {
     if (localStorage.getItem('selectOrderId')) {
-      getOrderDetail(this.$route.params.id).then((res) => {
+      this.isLoading = false;
+      getOrderDetail(localStorage.getItem('selectOrderId')).then((res) => {
         localStorage.removeItem('selectOrderId');
-        // console.log(res);
         if (res.data.status) {
           this.getServicesInfo();
           this.getDesignersInfo();

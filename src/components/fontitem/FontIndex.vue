@@ -322,7 +322,6 @@ export default {
         this.business = res.data.Business;
         this.services = res.data.ServicesPublic;
         this.dayof = this.business.RestDayOfWeek.toString();
-        console.log(this.dayof.replace(',', '、'));
       });
     },
     getAllworks() {
@@ -335,7 +334,6 @@ export default {
       getAllDesigner().then((res) => {
         this.designers = res.data.BasicData;
         this.isLoading = false;
-        console.log(res);
       });
     },
   },

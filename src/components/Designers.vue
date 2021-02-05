@@ -13,8 +13,12 @@
     </div>
     <ul class="row row-cols-1 row-cols-md-4">
       <li class="col mb-4" v-for="item in tempDesginersInfo" :key="item.Id">
-        <div class="card h-100 border-0 shadow-sm">
-          <img :src="item.PicturePath" class="card-img-top" alt="" />
+        <div class="card h-100 border-0 shadow-sm photobody">
+          <img
+            :src="item.PicturePath"
+            class="card-img-top photoinside"
+            alt=""
+          />
           <div class="card-body">
             <h5 class="card-title text-center">{{ item.Name }}</h5>
           </div>
@@ -626,7 +630,6 @@ export default {
           });
           this.getSingleInfoHandler(dId);
         }
-        console.log(res);
         // this.tempInfo.PicturePath = '';
         // this.tempInfo.PicturePath = `https://salon.rocket-coding.com/UpFiles/Images/${res.data.Picture}`;
       });

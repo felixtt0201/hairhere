@@ -223,12 +223,14 @@
                       required
                     >
                       <option disabled value="">選擇設計師</option>
+
                       <option
                         v-for="designer in designerInfo"
                         :key="designer.Id"
                         :value="designer.Id"
                         >{{ designer.Name }}</option
                       >
+                      <option value="0">全部設計師</option>
                     </select>
                   </div>
                 </div>
@@ -471,12 +473,12 @@ export default {
         this.comebackinfo = res.data.BasicData;
         this.status = true;
         this.index = res.data.Index;
-        console.log('全', this.comebackinfo, '總', this.pages, '目前', page);
         this.isLoading = false;
       });
     },
     searchWorksHandler(desingerId, page = 1) {
-      this.isLoading = true;
+      // this.isLoading = true;
+      // eslint-disable-next-line no-param-reassign
       getDesignerWorks(this.loginStoreId, desingerId, page).then((res) => {
         if (res.data.status) {
           this.pages = Math.ceil(res.data.Count / res.data.Limit);
@@ -485,15 +487,6 @@ export default {
           this.index = res.data.Index;
           localStorage.setItem('nowPage', this.pages);
           this.desingerId = desingerId;
-
-          console.log(
-            '搜索',
-            this.comebackinfo,
-            '總',
-            this.pages,
-            '目前',
-            page,
-          );
           this.isLoading = false;
         } else {
           this.$swal({
@@ -538,19 +531,15 @@ export default {
     openModal(isNew, product) {
       $('#staticBackdrop').modal('show');
       if (isNew) {
-        console.log('new');
         this.formProduct = {};
         this.categoryCheckbox = [];
         this.isNew = true;
         this.$refs.files.value = ''; // 將files欄位清空
-        console.log(this.$refs.files.value);
         this.desingerName = '';
         this.fileUploading = false;
       } else {
         this.isNew = false;
-        console.log('old');
         this.formProduct = { ...product };
-        console.log(this.formProduct);
         this.photosView = '';
         this.desingerName = this.formProduct.DesignerName;
         this.categoryCheckbox = this.formProduct.Category.split(',');
@@ -596,7 +585,6 @@ export default {
         patchWork(this.formProduct.Id, data, this.stoken).then((res) => {
           if (res.data.status) {
             const page = JSON.parse(localStorage.getItem('nowPage'));
-            console.log(res);
             $('#staticBackdrop').modal('hide');
             this.$swal({
               icon: 'success',
@@ -609,7 +597,6 @@ export default {
                 page,
               ).then((response) => {
                 if (response.data.status) {
-                  console.log('resp', response);
                   this.comebackinfo = response.data.BasicData;
                   this.isLoading = false;
                 } else {

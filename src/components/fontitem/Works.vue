@@ -177,7 +177,6 @@ export default {
     },
     getHandlerInfo(page = 1) {
       getworkss(page).then((res) => {
-        console.log(res);
         this.pages = Math.ceil(res.data.Count / res.data.Limit);
         this.worksarray = res.data.BasicData;
         this.status = true;
@@ -191,7 +190,6 @@ export default {
         if (res.data.status) {
           this.pages = Math.ceil(res.data.Count / res.data.Limit);
           this.worksarray = res.data.BasicData;
-          console.log('分類', this.worksarray, this.pages, page);
           this.status = false;
           this.index = res.data.Index;
         } else {

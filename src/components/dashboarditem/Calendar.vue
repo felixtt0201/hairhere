@@ -42,7 +42,6 @@
         role="dialog"
         aria-labelledby="reservationModal"
         aria-hidden="true"
-        @keydown.esc="cancelMouseEvnetHandler"
       >
         <div class="modal-dialog modal-lg container" role="document">
           <div class="modal-content border-0">
@@ -368,7 +367,6 @@ export default {
     // 搜尋訂單
     searchInfoHandler(selectId) {
       getOrderListbyDesinger(selectId, this.stoken).then((res) => {
-        console.log('sear', res);
         if (res.data.status) {
           this.calendarOptions.events = [];
           this.OrderInfo = res.data.BasicData;
@@ -495,7 +493,10 @@ export default {
       this.isLoading = false;
       this.reservationInfo = {};
       if (e.dayEl.classList.contains('fc-BeforeDay')) {
-        alert('過去日期不能預約');
+        this.$swal({
+          title: '過去日期不能預約',
+          icon: 'warning',
+        });
       } else {
         $('#reservationModal').modal('show');
         this.dateClickEvent = e;
@@ -549,17 +550,7 @@ export default {
         OrderStatus: '0',
         Remark: '修改成功',
       });
-      patchOrderDetailStatus(this.selectOrderId, data, this.stoken).then(
-        (res) => {
-          if (res.data.status) {
-            console.log(res);
-          }
-        },
-      );
-    },
-
-    cancelMouseEvnetHandler() {
-      this.dateClickEvent.view.calendar.unselect();
+      patchOrderDetailStatus(this.selectOrderId, data, this.stoken);
     },
   },
   created() {
