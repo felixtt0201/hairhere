@@ -177,15 +177,11 @@ export default {
     getInfoHandler() {
       this.isLoading = true;
       getSingleWork(this.workId).then((res) => {
-        console.log(res);
         this.workDetail = res.data.BasicData;
-        console.log(this.workDetail);
         this.category = this.workDetail.Category;
         const designerId = this.workDetail.DesignerId;
         this.slides = this.workDetail.PathArray;
-        console.log(this.slides);
         getDesigner(designerId).then((response) => {
-          console.log(response);
           this.designerDetail = response.data;
           this.reDesignerDetails = response.data.Details.replace(
             /(?:\r\n|\r|\n)/g,

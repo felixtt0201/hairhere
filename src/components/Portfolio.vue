@@ -94,7 +94,7 @@
       <ul class="pagination justify-content-center">
         <li class="page-item" :class="{ disabled: index == 1 }">
           <a
-            class="page-link path"
+            class="page-link path myPagination"
             href="#"
             aria-label="Previous"
             @click.prevent="changePage(index - 1)"
@@ -113,7 +113,7 @@
         <!-- pageLi -->
         <li class="page-item" :class="{ disabled: index == pages }">
           <a
-            class="page-link path"
+            class="page-link path myPagination"
             href="#"
             aria-label="Next"
             @click="changePage(index + 1)"
@@ -241,7 +241,7 @@
                       type="checkbox"
                       class="custom-control-input"
                       id="male"
-                      value="男"
+                      value="男生"
                       name="Category"
                       ref="cat"
                       v-model="categoryCheckbox"
@@ -253,7 +253,7 @@
                       type="checkbox"
                       class="custom-control-input"
                       id="female"
-                      value="女"
+                      value="女生"
                       name="Category"
                       ref="cat"
                       v-model="categoryCheckbox"
@@ -680,5 +680,8 @@ select {
     width: 200px;
     height: 200px;
   }
+}
+.myPagination {
+  border-radius: 15px 15px 15px 15px !important;
 }
 </style>

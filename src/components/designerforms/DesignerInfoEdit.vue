@@ -248,7 +248,6 @@ export default {
     // 取的設計師資料
     getInfo() {
       getDesignerInfoBack(this.dId).then((res) => {
-        console.log('singleDes', res.data);
         this.designerInfo = res.data;
         this.reSummary = res.data.Summary.replace(/(?:\r\n|\r|\n)/g, '<br />');
         this.reDetails = res.data.Details.replace(/(?:\r\n|\r|\n)/g, '<br />');
@@ -295,8 +294,7 @@ export default {
       const designerPhoto = this.$refs.files.files[0];
       const formData = new FormData();
       formData.append('file-to-upload', designerPhoto);
-      patchDesignerPhoto(this.dId, formData).then((res) => {
-        console.log('pic', res);
+      patchDesignerPhoto(this.dId, formData).then(() => {
         this.donewithUpload = false;
         this.getInfo();
       });

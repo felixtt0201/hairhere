@@ -9,7 +9,7 @@
       href="#"
     >
       <div class="sidebar-brand-icon rotate-n-15">
-        <i class="fas fa-wheelchair"></i>
+        <i class="fas fa-cut"></i>
       </div>
     </a>
     <!-- Divider -->

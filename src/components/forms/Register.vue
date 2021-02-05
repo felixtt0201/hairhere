@@ -133,7 +133,6 @@ export default {
         } else {
           this.successMessage();
         }
-        console.log(res);
       });
     },
 

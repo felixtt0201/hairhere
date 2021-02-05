@@ -241,11 +241,11 @@ export default {
     getSingInfo(cId) {
       getSingleBill(cId, this.stoken).then((res) => {
         this.singleCheckInfo = res.data.BasicData;
-        this.date = this.singleCheckInfo.OrderTime.replace('T', ' ').replace(
+        this.date = this.singleCheckInfo.OrderTime?.replace('T', ' ').replace(
           '00:00:00',
           ' ',
         );
-        this.bDay = this.singleCheckInfo.CustomerBirthday.replace(
+        this.bDay = this.singleCheckInfo.CustomerBirthday?.replace(
           'T',
           ' ',
         ).replace('00:00:00', ' ');
@@ -272,7 +272,6 @@ export default {
         DesignerId: this.dId,
       });
       postCheckInfo(data, this.stoken).then((res) => {
-        console.log(res.data);
         if (res.data.status) {
           this.totalCheckInfo = res.data.BasicData;
           this.customerName = '';
