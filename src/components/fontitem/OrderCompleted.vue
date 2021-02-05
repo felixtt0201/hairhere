@@ -44,11 +44,11 @@
                 <p>手機號碼</p>
                 <p>{{ orderDetails.CustomerPhone }}</p>
               </li>
-              <li class="d-flex" v-if="!orderDetails.CustomerIntroducer">
+              <li class="d-flex" v-if="orderDetails.CustomerIntroducer">
                 <p>介紹人</p>
                 <p>{{ orderDetails.CustomerIntroducer }}</p>
               </li>
-              <li class="d-flex" v-if="!orderDetails.StoreRemark">
+              <li class="d-flex" v-if="orderDetails.CustomerRemark">
                 <p>備註事項</p>
                 <p>
                   {{ orderDetails.CustomerRemark }}

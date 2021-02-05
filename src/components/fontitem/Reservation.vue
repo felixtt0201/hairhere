@@ -130,7 +130,7 @@
             <label for="name">預約姓名</label
             ><input type="name" id="name" v-model.trim="name" required />
             <label for="tel">手機號碼</label
-            ><input type="tel" id="tel" v-model.number="tel" required />
+            ><input type="tel" id="tel" v-model="tel" required />
             <label for="text">介紹人</label
             ><input type="text" id="text" v-model="text" />
             <label for="remarks">備註事項</label>
@@ -211,9 +211,11 @@ export default {
       this.showTimePanel = false;
     },
     notBeforeToday(date) {
-      return date < new Date(new Date().setHours(0, 0, 0, 0));
+      console.log(date);
+      return (
+        date < new Date(new Date().setHours(0, 0, 0, 0)) || date.getDay() === 6
+      );
     },
-    //
     getDesignerHandler() {
       this.isLoading = true;
       getDesigner(this.listId).then((res) => {
@@ -227,7 +229,8 @@ export default {
     // 測試點選時間回傳值
     selectDate() {
       getFreetime(this.listId, this.time1).then((res) => {
-        // console.log(res);
+        // if(this.time1)
+        console.log(res);
         this.freeTimeList = res.data.FreeTimeList;
         // console.log(this.freeTimeList);
       });
@@ -256,6 +259,7 @@ export default {
     addList() {
       const data2 = JSON.stringify({
         OrderTime: this.orderTime,
+        Time: this.time1,
         StoreRemark: '',
         DesignerId: this.listId,
         DesignerName: this.designer.Name,
@@ -278,7 +282,6 @@ export default {
         });
       } else {
         sessionStorage.setItem('list', data2);
-        console.log(data2);
         this.$router.push('/confirm');
       }
     },
@@ -286,7 +289,7 @@ export default {
     patchList() {
       if (sessionStorage.getItem('list') != null) {
         const getorder = JSON.parse(sessionStorage.getItem('list'));
-        console.log(getorder);
+        this.time1 = getorder.Time;
         this.orderTime = getorder.OrderTime;
         this.listId = getorder.DesignerId;
         this.designer.Name = getorder.DesignerName;

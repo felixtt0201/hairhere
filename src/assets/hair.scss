@@ -41,11 +41,19 @@ body {
 .nav-h {
   height: 100px !important;
 }
+.navbar-nav {
+  font-size: 22px;
+}
+.navbar-brand {
+  width: 200px;
+  height: 100px;
+}
 .img-position--center {
   background-position: center center;
-  background-size: cover;
-  height: 50px;
-  width: 112px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 100%;
+  width: 100%;
   margin-left: 24px;
 }
 .border-bottom {
