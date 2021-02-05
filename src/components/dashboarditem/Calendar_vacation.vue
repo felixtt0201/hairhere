@@ -323,14 +323,12 @@ export default {
       this.reservationInfo = Object.assign({}, e.evnet);
       this.reservationInfo.cName = e.event.title;
       this.reservationInfo.cTel = e.event.extendedProps.tel;
-      // console.log(e.event.extendedProps);
       $('#reservationModal').modal('show');
     },
 
     // 編輯預約資訊
     updateInfo() {
       const selectedInfo = this.eventClickEvent;
-      console.log(selectedInfo);
       selectedInfo.refetchEvents({
         title: this.reservationInfo.cName,
         start: this.dateClickEvent.dateStr,

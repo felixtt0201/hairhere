@@ -533,9 +533,7 @@ export default {
         OrderStatus: '0',
         Remark: '修改成功',
       });
-      patchOrderDetailStatus(this.selectOrderId, data).then((res) => {
-        console.log(res);
-      });
+      patchOrderDetailStatus(this.selectOrderId, data).then(() => {});
     },
 
     cancelMouseEvnetHandler() {

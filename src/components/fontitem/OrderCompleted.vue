@@ -107,10 +107,8 @@ export default {
   methods: {
     getInfoHandler() {
       getOrder(this.orderId).then((res) => {
-        console.log(res);
         this.orderDetails = res.data.BasicData;
         this.orderTime = this.orderDetails.OrderTime;
-        console.log(this.orderDetails);
       });
     },
   },
