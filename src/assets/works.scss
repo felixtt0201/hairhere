@@ -142,8 +142,11 @@
   background: #000000;
   overflow: hidden;
   transition: all 0.3s ease-in-out;
+  height: 100%;
+  width: auto;
   img {
-    position: relative;
+    // position: relative;
+    display: block;
     transition: all 0.5s;
     z-index: 1;
     will-change: transform;
