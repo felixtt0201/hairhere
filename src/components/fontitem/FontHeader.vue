@@ -1,7 +1,7 @@
 <template>
   <div class="container mb-3">
     <nav class="navbar navbar-expand-md navbar-light nav-h">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="/">
         <h1
           class="text-hide img-position--center"
           :style="{

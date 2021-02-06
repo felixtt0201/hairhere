@@ -40,7 +40,9 @@
     </div>
     <form @submit.prevent="addList">
       <div class="container bg-accent text-reservation pb-4 pt-5 mt-4">
-        <table class="table table-borderless text-reservation table-hover pr-0">
+        <table
+          class="table table-borderless text-reservation table-hover text-center"
+        >
           <thead class="table-borderless">
             <tr>
               <th scope="col"></th>
@@ -325,7 +327,14 @@ thead {
 }
 tr {
   input {
-    width: 200px;
+    width: 0;
+  }
+  label {
+    padding: 1rem;
+    margin: 0;
+  }
+  td {
+    padding: 0;
   }
 }
 td:hover,
