@@ -209,7 +209,7 @@ export default {
       this.showTimePanel = false;
     },
     notBeforeToday(date) {
-      return date < new Date(new Date() || date.getDay() === 6);
+      return date < new Date() || date.getDay() === 6;
     },
     getDesignerHandler() {
       this.isLoading = true;
