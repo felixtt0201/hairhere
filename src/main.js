@@ -63,8 +63,8 @@ router.beforeEach((to, from, next) => {
 });
 
 // 轉頁後回到Top
-router.afterEach((to, from, next) => {
-  setTimeout(() => {
-    window.scrollTo(0, 0);
-  }, 1000);
-});
+// router.afterEach((to, from, next) => {
+//   setTimeout(() => {
+//     window.scrollTo(0, 0);
+//   }, 1000);
+// });

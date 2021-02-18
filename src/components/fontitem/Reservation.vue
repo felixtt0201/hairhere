@@ -258,7 +258,10 @@ export default {
         });
       } else {
         sessionStorage.setItem('list', data2);
-        this.$router.push('/confirm');
+        // this.$router.push('/confirm');
+        // this.windows.location.href('/confirm');
+        console.log('href');
+        window.location.href = '#/confirm';
       }
     },
     // 從確認資料頁面返回編輯，把資料倒回
@@ -303,7 +306,7 @@ th:first-child {
 .table input {
   opacity: 0;
 }
-thead {
+.thead {
   font-size: 22px !important;
 }
 .time-btn {
