@@ -6,7 +6,7 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '*', // 若使用者輸入網址找不到，就會跳回login頁面，這段是為了防止網址亂輸入錯誤
+    path: '*',
     redirect: 'Home',
   },
   {
