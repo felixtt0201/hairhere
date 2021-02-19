@@ -10,6 +10,20 @@
     ></loading>
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800">設計師管理</h1>
+      <div>
+        <button
+          type="button"
+          class="btn btn-primary btn-lg btn-icon-split"
+          data-toggle="modal"
+          data-target="#designerModal"
+          @click="openModalHandler(true)"
+        >
+          <span class="icon text-white-50">
+            <i class="fas fa-user-plus"></i>
+          </span>
+          <span class="text">新增設計師</span>
+        </button>
+      </div>
     </div>
     <ul class="row row-cols-1 row-cols-md-4">
       <li class="col mb-4" v-for="item in tempDesginersInfo" :key="item.Id">
@@ -53,20 +67,7 @@
         </div>
       </li>
     </ul>
-    <div class="row justify-content-center mt-3 mb-3">
-      <button
-        type="button"
-        class="btn btn-primary btn-lg btn-icon-split"
-        data-toggle="modal"
-        data-target="#designerModal"
-        @click="openModalHandler(true)"
-      >
-        <span class="icon text-white-50">
-          <i class="fas fa-user-plus"></i>
-        </span>
-        <span class="text">新增設計師</span>
-      </button>
-    </div>
+
     <!--Modal-->
     <!---新增設計師-->
     <div

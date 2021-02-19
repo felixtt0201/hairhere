@@ -20,13 +20,13 @@
               <label for="done">已結算</label>
               <input type="radio" v-model="billStatus" value="1" id="done" />
             </div>
-            <div class="col mb-2">
+            <div class="col">
               <label for="cancel">已取消</label>
               <input type="radio" v-model="billStatus" value="0" id="cancel" />
             </div>
           </div>
         </div>
-        <div class="col">
+        <div class="col mb-2">
           <label for="customer" class="text-gray-900 font-weight-bold"
             >請輸入顧客姓名：</label
           >
@@ -251,7 +251,6 @@ export default {
         DesignerId: this.dId,
       });
       postCheckInfo(data, this.dToken).then((res) => {
-        console.log(res);
         if (res.data.status) {
           this.totalCheckInfo = res.data.BasicData;
           this.customerName = '';

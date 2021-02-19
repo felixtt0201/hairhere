@@ -8,8 +8,7 @@
       :active.sync="isLoading"
       :is-full-page="fullPage"
     >
-      <template slot="default"> <loadingitem></loadingitem></template
-    ></loading>
+    </loading>
     <div class="container text-main">
       <div class="row mt-3">
         <div class="col-md-6 step-center">
@@ -158,10 +157,9 @@ import {
   getStoreProductList,
   getFreetime,
 } from '@/js/FontAppServices';
-import loadingitem from '../dashboarditem/loadingitem.vue';
 
 export default {
-  components: { DatePicker, loadingitem },
+  components: { DatePicker },
   data() {
     return {
       // Loading遮罩

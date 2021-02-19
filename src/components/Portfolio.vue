@@ -8,7 +8,23 @@
       :active.sync="isLoading"
       :is-full-page="fullPage"
     ></loading>
-    <h3 class="mb-0 text-gray-800">作品集管理</h3>
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <h1 class="h3 mb-0 text-gray-800">作品集管理</h1>
+      <div>
+        <button
+          type="button"
+          class="btn btn-primary btn-lg btn-icon-split"
+          data-toggle="modal"
+          data-target="#staticBackdrop"
+          @click="openModal(true)"
+        >
+          <span class="icon text-white-50">
+            <i class="fas fa-plus"></i>
+          </span>
+          <span class="text">新增作品</span>
+        </button>
+      </div>
+    </div>
     <div class="row justify-content-end mb-4">
       <div class="input-group col-4">
         <select class="custom-select" v-model="desingerId">
@@ -75,20 +91,7 @@
         </div>
       </div>
     </div>
-    <div class="row justify-content-center mt-3 mb-3">
-      <button
-        type="button"
-        class="btn btn-primary btn-lg btn-icon-split"
-        data-toggle="modal"
-        data-target="#staticBackdrop"
-        @click="openModal(true)"
-      >
-        <span class="icon text-white-50">
-          <i class="fas fa-plus"></i>
-        </span>
-        <span class="text">新增作品</span>
-      </button>
-    </div>
+
     <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center">
         <li class="page-item" :class="{ disabled: index == 1 }">

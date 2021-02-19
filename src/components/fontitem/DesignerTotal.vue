@@ -8,8 +8,7 @@
       :active.sync="isLoading"
       :is-full-page="fullPage"
     >
-      <template slot="default"> <loadingitem></loadingitem></template
-    ></loading>
+    </loading>
     <div class="container text-main">
       <h4 class="title-line w-100 text-center mb-4 text-main">設計師</h4>
       <div
@@ -85,12 +84,8 @@
 
 <script>
 import { getAllDesignerPage } from '@/js/FontAppServices';
-import loadingitem from '../dashboarditem/loadingitem.vue';
 
 export default {
-  components: {
-    loadingitem,
-  },
   data() {
     return {
       isLoading: true, // Loading遮罩

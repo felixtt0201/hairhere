@@ -1,7 +1,10 @@
 <template>
   <div id="reservation" class="container-fluid">
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <div class="row">
       <h3 class="mb-0 text-gray-800">預約表</h3>
+    </div>
+    <div class="row">
+      <p>請點選下列日期方塊填寫預約資訊</p>
     </div>
     <Calendar />
   </div>

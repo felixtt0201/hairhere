@@ -5,50 +5,56 @@
         歷史訂單
       </h3>
     </div>
-    <div class="row mb-4">
-      <div class="col-md-8">
-        <p class="text-gray-900 font-weight-bold">請選擇日期：</p>
-        <input type="date" v-model="startTime" />
-        <input type="date" v-model="endTime" />
+    <form class="shadow mb-4 p-1">
+      <h3 class="text-gray-900 font-weight-bolder m-3">搜尋條件</h3>
+      <div class="p-4">
+        <div class="row mb-4">
+          <div class="col-md-8">
+            <p class="text-gray-900 font-weight-bold">請選擇日期：</p>
+            <input type="date" v-model="startTime" />
+            <input type="date" v-model="endTime" />
+          </div>
+        </div>
+        <div class="row mb-4">
+          <div class="col-12">
+            <p class="text-gray-900 font-weight-bold">訂單狀態：</p>
+            <label for="done">已結算</label>
+            <input type="radio" v-model="billStatus" value="1" id="done" />
+            <label for="cancel">已取消</label>
+            <input type="radio" v-model="billStatus" value="0" id="cancel" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <p class="text-gray-900 font-weight-bold">請選擇設計師：</p>
+            <select class="custom-select" v-model="dId">
+              <option disabled value="">選擇設計師</option>
+              <option
+                v-for="designer in designInfo"
+                :key="designer.Id"
+                :value="designer.Id"
+                >{{ designer.Name }}</option
+              >
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label for="customer" class="text-gray-900 font-weight-bold"
+              >請輸入顧客姓名：</label
+            >
+            <input
+              type="text"
+              id="customer"
+              placeholder="顧客姓名"
+              v-model.trim="customerName"
+            />
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="row mb-4">
-      <div class="col-12">
-        <p class="text-gray-900 font-weight-bold">訂單狀態：</p>
-        <label for="done">已結算</label>
-        <input type="radio" v-model="billStatus" value="1" id="done" />
-        <label for="cancel">已取消</label>
-        <input type="radio" v-model="billStatus" value="0" id="cancel" />
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <p class="text-gray-900 font-weight-bold">請選擇設計師：</p>
-        <select class="custom-select" v-model="dId">
-          <option disabled value="">選擇設計師</option>
-          <option
-            v-for="designer in designInfo"
-            :key="designer.Id"
-            :value="designer.Id"
-            >{{ designer.Name }}</option
-          >
-        </select>
-      </div>
-      <div class="col-md-6">
-        <label for="customer" class="text-gray-900 font-weight-bold"
-          >請輸入顧客姓名：</label
-        >
-        <input
-          type="text"
-          id="customer"
-          placeholder="顧客姓名"
-          v-model.trim="customerName"
-        />
-      </div>
-    </div>
-    <button class="btn btn-success mt-4 mb-4" @click="searchCheckInfo">
-      搜尋
-    </button>
+      <button class="btn btn-primary m-3 btn-lg" @click="searchCheckInfo">
+        搜尋
+      </button>
+    </form>
+
     <div class="table-responsive-md">
       <table class="table table-hover table-sm table-borderless text-gray-900">
         <thead class="thead-dark">
@@ -272,7 +278,6 @@ export default {
         DesignerId: this.dId,
       });
       postCheckInfo(data, this.stoken).then((res) => {
-        console.log(res);
         if (res.data.status) {
           this.totalCheckInfo = res.data.BasicData;
           this.customerName = '';

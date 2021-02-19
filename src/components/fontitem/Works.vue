@@ -8,8 +8,7 @@
       :active.sync="isLoading"
       :is-full-page="fullPage"
     >
-      <template slot="default"> <loadingitem></loadingitem></template
-    ></loading>
+    </loading>
     <div class="container text-main works-center">
       <div class="works-filter">
         <div class="works-filter-search">
@@ -142,10 +141,8 @@
 
 <script>
 import { getworkss, searchworks } from '@/js/FontAppServices';
-import loadingitem from '../dashboarditem/loadingitem.vue';
 
 export default {
-  components: { loadingitem },
   data() {
     return {
       // Loading遮罩

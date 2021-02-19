@@ -8,8 +8,7 @@
       :active.sync="isLoading"
       :is-full-page="fullPage"
     >
-      <template slot="default"> <loadingitem></loadingitem></template
-    ></loading>
+    </loading>
     <div class="row justify-content-center">
       <div class="col-md-8 mb-4 desingerInfo">
         <div class="row w-90">
@@ -94,8 +93,7 @@
             </div>
             <div class="col-md-3">
               <h4 class="mb-4">{{ workDetail.Name }}</h4>
-              <p class="mb-5 border-left" v-html="reWorkSummary">
-              </p>
+              <p class="mb-5 border-left" v-html="reWorkSummary"></p>
               <ul class="">
                 <li class="designer-tag" v-for="tag in category" :key="tag">
                   {{ tag }}
@@ -113,13 +111,11 @@
 import { getSingleWork, getDesigner } from '@/js/FontAppServices';
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
 import 'swiper/css/swiper.css';
-import loadingitem from '../dashboarditem/loadingitem.vue';
 
 export default {
   components: {
     Swiper,
     SwiperSlide,
-    loadingitem,
   },
   data() {
     return {

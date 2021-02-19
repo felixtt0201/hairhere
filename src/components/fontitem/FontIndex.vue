@@ -8,8 +8,7 @@
       :active.sync="isLoading"
       :is-full-page="fullPage"
     >
-      <template slot="default"> <loadingitem></loadingitem></template
-    ></loading>
+    </loading>
     <header class="mb-5">
       <div
         id="carouselExampleIndicators"
@@ -222,11 +221,9 @@ import {
   getworkss,
   getAllDesigner,
 } from '@/js/FontAppServices';
-import loadingitem from '../dashboarditem/loadingitem.vue';
 
 export default {
   components: {
-    loadingitem,
     Swiper,
     SwiperSlide,
   },
