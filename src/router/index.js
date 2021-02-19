@@ -127,7 +127,7 @@ const routes = [
           import('../components/designerforms/DesignerWorks.vue'),
       },
       {
-        path: 'designercheckout',
+        path: 'designercheckout/:id',
         name: 'Designercheckout',
         meta: { requiresAuth: true },
         component: () =>

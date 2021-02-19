@@ -127,7 +127,7 @@
                           <tr>
                             <th scope="col">項目</th>
                             <th scope="col">金額</th>
-                            <th scope="col">時間</th>
+                            <th scope="col">時間(分)</th>
                           </tr>
                         </thead>
                         <tbody v-if="editStatus">
@@ -361,7 +361,6 @@ export default {
       loginStoreId: null,
 
       stoken: '',
-      dtoken: '',
     };
   },
   methods: {
@@ -448,7 +447,7 @@ export default {
       });
       if (this.editInfo.length > 0) {
         postOrder(data, this.stoken).then((res) => {
-          if (res.data.status === true) {
+          if (res.data.status) {
             this.calendarOptions.events = [];
             this.editInfo = [];
             this.dId = '';
@@ -517,6 +516,7 @@ export default {
       });
     },
 
+    // 存點選的訂單資訊到localStorage
     reciveEmit() {
       $('#reservationModal').modal('hide');
       localStorage.setItem('selectOrderId', this.selectOrderId);

@@ -9,8 +9,11 @@
       :active.sync="isLoading"
       :is-full-page="fullPage"
     ></loading>
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <div class="row">
       <h3 class="mb-0 text-gray-800">預約表</h3>
+    </div>
+    <div class="row">
+      <p>請點選下列日期方塊填寫預約資訊</p>
     </div>
     <div class="row justify-content-end mb-4">
       <div class="input-group col-4">
@@ -44,12 +47,11 @@
         role="dialog"
         aria-labelledby="reservationModal"
         aria-hidden="true"
-        @keydown.esc="cancelMouseEvnetHandler"
       >
         <div class="modal-dialog modal-lg container" role="document">
           <div class="modal-content border-0">
             <div class="modal-header bg-dark text-white">
-              <h5 class="modal-title" id="reservationModal">
+              <h5 class="modal-title">
                 <span>新增預約</span>
               </h5>
               <button
@@ -129,7 +131,7 @@
                           <tr>
                             <th scope="col">項目</th>
                             <th scope="col">金額</th>
-                            <th scope="col">時間</th>
+                            <th scope="col">時間(分)</th>
                           </tr>
                         </thead>
                         <tbody v-if="editStatus">
@@ -243,9 +245,19 @@
                     >
                       確認
                     </button>
-                    <button class="btn btn-primary" data-dismiss="modal" v-else>
-                      返回
-                    </button>
+                    <div v-else>
+                      <button class="btn btn-primary" data-dismiss="modal">
+                        返回
+                      </button>
+                      <button
+                        class="btn btn-info"
+                        type="button"
+                        data-dismiss="modal"
+                        @click="reciveEmit"
+                      >
+                        結帳
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -346,16 +358,17 @@ export default {
       selectOrderId: '',
 
       // loadingStatus
-      isLoading: false,
+      isLoading: true,
       fullPage: true,
 
       storeId: null,
+      dToken: null,
     };
   },
   methods: {
     // 搜尋訂單
     searchInfoHandler(selectId) {
-      getOrderListbyDesinger(selectId).then((res) => {
+      getOrderListbyDesinger(selectId, this.dToken).then((res) => {
         if (res.data.status) {
           this.calendarOptions.events = [];
           this.OrderInfo = res.data.BasicData;
@@ -397,11 +410,10 @@ export default {
     },
 
     // getOrderInfo
-    async gettotalOrderHandler() {
-      this.isLoading = true;
-      await this.getDesignerHandler();
-      await this.getServicesHandler();
-      await getOrder().then((res) => {
+    gettotalOrderHandler() {
+      this.getDesignerHandler();
+      this.getServicesHandler();
+      getOrder(this.dToken).then((res) => {
         if (res.data.status) {
           this.OrderInfo = res.data.BasicData;
           this.OrderInfo.forEach((item) => {
@@ -414,9 +426,10 @@ export default {
               borderColor: item.Color,
             };
             this.calendarOptions.events.push(showOrderDetails);
+            this.isLoading = false;
           });
-          this.isLoading = false;
         }
+        this.isLoading = false;
       });
     },
 
@@ -435,8 +448,8 @@ export default {
         OrderDetails: this.editInfo,
       });
       if (this.editInfo.length > 0) {
-        postOrder(data).then((res) => {
-          if (res.data.status === true) {
+        postOrder(data, this.dToken).then((res) => {
+          if (res.data.status) {
             this.calendarOptions.events = [];
             this.editInfo = [];
             this.dId = '';
@@ -482,7 +495,10 @@ export default {
       this.isLoading = false;
       this.reservationInfo = {};
       if (e.dayEl.classList.contains('fc-BeforeDay')) {
-        alert('過去日期不能預約');
+        this.$swal({
+          title: '過去日期不能預約',
+          icon: 'warning',
+        });
       } else {
         $('#reservationModal').modal('show');
         this.dateClickEvent = e;
@@ -491,17 +507,22 @@ export default {
 
     // 點選有存儲過的資訊打開內容
     getSelectInfo(e) {
-      this.isLoading = true;
       this.editStatus = false;
       this.tempOrderInfo = {};
       this.selectOrderId = e.event.extendedProps.OrderID;
       getOrderDetail(this.selectOrderId).then((res) => {
         if (res.data.status) {
+          $('#reservationModal').modal('show');
           this.tempOrderInfo = res.data.BasicData;
-          this.isLoading = false;
         }
       });
-      $('#reservationModal').modal('show');
+    },
+
+    // 存點選的訂單資訊到localStorage
+    reciveEmit() {
+      $('#reservationModal').modal('hide');
+      localStorage.setItem('selectOrderId', this.selectOrderId);
+      this.$router.push(`/Dashboard/designercheckout/${this.selectOrderId}`);
     },
 
     // 刪除資訊
@@ -517,14 +538,13 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           $('#reservationModal').modal('hide');
-          this.$swal(
-            {
-              icon: 'success',
-              title: '成功取消預約',
-              timer: 1500,
-            },
-            this.deleteInfo(),
-          );
+          this.$swal({
+            icon: 'success',
+            title: '成功取消預約',
+            timer: 1500,
+          }).then(() => {
+            this.deleteInfo();
+          });
         }
       });
     },
@@ -533,16 +553,17 @@ export default {
         OrderStatus: '0',
         Remark: '修改成功',
       });
-      patchOrderDetailStatus(this.selectOrderId, data).then(() => {});
-    },
-
-    cancelMouseEvnetHandler() {
-      this.dateClickEvent.view.calendar.unselect();
+      patchOrderDetailStatus(this.selectOrderId, data, this.dToken);
     },
   },
   created() {
     const designerInfo = JSON.parse(localStorage.getItem('desginderDetails'));
     this.storeId = designerInfo.StoreId;
+    this.dToken = document.cookie.replace(
+      // eslint-disable-next-line no-useless-escape
+      /(?:(?:^|.*;\s*)desingerToken\s*\=\s*([^;]*).*$)|^.*$/,
+      '$1',
+    );
   },
   mounted() {
     this.gettotalOrderHandler();

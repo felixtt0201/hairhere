@@ -9,13 +9,11 @@
       :active.sync="isLoading"
       :is-full-page="fullPage"
     ></loading>
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <div class="row justify-content-between mt-3 mb-3">
       <h3 class="text-gray-800">結帳管理</h3>
       <button
         type="button"
         class="btn btn-primary btn-lg btn-icon-split"
-        data-toggle="modal"
-        data-target="#checkoutMoadel"
         @click="openModalHandler(true)"
       >
         <span class="icon text-white-50">
@@ -76,11 +74,11 @@
     <!--Modal--->
     <form @submit.prevent="postBillHandler">
       <!--新帳單--->
-      <div class="modal fade" id="checkoutMoadel" tabindex="-1" v-if="isNew">
+      <div class="modal fade" id="checkoutMoadel" tabindex="-1">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="checkoutMoadel">帳單</h5>
+              <h5 class="modal-title">帳單</h5>
               <button
                 type="button"
                 class="close"
@@ -141,7 +139,6 @@
                           type="date"
                           v-model="checkInfo.cBDay"
                           placeholder="請輸入客人生日"
-                          required
                         />
                       </td>
                     </tr>
@@ -278,17 +275,12 @@
       </div>
 
       <!--舊帳單--->
-      <div class="modal fade" id="checkoutMoadel" tabindex="-1" v-else>
+      <div class="modal fade" id="editModal" tabindex="-1">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="checkoutMoadel">結帳</h5>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
+              <h5 class="modal-title">結帳</h5>
+              <button type="button" class="close" @click="closeEditModal">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
@@ -379,7 +371,7 @@
                 <button
                   type="button"
                   class="btn btn-secondary"
-                  data-dismiss="modal"
+                  @click="closeEditModal"
                 >
                   取消
                 </button>
@@ -419,13 +411,14 @@ import {
   postBill,
   getSingleBill,
   patchBillStatus,
+  getOrderDetail,
 } from '@/js/DesignerServices';
 import $ from 'jquery';
 
 export default {
   data() {
     return {
-      isLoading: false,
+      isLoading: true,
       fullPage: true,
       servicesInfo: [],
       designerInfo: [],
@@ -451,7 +444,6 @@ export default {
       // 帳單資料
       billListInfo: [],
       editInfo: {},
-      isNew: true,
       // 當天日期
       date: '',
       // 客人生日
@@ -459,6 +451,7 @@ export default {
 
       dId: null,
       storeId: null,
+      dToken: null,
     };
   },
   computed: {
@@ -485,35 +478,26 @@ export default {
       });
     },
     // 取得全部帳單
-    async getAllBillList() {
-      this.isLoading = true;
-      await this.getServicesInfo();
-      await this.getDesignersInfo();
-      getBillList().then((res) => {
+    getAllBillList() {
+      this.addServicesInfo = [];
+      this.checkInfo = {};
+      getBillList(this.dToken).then((res) => {
         if (res.data.status) {
-          this.isLoading = false;
           this.billListInfo = res.data.BasicData;
-        } else {
           this.isLoading = false;
         }
+        this.isLoading = false;
       });
     },
+
     // 取得單一帳單
     getSingleInfo(id) {
-      this.isNew = false;
-      this.editInfo = {};
-      getSingleBill(id).then((res) => {
+      getSingleBill(id, this.dToken).then((res) => {
         if (res.data.status) {
-          $('#checkoutMoadel').modal('show');
           this.editInfo = res.data.BasicData;
-          this.bDay = this.editInfo.CustomerBirthday.replace('T', ' ').replace(
-            '00:00:00',
-            ' ',
-          );
-          this.date = this.editInfo.OrderTime.replace('T', ' ').replace(
-            '00:00:00',
-            ' ',
-          );
+          this.bDay = this.editInfo.CustomerBirthday?.split('T')[0];
+          this.date = this.editInfo.OrderTime?.split('T')[0];
+          $('#editModal').modal('show');
         }
       });
     },
@@ -559,7 +543,7 @@ export default {
         BillDetails: this.addServicesInfo,
       });
       if (this.addServicesInfo.length > 0) {
-        postBill(data).then((res) => {
+        postBill(data, this.dToken).then((res) => {
           if (res.data.status) {
             this.successedMessage();
           } else {
@@ -590,15 +574,12 @@ export default {
         cancelButtonText: '取消',
       }).then((result) => {
         if (result.isConfirmed) {
-          $('#checkoutMoadel').modal('hide');
-          this.$swal(
-            {
-              icon: 'success',
-              title: '成功取消此筆帳單',
-              timer: 1500,
-            },
-            this.patchStatusHandler(billId),
-          );
+          this.patchStatusHandler(billId);
+          $('#editModal').modal('hide');
+          this.$swal({
+            icon: 'success',
+            title: '成功取消此筆帳單',
+          });
         }
       });
     },
@@ -608,20 +589,21 @@ export default {
         BillStatus: '0',
         StoreRemark: '"asdas"',
       });
-      patchBillStatus(billId, data).then(() => {
+      patchBillStatus(billId, data, this.dToken).then(() => {
         this.getAllBillList();
       });
     },
 
     openModalHandler(isNew, id) {
-      if (isNew) {
-        this.editInfo = {};
-        this.isNew = true;
+      if (isNew === true) {
+        // this.editInfo = {};
+        // this.isNew = true;
+        this.getServicesInfo();
+        this.getDesignersInfo();
+        $('#checkoutMoadel').modal('show');
       } else {
-        this.isNew = false;
         this.getSingleInfo(id);
       }
-      $('#designerModal').modal('show');
     },
 
     edit() {
@@ -637,18 +619,47 @@ export default {
         timer: 1500,
       }).then(() => {
         $('#checkoutMoadel').modal('hide');
-        this.addServicesInfo = [];
-        this.checkInfo = {};
         this.getAllBillList();
       });
+    },
+    closeModal() {
+      $('#checkoutMoadel').modal('hide');
+      this.getAllBillList();
+    },
+    closeEditModal() {
+      $('#editModal').modal('hide');
+      this.getAllBillList();
     },
   },
   created() {
     const designerInfo = JSON.parse(localStorage.getItem('desginderDetails'));
     this.dId = designerInfo.Id;
     this.storeId = designerInfo.StoreId;
+    this.dToken = document.cookie.replace(
+      // eslint-disable-next-line no-useless-escape
+      /(?:(?:^|.*;\s*)desingerToken\s*\=\s*([^;]*).*$)|^.*$/,
+      '$1',
+    );
   },
   mounted() {
+    if (localStorage.getItem('selectOrderId')) {
+      this.isLoading = false;
+      getOrderDetail(localStorage.getItem('selectOrderId')).then((res) => {
+        localStorage.removeItem('selectOrderId');
+        if (res.data.status) {
+          this.getServicesInfo();
+          this.getDesignersInfo();
+          // eslint-disable-next-line prefer-destructuring
+          this.checkInfo.date = res.data.BasicData.OrderTime.split('T')[0];
+          this.checkInfo.cName = res.data.BasicData.CustomerName;
+          this.checkInfo.designerId = res.data.BasicData.DesignerId;
+          this.checkInfo.cTel = res.data.BasicData.CustomerPhone;
+          this.checkInfo.cIntroducer = res.data.BasicData.CustomerIntroducer;
+          this.addServicesInfo = res.data.BasicData.Detail;
+          $('#checkoutMoadel').modal('show');
+        }
+      });
+    }
     this.getAllBillList();
   },
 };

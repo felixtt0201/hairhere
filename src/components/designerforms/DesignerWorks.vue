@@ -9,7 +9,22 @@
       :active.sync="isLoading"
       :is-full-page="fullPage"
     ></loading>
-    <h3 class="mb-0 text-gray-800">作品集管理</h3>
+
+    <div class="row justify-content-between mt-3 mb-3">
+      <h3 class="mb-0 text-gray-800">作品集管理</h3>
+      <button
+        type="button"
+        class="btn btn-primary btn-lg btn-icon-split"
+        data-toggle="modal"
+        data-target="#staticBackdrop"
+        @click="openModal(true)"
+      >
+        <span class="icon text-white-50">
+          <i class="fas fa-plus"></i>
+        </span>
+        <span class="text">新增作品</span>
+      </button>
+    </div>
     <!-- 作品資訊 -->
     <div class="row row-cols-1 row-cols-md-3 mt-4">
       <div class="col mb-4" v-for="product in comebackinfo" :key="product.Id">
@@ -53,20 +68,6 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="row justify-content-center mt-3 mb-3">
-      <button
-        type="button"
-        class="btn btn-primary btn-lg btn-icon-split"
-        data-toggle="modal"
-        data-target="#staticBackdrop"
-        @click="openModal(true)"
-      >
-        <span class="icon text-white-50">
-          <i class="fas fa-plus"></i>
-        </span>
-        <span class="text">新增作品</span>
-      </button>
     </div>
     <!---分頁-->
     <nav aria-label="Page navigation example">
@@ -353,7 +354,7 @@ export default {
   data() {
     return {
       // Loading遮罩
-      isLoading: false,
+      isLoading: true,
       fullPage: true,
 
       designerInfo: [], // get設計師資訊
@@ -378,6 +379,7 @@ export default {
       loginId: null,
       storeId: null,
       images: [],
+      dToken: null,
     };
   },
   methods: {
@@ -397,7 +399,7 @@ export default {
           const file = this.images[i];
           formData.append(`files[${i}]`, file);
         }
-        postPhoto(formData).then((res) => {
+        postPhoto(formData, this.dToken).then((res) => {
           if (res.data.status) {
             this.images = [];
             this.photosView = res.data.PhotoPathList;
@@ -415,37 +417,11 @@ export default {
           title: '請選擇照片',
           position: 'center',
           icon: 'error',
+        }).then(() => {
+          this.fileUploading = false;
         });
       }
     },
-
-    // 上傳圖片
-    // uploadPhoto() {
-    //   const formData = new FormData();
-    //   const photos = this.$refs.files.files; // refs要對應上面input的ref
-
-    //   if (photos.length > 0) {
-    //     // eslint-disable-next-line no-plusplus
-    //     for (let index = 0; index < photos.length; index++) {
-    //       const element = photos[index];
-    //       formData.append(index, element);
-    //     }
-    //     postPhoto(formData).then((res) => {
-    //       if (res.data.status) {
-    //         this.photosView = res.data.PhotoPathList;
-    //         // eslint-disable-next-line prefer-destructuring
-    //         this.formProduct.Photo1 = res.data.photoList[0];
-    //         // eslint-disable-next-line prefer-destructuring
-    //         this.formProduct.Photo2 = res.data.photoList[1];
-    //         // eslint-disable-next-line prefer-destructuring
-    //         this.formProduct.Photo3 = res.data.photoList[2];
-    //         // vm.$set(vm.formProduct, 'Photo1', res.data.PhotoPathList[0]);
-    //         // vm.$set(vm.formProduct, 'Photo2', res.data.PhotoPathList[1]);
-    //         // vm.$set(vm.formProduct, 'Photo3', res.data.PhotoPathList[2]);
-    //       }
-    //     });
-    //   }
-    // },
 
     // 分頁
     changePage(page) {
@@ -453,7 +429,6 @@ export default {
     },
     // 取的作品資訊(分頁)
     getPageHandler(page = 1) {
-      this.isLoading = true;
       getDesignerWorks(this.storeId, this.loginId, page).then((res) => {
         if (res.data.status) {
           this.comebackinfo = res.data.BasicData;
@@ -500,20 +475,22 @@ export default {
         const categoryString = this.categoryCheckbox.toString();
         this.formProduct.Category = categoryString;
         this.formProduct.DesignerId = this.loginId;
-        postPortfolio(this.$qs.stringify(this.formProduct)).then((res) => {
-          if (res.data.status) {
-            this.getPageHandler();
-            $('#staticBackdrop').modal('hide');
-            this.$swal({
-              title: '新增成功',
-              position: 'center',
-              icon: 'success',
-              showConfirmButton: false,
-              timer: 1500,
-            });
-            this.fileUploading = false;
-          }
-        });
+        postPortfolio(this.$qs.stringify(this.formProduct), this.dToken).then(
+          (res) => {
+            if (res.data.status) {
+              this.getPageHandler();
+              $('#staticBackdrop').modal('hide');
+              this.$swal({
+                title: '新增成功',
+                position: 'center',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              this.fileUploading = false;
+            }
+          },
+        );
       } else {
         // 編輯作品：全部
         const data = this.$qs.stringify({
@@ -526,7 +503,7 @@ export default {
           Photo2: this.formProduct.Photo2,
           Photo3: this.formProduct.Photo3,
         });
-        patchWork(this.formProduct.Id, data).then((res) => {
+        patchWork(this.formProduct.Id, data, this.dToken).then((res) => {
           if (res.data.status) {
             this.getPageHandler();
             $('#staticBackdrop').modal('hide');
@@ -553,7 +530,7 @@ export default {
         cancelButtonText: '取消',
       }).then((result) => {
         if (result.isConfirmed) {
-          deleteWork(workId);
+          deleteWork(workId, this.dToken);
           this.$swal({
             title: '刪除成功',
             icon: 'success',
@@ -568,6 +545,11 @@ export default {
   created() {
     this.loginId = JSON.parse(localStorage.getItem('desginderDetails')).Id;
     this.storeId = JSON.parse(localStorage.getItem('desginderDetails')).StoreId;
+    this.dToken = document.cookie.replace(
+      // eslint-disable-next-line no-useless-escape
+      /(?:(?:^|.*;\s*)desingerToken\s*\=\s*([^;]*).*$)|^.*$/,
+      '$1',
+    );
   },
   mounted() {
     this.getPageHandler();

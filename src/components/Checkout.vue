@@ -498,15 +498,10 @@ export default {
 
     // 取得單一帳單
     getSingleInfo(id) {
-      // this.isNew = false;
-      // this.editInfo = {};
       getSingleBill(id, this.stoken).then((res) => {
         if (res.data.status) {
           this.editInfo = res.data.BasicData;
-          // this.isNew = false;
-          // eslint-disable-next-line prefer-destructuring
           this.bDay = this.editInfo.CustomerBirthday?.split('T')[0];
-          // eslint-disable-next-line prefer-destructuring
           this.date = this.editInfo.OrderTime?.split('T')[0];
           $('#editModal').modal('show');
         }
@@ -633,14 +628,10 @@ export default {
     },
     closeModal() {
       $('#checkoutMoadel').modal('hide');
-      // this.addServicesInfo = [];
-      // this.checkInfo = {};
       this.getAllBillList();
     },
     closeEditModal() {
       $('#editModal').modal('hide');
-      // this.addServicesInfo = [];
-      // this.checkInfo = {};
       this.getAllBillList();
     },
   },

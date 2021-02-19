@@ -180,7 +180,6 @@
           ></textarea>
         </div>
       </div>
-      <div class="row"></div>
       <div class="col-md-8 text-right">
         <a
           href="#top"
@@ -241,6 +240,9 @@ export default {
 
       // 上傳檔案
       donewithUpload: false,
+
+      // 設計師Token
+      dToken: null,
     };
   },
 
@@ -280,7 +282,7 @@ export default {
         WorkStatus: 1,
         Color: this.designerInfo.Color,
       });
-      putDesigner(data, this.dId).then((res) => {
+      putDesigner(data, this.dId, this.dToken).then((res) => {
         if (res.data.status) {
           this.successedMessage();
           this.getInfo();
@@ -294,7 +296,7 @@ export default {
       const designerPhoto = this.$refs.files.files[0];
       const formData = new FormData();
       formData.append('file-to-upload', designerPhoto);
-      patchDesignerPhoto(this.dId, formData).then(() => {
+      patchDesignerPhoto(this.dId, formData, this.dToken).then(() => {
         this.donewithUpload = false;
         this.getInfo();
       });
@@ -333,6 +335,11 @@ export default {
     const designerInfo = JSON.parse(localStorage.getItem('desginderDetails'));
     this.dId = designerInfo.Id;
     this.storeId = designerInfo.StoreId;
+    this.dToken = document.cookie.replace(
+      // eslint-disable-next-line no-useless-escape
+      /(?:(?:^|.*;\s*)desingerToken\s*\=\s*([^;]*).*$)|^.*$/,
+      '$1',
+    );
   },
   mounted() {
     this.getInfo();

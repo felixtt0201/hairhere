@@ -5,38 +5,44 @@
         歷史訂單
       </h3>
     </div>
-    <div class="row mb-4">
-      <div class="col-md-8">
-        <p class="text-gray-900 font-weight-bold">請選擇日期：</p>
-        <input type="date" v-model="startTime" />
-        <input type="date" v-model="endTime" />
+    <form class="shadow mb-4 p-1">
+      <h3 class="text-gray-900 font-weight-bolder m-3">搜尋條件</h3>
+      <div class="d-flex flex-wrap p-2">
+        <div class="col mb-2">
+          <p class="text-gray-900 font-weight-bold">請選擇日期：</p>
+          <input type="date" v-model="startTime" />到
+          <input type="date" v-model="endTime" />
+        </div>
+        <div class="col mb-2">
+          <p class="text-gray-900 font-weight-bold">訂單狀態：</p>
+          <div class="form-row">
+            <div class="col">
+              <label for="done">已結算</label>
+              <input type="radio" v-model="billStatus" value="1" id="done" />
+            </div>
+            <div class="col mb-2">
+              <label for="cancel">已取消</label>
+              <input type="radio" v-model="billStatus" value="0" id="cancel" />
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <label for="customer" class="text-gray-900 font-weight-bold"
+            >請輸入顧客姓名：</label
+          >
+          <input
+            type="text"
+            id="customer"
+            placeholder="顧客姓名"
+            v-model.trim="customerName"
+          />
+        </div>
       </div>
-    </div>
-    <div class="row mb-4">
-      <div class="col-12">
-        <p class="text-gray-900 font-weight-bold">訂單狀態：</p>
-        <label for="done">已結算</label>
-        <input type="radio" v-model="billStatus" value="1" id="done" />
-        <label for="cancel">已取消</label>
-        <input type="radio" v-model="billStatus" value="0" id="cancel" />
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <label for="customer" class="text-gray-900 font-weight-bold"
-          >請輸入顧客姓名：</label
-        >
-        <input
-          type="text"
-          id="customer"
-          placeholder="顧客姓名"
-          v-model.trim="customerName"
-        />
-      </div>
-    </div>
-    <button class="btn btn-success mt-4 mb-4" @click="searchCheckInfo">
-      搜尋
-    </button>
+      <button class="btn btn-primary m-3 btn-lg" @click="searchCheckInfo">
+        搜尋
+      </button>
+    </form>
+
     <div class="table-responsive-md">
       <table class="table table-hover table-sm table-borderless text-gray-900">
         <thead class="thead-dark">
@@ -197,6 +203,8 @@ export default {
       amount: '',
       bDay: '',
       date: '',
+      dToken: null,
+      storeId: null,
     };
   },
   computed: {
@@ -216,13 +224,13 @@ export default {
   methods: {
     // 查詢單一帳單
     getSingInfo(cId) {
-      getSingleBill(cId).then((res) => {
+      getSingleBill(cId, this.dToken).then((res) => {
         this.singleCheckInfo = res.data.BasicData;
-        this.date = this.singleCheckInfo.OrderTime.replace('T', ' ').replace(
+        this.date = this.singleCheckInfo.OrderTime?.replace('T', ' ').replace(
           '00:00:00',
           ' ',
         );
-        this.bDay = this.singleCheckInfo.CustomerBirthday.replace(
+        this.bDay = this.singleCheckInfo.CustomerBirthday?.replace(
           'T',
           ' ',
         ).replace('00:00:00', ' ');
@@ -242,7 +250,8 @@ export default {
         CustomerBirthdayEnd: '',
         DesignerId: this.dId,
       });
-      postCheckInfo(data).then((res) => {
+      postCheckInfo(data, this.dToken).then((res) => {
+        console.log(res);
         if (res.data.status) {
           this.totalCheckInfo = res.data.BasicData;
           this.customerName = '';
@@ -257,6 +266,15 @@ export default {
         }
       });
     },
+  },
+  created() {
+    this.dToken = document.cookie.replace(
+      // eslint-disable-next-line no-useless-escape
+      /(?:(?:^|.*;\s*)desingerToken\s*\=\s*([^;]*).*$)|^.*$/,
+      '$1',
+    );
+    const designerInfo = JSON.parse(localStorage.getItem('desginderDetails'));
+    this.storeId = designerInfo.StoreId;
   },
 };
 </script>

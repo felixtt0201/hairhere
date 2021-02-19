@@ -272,6 +272,7 @@ export default {
         DesignerId: this.dId,
       });
       postCheckInfo(data, this.stoken).then((res) => {
+        console.log(res);
         if (res.data.status) {
           this.totalCheckInfo = res.data.BasicData;
           this.customerName = '';
