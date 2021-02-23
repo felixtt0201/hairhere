@@ -11,7 +11,7 @@
     </loading>
     <div class="container text-main">
       <div class="row mt-3">
-        <div class="col-md-6 step-center">
+        <div class="col-11 col-lg-6 step-center">
           <ul class="step">
             <li class="active-step">
               <p class="mb-0">1. 選擇服務項目</p>
@@ -22,13 +22,13 @@
             <li>預約完成</li>
           </ul>
         </div>
-        <div class="col-md-6">
+        <div class="col-12 col-lg-6">
           <div class="row">
             <div
-              class="col-md-6 photo-size"
+              class="col-6 photo-size"
               :style="{ backgroundImage: `url(${designer.PicturePath})` }"
             ></div>
-            <div class="col-md-6 personInfo">
+            <div class="col-6 personInfo">
               <h4>本次預約設計師</h4>
               <h5>{{ designer.Name }}</h5>
               <p class="border-left" v-html="reDetails"></p>
@@ -105,7 +105,7 @@
             </date-picker>
           </div>
         </template>
-        <ul class="d-flex justify-content-between">
+        <ul class="d-flex flex-wrap">
           <li
             v-for="(freetime, index) in freeTimeList"
             :key="freetime"
@@ -336,5 +336,10 @@ tr {
 td:hover,
 label:hover {
   cursor: pointer;
+}
+@media (max-width: 768px) {
+  .step li::after {
+    right: -90px;
+  }
 }
 </style>

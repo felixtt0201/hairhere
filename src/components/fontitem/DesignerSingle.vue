@@ -11,7 +11,7 @@
     </loading>
     <div class="row justify-content-center">
       <div class="col-md-8 mb-4">
-        <div class="row">
+        <div class="row flex-nowrap">
           <div
             class="col-md-6 photo-size"
             :style="{ backgroundImage: `url(${designer.PicturePath})` }"
@@ -30,7 +30,7 @@
       </div>
     </div>
     <h4 class="title-line w-100 text-center mb-4 text-main">設計作品</h4>
-    <div class="row img-center">
+    <div class="row img-center flex-nowrap">
       <div
         class="col-md-3"
         v-for="designerWork in designerWorks"

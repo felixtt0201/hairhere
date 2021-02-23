@@ -86,21 +86,21 @@
       </div>
     </header>
     <div class="container-fluid font-tw mb-5">
-      <div class="row">
-        <div class="col-md-2 item-logo-position-relative">
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-1 item-logo-position-relative">
           <img
             src="@/assets/img/lefa_logo_all_cn.svg"
             alt=""
             class="item-logo-position-absolute "
           />
         </div>
-        <div class="col-md-10 text-main">
-          <div class="row border-h70">
-            <div class="col-md-3 index-infomation">
+        <div class="col-8 text-main col-lg-11 p-4">
+          <div class="row border-h80 justify-content-md-center">
+            <div class="col-12 col-lg-3 index-infomation">
               <h4 class="font-weight-bold">About us</h4>
               <p>{{ basicData.Summary }}</p>
             </div>
-            <div class="col-md-2 index-infomation">
+            <div class="col-12 col-lg-3 index-infomation">
               <h4 class="font-weight-bold">服務項目</h4>
               <ul>
                 <li>專業剪燙染護</li>
@@ -110,7 +110,7 @@
                 <li>彩妝及新娘秘書</li>
               </ul>
             </div>
-            <div class="col-md-4 index-infomation">
+            <div class="col-12 col-lg-4 index-infomation">
               <h4 class="font-weight-bold">店家資訊</h4>
               <ul>
                 <li>聯絡電話 （07）{{ basicData.Phone }}</li>
@@ -132,7 +132,7 @@
                 </li>
               </ul>
             </div>
-            <div class="col-md-3 index-infomation">
+            <div class="col-12 col-lg-2 index-infomation">
               <h4 class="font-weight-bold">Follow us</h4>
               <ul>
                 <li>
@@ -338,6 +338,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@media (max-width: 768px) {
+  .index-infomation {
+    height: auto;
+    margin-bottom: 15px;
+  }
+  .item-logo-position-relative {
+    display: none;
+  }
+}
 .swiper-slide {
   background: #000000;
 }

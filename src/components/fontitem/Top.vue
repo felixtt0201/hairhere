@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="a">
     <a href="#top" class="top">
-      <img src="../../assets/img/top.png" alt="" />
+      <i class="fas fa-arrow-up fa-lg text-light"></i>
     </a>
   </div>
 </template>
@@ -10,20 +10,21 @@
 
 <style lang="scss">
 .top {
-  width: 70px;
-  height: 70px;
-  transform: rotate(45deg);
+  width: 50px;
+  height: 50px;
+  background: #6c6c6c;
+  // transform: rotate(45deg);
   position: fixed;
-  bottom: 40%;
-  right: 0;
+  bottom: 20%;
+  right: 15px;
+  text-align: center;
+  line-height: 50px;
+  border-radius: 5px;
   &:hover {
-    bottom: 42%;
-    right: 2px;
+    opacity: 0.8;
+    bottom: 21%;
+    // right: 15px;
     transition: all 0.5s;
-  }
-  img {
-    width: 90px;
-    height: 90px;
   }
 }
 // 滾動樣式

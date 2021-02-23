@@ -11,7 +11,7 @@
     </loading>
     <div class="row justify-content-center">
       <div class="col-md-8 mb-4 desingerInfo">
-        <div class="row w-90">
+        <div class="row w-90 flex-nowrap">
           <div
             class="col-md-6 photo-size"
             :style="{ backgroundImage: `url(${designerDetail.PicturePath})` }"
@@ -33,7 +33,9 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-md-10">
-          <div class="row d-flex align-items-md-center mb-4">
+          <div
+            class="row d-flex align-items-md-center mb-4 desinger-detailwork"
+          >
             <div class="col-md-9">
               <template>
                 <div class="thumb-example">
@@ -91,7 +93,7 @@
                 </div>
               </template>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 desinger-detailwork-detail">
               <h4 class="mb-4">{{ workDetail.Name }}</h4>
               <p class="mb-5 border-left" v-html="reWorkSummary"></p>
               <ul class="">
@@ -189,6 +191,21 @@ export default {
   height: 480px;
   width: 600px;
   background-color: white;
+}
+@media (max-width: 768px) {
+  .thumb-example {
+    max-width: 100%;
+  }
+}
+@media (max-width: 767px) {
+  .desinger-detailwork {
+    flex-direction: column-reverse;
+  }
+  .desinger-detailwork-detail {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
 }
 .swiper {
   .swiper-slide {

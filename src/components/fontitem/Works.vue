@@ -22,7 +22,7 @@
             <i class="fas fa-search"></i>
           </button>
         </div>
-        <div>
+        <div class="pl-40">
           <label for="c1"
             ><input
               type="checkbox"
@@ -98,7 +98,7 @@
         作品集
       </h3>
       <div class="row img-center">
-        <div class="col-md-3 size" v-for="work in worksarray" :key="work.Id">
+        <div class="col-3 size" v-for="work in worksarray" :key="work.Id">
           <router-link :to="`/designerSingleWork/${work.Id}`" class="itemimg">
             <h2 class="item-tittle">{{ work.Name }}</h2>
             <img :src="work.Photo1" alt="" />

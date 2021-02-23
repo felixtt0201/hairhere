@@ -7,8 +7,6 @@
   align-items: center;
   background-color: white;
   position: absolute;
-  // top: 50px;
-  // right: 350px;
   top: 12%;
   right: 33%;
   form {
@@ -40,6 +38,22 @@
     }
   }
 }
+@media (max-width: 768px) {
+  .search-content {
+    right: 22%;
+  }
+}
+@media (max-width: 767px) {
+  .search-content {
+    right: 15%;
+  }
+  .title-line:before {
+    right: 62%;
+  }
+  .title-line:after {
+    left: 62%;
+  }
+}
 
 .search-group {
   position: relative;
@@ -56,4 +70,10 @@
   width: 350px;
   height: 400px;
   opacity: 0.8;
+}
+@media (max-width: 767px) {
+  .search-content-left,
+  .search-content-right {
+    display: none;
+  }
 }

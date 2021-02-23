@@ -25,6 +25,11 @@ const routes = [
         component: () => import('../components/fontitem/DesignerTotal.vue'),
       },
       {
+        path: 'designers',
+        name: 'Designers',
+        component: () => import('../components/fontitem/DesignerTotal.vue'),
+      },
+      {
         path: 'designerSingle/:id',
         name: 'DesignerSingle',
         component: () => import('../components/fontitem/DesignerSingle.vue'),
