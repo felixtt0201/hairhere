@@ -23,12 +23,12 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto ">
-          <li class="nav-item active">
+      <div class="collapse navbar-collapse mt-3" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
             <router-link
               to="/"
+              exact
               class="nav-link text-main--hover border-bottom pr-3 pl-3"
               >首頁<span class="sr-only">(current)</span></router-link
             >
@@ -49,7 +49,7 @@
           </li>
           <li class="nav-item ">
             <router-link
-              to="/designerTotal"
+              to="/designers"
               class="nav-link text-main--hover border-bottom pr-3 pl-3"
               >設計師</router-link
             >
@@ -68,8 +68,16 @@
   </div>
 </template>
 
-<script>
-export default {};
-</script>
+<script></script>
 
-<style></style>
+<style lang="scss" scoped>
+$bg-primary: rgba(205, 195, 183, 1);
+$text-primary: #7d7265;
+.router-link-active {
+  color: white !important;
+  background: $bg-primary !important;
+  border-radius: 2px;
+  box-shadow: inset 1px 1px 1px;
+  border-bottom: 2px solid $text-primary !important;
+}
+</style>

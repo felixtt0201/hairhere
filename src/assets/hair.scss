@@ -39,7 +39,7 @@ body {
   background-color: $text-primary;
 }
 .nav-h {
-  height: 100px !important;
+  height: auto;
 }
 .navbar-nav {
   font-size: 22px;
@@ -65,6 +65,10 @@ body {
 .position-absolute {
   right: 0;
   bottom: 0;
+}
+// 漢堡選單
+#navbarSupportedContent {
+  z-index: 40;
 }
 // index服務項目
 .menu-item {
@@ -146,25 +150,27 @@ body {
   background-position: center center;
   background-size: cover;
 }
-.footer-center {
+.footer-groups {
   display: flex;
   justify-content: center;
   align-items: center;
-  .footer-list {
-    padding-right: 45px;
-    padding-left: 20px;
-    border-left: 1px solid $text-accent;
+}
+.footer-list {
+  padding-right: 10px;
+  padding-left: 20px;
+  border-left: 1px solid $text-accent;
+  .follow-icon {
+    color: $text-accent;
   }
 }
-
 .index-infomation {
   display: flex;
   flex-direction: column;
   border-left: 2px solid $bg-primary !important;
   height: 100%;
-  padding-left: 25px;
+  // padding-left: 25px;
 }
-.border-h70 {
+.border-h80 {
   height: 80%;
 }
 .follow-icon {
@@ -172,14 +178,5 @@ body {
   color: $text-primary;
   &:hover {
     color: $bg-accent !important;
-  }
-}
-.footer-list {
-  .follow-icon {
-    text-decoration: none !important;
-    color: $text-accent;
-    &:hover {
-      color: $bg-accent !important;
-    }
   }
 }

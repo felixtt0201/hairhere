@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <div>
-      <!-- <router-link to="/login"> <i class="fas fa-cog"></i></router-link> -->
       <router-view v-if="isRouterAlive"></router-view>
     </div>
   </div>
@@ -33,4 +32,9 @@ export default {
 
 <style lang="scss">
 @import './src/assets/all.scss';
+
+#app {
+  max-width: 1200px;
+  margin: 0 auto;
+}
 </style>

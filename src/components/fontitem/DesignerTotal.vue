@@ -13,7 +13,7 @@
     <div class="container text-main">
       <h4 class="title-line w-100 text-center mb-4 text-main">設計師</h4>
       <div
-        class="row mb-4 mt-4"
+        class="row flex-nowrap mb-4 mt-4"
         v-for="designer in designers"
         :key="designer.Id"
       >
@@ -130,6 +130,18 @@ export default {
   .row {
     width: 90%;
     margin: 0 auto;
+  }
+}
+@media (max-width: 767px) {
+  .text-main {
+    .row {
+      width: 100%;
+    }
+  }
+  .w-50 {
+    width: 100% !important;
+    padding-left: 15px;
+    // text-align: center;
   }
 }
 </style>

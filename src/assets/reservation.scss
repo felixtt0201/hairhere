@@ -10,13 +10,11 @@ $text-reservation: #cb9861;
     color: $text-accent;
   }
 }
-.item-total {
+.item-total-group {
   display: flex;
-  justify-content: flex-end;
-  .item-total-group {
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid $text-accent;
+  justify-content: center;
+  .item-total {
+    padding-right: 20px;
   }
 }
 .bg-reservation {

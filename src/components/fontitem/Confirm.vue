@@ -2,7 +2,7 @@
   <div>
     <div class="container text-main">
       <div class="row mt-3">
-        <div class="col-md-6 step-center">
+        <div class="col-11 col-lg-6 step-center">
           <ul class="step">
             <li class="active">
               選擇服務項目
@@ -11,16 +11,16 @@
             <li>預約完成</li>
           </ul>
         </div>
-        <div class="col-md-6">
+        <div class="col-12 col-lg-6">
           <div class="row">
             <div
-              class="col-md-6 photo-size"
+              class="col-6 photo-size"
               :style="{
                 backgroundImage: `url(${orderDetails.DesignerPicturePath})`,
               }"
             ></div>
             <div
-              class="col-md-6 personInfo
+              class="col-6 personInfo
               "
             >
               <h4>本次預約設計師</h4>
@@ -159,6 +159,28 @@ export default {
       background-color: #1d3d4a;
       color: white;
     }
+  }
+}
+@media (max-width: 768px) {
+  .step li::after {
+    right: -90px;
+  }
+  .title-line:before {
+    right: 63%;
+  }
+  .title-line:after {
+    left: 62%;
+  }
+  h4 {
+    font-size: 1.4rem;
+  }
+}
+@media (max-width: 767px) {
+  .title-line:before {
+    right: 70%;
+  }
+  .title-line:after {
+    left: 68%;
   }
 }
 </style>

@@ -29,8 +29,13 @@ export default {
       const last = $(window).height();
       // eslint-disable-next-line no-undef
       if ($(window).scrollTop() >= last) {
-        $('.down').show();
+        $('.down').fadeTo('slow', 0.8);
       }
+    });
+    // eslint-disable-next-line prefer-arrow-callback
+    // eslint-disable-next-line space-before-function-paren
+    $('.navbar a').on('click', () => {
+      $('.navbar-toggler').click();
     });
   },
 };
@@ -52,5 +57,11 @@ export default {
 .page-enter,
 .page-leave {
   opacity: 0;
+}
+@media (max-width: 768px) {
+  .nav-link {
+    padding-right: 0.5rem !important;
+    padding-left: 0.5rem !important;
+  }
 }
 </style>

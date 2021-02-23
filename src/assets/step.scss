@@ -2,6 +2,11 @@
   display: flex;
   align-items: center;
 }
+@media (max-width: 768px) {
+  .step-center {
+    margin: 0 auto;
+  }
+}
 .step {
   width: 100%;
   display: flex;
@@ -64,5 +69,10 @@
     &:last-child::after {
       content: none;
     }
+  }
+}
+@media (max-width: 768px) {
+  .step li::after {
+    right: -90px;
   }
 }
