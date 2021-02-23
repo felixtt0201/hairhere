@@ -90,8 +90,8 @@ const routes = [
 
     children: [
       {
-        path: 'designers',
-        name: 'Designers',
+        path: 'designersback',
+        name: 'DesignersBack',
         meta: { requiresAuth: true },
         component: () => import('../components/Designers.vue'),
       },

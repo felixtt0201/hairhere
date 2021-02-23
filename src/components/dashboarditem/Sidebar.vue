@@ -34,7 +34,7 @@
       <li class="nav-item">
         <router-link
           class="nav-link font-weight-bold sidebarhover"
-          :to="{ name: 'Designers' }"
+          :to="{ name: 'DesignersBack' }"
         >
           <i class="fas fa-users mr-2"></i>
           <span>設計師管理</span></router-link
