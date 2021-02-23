@@ -305,7 +305,7 @@ th:first-child {
 .table input {
   opacity: 0;
 }
-thead {
+.thead {
   font-size: 22px !important;
 }
 .time-btn {
