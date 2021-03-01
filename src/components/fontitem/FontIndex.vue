@@ -28,7 +28,7 @@
           <div class="carousel-item active">
             <img
               class="d-block w-100"
-              src="@/assets/img/unnamed 1.svg"
+              src="@/assets/img/banner.jpg"
               alt="First slide"
             />
             <div class="carousel-caption d-none d-md-block">
@@ -40,8 +40,8 @@
           </div>
           <div class="carousel-item">
             <img
-              class="d-block w-100"
-              src="@/assets/img/unnamed 1.svg"
+              class="d-bglock w-100"
+              src="https://pixabay.com/get/gb15bf22f188aeb7a1f97829c5a03ff6aff5a5cbe715cb8723e9f769e097214fdcc8e42cbab9de211a563b5623eb350f0_1280.jpg"
               alt="Second slide"
             />
             <div class="carousel-caption d-none d-md-block">
@@ -54,7 +54,7 @@
           <div class="carousel-item">
             <img
               class="d-block w-100"
-              src="@/assets/img/unnamed 1.svg"
+              src="https://pixabay.com/get/gb15bf22f188aeb7a1f97829c5a03ff6aff5a5cbe715cb8723e9f769e097214fdcc8e42cbab9de211a563b5623eb350f0_1280.jpg"
               alt="Third slide"
             />
             <div class="carousel-caption d-none d-md-block">

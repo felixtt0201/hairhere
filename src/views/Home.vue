@@ -1,9 +1,9 @@
 <template>
-  <div class="home">
-    <Top class="down"></Top>
+  <div>
     <FontHeader></FontHeader>
+    <Top class="down">123</Top>
     <transition name="page" mode="out-in">
-      <router-view :key="$route.path"></router-view>
+      <router-view class="wrap" :key="$route.path"></router-view>
     </transition>
     <FontFooter></FontFooter>
   </div>
@@ -50,6 +50,11 @@ export default {
 @import './src/assets/works.scss';
 @import './src/assets/searchList.scss';
 @import './src/assets/step.scss';
+
+.wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+}
 .page-enter-active,
 .page-leave-active {
   transition: 1s;

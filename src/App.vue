@@ -33,8 +33,8 @@ export default {
 <style lang="scss">
 @import './src/assets/all.scss';
 
-#app {
-  max-width: 1200px;
-  margin: 0 auto;
-}
+// #app {
+//   max-width: 1200px;
+//   margin: 0 auto;
+// }
 </style>

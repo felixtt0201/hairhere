@@ -79,7 +79,7 @@
 
         <h4 class="title-line text-center mb-5 text-sm">項目結算</h4>
         <div class="item-total">
-          <div class="item-total-group w-75">
+          <div class="item-total-group w-50">
             <h5>預期金額</h5>
             <span class="mr-5">${{ TotalMoney.moneytotal }}+</span>
             <h5>預估時間</h5>
@@ -340,6 +340,24 @@ label:hover {
 @media (max-width: 768px) {
   .step li::after {
     right: -90px;
+  }
+}
+.w-50 {
+  width: 45%;
+}
+.item-total {
+  display: flex;
+  justify-content: flex-end;
+  .item-total-group {
+    justify-content: space-around;
+  }
+}
+@media (max-width: 768px) {
+  .w-50 {
+    width: 100% !important;
+  }
+  .item-total {
+    justify-content: center;
   }
 }
 </style>
