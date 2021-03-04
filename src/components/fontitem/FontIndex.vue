@@ -40,8 +40,8 @@
           </div>
           <div class="carousel-item">
             <img
-              class="d-bglock w-100"
-              src="https://pixabay.com/get/gb15bf22f188aeb7a1f97829c5a03ff6aff5a5cbe715cb8723e9f769e097214fdcc8e42cbab9de211a563b5623eb350f0_1280.jpg"
+              class="d-block w-100"
+              src="../../../src/assets/img/interior-5413351_1280.jpg"
               alt="Second slide"
             />
             <div class="carousel-caption d-none d-md-block">
@@ -54,7 +54,7 @@
           <div class="carousel-item">
             <img
               class="d-block w-100"
-              src="https://pixabay.com/get/gb15bf22f188aeb7a1f97829c5a03ff6aff5a5cbe715cb8723e9f769e097214fdcc8e42cbab9de211a563b5623eb350f0_1280.jpg"
+              src="../../../src/assets/img/adam-winger-iirbrh939yc-unsplash.jpg"
               alt="Third slide"
             />
             <div class="carousel-caption d-none d-md-block">
@@ -168,7 +168,7 @@
         </div>
       </div>
     </div>
-    <div class="container">
+    <div class="container-fluid">
       <h4 class="title-line w-100 text-center mb-4 text-main">作品集</h4>
       <swiper
         class="swiper"
@@ -338,6 +338,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.carousel-item {
+  height: 800px;
+}
 @media (max-width: 768px) {
   .index-infomation {
     height: auto;
